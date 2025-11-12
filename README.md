@@ -52,7 +52,7 @@
 1. **Клонируйте репозиторий**
 ```bash
 git clone https://github.com/KnowerLife/secretsanta.git
-cd secret-santa-bot
+cd secretsanta
 ```
 
 2. **Установите зависимости**
@@ -62,11 +62,11 @@ pip install python-telegram-bot schedule
 
 3. **Настройте бота**
    - Получите токен у [@BotFather](https://t.me/BotFather)
-   - Замените `"ВАШ_ТОКЕН_БОТА"` в файле `secret_santa_bot.py` на ваш токен
+   - Замените `"ВАШ_ТОКЕН_БОТА"` в файле `SecretSanta.py` на ваш токен
 
 4. **Запустите бота**
 ```bash
-python secret_santa_bot.py
+python SecretSanta.py
 ```
 
 ## 📋 Полный список команд
@@ -172,12 +172,12 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
-CMD ["python", "secret_santa_bot.py"]
+CMD ["python", "SecretSanta.py"]
 ```
 
 ```bash
-docker build -t secret-santa-bot .
-docker run -d --name santa-bot secret-santa-bot
+docker build -t SecretSanta .
+docker run -d --name SecretSanta-bot SecretSanta
 ```
 
 ## 📊 Мониторинг и логи
