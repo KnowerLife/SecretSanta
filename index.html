@@ -393,6 +393,25 @@
                 </div>
               </div>
             </article>
+
+            <article class="snow-card panel" id="accessPanel">
+              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
+              <div class="panel__body">
+                <div class="panel-head">
+                  <div class="panel-icon panel-icon--red" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg></div>
+                  <div>
+                    <h2 data-i18n="dash.accessTitle">Доступ и сессии</h2>
+                    <p class="muted small" data-i18n="dash.accessSub">Приглашение, ссылка и активные сессии</p>
+                  </div>
+                </div>
+                <div class="inline-form" style="margin-bottom:12px;">
+                  <button id="copyInviteBtn" class="btn btn-secondary" type="button" data-i18n="dash.copyInvite">Скопировать invite-ссылку</button>
+                  <button id="refreshSessionsBtn" class="btn btn-ghost" type="button" data-i18n="dash.refreshSessions">Обновить сессии</button>
+                </div>
+                <ul id="sessionsList" class="list"></ul>
+                <p id="accessNotice" class="muted small"></p>
+              </div>
+            </article>
           </div>
 
           <p id="dashNotice" class="notice hidden" role="status" aria-live="polite"></p>
