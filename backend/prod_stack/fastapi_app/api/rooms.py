@@ -120,11 +120,15 @@ def get_room(code: str, authorization: str | None = Header(None), db: Session = 
     member, _ = _auth_member(db, room, authorization)
     members = db.query(models.RoomMember).filter_by(room_id=room.id).order_by(models.RoomMember.created_at).all()
     exclusions = db.query(models.Exclusion).filter_by(room_id=room.id).all()
+    wish_rows = db.query(models.WishlistItem).filter_by(room_id=room.id).order_by(models.WishlistItem.created_at).all() if hasattr(models, 'WishlistItem') else []
+    wishes_by_member = {}
+    for w in wish_rows:
+        wishes_by_member.setdefault(w.member_id, []).append({"id": w.id, "text": w.text, "createdAt": w.created_at.isoformat() if w.created_at else None})
     draw = db.query(models.DrawRun).filter_by(room_id=room.id).order_by(models.DrawRun.created_at.desc()).first()
     return {
         "room": {"id": room.id, "code": room.code, "name": room.name, "mode": room.mode, "budgetMin": room.budget_min, "budgetMax": room.budget_max, "eventDate": room.event_date, "theme": room.theme, "status": room.status},
-        "me": {"id": member.id, "name": member.name_snapshot, "role": member.role, "giftStatus": member.gift_status},
-        "members": [{"id": m.id, "name": m.name_snapshot, "role": m.role, "giftStatus": m.gift_status} for m in members],
+        "me": {"id": member.id, "name": member.name_snapshot, "role": member.role, "giftStatus": member.gift_status, "wishlist": wishes_by_member.get(member.id, [])},
+        "members": [{"id": m.id, "name": m.name_snapshot, "role": m.role, "giftStatus": m.gift_status, "wishlist": wishes_by_member.get(m.id, [])} for m in members],
         "exclusions": [{"id": e.id, "a": e.member_a_id, "b": e.member_b_id} for e in exclusions],
         "draw": ({"id": draw.id, "createdAt": draw.created_at.isoformat() if draw.created_at else None, "mode": draw.mode} if draw else None),
     }
@@ -163,3 +167,60 @@ def my_assignment(code: str, authorization: str | None = Header(None), db: Sessi
     if not asn: return {"drawn": False, "assignment": None}
     recv = db.get(models.RoomMember, asn.recipient_member_id)
     return {"drawn": True, "drawRunId": draw.id, "assignment": {"recipientMemberId": recv.id if recv else asn.recipient_member_id, "recipientName": recv.name_snapshot if recv else "Получатель"}}
+
+
+@router.post("/{code}/draw/reset")
+def reset_draw(code: str, authorization: str | None = Header(None), db: Session = Depends(get_db)):
+    room = db.query(models.Room).filter_by(code=code.upper()).first()
+    if not room: raise HTTPException(404, detail="room_not_found")
+    member, _ = _auth_member(db, room, authorization)
+    if member.role != "organizer": raise HTTPException(403, detail="organizer_required")
+    draw = db.query(models.DrawRun).filter_by(room_id=room.id).order_by(models.DrawRun.created_at.desc()).first()
+    if draw:
+        db.query(models.Assignment).filter_by(draw_run_id=draw.id).delete()
+        db.delete(draw)
+    db.add(models.RoomEvent(id=new_id("evt"), room_id=room.id, type="room.draw_reset", actor_member_id=member.id, payload_json="{}"))
+    db.commit()
+    return {"ok": True}
+
+
+@router.post("/{code}/wishlist")
+def add_wishlist(code: str, body: dict, authorization: str | None = Header(None), db: Session = Depends(get_db)):
+    room = db.query(models.Room).filter_by(code=code.upper()).first()
+    if not room: raise HTTPException(404, detail="room_not_found")
+    member, _ = _auth_member(db, room, authorization)
+    text = (body.get("text") or "").strip()
+    if not text: raise HTTPException(400, detail="text_required")
+    if len(text) > 500: raise HTTPException(400, detail="text_too_long")
+    item = models.WishlistItem(id=new_id("wish"), room_id=room.id, member_id=member.id, text=text)
+    db.add(item)
+    db.add(models.RoomEvent(id=new_id("evt"), room_id=room.id, type="room.wishlist_updated", actor_member_id=member.id, payload_json='{"memberId":"%s"}' % member.id))
+    db.commit()
+    return {"ok": True, "item": {"id": item.id, "text": item.text}}
+
+
+@router.delete("/{code}/wishlist/{item_id}")
+def delete_wishlist(code: str, item_id: str, authorization: str | None = Header(None), db: Session = Depends(get_db)):
+    room = db.query(models.Room).filter_by(code=code.upper()).first()
+    if not room: raise HTTPException(404, detail="room_not_found")
+    member, _ = _auth_member(db, room, authorization)
+    item = db.get(models.WishlistItem, item_id)
+    if not item or item.room_id != room.id: raise HTTPException(404, detail="wishlist_item_not_found")
+    if item.member_id != member.id and member.role != "organizer": raise HTTPException(403, detail="forbidden")
+    db.delete(item)
+    db.add(models.RoomEvent(id=new_id("evt"), room_id=room.id, type="room.wishlist_updated", actor_member_id=member.id, payload_json='{"memberId":"%s"}' % item.member_id))
+    db.commit()
+    return {"ok": True}
+
+
+@router.post("/{code}/gift-status")
+def set_gift_status(code: str, body: dict, authorization: str | None = Header(None), db: Session = Depends(get_db)):
+    room = db.query(models.Room).filter_by(code=code.upper()).first()
+    if not room: raise HTTPException(404, detail="room_not_found")
+    member, _ = _auth_member(db, room, authorization)
+    status = (body.get("status") or "").strip()
+    if status not in ("none", "idea", "bought", "done"): raise HTTPException(400, detail="invalid_status")
+    member.gift_status = status
+    db.add(models.RoomEvent(id=new_id("evt"), room_id=room.id, type="room.gift_status_updated", actor_member_id=member.id, payload_json='{"memberId":"%s","giftStatus":"%s"}' % (member.id, status)))
+    db.commit()
+    return {"ok": True, "status": status}

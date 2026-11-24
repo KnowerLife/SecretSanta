@@ -1,104 +1,105 @@
-# Secret Santa — план перехода к продакшену
+# Secret Santa — Production Plan (Status)
 
-Этот документ фиксирует следующий этап развития прототипа `SecretSanta/` (текущий MVP: локальный frontend, `localStorage`, без backend).
+Этот документ фиксирует план перехода `SecretSanta/` в production-ready состояние и текущий статус реализации в репозитории.
 
-## Статус выполнения (обновляется)
+## Сводка статуса
 
-- [x] **A (частично)**: Foundation backend (Python stdlib + SQLite) — комнаты, join, auth/session, server-side draw, private assignment, SSE, push scaffold.
-- [x] **B (частично)**: invite/member tokens, session revocation/list, wishlist/gift-status API, draw reset, SSE replay.
-- [x] **E (частично)**: frontend интегрирован с backend (auto-detect, create/join/sync/draw/assignment/wishlist/gift-status/reset, SSE автообновление), localStorage fallback сохранён.
-- [x] **Infra (частично)**: `.env.example`, backend Dockerfile, docker-compose, CI (unittest + JS syntax), новые тесты wishlist.
-- [ ] **B/C/D/F**: полноценный UI управления invite/sessions, rate limiting/CSRF/hardening, email/push delivery worker в production, миграция на `backend/prod_stack` (FastAPI/Postgres/Redis), e2e, observability, deploy.
+- [x] **A. Foundation backend** — реализован в `backend/app/*` (Python stdlib + SQLite)
+- [x] **B. Auth / Access / Sessions** — реализовано (invite/member tokens, sessions, revoke, rate limit basic)
+- [x] **C. Realtime / Notifications scaffold** — SSE + room_events replay, push scaffold, notification jobs; worker/provider hooks подготовлены
+- [x] **D. PWA / Offline** — manifest, SW cache versioning, offline shell fallback
+- [x] **E. Frontend integration** — online backend mode + localStorage fallback, SSE auto-refresh
+- [x] **F. CI / Docker / Tests / Docs** — CI, docker-compose, env example, unit/e2e security tests, README/plan updated
+- [~] **Prod stack migration (FastAPI+Postgres+Redis)** — scaffold + parity improvements в `backend/prod_stack/` (требует infra/зависимостей/полного cutover)
+- [ ] **Operational deployment** — требует реальной инфраструктуры/секретов (VAPID/SMTP/Sentry/домен/хостинг)
 
-## 1. Цели продакшена
-- Мультипользовательские комнаты с реальным присоединением по коду/ссылке.
-- Приватность: назначение «кто кому дарит» недоступно другим участникам и не раскрывается клиентской логике.
-- Надёжная серверная жеребьёвка с учётом исключений и режимов игры.
-- Синхронизация состояния в реальном времени, чат/анонимные сообщения, уведомления.
-- Готовность к публикации (PWA, домен, мониторинг, безопасность, масштабирование).
+---
 
-## 2. Рекомендуемая архитектура
+## A) Foundation Backend (готово)
 
-### Frontend
-- Текущий стек можно эволюционировать (Vanilla/SPA) или мигрировать на React/Vue + TypeScript для роста команды/поддержки.
-- PWA: манифест, SW с версионированием, offline-shell, стратегия кэширования (app shell + API cache where safe).
-- Состояние: сервер как source of truth; локальный кэш только для UX/offline drafts.
+- [x] SQLite схема + миграции (`backend/migrations/001..003`)
+- [x] Rooms / members / join / draw / assignment
+- [x] Wishlist + gift status + draw reset
+- [x] Auth sessions, room invites, member access tokens
+- [x] SSE `/api/rooms/{code}/events` + `room_events` durable replay (`Last-Event-ID`)
+- [x] Web Push scaffold (`/api/push/*`, VAPID config), notification jobs enqueue
+- [x] Privacy: assignment выдаётся только владельцу (`/assignment`)
+- [x] Basic hardening: rate limiting, security headers, request logging
 
-### Backend
-- API: REST + WebSocket/SSE (или tRPC/GraphQL) для realtime обновлений комнат.
-- Auth:
-  - быстрый старт: magic link / email OTP;
-  - опционально OAuth (Google/Apple) и гостевой вход с привязкой позже.
-- Авторизация: роли `organizer`, `participant`; проверки доступа на уровне API/DB.
-- Жеребьёвка: выполняется **на сервере**; клиент получает только своё назначение/необходимые данные.
-- Уведомления:
-  - Web Push (VAPID) для браузера/PWA;
-  - email как fallback (дедлайны, старт жеребьёвки, напоминания).
+## B) Auth & Room Access (готово в foundation)
 
-### Хранилище данных (пример схемы)
-- `users`: id, email/phone, name, avatar, settings, created_at.
-- `rooms`: id, code, name, mode, budget_min, budget_max, event_date, theme, organizer_id, status, created_at.
-- `room_members`: room_id, user_id, role, joined_at, gift_status, checklist (json/таблица), preferences.
-- `wishlists` / `anti_wishlists`: member-scoped items.
-- `exclusions`: room_id, member_a_id, member_b_id.
-- `draw_runs`: room_id, run_id, created_at, algorithm_version, seed/hash (audit-safe).
-- `assignments`: draw_run_id, santa_member_id, recipient_member_id (строгий доступ: только santa/organizer по политике).
-- `gift_pool`, `pool_turns`, `pool_claims`, `pool_events`: для режимов лотереи/общего обмена.
-- `messages`: room_id, from_member_id (nullable/hidden for anon UX), to_member_id/room scope, type, body, created_at.
-- `reminders`: room_id/member_id, schedule, channel, status.
-- `audit_logs`: важные события (создание, join, draw, reset, edits).
+- [x] Invite-based join + legacy name fallback (для совместимости)
+- [x] Member token resume flow
+- [x] Session listing + revoke (self/all)
+- [x] Frontend UI: copy invite link, sessions list, revoke session
+- [ ] Полная продовая модель аккаунтов (email/Telegram/OAuth) — следующий этап после cutover на prod_stack
+- [ ] CSRF для cookie-auth сценариев (актуально при переходе на cookie sessions)
 
-> Примечание: секретные назначения и анонимные сообщения должны проектироваться так, чтобы минимизировать утечки даже при ошибках UI/клиента.
+## C) Realtime & Notifications (частично / scaffold готов)
 
-## 3. Безопасность и приватность
-- Серверная валидация всех действий (включая права, режим, дедлайны, состав участников).
-- Rate limiting, CSRF (если cookie-сессии), защита от перебора кодов комнат.
-- Шифрование в transit (HTTPS) и at rest (DB/секреты), управление секретами (VAPID keys, JWT/session secrets).
-- Политика доступа к `assignments` и сообщениям (минимально необходимая выдача данных).
-- Логи без утечки секретов (не логировать назначения/токены/PII сверх нужного).
-- Резервное копирование БД и план восстановления.
+- [x] SSE события: draw/wishlist/gift-status/reset/member joined
+- [x] Frontend auto-refresh через EventSource
+- [x] Notification jobs table + enqueue endpoint
+- [x] Worker/scheduler scripts в backend (scaffold)
+- [ ] Реальная доставка Web Push в production (VAPID keys + pywebpush + worker deploy)
+- [ ] Email provider integration (SMTP/SendGrid/etc.)
+- [ ] Напоминания по расписанию (cron/worker в infra)
 
-## 4. Функциональная дорожная карта
+## D) PWA / Offline / UX (готово базово)
 
-### Этап A — Backend foundation
-- Модель данных, миграции, auth, CRUD комнат/участников.
-- Серверная жеребьёвка (classic + ограничения), выдача только персонального назначения.
-- Базовый realtime sync (статусы, участники, события).
+- [x] `manifest.webmanifest`, `sw.js`, cache versioning
+- [x] Local fallback mode при недоступном backend
+- [x] RU/EN локализация
+- [ ] Расширенный offline UX (background sync, conflict resolution) — после стабильного backend API
 
-### Этап B — Коммуникации и UX
-- Анонимные/служебные сообщения с серверной маршрутизацией.
-- Напоминания (scheduler/cron + Web Push/email).
-- Надёжная синхронизация чек-листов, вишлистов, статусов подарков.
+## E) Frontend Integration (готово)
 
-### Этап C — Игровые режимы и расширения
-- Серверная логика лотереи/общего обмена (ходы, кражи, блокировки, таймеры хода, восстановление состояния).
-- История событий/аудит, анти-абьюз правила.
+- [x] Auto-detect backend `/api/health`
+- [x] Create/join/sync/draw/assignment/wishlist/gift-status/reset через API
+- [x] Invite link с token + session persistence
+- [x] SSE realtime refresh
+- [x] LocalStorage fallback сохранён
 
-### Этап D — Продакшенизация
-- Наблюдаемость (Sentry/логирование/метрики), алерты.
-- CI/CD, staging/prod окружения, миграции, feature flags.
-- Тестирование: unit/integration/e2e (включая жеребьёвку, права доступа, realtime).
+## F) Quality / Infra / Deploy (готово в репозитории)
 
-## 5. Качество и тестирование
-- Автотесты алгоритма жеребьёвки (валидность, исключения, отсутствие self-assignments, воспроизводимость/аудит).
-- Тесты авторизации (участник не видит чужие назначения/приватные данные).
-- E2E сценарии: создание комнаты, join, draw, reveal, лотерея/кражи, напоминания, экспорт.
-- Нагрузочные проверки для realtime-комнат и push/email очередей.
+- [x] Unit/e2e tests: `backend/tests/test_draw.py`, `test_security_e2e.py`, `test_wishlist.py`
+- [x] CI: `.github/workflows/ci.yml` (unittest + JS syntax)
+- [x] Docker: `backend/Dockerfile`, root `docker-compose.yml`
+- [x] Env: `backend/.env.example`
+- [x] Docs: README RU/EN, backend READMEs, этот план
+- [x] Prod stack scaffold parity updates: wishlist/gift-status/reset endpoints in FastAPI scaffold
+- [ ] Observability stack (Sentry/Prometheus/Grafana) — подключается при деплое
+- [ ] Load/stress/security audit в целевой infra
 
-## 6. Инфраструктура и деплой
-- Frontend: CDN/статический хостинг (Vercel/Netlify/Cloudflare Pages) + HTTPS.
-- Backend: контейнеризированный сервис (Fly.io/Render/Kubernetes/Cloud Run) + managed DB (Postgres).
-- Очереди/джобы: Redis + worker (BullMQ/Celery/RQ) для напоминаний, push, email.
-- Домены, сертификаты, environment management, секреты.
+## Prod Stack Migration (следующий технический этап)
 
-## 7. Миграция с текущего MVP
-- Добавить экспорт/импорт совместимый с будущей схемой (versioned payloads).
-- Сохранить локальный режим как demo/offline fallback на ранних этапах.
-- Постепенно переносить критичные операции (draw, assignments, reminders delivery) на сервер.
+Цель: перенести foundation на `backend/prod_stack/` (FastAPI + Postgres + SQLAlchemy/Alembic + Redis + worker).
 
-## 8. Ближайшие практические шаги (рекомендуется начать)
-1. Зафиксировать API-контракты (rooms, members, draw, pool, reminders, messages).
-2. Спроектировать схему БД и политики доступа (особенно `assignments`).
-3. Реализовать серверную жеребьёвку и минимальный realtime для одной комнаты.
-4. Подключить Web Push (VAPID) и серверный планировщик напоминаний.
-5. Добавить e2e-тесты критических пользовательских сценариев.
+- [x] Scaffold структуры, моделей, routers, docker-compose, requirements
+- [x] Добавлена parity для wishlist/gift-status/reset в FastAPI rooms router
+- [ ] Полная parity всех foundation endpoints (sessions/invites/member-tokens/push/notifications/events replay)
+- [ ] Alembic migrations для всех таблиц (включая wishlist_items)
+- [ ] Redis pub/sub интеграция в runtime + durable replay
+- [ ] Worker (RQ/Celery/Arq) для notification jobs / push / email
+- [ ] E2E tests против prod stack
+- [ ] Cutover: frontend API_BASE -> prod stack, deprecate foundation
+
+## Operational Deployment Checklist (выполняется при наличии infra)
+
+- [ ] Создать production secrets: `SECRET_SANTA_SECRET`, DB creds, VAPID, SMTP
+- [ ] Настроить Postgres + Redis managed services
+- [ ] Развернуть API + worker + static frontend (Nginx/CDN)
+- [ ] Настроить HTTPS, домен, CORS allowlist, backups
+- [ ] Подключить Sentry/log aggregation/metrics/alerts
+- [ ] Прогнать e2e smoke + security checklist перед релизом
+
+## Определение “готово” для этого репозитория
+
+Репозиторий считается production-ready на уровне implementation baseline, когда:
+- [x] Основной user flow работает в онлайн и локальном режимах
+- [x] Draw приватный и серверный
+- [x] Wishlist/gift-status/sessions/invites поддержаны в foundation
+- [x] Есть тесты, CI, docker, env docs, runbook в README
+- [x] Есть план миграции на prod stack и scaffold
+
+Дальнейшие пункты помечены как operational/infrastructure и выполняются при деплое.

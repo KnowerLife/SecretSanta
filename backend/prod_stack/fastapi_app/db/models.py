@@ -146,6 +146,15 @@ class PushSubscription(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
+class WishlistItem(Base):
+    __tablename__ = "wishlist_items"
+    id = Column(String, primary_key=True)
+    room_id = Column(String, ForeignKey("rooms.id", ondelete="CASCADE"), nullable=False, index=True)
+    member_id = Column(String, ForeignKey("room_members.id", ondelete="CASCADE"), nullable=False, index=True)
+    text = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
 class NotificationJob(Base):
     __tablename__ = "notification_jobs"
     id = Column(String, primary_key=True)
