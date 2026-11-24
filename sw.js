@@ -1,4 +1,4 @@
-const CACHE_NAME = 'secret-santa-v28-prod-hardening';
+const CACHE_NAME = 'secret-santa-v29-exclusions-ux';
 const ASSETS = [
   './',
   './index.html',
