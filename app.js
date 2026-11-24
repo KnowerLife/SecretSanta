@@ -1,9 +1,69 @@
 (() => {
   const STORAGE_KEY = 'secret-santa-simple-v1';
   const LANG_KEY = 'secret-santa-lang';
+  const API_BASE_KEY = 'secret-santa-api-base';
   const views = ['home', 'create', 'join', 'dashboard'];
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+  const DEFAULT_API_BASE = window.SECRET_SANTA_API_BASE || localStorage.getItem(API_BASE_KEY) || 'http://127.0.0.1:8000';
+  const apiState = {
+    base: DEFAULT_API_BASE.replace(/\/$/, ''),
+    online: null, // null unknown, true/false
+    checking: false,
+  };
+
+  function apiHeaders(token) {
+    const h = { 'Content-Type': 'application/json' };
+    if (token) h.Authorization = `Bearer ${token}`;
+    return h;
+  }
+
+  async function apiFetch(path, { method = 'GET', body, token } = {}) {
+    const res = await fetch(apiState.base + path, {
+      method,
+      headers: apiHeaders(token),
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+    const text = await res.text();
+    let data = {};
+    try { data = text ? JSON.parse(text) : {}; } catch { data = { raw: text }; }
+    if (!res.ok) {
+      const err = new Error(data.error || data.detail || `HTTP ${res.status}`);
+      err.status = res.status;
+      err.data = data;
+      throw err;
+    }
+    return data;
+  }
+
+  async function detectBackend() {
+    if (apiState.checking) return apiState.online;
+    apiState.checking = true;
+    try {
+      const ctrl = new AbortController();
+      const tmr = setTimeout(() => ctrl.abort(), 1800);
+      const res = await fetch(apiState.base + '/api/health', { signal: ctrl.signal });
+      clearTimeout(tmr);
+      apiState.online = res.ok;
+    } catch {
+      apiState.online = false;
+    } finally {
+      apiState.checking = false;
+    }
+    return apiState.online;
+  }
+
+  function roomSession(code) {
+    state.backend = state.backend || { rooms: {} };
+    state.backend.rooms = state.backend.rooms || {};
+    return state.backend.rooms[(code || '').toUpperCase()] || null;
+  }
+  function setRoomSession(code, sess) {
+    state.backend = state.backend || { rooms: {} };
+    state.backend.rooms = state.backend.rooms || {};
+    state.backend.rooms[(code || '').toUpperCase()] = { ...(state.backend.rooms[(code || '').toUpperCase()] || {}), ...sess };
+  }
 
   const I18N = {
     ru: {
@@ -153,11 +213,19 @@
       'toast.drawReset': 'Жеребьёвка сброшена',
       'toast.copied': 'Код скопирован',
       'toast.statusSaved': 'Статус сохранён',
+      'toast.backendOnline': 'Подключено к серверу',
+      'toast.backendOffline': 'Сервер недоступен, используем локальный режим',
+      'toast.copiedLink': 'Ссылка скопирована',
       'err.createRequired': 'Укажите название игры и ваше имя.',
       'err.createDate': 'Укажите дату обмена.',
       'err.createBudget': 'Проверьте бюджет.',
       'err.joinRequired': 'Введите код комнаты и имя.',
       'err.joinNotFound': 'Игра с таким кодом не найдена в этом браузере.',
+      'err.joinNotFoundOnline': 'Игра с таким кодом не найдена на сервере.',
+      'err.network': 'Ошибка сети. Проверьте подключение к серверу.',
+      'dash.backendOnline': 'Онлайн',
+      'dash.backendOffline': 'Локально',
+      'dash.copyLink': 'Скопировать ссылку',
     },
     en: {
       'meta.title': 'Secret Santa — gift exchange organizer',
@@ -306,11 +374,19 @@
       'toast.drawReset': 'Draw reset',
       'toast.copied': 'Code copied',
       'toast.statusSaved': 'Status saved',
+      'toast.backendOnline': 'Connected to server',
+      'toast.backendOffline': 'Server unavailable, using local mode',
+      'toast.copiedLink': 'Link copied',
       'err.createRequired': 'Enter the game name and your name.',
       'err.createDate': 'Select the exchange date.',
       'err.createBudget': 'Check the budget.',
       'err.joinRequired': 'Enter the room code and your name.',
       'err.joinNotFound': 'No game with this code was found in this browser.',
+      'err.joinNotFoundOnline': 'No game with this code was found on the server.',
+      'err.network': 'Network error. Check server connection.',
+      'dash.backendOnline': 'Online',
+      'dash.backendOffline': 'Local',
+      'dash.copyLink': 'Copy link',
     }
   };
 
@@ -348,6 +424,8 @@
       const s = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
       s.games = s.games || {};
       s.session = s.session || null;
+      s.backend = s.backend && typeof s.backend === 'object' ? s.backend : { rooms: {} };
+      s.backend.rooms = s.backend.rooms || {};
       // migrate from previous versions if present and current empty
       if (!Object.keys(s.games).length) {
         for (const key of ['secret-santa-mvp-v11','secret-santa-mvp-v10','secret-santa-mvp-v9']) {
@@ -358,7 +436,7 @@
         }
       }
       return s;
-    } catch { return { games: {}, session: null }; }
+    } catch { return { games: {}, session: null, backend: { rooms: {} } }; }
   }
   const state = loadState();
   function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -399,7 +477,8 @@
     if (hash !== view) location.hash = view;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-    if (view === 'dashboard') renderDashboard();
+    if (view !== 'dashboard') disconnectSSE();
+    if (view === 'dashboard') { renderDashboard(); refreshDashboard(); }
   }
 
   function derangement(participants) {
@@ -469,6 +548,18 @@
     else if (d === 0) $('#countdownLabel').textContent = t('dash.daysToday');
     else $('#countdownLabel').textContent = t('dash.daysPast', { n: Math.abs(d) });
 
+    const bs = $('#backendStatusLabel');
+    if (bs) {
+      const sess = roomSession(game.code);
+      if (sess && sess.token) {
+        bs.textContent = apiState.online ? `● ${t('dash.backendOnline')}` : (apiState.online === false ? `● ${t('dash.backendOffline')}` : '');
+        bs.style.color = apiState.online ? '#1f8a4c' : (apiState.online === false ? '#8a6a1f' : '');
+      } else {
+        bs.textContent = `● ${t('dash.backendOffline')}`;
+        bs.style.color = '#8a6a1f';
+      }
+    }
+
     const drawn = game.assignments && Object.keys(game.assignments).length > 0;
     const revealed = !!(game.revealed && game.revealed[me.id]);
 
@@ -522,12 +613,134 @@
     $('#myWishlist').innerHTML = me.wishlist.length
       ? me.wishlist.map(w => `<li><span>${escapeHtml(w.text)}</span><button class="link-btn" data-rm-wish="${w.id}" type="button">${escapeHtml(t('dash.wishDelete'))}</button></li>`).join('')
       : `<li><span class="muted">${escapeHtml(t('dash.myWishlistEmpty'))}</span></li>`;
-    $$('[data-rm-wish]').forEach(btn => btn.onclick = () => {
-      me.wishlist = me.wishlist.filter(w => w.id !== btn.dataset.rmWish); saveState(); renderDashboard();
+    $$('[data-rm-wish]').forEach(btn => btn.onclick = async () => {
+      const wid = btn.dataset.rmWish;
+      const sess = roomSession(game.code);
+      if (sess && sess.token && game.backend) {
+        try { await apiFetch(`/api/rooms/${game.code}/wishlist/${wid}`, { method: 'DELETE', token: sess.token }); } catch (e) { console.warn(e); }
+      }
+      me.wishlist = me.wishlist.filter(w => w.id !== wid); saveState(); renderDashboard();
     });
 
     $('#myGiftStatus').value = me.giftStatus || 'none';
     setNotice('');
+  }
+
+  function mapBackendRoom(code, data) {
+    const prev = state.games[code] || {};
+    const prevById = new Map((prev.participants || []).map(p => [p.id, p]));
+    const prevByName = new Map((prev.participants || []).map(p => [String(p.name || '').toLowerCase(), p]));
+    const members = (data.members || []).map(m => {
+      const old = prevById.get(m.id) || prevByName.get(String(m.name || '').toLowerCase()) || {};
+      const backendWishlist = Array.isArray(m.wishlist) ? m.wishlist.map(w => ({ id: w.id, text: w.text })) : null;
+      return {
+        id: m.id,
+        name: m.name,
+        isOrganizer: m.role === 'organizer',
+        wishlist: backendWishlist !== null ? backendWishlist : (Array.isArray(old.wishlist) ? old.wishlist : []),
+        giftStatus: m.giftStatus || old.giftStatus || 'none',
+        joinedAt: m.joinedAt || old.joinedAt || null,
+      };
+    });
+    const game = {
+      ...prev,
+      code,
+      name: data.room?.name || prev.name || code,
+      budgetMin: Number(data.room?.budgetMin ?? prev.budgetMin ?? 0),
+      budgetMax: Number(data.room?.budgetMax ?? prev.budgetMax ?? 0),
+      eventDate: data.room?.eventDate || prev.eventDate || '',
+      theme: data.room?.theme || prev.theme || '',
+      mode: data.room?.mode || prev.mode || 'classic',
+      participants: members,
+      assignments: prev.assignments || {},
+      revealed: prev.revealed || {},
+      backend: true,
+      drawInfo: data.draw || null,
+      createdAt: prev.createdAt || Date.now(),
+    };
+    // if backend says draw exists but we don't have mapping, keep empty; assignment fetched separately
+    if (data.draw && !Object.keys(game.assignments).length) {
+      game.assignments = game.assignments || {};
+    }
+    if (!data.draw) { game.assignments = {}; game.revealed = {}; }
+    state.games[code] = game;
+    return game;
+  }
+
+  async function syncRoomFromBackend(code) {
+    const sess = roomSession(code);
+    if (!sess || !sess.token) return null;
+    const data = await apiFetch(`/api/rooms/${code.toUpperCase()}`, { token: sess.token });
+    const game = mapBackendRoom(code.toUpperCase(), data);
+    // sync my identity
+    if (data.me && data.me.id) {
+      if (state.session && state.session.gameCode === code.toUpperCase()) {
+        state.session.participantId = data.me.id;
+      }
+      setRoomSession(code, { memberId: data.me.id });
+    }
+    // fetch my assignment if drawn
+    if (data.draw) {
+      try {
+        const asn = await apiFetch(`/api/rooms/${code.toUpperCase()}/assignment`, { token: sess.token });
+        if (asn && asn.drawn && asn.assignment) {
+          const me = currentMe(game);
+          if (me) {
+            // ensure recipient exists in participants list
+            if (!game.participants.some(p => p.id === asn.assignment.recipientMemberId)) {
+              game.participants.push({ id: asn.assignment.recipientMemberId, name: asn.assignment.recipientName || 'Recipient', isOrganizer: false, wishlist: [], giftStatus: 'none' });
+            }
+            game.assignments[me.id] = asn.assignment.recipientMemberId;
+          }
+        }
+      } catch {}
+    }
+    saveState();
+    return game;
+  }
+
+  let sse = null;
+  let sseCode = null;
+  function disconnectSSE() {
+    if (sse) { try { sse.close(); } catch {} sse = null; sseCode = null; }
+  }
+  function connectSSE(code) {
+    const c = (code || '').toUpperCase();
+    const sess = roomSession(c);
+    if (!sess || !sess.token || !apiState.online) { disconnectSSE(); return; }
+    if (sse && sseCode === c) return;
+    disconnectSSE();
+    const url = `${apiState.base}/api/rooms/${c}/events?token=${encodeURIComponent(sess.token)}`;
+    try {
+      sse = new EventSource(url);
+      sseCode = c;
+      const onEvt = () => { if (currentGame()?.code === c) refreshDashboard(); };
+      ['room.draw_completed','room.wishlist_updated','room.gift_status_updated','room.draw_reset','room.member_joined','room.created'].forEach(t => sse.addEventListener(t, onEvt));
+      sse.onerror = () => { /* browser will retry; keep simple */ };
+    } catch (e) { console.warn('SSE failed', e); }
+  }
+
+  async function refreshDashboard() {
+    const game = currentGame();
+    if (!game) { renderDashboard(); return; }
+    const code = game.code;
+    const sess = roomSession(code);
+    if (sess && sess.token) {
+      try {
+        await detectBackend();
+        if (apiState.online) {
+          await syncRoomFromBackend(code);
+          connectSSE(code);
+        } else {
+          disconnectSSE();
+        }
+      } catch (e) {
+        console.warn('sync failed', e);
+      }
+    } else {
+      disconnectSSE();
+    }
+    renderDashboard();
   }
 
   function wire() {
@@ -540,9 +753,10 @@
       if (views.includes(v)) navigate(v);
     });
 
-    $('#createForm').addEventListener('submit', (e) => {
+    $('#createForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const err = $('#createError'); err.textContent = '';
+      const submitBtn = e.target.querySelector('button[type="submit"]');
       const name = $('#gameName').value.trim();
       const orgName = $('#organizerName').value.trim();
       const budgetMin = Number($('#budgetMin').value);
@@ -552,57 +766,167 @@
       if (!name || !orgName) { err.textContent = t('err.createRequired'); return; }
       if (!eventDate) { err.textContent = t('err.createDate'); return; }
       if (isNaN(budgetMin) || isNaN(budgetMax) || budgetMax < budgetMin) { err.textContent = t('err.createBudget'); return; }
-      let code = makeCode(); while (state.games[code]) code = makeCode();
-      const organizer = { id: uid('p'), name: orgName, isOrganizer: true, wishlist: [], giftStatus: 'none' };
-      const game = { code, name, budgetMin, budgetMax, eventDate, theme, participants: [organizer], assignments: {}, revealed: {}, createdAt: Date.now() };
-      state.games[code] = game;
-      state.session = { gameCode: code, participantId: organizer.id };
-      saveState();
-      e.target.reset();
-      $('#budgetMin').value = 500; $('#budgetMax').value = 1500;
-      toast(t('toast.created'));
-      navigate('dashboard');
+      if (submitBtn) submitBtn.disabled = true;
+      try {
+        await detectBackend();
+        if (apiState.online) {
+          try {
+            const data = await apiFetch('/api/rooms', {
+              method: 'POST',
+              body: { name, organizerName: orgName, budgetMin, budgetMax, eventDate, theme, mode: 'classic' },
+            });
+            const code = String(data.room.code).toUpperCase();
+            setRoomSession(code, {
+              token: data.token,
+              sessionId: data.sessionId,
+              memberId: data.member?.id,
+              inviteToken: data.inviteToken,
+              role: data.member?.role,
+            });
+            const game = {
+              code, name, budgetMin, budgetMax, eventDate, theme,
+              participants: [{ id: data.member.id, name: orgName, isOrganizer: true, wishlist: [], giftStatus: 'none' }],
+              assignments: {}, revealed: {}, createdAt: Date.now(), backend: true,
+            };
+            state.games[code] = game;
+            state.session = { gameCode: code, participantId: data.member.id };
+            saveState();
+            e.target.reset();
+            $('#budgetMin').value = 500; $('#budgetMax').value = 1500;
+            toast(t('toast.created'));
+            navigate('dashboard');
+            refreshDashboard();
+            return;
+          } catch (apiErr) {
+            console.warn('backend create failed, fallback local', apiErr);
+            // fallback to local below
+          }
+        }
+        let code = makeCode(); while (state.games[code]) code = makeCode();
+        const organizer = { id: uid('p'), name: orgName, isOrganizer: true, wishlist: [], giftStatus: 'none' };
+        const game = { code, name, budgetMin, budgetMax, eventDate, theme, participants: [organizer], assignments: {}, revealed: {}, createdAt: Date.now(), backend: false };
+        state.games[code] = game;
+        state.session = { gameCode: code, participantId: organizer.id };
+        saveState();
+        e.target.reset();
+        $('#budgetMin').value = 500; $('#budgetMax').value = 1500;
+        toast(t('toast.created'));
+        navigate('dashboard');
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
     });
 
-    $('#joinForm').addEventListener('submit', (e) => {
+    $('#joinForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const err = $('#joinError'); err.textContent = '';
+      const submitBtn = e.target.querySelector('button[type="submit"]');
       const code = $('#joinCode').value.trim().toUpperCase();
       const name = $('#joinName').value.trim();
       if (!code || !name) { err.textContent = t('err.joinRequired'); return; }
-      const game = state.games[code];
-      if (!game) { err.textContent = t('err.joinNotFound'); return; }
-      ensureGame(game);
-      let p = game.participants.find(x => x.name.toLowerCase() === name.toLowerCase());
-      if (!p) { p = { id: uid('p'), name, isOrganizer: false, wishlist: [], giftStatus: 'none' }; game.participants.push(p); }
-      state.session = { gameCode: code, participantId: p.id };
-      saveState();
-      e.target.reset();
-      toast(t('toast.joined'));
-      navigate('dashboard');
+      if (submitBtn) submitBtn.disabled = true;
+      try {
+        await detectBackend();
+        if (apiState.online) {
+          try {
+            const sess = roomSession(code) || {};
+            const body = { code, name };
+            if (sess.memberToken) body.memberToken = sess.memberToken;
+            if (sess.inviteToken) body.inviteToken = sess.inviteToken;
+            const data = await apiFetch('/api/rooms/join', { method: 'POST', body, token: sess.token });
+            const rcode = String(data.room.code).toUpperCase();
+            setRoomSession(rcode, {
+              token: data.token,
+              sessionId: data.sessionId,
+              memberId: data.member?.id,
+              memberToken: data.memberToken || sess.memberToken,
+              inviteToken: sess.inviteToken,
+              role: data.member?.role,
+            });
+            // seed local game; then sync full state
+            if (!state.games[rcode]) {
+              state.games[rcode] = { code: rcode, name: data.room.name, participants: [], assignments: {}, revealed: {}, createdAt: Date.now(), backend: true };
+            }
+            state.session = { gameCode: rcode, participantId: data.member.id };
+            saveState();
+            await syncRoomFromBackend(rcode);
+            e.target.reset();
+            toast(t('toast.joined'));
+            navigate('dashboard');
+            renderDashboard();
+            return;
+          } catch (apiErr) {
+            if (apiErr && apiErr.status === 404) { err.textContent = t('err.joinNotFoundOnline'); return; }
+            console.warn('backend join failed, fallback local', apiErr);
+            // fall through to local
+          }
+        }
+        const game = state.games[code];
+        if (!game) { err.textContent = t('err.joinNotFound'); return; }
+        ensureGame(game);
+        let p = game.participants.find(x => x.name.toLowerCase() === name.toLowerCase());
+        if (!p) { p = { id: uid('p'), name, isOrganizer: false, wishlist: [], giftStatus: 'none' }; game.participants.push(p); }
+        state.session = { gameCode: code, participantId: p.id };
+        saveState();
+        e.target.reset();
+        toast(t('toast.joined'));
+        navigate('dashboard');
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
     });
 
     $('#addParticipantForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const game = currentGame(); if (!game) return; ensureGame(game);
+      const sess = roomSession(game.code);
+      if (sess && sess.token && game.backend) {
+        toast(lang === 'ru' ? 'В онлайн-режиме поделитесь кодом/ссылкой, чтобы участник присоединился сам.' : 'In online mode, share the code/link so the participant can join.');
+        return;
+      }
       const input = $('#addName'); const name = input.value.trim(); if (!name) return;
       if (game.participants.some(p => p.name.toLowerCase() === name.toLowerCase())) { toast(t('toast.participantExists')); return; }
       game.participants.push({ id: uid('p'), name, isOrganizer: false, wishlist: [], giftStatus: 'none' });
       saveState(); input.value = ''; renderDashboard(); toast(t('toast.participantAdded'));
     });
 
-    $('#wishlistForm').addEventListener('submit', (e) => {
+    $('#wishlistForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
       const input = $('#wishText'); const text = input.value.trim(); if (!text) return;
+      const sess = roomSession(game.code);
+      if (sess && sess.token && game.backend) {
+        try {
+          const data = await apiFetch(`/api/rooms/${game.code}/wishlist`, { method: 'POST', token: sess.token, body: { text } });
+          me.wishlist.push({ id: data.item?.id || uid('w'), text });
+          saveState(); input.value = ''; renderDashboard(); toast(t('toast.wishAdded'));
+          refreshDashboard();
+          return;
+        } catch (err) { console.warn(err); toast(err.message || t('toast.drawFail')); return; }
+      }
       me.wishlist.push({ id: uid('w'), text });
       saveState(); input.value = ''; renderDashboard(); toast(t('toast.wishAdded'));
     });
 
-    $('#drawBtn').addEventListener('click', () => {
+    $('#drawBtn').addEventListener('click', async () => {
       const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
       ensureGame(game);
       if (game.participants.length < 3) { toast(t('toast.drawNeed3')); return; }
+      const sess = roomSession(game.code);
+      if (sess && sess.token && game.backend) {
+        $('#drawBtn').disabled = true;
+        try {
+          await apiFetch(`/api/rooms/${game.code}/draw`, { method: 'POST', token: sess.token, body: {} });
+          await syncRoomFromBackend(game.code);
+          renderDashboard();
+          toast(t('toast.drawDone'));
+        } catch (e) {
+          console.warn(e);
+          toast(e.data?.error === 'draw_failed_constraints' ? t('toast.drawFail') : (e.message || t('toast.drawFail')));
+          renderDashboard();
+        }
+        return;
+      }
       const map = derangement(game.participants);
       if (!map) { toast(t('toast.drawFail')); return; }
       game.assignments = map; game.revealed = {};
@@ -618,25 +942,46 @@
 
     $('#resetDrawBtn').addEventListener('click', () => {
       const game = currentGame(); if (!game) return;
-      openConfirm(t('confirm.reset'), () => {
+      openConfirm(t('confirm.reset'), async () => {
+        const sess = roomSession(game.code);
+        if (sess && sess.token && game.backend) {
+          try {
+            await apiFetch(`/api/rooms/${game.code}/draw/reset`, { method: 'POST', token: sess.token, body: {} });
+            await syncRoomFromBackend(game.code);
+            renderDashboard(); toast(t('toast.drawReset'));
+          } catch (e) { console.warn(e); toast(e.message || t('toast.drawFail')); }
+          return;
+        }
         game.assignments = {}; game.revealed = {}; saveState(); renderDashboard(); toast(t('toast.drawReset'));
       });
     });
 
     $('#leaveBtn').addEventListener('click', () => {
       openConfirm(t('confirm.leave'), () => {
+        disconnectSSE();
         state.session = null; saveState(); renderDashboard(); navigate('home');
       });
     });
 
     $('#copyCodeBtn').addEventListener('click', async () => {
       const game = currentGame(); if (!game) return;
-      try { await navigator.clipboard.writeText(game.code); toast(t('toast.copied')); } catch { toast(game.code); }
+      const sess = roomSession(game.code);
+      const inviteToken = sess?.inviteToken;
+      const url = new URL(location.href);
+      url.hash = inviteToken ? `join?code=${encodeURIComponent(game.code)}&invite=${encodeURIComponent(inviteToken)}` : `join?code=${encodeURIComponent(game.code)}`;
+      const text = inviteToken ? url.toString() : game.code;
+      try { await navigator.clipboard.writeText(text); toast(inviteToken ? t('toast.copiedLink') : t('toast.copied')); } catch { toast(text); }
     });
 
-    $('#myGiftStatus').addEventListener('change', (e) => {
+    $('#myGiftStatus').addEventListener('change', async (e) => {
       const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
-      me.giftStatus = e.target.value; saveState(); toast(t('toast.statusSaved'));
+      const val = e.target.value;
+      me.giftStatus = val; saveState(); toast(t('toast.statusSaved'));
+      const sess = roomSession(game.code);
+      if (sess && sess.token && game.backend) {
+        try { await apiFetch(`/api/rooms/${game.code}/gift-status`, { method: 'POST', token: sess.token, body: { status: val } }); }
+        catch (err) { console.warn(err); }
+      }
     });
 
     $('#confirmOkBtn').addEventListener('click', () => { const cb = confirmCb; closeConfirm(); if (cb) cb(); });
@@ -654,16 +999,23 @@
   const langBtn = $('#langToggle');
   if (langBtn) langBtn.addEventListener('click', () => applyLang(lang === 'ru' ? 'en' : 'ru'));
 
-  // handle join link with code
+  // handle join link with code/invite
   const rawHash = location.hash.replace('#', '');
   if (rawHash.startsWith('join')) {
     const q = rawHash.split('?')[1] || '';
-    const code = new URLSearchParams(q).get('code');
-    if (code) $('#joinCode').value = code.toUpperCase();
+    const params = new URLSearchParams(q);
+    const code = params.get('code');
+    const invite = params.get('invite');
+    if (code) {
+      const c = code.toUpperCase();
+      $('#joinCode').value = c;
+      if (invite) setRoomSession(c, { inviteToken: invite });
+    }
   }
 
   applyLang(lang);
   const start = rawHash.split('?')[0];
   navigate(views.includes(start) ? start : 'home');
+  detectBackend().then(() => { if (currentGame()) refreshDashboard(); });
   if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {})); }
 })();
