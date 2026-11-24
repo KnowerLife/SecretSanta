@@ -195,6 +195,7 @@
       'dash.statusDraw': 'Жеребьёвка',
       'dash.statusDrawNo': 'не проведена',
       'dash.statusDrawYes': 'проведена',
+      'dash.statusGifts': 'Подарки готовы',
       'dash.giftStatus': 'Мой статус подарка',
       'dash.gift.none': 'Ещё не начал(а)',
       'dash.gift.idea': 'Выбираю идею',
@@ -392,6 +393,7 @@
       'dash.statusDraw': 'Draw',
       'dash.statusDrawNo': 'not run',
       'dash.statusDrawYes': 'completed',
+      'dash.statusGifts': 'Gifts ready',
       'dash.giftStatus': 'My gift status',
       'dash.gift.none': 'Not started yet',
       'dash.gift.idea': 'Choosing an idea',
@@ -653,12 +655,16 @@
     const withWish = game.participants.filter(p => p.wishlist.length > 0).length;
     $('#statWishlists').textContent = game.participants.length ? Math.round((withWish / game.participants.length) * 100) + '%' : '0%';
     $('#statDraw').textContent = drawn ? t('dash.statusDrawYes') : t('dash.statusDrawNo');
+    const giftsDone = game.participants.filter(p => ['bought','done'].includes(p.giftStatus)).length;
+    const sg = $('#statGifts');
+    if (sg) sg.textContent = game.participants.length ? Math.round((giftsDone / game.participants.length) * 100) + '%' : '0%';
     $('#participantsCount').textContent = String(game.participants.length);
 
     // participants
     $('#participantsList').innerHTML = game.participants.map(p => {
       const tags = [];
       if (p.wishlist.length) tags.push(t('dash.participantWishes', { n: p.wishlist.length }));
+      if (p.giftStatus && p.giftStatus !== 'none') tags.push(t('dash.gift.' + p.giftStatus));
       if (p.isOrganizer) tags.push(t('dash.participantOrganizer'));
       const canRemove = !drawn && p.id !== me.id;
       const rm = canRemove ? `<button class="link-btn" data-rm="${p.id}" type="button">${escapeHtml(t('dash.participantRemove'))}</button>` : '';
