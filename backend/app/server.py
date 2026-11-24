@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import sys
 import time
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -112,6 +113,33 @@ def create_session(conn, room_id, member_id, user_id, role, user_agent=None, ip_
     return sid, token
 
 
+class SimpleRateLimiter:
+    def __init__(self):
+        self.buckets = {}
+
+    def allow(self, key, limit, window_sec):
+        now = time.time()
+        bucket = self.buckets.get(key, [])
+        cutoff = now - window_sec
+        if bucket and bucket[0] < cutoff:
+            bucket = [t for t in bucket if t >= cutoff]
+        if len(bucket) >= limit:
+            self.buckets[key] = bucket
+            return False
+        bucket.append(now)
+        self.buckets[key] = bucket
+        if len(self.buckets) > 5000:
+            # coarse cleanup
+            for k in list(self.buckets.keys())[:1000]:
+                v = [t for t in self.buckets.get(k, []) if t >= cutoff]
+                if v: self.buckets[k] = v
+                else: self.buckets.pop(k, None)
+        return True
+
+
+RATE_LIMITER = SimpleRateLimiter()
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = 'SecretSantaBackend/0.2'
 
@@ -126,9 +154,17 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(status)
         self._send_cors()
         self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('X-Frame-Options', 'DENY')
+        self.send_header('Referrer-Policy', 'no-referrer')
         self.send_header('Content-Length', str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+        try:
+            dur = int((time.time() - getattr(self, '_req_start', time.time())) * 1000)
+            print(f'[{now_iso()}] {self.command} {getattr(self, "_req_path", self.path)} {status} {dur}ms', file=sys.stderr)
+        except Exception:
+            pass
 
     def _read_json(self):
         length = int(self.headers.get('Content-Length') or '0')
@@ -146,7 +182,18 @@ class Handler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = parsed.path.rstrip('/') or '/'
         query = parse_qs(parsed.query)
+        self._req_path = path
+        self._req_start = time.time()
         return path, query
+
+    def _rate_limit_or_raise(self, path):
+        ip = (self.client_address[0] if self.client_address else 'unknown') or 'unknown'
+        # stricter for create/join/auth-sensitive writes
+        strict = path.endswith('/join') or path == '/api/rooms' or '/sessions/revoke' in path or '/invites' in path
+        limit, window = (30, 60) if strict else (180, 60)
+        key = f'{ip}:{ "strict" if strict else "gen" }'
+        if not RATE_LIMITER.allow(key, limit, window):
+            raise ApiError(429, 'rate_limited')
 
     def do_OPTIONS(self):
         self.send_response(HTTPStatus.NO_CONTENT)
@@ -156,6 +203,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             path, query = self._route()
+            self._rate_limit_or_raise(path)
             if path == '/api/health':
                 return self._send_json(200, {'ok': True, 'time': now_iso(), 'push': vapid_public_config(), 'version': '0.2'})
             if path == '/api/push/config':
@@ -251,6 +299,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             path, _ = self._route()
+            self._rate_limit_or_raise(path)
             body = self._read_json()
             parts = [p for p in path.split('/') if p]
 
@@ -293,6 +342,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_DELETE(self):
         try:
             path, _ = self._route()
+            self._rate_limit_or_raise(path)
             parts = [p for p in path.split('/') if p]
             if len(parts) == 5 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'wishlist':
                 return self._delete_wishlist_item(parts[2].upper(), parts[4])

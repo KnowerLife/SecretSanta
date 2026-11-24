@@ -1,4 +1,4 @@
-const CACHE_NAME = 'secret-santa-v27-backend-integration';
+const CACHE_NAME = 'secret-santa-v28-prod-hardening';
 const ASSETS = [
   './',
   './index.html',

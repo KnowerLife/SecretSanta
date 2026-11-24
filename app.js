@@ -226,6 +226,15 @@
       'dash.backendOnline': 'Онлайн',
       'dash.backendOffline': 'Локально',
       'dash.copyLink': 'Скопировать ссылку',
+      'dash.accessTitle': 'Доступ и сессии',
+      'dash.accessSub': 'Приглашение, ссылка и активные сессии',
+      'dash.copyInvite': 'Скопировать invite-ссылку',
+      'dash.refreshSessions': 'Обновить сессии',
+      'dash.noSessions': 'Нет активных сессий или сервер недоступен.',
+      'dash.sessionCurrent': 'текущая',
+      'dash.sessionRevoked': 'отозвана',
+      'dash.revokeSession': 'Отозвать',
+      'dash.sessionRevokedOk': 'Сессия отозвана',
     },
     en: {
       'meta.title': 'Secret Santa — gift exchange organizer',
@@ -387,6 +396,15 @@
       'dash.backendOnline': 'Online',
       'dash.backendOffline': 'Local',
       'dash.copyLink': 'Copy link',
+      'dash.accessTitle': 'Access & sessions',
+      'dash.accessSub': 'Invite link and active sessions',
+      'dash.copyInvite': 'Copy invite link',
+      'dash.refreshSessions': 'Refresh sessions',
+      'dash.noSessions': 'No active sessions or server unavailable.',
+      'dash.sessionCurrent': 'current',
+      'dash.sessionRevoked': 'revoked',
+      'dash.revokeSession': 'Revoke',
+      'dash.sessionRevokedOk': 'Session revoked',
     }
   };
 
@@ -720,6 +738,46 @@
     } catch (e) { console.warn('SSE failed', e); }
   }
 
+  async function loadSessions() {
+    const game = currentGame();
+    const list = $('#sessionsList');
+    const notice = $('#accessNotice');
+    if (!game || !list) return;
+    const sess = roomSession(game.code);
+    if (!sess || !sess.token || !apiState.online) {
+      list.innerHTML = `<li><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
+      if (notice) notice.textContent = '';
+      return;
+    }
+    try {
+      const data = await apiFetch(`/api/rooms/${game.code}/sessions`, { token: sess.token });
+      const sessions = data.sessions || [];
+      if (!sessions.length) {
+        list.innerHTML = `<li><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
+      } else {
+        list.innerHTML = sessions.slice(0, 10).map(s => {
+          const cur = sess.sessionId && s.id === sess.sessionId;
+          const revoked = !!s.revoked_at;
+          const meta = [cur ? t('dash.sessionCurrent') : '', revoked ? t('dash.sessionRevoked') : '', (s.last_seen_at || s.created_at || '').replace('T',' ').replace('Z','')].filter(Boolean).join(' · ');
+          const btn = (!revoked && !cur) ? `<button class="link-btn" data-revoke-sess="${escapeHtml(s.id)}" type="button">${escapeHtml(t('dash.revokeSession'))}</button>` : '';
+          return `<li><span><strong>${escapeHtml((s.user_agent || 'Session').slice(0, 48))}</strong>${meta ? ` <span class="muted small">· ${escapeHtml(meta)}</span>` : ''}</span><span>${btn}</span></li>`;
+        }).join('');
+        $$('[data-revoke-sess]').forEach(btn => btn.onclick = async () => {
+          const sid = btn.dataset.revokeSess;
+          try {
+            await apiFetch(`/api/rooms/${game.code}/sessions/revoke`, { method: 'POST', token: sess.token, body: { sessionId: sid } });
+            toast(t('dash.sessionRevokedOk'));
+            loadSessions();
+          } catch (e) { console.warn(e); toast(e.message || 'Error'); }
+        });
+      }
+      if (notice) notice.textContent = apiState.base ? `API: ${apiState.base}` : '';
+    } catch (e) {
+      list.innerHTML = `<li><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
+      if (notice) notice.textContent = '';
+    }
+  }
+
   async function refreshDashboard() {
     const game = currentGame();
     if (!game) { renderDashboard(); return; }
@@ -731,6 +789,7 @@
         if (apiState.online) {
           await syncRoomFromBackend(code);
           connectSSE(code);
+          loadSessions();
         } else {
           disconnectSSE();
         }
@@ -972,6 +1031,25 @@
       const text = inviteToken ? url.toString() : game.code;
       try { await navigator.clipboard.writeText(text); toast(inviteToken ? t('toast.copiedLink') : t('toast.copied')); } catch { toast(text); }
     });
+
+    const copyInviteBtn = $('#copyInviteBtn');
+    if (copyInviteBtn) copyInviteBtn.addEventListener('click', async () => {
+      const game = currentGame(); if (!game) return;
+      const sess = roomSession(game.code);
+      let inviteToken = sess?.inviteToken;
+      if (!inviteToken && sess?.token && apiState.online) {
+        try {
+          const inv = await apiFetch(`/api/rooms/${game.code}/invites`, { method: 'POST', token: sess.token, body: { label: 'ui', role: 'participant' } });
+          inviteToken = inv.invite?.token;
+          if (inviteToken) { setRoomSession(game.code, { inviteToken }); saveState(); }
+        } catch (e) { console.warn(e); }
+      }
+      const url = new URL(location.href);
+      url.hash = inviteToken ? `join?code=${encodeURIComponent(game.code)}&invite=${encodeURIComponent(inviteToken)}` : `join?code=${encodeURIComponent(game.code)}`;
+      try { await navigator.clipboard.writeText(url.toString()); toast(t('toast.copiedLink')); } catch { toast(url.toString()); }
+    });
+    const refreshSessionsBtn = $('#refreshSessionsBtn');
+    if (refreshSessionsBtn) refreshSessionsBtn.addEventListener('click', () => loadSessions());
 
     $('#myGiftStatus').addEventListener('change', async (e) => {
       const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
