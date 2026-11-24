@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      SECRET_SANTA_SECRET: ${SECRET_SANTA_SECRET:-dev-insecure-change-me}
+      SECRET_SANTA_ALLOW_ORIGIN: ${SECRET_SANTA_ALLOW_ORIGIN:-http://localhost:8766}
+      SECRET_SANTA_DB_PATH: /data/app.db
+    volumes:
+      - secretsanta_data:/data
+    ports:
+      - "8000:8000"
+
+  frontend:
+    image: python:3.12-slim
+    working_dir: /app
+    command: python -m http.server 8766
+    volumes:
+      - ./:/app:ro
+    ports:
+      - "8766:8766"
+    depends_on:
+      - backend
+
+volumes:
+  secretsanta_data:

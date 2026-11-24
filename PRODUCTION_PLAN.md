@@ -2,6 +2,14 @@
 
 Этот документ фиксирует следующий этап развития прототипа `SecretSanta/` (текущий MVP: локальный frontend, `localStorage`, без backend).
 
+## Статус выполнения (обновляется)
+
+- [x] **A (частично)**: Foundation backend (Python stdlib + SQLite) — комнаты, join, auth/session, server-side draw, private assignment, SSE, push scaffold.
+- [x] **B (частично)**: invite/member tokens, session revocation/list, wishlist/gift-status API, draw reset, SSE replay.
+- [x] **E (частично)**: frontend интегрирован с backend (auto-detect, create/join/sync/draw/assignment/wishlist/gift-status/reset, SSE автообновление), localStorage fallback сохранён.
+- [x] **Infra (частично)**: `.env.example`, backend Dockerfile, docker-compose, CI (unittest + JS syntax), новые тесты wishlist.
+- [ ] **B/C/D/F**: полноценный UI управления invite/sessions, rate limiting/CSRF/hardening, email/push delivery worker в production, миграция на `backend/prod_stack` (FastAPI/Postgres/Redis), e2e, observability, deploy.
+
 ## 1. Цели продакшена
 - Мультипользовательские комнаты с реальным присоединением по коду/ссылке.
 - Приватность: назначение «кто кому дарит» недоступно другим участникам и не раскрывается клиентской логике.

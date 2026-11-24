@@ -171,18 +171,29 @@ class Handler(BaseHTTPRequestHandler):
                     member, _ = require_auth_room_member(conn, self, room)
                     members = conn.execute('SELECT * FROM room_members WHERE room_id = ? ORDER BY created_at, rowid', (room['id'],)).fetchall()
                     exclusions = conn.execute('SELECT * FROM exclusions WHERE room_id = ?', (room['id'],)).fetchall()
+                    wish_rows = conn.execute('SELECT id, member_id, text, created_at FROM wishlist_items WHERE room_id = ? ORDER BY created_at, rowid', (room['id'],)).fetchall()
+                    wishes_by_member = {}
+                    for w in wish_rows:
+                        wishes_by_member.setdefault(w['member_id'], []).append({'id': w['id'], 'text': w['text'], 'createdAt': w['created_at']})
                     draw = latest_draw(conn, room['id'])
                     draw_info = None
                     if draw:
                         draw_info = {'id': draw['id'], 'createdAt': draw['created_at'], 'mode': draw['mode'], 'algorithm': draw['algorithm_version']}
+                    member_rows = []
+                    for m in members:
+                        mr = safe_member_row(m)
+                        mr['wishlist'] = wishes_by_member.get(m['id'], [])
+                        member_rows.append(mr)
+                    me_row = safe_member_row(member)
+                    me_row['wishlist'] = wishes_by_member.get(member['id'], [])
                     return self._send_json(200, {
                         'room': {
                             'id': room['id'], 'code': room['code'], 'name': room['name'], 'mode': room['mode'],
                             'budgetMin': room['budget_min'], 'budgetMax': room['budget_max'], 'eventDate': room['event_date'],
                             'theme': room['theme'], 'status': room['status'], 'createdAt': room['created_at'],
                         },
-                        'me': safe_member_row(member),
-                        'members': [safe_member_row(m) for m in members],
+                        'me': me_row,
+                        'members': member_rows,
                         'exclusions': [{'id': e['id'], 'a': e['member_a_id'], 'b': e['member_b_id']} for e in exclusions],
                         'draw': draw_info,
                     })
@@ -254,6 +265,8 @@ class Handler(BaseHTTPRequestHandler):
 
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'draw':
                 return self._run_draw(parts[2].upper(), body)
+            if len(parts) == 5 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'draw' and parts[4] == 'reset':
+                return self._reset_draw(parts[2].upper(), body)
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'exclusions':
                 return self._add_exclusion(parts[2].upper(), body)
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'invites':
@@ -266,7 +279,23 @@ class Handler(BaseHTTPRequestHandler):
                 return self._push_test(parts[2].upper(), body)
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'notifications':
                 return self._enqueue_notification(parts[2].upper(), body)
+            if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'wishlist':
+                return self._add_wishlist_item(parts[2].upper(), body)
+            if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'gift-status':
+                return self._set_gift_status(parts[2].upper(), body)
 
+            raise ApiError(404, 'not_found')
+        except ApiError as e:
+            return self._send_json(e.status, {'ok': False, 'error': e.message, 'details': e.details})
+        except Exception as e:
+            return self._send_json(500, {'ok': False, 'error': 'internal_error', 'details': str(e)})
+
+    def do_DELETE(self):
+        try:
+            path, _ = self._route()
+            parts = [p for p in path.split('/') if p]
+            if len(parts) == 5 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'wishlist':
+                return self._delete_wishlist_item(parts[2].upper(), parts[4])
             raise ApiError(404, 'not_found')
         except ApiError as e:
             return self._send_json(e.status, {'ok': False, 'error': e.message, 'details': e.details})
@@ -576,6 +605,66 @@ class Handler(BaseHTTPRequestHandler):
             conn.execute('INSERT INTO notification_jobs(id,room_id,member_id,channel,kind,payload_json,status,scheduled_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?)',
                          (job_id, room['id'], body.get('memberId'), channel, kind, json_dumps(body.get('payload') or {}), 'pending', body.get('scheduledAt'), now_iso(), now_iso()))
             return self._send_json(202, {'ok': True, 'jobId': job_id, 'status': 'pending'})
+
+    def _add_wishlist_item(self, code, body):
+        text = (body.get('text') or '').strip()
+        if not text:
+            raise ApiError(400, 'text_required')
+        if len(text) > 500:
+            raise ApiError(400, 'text_too_long')
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            item_id = new_id('wish')
+            conn.execute('INSERT INTO wishlist_items(id,room_id,member_id,text,created_at) VALUES (?,?,?,?,?)',
+                         (item_id, room['id'], member['id'], text, now_iso()))
+            emit_room_event(conn, room, 'room.wishlist_updated', member['id'], {'memberId': member['id']})
+            return self._send_json(201, {'ok': True, 'item': {'id': item_id, 'text': text}})
+
+    def _delete_wishlist_item(self, code, item_id):
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            row = conn.execute('SELECT * FROM wishlist_items WHERE id=? AND room_id=?', (item_id, room['id'])).fetchone()
+            if not row:
+                raise ApiError(404, 'wishlist_item_not_found')
+            if row['member_id'] != member['id'] and member['role'] != 'organizer':
+                raise ApiError(403, 'forbidden')
+            conn.execute('DELETE FROM wishlist_items WHERE id=?', (item_id,))
+            emit_room_event(conn, room, 'room.wishlist_updated', member['id'], {'memberId': row['member_id']})
+            return self._send_json(200, {'ok': True})
+
+    def _set_gift_status(self, code, body):
+        status = (body.get('status') or '').strip()
+        if status not in ('none', 'idea', 'bought', 'done'):
+            raise ApiError(400, 'invalid_status')
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            conn.execute('UPDATE room_members SET gift_status=? WHERE id=? AND room_id=?', (status, member['id'], room['id']))
+            emit_room_event(conn, room, 'room.gift_status_updated', member['id'], {'memberId': member['id'], 'giftStatus': status})
+            return self._send_json(200, {'ok': True, 'status': status})
+
+    def _reset_draw(self, code, body):
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            if member['role'] != 'organizer':
+                raise ApiError(403, 'organizer_required')
+            draw = latest_draw(conn, room['id'])
+            if draw:
+                conn.execute('DELETE FROM assignments WHERE draw_run_id=?', (draw['id'],))
+                conn.execute('DELETE FROM draw_runs WHERE id=?', (draw['id'],))
+            emit_room_event(conn, room, 'room.draw_reset', member['id'], {})
+            return self._send_json(200, {'ok': True})
 
     def _handle_sse(self, room, last_event_id=None):
         self.send_response(200)
