@@ -263,6 +263,16 @@
       'dash.exclusionsSame': 'Выберите двух разных участников',
       'dash.exclusionsExists': 'Такое исключение уже есть',
       'dash.exclusionsAdded': 'Исключение добавлено',
+      'dash.chatTitle': 'Анонимный чат',
+      'dash.chatSub': 'Общайтесь тайно с получателем или своим Сантой',
+      'dash.chatToRecipient': 'Моему получателю',
+      'dash.chatToSanta': 'Моему Санте',
+      'dash.chatPlaceholder': 'Напишите анонимное сообщение...',
+      'dash.chatSend': 'Отправить',
+      'dash.chatEmpty': 'Пока нет сообщений.',
+      'dash.chatNoDraw': 'Чат станет доступен после жеребьёвки.',
+      'dash.chatYou': 'Вы',
+      'dash.chatThem': 'Собеседник',
     },
     en: {
       'meta.title': 'Secret Santa — gift exchange organizer',
@@ -461,6 +471,16 @@
       'dash.exclusionsSame': 'Select two different participants',
       'dash.exclusionsExists': 'This exclusion already exists',
       'dash.exclusionsAdded': 'Exclusion added',
+      'dash.chatTitle': 'Anonymous chat',
+      'dash.chatSub': 'Chat secretly with your recipient or your Santa',
+      'dash.chatToRecipient': 'To my recipient',
+      'dash.chatToSanta': 'To my Santa',
+      'dash.chatPlaceholder': 'Write an anonymous message...',
+      'dash.chatSend': 'Send',
+      'dash.chatEmpty': 'No messages yet.',
+      'dash.chatNoDraw': 'Chat becomes available after the draw.',
+      'dash.chatYou': 'You',
+      'dash.chatThem': 'Peer',
     }
   };
 
@@ -589,6 +609,7 @@
   let confirmCb = null;
   let lastFocusBeforeModal = null;
   let quickPairs = [];
+  let chatChannel = 'to_recipient';
   function openConfirm(text, cb) {
     $('#confirmText').textContent = text;
     confirmCb = cb;
@@ -832,7 +853,7 @@
       sse = new EventSource(url);
       sseCode = c;
       const onEvt = () => { if (currentGame()?.code === c) refreshDashboard(); };
-      ['room.draw_completed','room.wishlist_updated','room.gift_status_updated','room.draw_reset','room.member_joined','room.created'].forEach(t => sse.addEventListener(t, onEvt));
+      ['room.draw_completed','room.wishlist_updated','room.gift_status_updated','room.draw_reset','room.member_joined','room.created','room.message'].forEach(t => sse.addEventListener(t, onEvt));
       sse.onerror = () => { /* browser will retry; keep simple */ };
     } catch (e) { console.warn('SSE failed', e); }
   }
@@ -1104,6 +1125,7 @@
       saveState(); input.value = ''; renderDashboard(); toast(t('toast.wishAdded'));
     });
 
+
     $('#drawBtn').addEventListener('click', async () => {
       const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
       ensureGame(game);
@@ -1235,6 +1257,7 @@
       const text = quickPairs.map(p => `${p.santa} → ${p.recipient}`).join('\n');
       try { await navigator.clipboard.writeText(text); toast(t('quick.copied')); } catch { toast(text); }
     });
+
   }
 
   // init

@@ -265,6 +265,11 @@ class Handler(BaseHTTPRequestHandler):
                         }
                     })
 
+            if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'messages':
+                code = parts[2].upper()
+                channel = (query.get('channel') or ['to_recipient'])[0]
+                return self._get_messages(code, channel)
+
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'sessions':
                 code = parts[2].upper()
                 with db_conn() as conn:
@@ -332,6 +337,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self._add_wishlist_item(parts[2].upper(), body)
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'gift-status':
                 return self._set_gift_status(parts[2].upper(), body)
+            if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'messages':
+                return self._send_message(parts[2].upper(), body)
 
             raise ApiError(404, 'not_found')
         except ApiError as e:
@@ -715,6 +722,64 @@ class Handler(BaseHTTPRequestHandler):
                 conn.execute('DELETE FROM draw_runs WHERE id=?', (draw['id'],))
             emit_room_event(conn, room, 'room.draw_reset', member['id'], {})
             return self._send_json(200, {'ok': True})
+
+    def _resolve_message_peer(self, conn, room, member, channel):
+        draw = latest_draw(conn, room['id'])
+        if not draw:
+            raise ApiError(409, 'draw_required')
+        channel = channel if channel in ('to_recipient', 'to_santa') else 'to_recipient'
+        if channel == 'to_recipient':
+            asn = conn.execute('SELECT * FROM assignments WHERE draw_run_id=? AND santa_member_id=?', (draw['id'], member['id'])).fetchone()
+            if not asn:
+                raise ApiError(404, 'assignment_not_found')
+            peer_id = asn['recipient_member_id']
+        else:
+            asn = conn.execute('SELECT * FROM assignments WHERE draw_run_id=? AND recipient_member_id=?', (draw['id'], member['id'])).fetchone()
+            if not asn:
+                raise ApiError(404, 'assignment_not_found')
+            peer_id = asn['santa_member_id']
+        peer = get_member(conn, room['id'], peer_id)
+        if not peer:
+            raise ApiError(404, 'peer_not_found')
+        return draw, peer, channel
+
+    def _get_messages(self, code, channel):
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            draw, peer, channel = self._resolve_message_peer(conn, room, member, channel)
+            rows = conn.execute(
+                '''SELECT id, from_member_id, to_member_id, text, created_at, channel
+                   FROM messages
+                   WHERE room_id=? AND ((from_member_id=? AND to_member_id=?) OR (from_member_id=? AND to_member_id=?))
+                   ORDER BY created_at ASC, rowid ASC LIMIT 200''',
+                (room['id'], member['id'], peer['id'], peer['id'], member['id'])
+            ).fetchall()
+            msgs = [{'id': r['id'], 'fromMe': r['from_member_id'] == member['id'], 'text': r['text'], 'createdAt': r['created_at'], 'channel': r['channel']} for r in rows]
+            return self._send_json(200, {'ok': True, 'channel': channel, 'messages': msgs})
+
+    def _send_message(self, code, body):
+        text = (body.get('text') or '').strip()
+        channel = (body.get('channel') or 'to_recipient').strip()
+        if not text:
+            raise ApiError(400, 'text_required')
+        if len(text) > 1000:
+            raise ApiError(400, 'text_too_long')
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            draw, peer, channel = self._resolve_message_peer(conn, room, member, channel)
+            msg_id = new_id('msg')
+            conn.execute(
+                'INSERT INTO messages(id,room_id,draw_run_id,from_member_id,to_member_id,channel,text,created_at) VALUES (?,?,?,?,?,?,?,?)',
+                (msg_id, room['id'], draw['id'], member['id'], peer['id'], channel, text, now_iso())
+            )
+            emit_room_event(conn, room, 'room.message', member['id'], {'messageId': msg_id, 'toMemberId': peer['id']})
+            return self._send_json(201, {'ok': True, 'message': {'id': msg_id, 'fromMe': True, 'text': text, 'createdAt': now_iso(), 'channel': channel}})
 
     def _handle_sse(self, room, last_event_id=None):
         self.send_response(200)

@@ -6,7 +6,7 @@
 
 - [x] **A. Foundation backend** — реализован в `backend/app/*` (Python stdlib + SQLite)
 - [x] **B. Auth / Access / Sessions** — реализовано (invite/member tokens, sessions, revoke, rate limit basic)
-- [x] **C. Realtime / Notifications scaffold** — SSE + room_events replay, push scaffold, notification jobs; worker/provider hooks подготовлены
+- [x] **C. Realtime / Notifications scaffold** — SSE + room_events replay, push scaffold, notification jobs; worker/provider hooks подготовлены; анонимный чат (MVP)
 - [x] **D. PWA / Offline** — manifest, SW cache versioning, offline shell fallback
 - [x] **E. Frontend integration** — online backend mode + localStorage fallback, SSE auto-refresh
 - [x] **F. CI / Docker / Tests / Docs** — CI, docker-compose, env example, unit/e2e security tests, README/plan updated

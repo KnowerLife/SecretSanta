@@ -1,4 +1,4 @@
-const CACHE_NAME = 'secret-santa-v31-organizer-progress';
+const CACHE_NAME = 'secret-santa-v32-anonymous-chat';
 const ASSETS = [
   './',
   './index.html',
