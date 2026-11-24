@@ -235,6 +235,16 @@
       'dash.sessionRevoked': 'отозвана',
       'dash.revokeSession': 'Отозвать',
       'dash.sessionRevokedOk': 'Сессия отозвана',
+      'dash.exclusionsTitle': 'Исключения',
+      'dash.exclusionsSub': 'Кто не должен дарить кому',
+      'dash.exclusionsAdd': 'Добавить исключение',
+      'dash.exclusionsNone': 'Исключений нет.',
+      'dash.exclusionsA': 'Участник А',
+      'dash.exclusionsB': 'Участник Б',
+      'dash.exclusionsRemove': 'Удалить',
+      'dash.exclusionsSame': 'Выберите двух разных участников',
+      'dash.exclusionsExists': 'Такое исключение уже есть',
+      'dash.exclusionsAdded': 'Исключение добавлено',
     },
     en: {
       'meta.title': 'Secret Santa — gift exchange organizer',
@@ -405,6 +415,16 @@
       'dash.sessionRevoked': 'revoked',
       'dash.revokeSession': 'Revoke',
       'dash.sessionRevokedOk': 'Session revoked',
+      'dash.exclusionsTitle': 'Exclusions',
+      'dash.exclusionsSub': 'Who should not gift to whom',
+      'dash.exclusionsAdd': 'Add exclusion',
+      'dash.exclusionsNone': 'No exclusions.',
+      'dash.exclusionsA': 'Participant A',
+      'dash.exclusionsB': 'Participant B',
+      'dash.exclusionsRemove': 'Remove',
+      'dash.exclusionsSame': 'Select two different participants',
+      'dash.exclusionsExists': 'This exclusion already exists',
+      'dash.exclusionsAdded': 'Exclusion added',
     }
   };
 
@@ -464,6 +484,7 @@
     game.participants = game.participants || [];
     game.assignments = game.assignments || {};
     game.revealed = game.revealed || {};
+    game.exclusions = game.exclusions || [];
     game.participants.forEach(p => { p.wishlist = p.wishlist || []; if (!p.giftStatus) p.giftStatus = 'none'; });
   }
   Object.values(state.games).forEach(ensureGame);
@@ -499,15 +520,20 @@
     if (view === 'dashboard') { renderDashboard(); refreshDashboard(); }
   }
 
-  function derangement(participants) {
+  function isExcluded(exclusions, a, b) {
+    return (exclusions || []).some(e => (e.a === a && e.b === b) || (e.a === b && e.b === a));
+  }
+  function derangement(participants, exclusions = []) {
     const ids = participants.map(p => p.id);
-    if (ids.length < 3) return null;
-    for (let attempt = 0; attempt < 1000; attempt++) {
+    if (ids.length < 2) return null;
+    for (let attempt = 0; attempt < 2000; attempt++) {
       const recv = ids.slice();
       for (let i = recv.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [recv[i], recv[j]] = [recv[j], recv[i]]; }
-      if (ids.every((id, i) => id !== recv[i])) {
-        const map = {}; ids.forEach((id, i) => map[id] = recv[i]); return map;
+      let ok = true;
+      for (let i = 0; i < ids.length; i++) {
+        if (ids[i] === recv[i] || isExcluded(exclusions, ids[i], recv[i])) { ok = false; break; }
       }
+      if (ok) { const map = {}; ids.forEach((id, i) => map[id] = recv[i]); return map; }
     }
     return null;
   }
@@ -605,8 +631,38 @@
     $$('[data-rm]').forEach(btn => btn.onclick = () => {
       const id = btn.dataset.rm; const p = game.participants.find(x => x.id === id);
       game.participants = game.participants.filter(x => x.id !== id);
+      game.exclusions = (game.exclusions || []).filter(e => e.a !== id && e.b !== id);
       saveState(); renderDashboard(); toast(p ? t('toast.participantRemoved', { name: p.name }) : t('toast.participantRemovedSimple'));
     });
+
+    // exclusions
+    const exList = $('#exclusionsList');
+    const exForm = $('#exclusionForm');
+    const exA = $('#exclusionA');
+    const exB = $('#exclusionB');
+    if (exList) {
+      const nameById = new Map(game.participants.map(p => [p.id, p.name]));
+      const ex = game.exclusions || [];
+      exList.innerHTML = ex.length ? ex.map(e => {
+        const a = nameById.get(e.a) || e.a;
+        const b = nameById.get(e.b) || e.b;
+        const canRm = !drawn;
+        const rm = canRm ? `<button class="link-btn" data-rm-ex="${escapeHtml(e.a)}|${escapeHtml(e.b)}" type="button">${escapeHtml(t('dash.exclusionsRemove'))}</button>` : '';
+        return `<li><span>${escapeHtml(a)} ↔ ${escapeHtml(b)}</span><span>${rm}</span></li>`;
+      }).join('') : `<li><span class="muted small">${escapeHtml(t('dash.exclusionsNone'))}</span></li>`;
+      $$('[data-rm-ex]').forEach(btn => btn.onclick = () => {
+        const [a,b] = String(btn.dataset.rmEx || '').split('|');
+        game.exclusions = (game.exclusions || []).filter(e => !((e.a===a&&e.b===b)||(e.a===b&&e.b===a)));
+        saveState(); renderDashboard();
+      });
+    }
+    if (exA && exB) {
+      const opts = `<option value="">—</option>` + game.participants.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}</option>`).join('');
+      const va = exA.value; const vb = exB.value;
+      exA.innerHTML = opts; exB.innerHTML = opts;
+      if (va) exA.value = va; if (vb) exB.value = vb;
+    }
+    if (exForm) exForm.classList.toggle('hidden', drawn);
 
     // assignment
     if (drawn && game.assignments[me.id] && revealed) {
@@ -670,6 +726,7 @@
       theme: data.room?.theme || prev.theme || '',
       mode: data.room?.mode || prev.mode || 'classic',
       participants: members,
+      exclusions: Array.isArray(data.exclusions) ? data.exclusions : (prev.exclusions || []),
       assignments: prev.assignments || {},
       revealed: prev.revealed || {},
       backend: true,
@@ -845,7 +902,7 @@
             const game = {
               code, name, budgetMin, budgetMax, eventDate, theme,
               participants: [{ id: data.member.id, name: orgName, isOrganizer: true, wishlist: [], giftStatus: 'none' }],
-              assignments: {}, revealed: {}, createdAt: Date.now(), backend: true,
+              assignments: {}, revealed: {}, exclusions: [], createdAt: Date.now(), backend: true,
             };
             state.games[code] = game;
             state.session = { gameCode: code, participantId: data.member.id };
@@ -863,7 +920,7 @@
         }
         let code = makeCode(); while (state.games[code]) code = makeCode();
         const organizer = { id: uid('p'), name: orgName, isOrganizer: true, wishlist: [], giftStatus: 'none' };
-        const game = { code, name, budgetMin, budgetMax, eventDate, theme, participants: [organizer], assignments: {}, revealed: {}, createdAt: Date.now(), backend: false };
+        const game = { code, name, budgetMin, budgetMax, eventDate, theme, participants: [organizer], assignments: {}, revealed: {}, exclusions: [], createdAt: Date.now(), backend: false };
         state.games[code] = game;
         state.session = { gameCode: code, participantId: organizer.id };
         saveState();
@@ -904,7 +961,7 @@
             });
             // seed local game; then sync full state
             if (!state.games[rcode]) {
-              state.games[rcode] = { code: rcode, name: data.room.name, participants: [], assignments: {}, revealed: {}, createdAt: Date.now(), backend: true };
+              state.games[rcode] = { code: rcode, name: data.room.name, participants: [], assignments: {}, revealed: {}, exclusions: [], createdAt: Date.now(), backend: true };
             }
             state.session = { gameCode: rcode, participantId: data.member.id };
             saveState();
@@ -949,6 +1006,28 @@
       saveState(); input.value = ''; renderDashboard(); toast(t('toast.participantAdded'));
     });
 
+    const exclusionForm = $('#exclusionForm');
+    if (exclusionForm) exclusionForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
+      const a = $('#exclusionA').value; const b = $('#exclusionB').value;
+      if (!a || !b || a === b) { toast(t('dash.exclusionsSame')); return; }
+      const [x, y] = [a, b].sort();
+      if ((game.exclusions || []).some(e => (e.a===x&&e.b===y)||(e.a===y&&e.b===x))) { toast(t('dash.exclusionsExists')); return; }
+      const sess = roomSession(game.code);
+      if (sess && sess.token && game.backend) {
+        try {
+          await apiFetch(`/api/rooms/${game.code}/exclusions`, { method: 'POST', token: sess.token, body: { a: x, b: y } });
+          await syncRoomFromBackend(game.code);
+          renderDashboard(); toast(t('dash.exclusionsAdded'));
+          return;
+        } catch (err) { console.warn(err); toast(err.message || t('toast.drawFail')); return; }
+      }
+      game.exclusions = game.exclusions || [];
+      game.exclusions.push({ id: uid('ex'), a: x, b: y });
+      saveState(); renderDashboard(); toast(t('dash.exclusionsAdded'));
+    });
+
     $('#wishlistForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
@@ -986,7 +1065,7 @@
         }
         return;
       }
-      const map = derangement(game.participants);
+      const map = derangement(game.participants, game.exclusions || []);
       if (!map) { toast(t('toast.drawFail')); return; }
       game.assignments = map; game.revealed = {};
       saveState(); renderDashboard(); toast(t('toast.drawDone'));

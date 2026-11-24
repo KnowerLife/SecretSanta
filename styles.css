@@ -956,7 +956,10 @@ select {
   align-items: stretch;
 }
 .inline-form input { flex: 1 1 200px; min-width: 0; }
+.inline-form select { flex: 1 1 160px; min-width: 0; padding: 0.72rem 0.9rem; border-radius: 12px; border: 1px solid var(--border); background: #fff; color: var(--text); font: inherit; }
 .inline-form .btn { flex-shrink: 0; }
+.exclusions-block { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(16,35,71,.08); }
+.exclusions-block .wishlist-title { margin-bottom: 2px; }
 .add-participant-form {
   margin-top: 0.25rem;
   padding-top: 1rem;

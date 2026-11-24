@@ -364,6 +364,19 @@
                   <input id="addName" type="text" placeholder="Имя участника" maxlength="40" data-i18n-placeholder="dash.participantsPh" />
                   <button class="btn btn-secondary" type="submit" data-i18n="dash.participantsAdd">Добавить</button>
                 </form>
+
+                <div class="exclusions-block" id="exclusionsBlock">
+                  <h3 class="wishlist-title" data-i18n="dash.exclusionsTitle">Исключения</h3>
+                  <p class="muted small" data-i18n="dash.exclusionsSub">Кто не должен дарить кому</p>
+                  <ul id="exclusionsList" class="list"></ul>
+                  <form id="exclusionForm" class="inline-form" style="margin-top:10px;">
+                    <label class="sr-only" for="exclusionA" data-i18n="dash.exclusionsA">Участник А</label>
+                    <select id="exclusionA"></select>
+                    <label class="sr-only" for="exclusionB" data-i18n="dash.exclusionsB">Участник Б</label>
+                    <select id="exclusionB"></select>
+                    <button class="btn btn-secondary" type="submit" data-i18n="dash.exclusionsAdd">Добавить исключение</button>
+                  </form>
+                </div>
               </div>
             </article>
 
