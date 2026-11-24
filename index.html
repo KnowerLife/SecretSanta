@@ -466,6 +466,30 @@
                 <p id="accessNotice" class="muted small"></p>
               </div>
             </article>
+
+            <article class="snow-card panel" id="chatPanel">
+              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
+              <div class="panel__body">
+                <div class="panel-head">
+                  <div class="panel-icon panel-icon--gold" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                  <div>
+                    <h2 data-i18n="dash.chatTitle">Анонимный чат</h2>
+                    <p class="muted small" data-i18n="dash.chatSub">Общайтесь тайно с получателем или своим Сантой</p>
+                  </div>
+                </div>
+                <div class="chat-tabs">
+                  <button id="chatTabRecipient" class="btn btn-secondary btn-sm is-active" type="button" data-i18n="dash.chatToRecipient">Моему получателю</button>
+                  <button id="chatTabSanta" class="btn btn-ghost btn-sm" type="button" data-i18n="dash.chatToSanta">Моему Санте</button>
+                </div>
+                <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+                <form id="chatForm" class="inline-form" style="margin-top:10px;">
+                  <label class="sr-only" for="chatInput">Message</label>
+                  <input id="chatInput" type="text" maxlength="500" placeholder="Напишите анонимное сообщение..." data-i18n-placeholder="dash.chatPlaceholder" />
+                  <button class="btn btn-primary" type="submit" data-i18n="dash.chatSend">Отправить</button>
+                </form>
+                <p id="chatNotice" class="muted small"></p>
+              </div>
+            </article>
           </div>
 
           <p id="dashNotice" class="notice hidden" role="status" aria-live="polite"></p>
