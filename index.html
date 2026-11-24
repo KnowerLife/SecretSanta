@@ -49,6 +49,7 @@
       <nav class="nav" aria-label="Основная навигация" data-i18n-aria-label="nav.aria">
         <a href="#home" data-nav="home" data-i18n="nav.home">Главная</a>
         <a href="#create" data-nav="create" data-i18n="nav.create">Создать игру</a>
+        <a href="#quick" data-nav="quick" data-i18n="nav.quick">Быстрая жеребьёвка</a>
         <a href="#join" data-nav="join" data-i18n="nav.join">Войти по коду</a>
         <a href="#dashboard" data-nav="dashboard" class="nav__pill" data-i18n="nav.dashboard">Моя игра</a>
         <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
@@ -254,6 +255,45 @@
             <p id="joinError" class="error" role="alert" aria-live="polite"></p>
           </div>
         </form>
+      </div>
+    </section>
+
+    <!-- QUICK DRAW -->
+    <section id="view-quick" class="view">
+      <div class="container form-page">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="quick.kicker">Быстрый инструмент</p>
+          <h1 data-i18n="quick.title">Быстрая жеребьёвка</h1>
+          <p class="section-sub" data-i18n="quick.sub">Введите имена участников — каждый получит случайного получателя. Без регистрации и без комнаты.</p>
+        </div>
+        <div class="snow-card form-card">
+          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
+          <div class="form-card__body">
+            <div class="field">
+              <label for="quickNames" data-i18n="quick.namesLabel">Имена участников</label>
+              <textarea id="quickNames" rows="8" placeholder="Каждое имя с новой строки" data-i18n-placeholder="quick.namesPh"></textarea>
+              <p class="field-hint" data-i18n="quick.namesHint">Минимум 3 участника. Пустые строки игнорируются.</p>
+            </div>
+            <div class="form-actions">
+              <button id="quickDrawBtn" class="btn btn-primary" type="button" data-i18n="quick.draw">Провести жеребьёвку</button>
+              <button id="quickResetBtn" class="btn btn-ghost" type="button" data-i18n="quick.reset">Очистить</button>
+            </div>
+            <p id="quickError" class="error" role="alert" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="snow-card form-card" style="margin-top:16px;">
+          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
+          <div class="form-card__body">
+            <div class="panel-head">
+              <div>
+                <h2 data-i18n="quick.resultTitle">Результат</h2>
+                <p class="muted small" id="quickResultMeta"></p>
+              </div>
+              <button id="quickCopyBtn" class="btn btn-secondary btn-sm" type="button" data-i18n="quick.copy">Скопировать результат</button>
+            </div>
+            <ul id="quickResultList" class="list"></ul>
+          </div>
+        </div>
       </div>
     </section>
 

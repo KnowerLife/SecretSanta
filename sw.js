@@ -1,4 +1,4 @@
-const CACHE_NAME = 'secret-santa-v29-exclusions-ux';
+const CACHE_NAME = 'secret-santa-v30-quick-draw';
 const ASSETS = [
   './',
   './index.html',
