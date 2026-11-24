@@ -1,4 +1,4 @@
-const CACHE_NAME = 'secret-santa-v30-quick-draw';
+const CACHE_NAME = 'secret-santa-v31-organizer-progress';
 const ASSETS = [
   './',
   './index.html',
