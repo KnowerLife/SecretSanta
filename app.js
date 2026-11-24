@@ -2,7 +2,7 @@
   const STORAGE_KEY = 'secret-santa-simple-v1';
   const LANG_KEY = 'secret-santa-lang';
   const API_BASE_KEY = 'secret-santa-api-base';
-  const views = ['home', 'create', 'join', 'dashboard'];
+  const views = ['home', 'create', 'join', 'quick', 'dashboard'];
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
@@ -77,6 +77,7 @@
       'brand.name': '<span class="brand__word">Тайный</span> <span class="brand__word brand__word--accent">Санта</span>',
       'nav.home': 'Главная',
       'nav.create': 'Создать игру',
+      'nav.quick': 'Быстрая жеребьёвка',
       'nav.join': 'Войти по коду',
       'nav.dashboard': 'Моя игра',
       'nav.lang': 'EN',
@@ -138,6 +139,22 @@
       'join.namePh': 'Например: Анна',
       'join.submit': 'Войти в игру',
       'join.cancel': 'Отмена',
+      'quick.kicker': 'Быстрый инструмент',
+      'quick.title': 'Быстрая жеребьёвка',
+      'quick.sub': 'Введите имена участников — каждый получит случайного получателя. Без регистрации и без комнаты.',
+      'quick.namesLabel': 'Имена участников',
+      'quick.namesPh': 'Каждое имя с новой строки\nНапример:\nАнна\nБорис\nВика',
+      'quick.namesHint': 'Минимум 3 участника. Пустые строки игнорируются.',
+      'quick.draw': 'Провести жеребьёвку',
+      'quick.reset': 'Очистить',
+      'quick.resultTitle': 'Результат',
+      'quick.resultEmpty': 'Здесь появятся пары после жеребьёвки.',
+      'quick.copy': 'Скопировать результат',
+      'quick.copied': 'Результат скопирован',
+      'quick.errMin': 'Нужно минимум 3 участника',
+      'quick.errDup': 'Имена должны быть уникальными',
+      'quick.errFail': 'Не удалось провести жеребьёвку',
+      'quick.pair': '{santa} → {recipient}',
       'dash.emptyKicker': 'Моя игра',
       'dash.emptyTitle': 'Здесь появится ваша игра',
       'dash.emptySub': 'Создайте новую игру или войдите по коду, чтобы начать обмен подарками.',
@@ -257,6 +274,7 @@
       'brand.name': '<span class="brand__word">Secret</span> <span class="brand__word brand__word--accent">Santa</span>',
       'nav.home': 'Home',
       'nav.create': 'Create game',
+      'nav.quick': 'Quick draw',
       'nav.join': 'Join by code',
       'nav.dashboard': 'My game',
       'nav.lang': 'RU',
@@ -318,6 +336,22 @@
       'join.namePh': 'For example: Anna',
       'join.submit': 'Join game',
       'join.cancel': 'Cancel',
+      'quick.kicker': 'Quick tool',
+      'quick.title': 'Quick draw',
+      'quick.sub': 'Enter participant names — everyone gets a random recipient. No sign-up, no room.',
+      'quick.namesLabel': 'Participant names',
+      'quick.namesPh': 'One name per line\nFor example:\nAnna\nBoris\nVika',
+      'quick.namesHint': 'At least 3 participants. Empty lines are ignored.',
+      'quick.draw': 'Run draw',
+      'quick.reset': 'Clear',
+      'quick.resultTitle': 'Result',
+      'quick.resultEmpty': 'Pairs will appear here after the draw.',
+      'quick.copy': 'Copy result',
+      'quick.copied': 'Result copied',
+      'quick.errMin': 'At least 3 participants are needed',
+      'quick.errDup': 'Names must be unique',
+      'quick.errFail': 'Could not run the draw',
+      'quick.pair': '{santa} → {recipient}',
       'dash.emptyKicker': 'My game',
       'dash.emptyTitle': 'Your game will appear here',
       'dash.emptySub': 'Create a new game or join by code to start the gift exchange.',
@@ -451,6 +485,7 @@
     const langBtn = $('#langToggle');
     if (langBtn) { langBtn.textContent = t('nav.lang'); langBtn.setAttribute('aria-label', t('nav.langAria')); }
     renderDashboard();
+    renderQuickResult();
   }
 
   function uid(prefix = 'id') { return prefix + '_' + Math.random().toString(36).slice(2, 10); }
@@ -551,6 +586,7 @@
 
   let confirmCb = null;
   let lastFocusBeforeModal = null;
+  let quickPairs = [];
   function openConfirm(text, cb) {
     $('#confirmText').textContent = text;
     confirmCb = cb;
@@ -859,6 +895,22 @@
     renderDashboard();
   }
 
+  function renderQuickResult() {
+    const list = $('#quickResultList');
+    const meta = $('#quickResultMeta');
+    const copyBtn = $('#quickCopyBtn');
+    if (!list) return;
+    if (!quickPairs.length) {
+      list.innerHTML = `<li><span class="muted small">${escapeHtml(t('quick.resultEmpty'))}</span></li>`;
+      if (meta) meta.textContent = '';
+      if (copyBtn) copyBtn.disabled = true;
+      return;
+    }
+    list.innerHTML = quickPairs.map(p => `<li><span><strong>${escapeHtml(p.santa)}</strong> → ${escapeHtml(p.recipient)}</span></li>`).join('');
+    if (meta) meta.textContent = `${quickPairs.length}`;
+    if (copyBtn) copyBtn.disabled = false;
+  }
+
   function wire() {
     $$('[data-nav]').forEach(el => el.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1148,6 +1200,34 @@
         e.preventDefault();
         closeConfirm();
       }
+    });
+
+    const quickDrawBtn = $('#quickDrawBtn');
+    const quickResetBtn = $('#quickResetBtn');
+    const quickCopyBtn = $('#quickCopyBtn');
+    if (quickDrawBtn) quickDrawBtn.addEventListener('click', () => {
+      const err = $('#quickError'); if (err) err.textContent = '';
+      const raw = ($('#quickNames')?.value || '').split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+      const names = raw.map(s => s.replace(/\s+/g, ' '));
+      const seen = new Set();
+      for (const n of names) { const k = n.toLowerCase(); if (seen.has(k)) { if (err) err.textContent = t('quick.errDup'); return; } seen.add(k); }
+      if (names.length < 3) { if (err) err.textContent = t('quick.errMin'); return; }
+      const participants = names.map((name, i) => ({ id: 'q' + i, name }));
+      const map = derangement(participants, []);
+      if (!map) { if (err) err.textContent = t('quick.errFail'); return; }
+      quickPairs = participants.map(p => ({ santa: p.name, recipient: participants.find(r => r.id === map[p.id])?.name || '' }));
+      renderQuickResult();
+    });
+    if (quickResetBtn) quickResetBtn.addEventListener('click', () => {
+      quickPairs = [];
+      const qn = $('#quickNames'); if (qn) qn.value = '';
+      const err = $('#quickError'); if (err) err.textContent = '';
+      renderQuickResult();
+    });
+    if (quickCopyBtn) quickCopyBtn.addEventListener('click', async () => {
+      if (!quickPairs.length) return;
+      const text = quickPairs.map(p => `${p.santa} → ${p.recipient}`).join('\n');
+      try { await navigator.clipboard.writeText(text); toast(t('quick.copied')); } catch { toast(text); }
     });
   }
 
