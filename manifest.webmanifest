@@ -1,0 +1,19 @@
+{
+  "name": "Тайный Санта",
+  "short_name": "Тайный Санта",
+  "description": "Простой и уютный способ организовать обмен подарками",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#A3CEFD",
+  "theme_color": "#A3CEFD",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
