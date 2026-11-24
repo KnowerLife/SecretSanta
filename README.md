@@ -105,7 +105,7 @@ http://localhost:8766
 
 A modern web app for organizing a Secret Santa gift exchange: create a room, invite participants with a code, collect gift wishes, and run a fair draw. The interface features a winter holiday style, supports **RU/EN**, and works without registration.
 
-![Secret Santa home screen](docs/screenshots/home.jpg)
+![Secret Santa home screen](docs/screenshots/home-en.jpg)
 
 ## Features
 
@@ -123,7 +123,7 @@ A modern web app for organizing a Secret Santa gift exchange: create a room, inv
 
 | Home | Create game | Game dashboard |
 |---|---|---|
-| ![Home page](docs/screenshots/home.jpg) | ![Create game](docs/screenshots/create.jpg) | ![Game dashboard](docs/screenshots/dashboard.jpg) |
+| ![Home page](docs/screenshots/home-en.jpg) | ![Create game](docs/screenshots/create-en.jpg) | ![Game dashboard](docs/screenshots/dashboard-en.jpg) |
 
 ## Quick Start
 
