@@ -83,7 +83,12 @@
       'nav.offline': 'Нет соединения — игра доступна офлайн, сообщения отправятся позже',
       'nav.online': 'Соединение восстановлено',
       'nav.lang': 'EN',
-      'nav.langAria': 'Switch to English',
+      'nav.langAria': 'EN — Switch to English',
+      'nav.installAria': 'Установить приложение',
+      'theme.switch': 'Сменить тему',
+      'theme.winter': 'Тема: Зима',
+      'theme.midnight': 'Тема: Ночь',
+      'theme.cozy': 'Тема: Уют',
       'hero.eyebrow': 'Новогодний обмен подарками',
       'hero.title': '<span class="brand__word">Тайный</span> <span class="brand__word brand__word--accent">Санта</span>',
       'hero.lead': 'Организуйте обмен подарками легко и приятно: создайте игру, пригласите участников по коду и проведите честную жеребьёвку. Каждый узнает только своего получателя.',
@@ -91,10 +96,10 @@
       'hero.ctaJoin': 'Войти по коду',
       'hero.ctaDemo': 'Посмотреть демо',
       'hero.note': 'Бесплатно · Без регистрации · Данные сохраняются в вашем браузере',
-      'hero.trust.1': '🔒 Приватная жеребьёвка',
-      'hero.trust.2': '💬 Анонимный чат',
-      'hero.trust.3': '📦 Адрес и анти-пожелания',
-      'hero.trust.4': '⚡ Демо за 1 клик',
+      'hero.trust.1': 'Приватная жеребьёвка',
+      'hero.trust.2': 'Анонимный чат',
+      'hero.trust.3': 'Адрес и анти-пожелания',
+      'hero.trust.4': 'Демо за 1 клик',
       'modes.kicker': 'Выберите формат',
       'modes.title': 'Как хотите начать?',
       'modes.sub': 'Полная игра с комнатой, быстрая жеребьёвка или демо для знакомства.',
@@ -234,7 +239,11 @@
       'quick.draw': 'Провести жеребьёвку',
       'quick.reset': 'Очистить',
       'quick.resultTitle': 'Результат',
+      'quick.resultEmptyTitle': 'Пары появятся здесь',
       'quick.resultEmpty': 'Здесь появятся пары после жеребьёвки.',
+      'quick.resultMetaOne': '{n} пара',
+      'quick.resultMetaFew': '{n} пары',
+      'quick.resultMetaMany': '{n} пар',
       'quick.copy': 'Скопировать результат',
       'quick.csv': 'CSV',
       'quick.print': 'Печать',
@@ -242,6 +251,7 @@
       'quick.personalKicker': 'Ваша персональная ссылка',
       'quick.personalLabel': 'Вы дарите',
       'quick.personalNote': 'Эту ссылку можно отправить только этому участнику — другие пары в ней не видны.',
+      'quick.personalWarning': 'Ссылка лишь скрывает пары от случайного взгляда — отправляйте её только адресату.',
       'quick.personalCopy': 'Скопировать мою ссылку',
       'quick.personalHello': 'Привет, {name}!',
       'quick.linkCopied': 'Персональная ссылка скопирована',
@@ -344,8 +354,15 @@
       'footer.game': 'Игра',
       'footer.sections': 'Разделы',
       'footer.how': 'Как это работает',
+      'footer.installTitle': 'Установите на главный экран',
+      'footer.installText': 'Открывайте игру в один тап, даже без сети.',
+      'footer.install': 'Установить приложение',
       'footer.copy': '© Тайный Санта',
       'footer.made': 'Сделано с заботой о празднике',
+      'install.ios': 'В Safari: «Поделиться» → «На главный экран».',
+      'install.generic': 'Установите приложение через меню браузера.',
+      'install.ready': 'Нажмите «Установить» — приложение появится на главном экране.',
+      'install.done': 'Приложение установлено',
       'toast.created': 'Игра создана',
       'toast.joined': 'Вы вошли в игру',
       'toast.participantAdded': 'Участник добавлен',
@@ -382,7 +399,7 @@
       'dash.inviteCopy': 'Скопировать текст',
       'dash.inviteGreeting': 'Привет! Приглашаю тебя в Тайный Санта «{name}».',
       'dash.inviteBudget': 'Бюджет подарка: {min}–{max}.',
-      'dash.inviteDate': 'Дата обмена: {date}.',
+      'dash.inviteDate': 'Дата обмена: {date}',
       'dash.inviteJoin': 'Присоединяйся по ссылке: {url}',
       'dash.inviteCode': 'Код комнаты: {code}.',
       'dash.copyInvite': 'Скопировать invite-ссылку',
@@ -418,10 +435,10 @@
       'dash.activityEmpty': 'Событий пока нет.',
       'dash.activityDemo': 'Демо-режим: события из локальной игры',
       'dash.evt.created': 'Игра «{name}» создана',
-      'dash.evt.joined': '{name} присоединился к игре',
-      'dash.evt.wishlist': '{name} обновил вишлист',
-      'dash.evt.status': '{name} изменил статус подарка: {status}',
-      'dash.evt.profile': '{name} обновил профиль',
+      'dash.evt.joined': 'Участник {name} присоединился к игре',
+      'dash.evt.wishlist': '{name}: обновлён вишлист',
+      'dash.evt.status': '{name}: статус подарка — {status}',
+      'dash.evt.profile': '{name}: профиль обновлён',
       'dash.evt.exclusionAdded': 'Добавлено исключение',
       'dash.evt.exclusionRemoved': 'Удалено исключение',
       'dash.evt.groupAdded': 'Создана группа «{name}»',
@@ -442,6 +459,7 @@
       'dash.chatSend': 'Отправить',
       'dash.chatEmpty': 'Пока нет сообщений.',
       'dash.chatNoDraw': 'Чат станет доступен после жеребьёвки.',
+      'dash.chatUnavailable': 'Чат откроется после подключения к серверу',
       'dash.chatYou': 'Вы',
       'dash.chatThem': 'Собеседник',
     },
@@ -462,7 +480,12 @@
       'nav.offline': 'You are offline — the game still works, messages will be sent later',
       'nav.online': 'Back online',
       'nav.lang': 'RU',
-      'nav.langAria': 'Переключить на русский',
+      'nav.langAria': 'RU — Switch to Russian',
+      'nav.installAria': 'Install app',
+      'theme.switch': 'Switch theme',
+      'theme.winter': 'Theme: Winter',
+      'theme.midnight': 'Theme: Midnight',
+      'theme.cozy': 'Theme: Cozy',
       'hero.eyebrow': 'Holiday gift exchange',
       'hero.title': '<span class="brand__word">Secret</span> <span class="brand__word brand__word--accent">Santa</span>',
       'hero.lead': 'Organize a gift exchange easily and warmly: create a game, invite participants with a code, and run a fair draw. Everyone learns only their recipient.',
@@ -470,10 +493,10 @@
       'hero.ctaJoin': 'Join by code',
       'hero.ctaDemo': 'View demo',
       'hero.note': 'Free · No sign-up · Data stays in your browser',
-      'hero.trust.1': '🔒 Private draw',
-      'hero.trust.2': '💬 Anonymous chat',
-      'hero.trust.3': '📦 Address & anti-wishes',
-      'hero.trust.4': '⚡ 1-click demo',
+      'hero.trust.1': 'Private draw',
+      'hero.trust.2': 'Anonymous chat',
+      'hero.trust.3': 'Address & anti-wishes',
+      'hero.trust.4': '1-click demo',
       'modes.kicker': 'Choose a format',
       'modes.title': 'How do you want to start?',
       'modes.sub': 'A full room, a quick draw, or a demo to explore the experience.',
@@ -613,7 +636,10 @@
       'quick.draw': 'Run draw',
       'quick.reset': 'Clear',
       'quick.resultTitle': 'Result',
+      'quick.resultEmptyTitle': 'Pairs will appear here',
       'quick.resultEmpty': 'Pairs will appear here after the draw.',
+      'quick.resultMetaOne': '{n} pair',
+      'quick.resultMetaMany': '{n} pairs',
       'quick.copy': 'Copy result',
       'quick.csv': 'CSV',
       'quick.print': 'Print',
@@ -621,6 +647,7 @@
       'quick.personalKicker': 'Your personal link',
       'quick.personalLabel': 'You are gifting',
       'quick.personalNote': 'Send this link only to this participant — other pairs are not visible in it.',
+      'quick.personalWarning': 'The link only hides pairs from a casual glance — send it only to the intended person.',
       'quick.personalCopy': 'Copy my link',
       'quick.personalHello': 'Hi, {name}!',
       'quick.linkCopied': 'Personal link copied',
@@ -723,8 +750,15 @@
       'footer.game': 'Game',
       'footer.sections': 'Sections',
       'footer.how': 'How it works',
+      'footer.installTitle': 'Add it to your home screen',
+      'footer.installText': 'Open the game in one tap, even offline.',
+      'footer.install': 'Install app',
       'footer.copy': '© Secret Santa',
       'footer.made': 'Made with holiday care',
+      'install.ios': 'In Safari: Share → Add to Home Screen.',
+      'install.generic': 'Use your browser menu to install the app.',
+      'install.ready': 'Tap Install to add the app to your home screen.',
+      'install.done': 'App installed',
       'toast.created': 'Game created',
       'toast.joined': 'You joined the game',
       'toast.participantAdded': 'Participant added',
@@ -761,7 +795,7 @@
       'dash.inviteCopy': 'Copy text',
       'dash.inviteGreeting': 'Hi! I invite you to the Secret Santa game “{name}”.',
       'dash.inviteBudget': 'Gift budget: {min}–{max}.',
-      'dash.inviteDate': 'Exchange date: {date}.',
+      'dash.inviteDate': 'Exchange date: {date}',
       'dash.inviteJoin': 'Join here: {url}',
       'dash.inviteCode': 'Room code: {code}.',
       'dash.copyInvite': 'Copy invite link',
@@ -821,6 +855,7 @@
       'dash.chatSend': 'Send',
       'dash.chatEmpty': 'No messages yet.',
       'dash.chatNoDraw': 'Chat becomes available after the draw.',
+      'dash.chatUnavailable': 'Chat opens once connected to the server',
       'dash.chatYou': 'You',
       'dash.chatThem': 'Peer',
     }
@@ -843,13 +878,14 @@
     if (nextTheme && THEMES.includes(nextTheme)) theme = nextTheme;
     localStorage.setItem(THEME_KEY, theme);
     document.documentElement.dataset.theme = theme;
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.setAttribute('content', theme === 'winter' ? '#a3cefd' : theme === 'midnight' ? '#0b1630' : '#f3d9c2');
     const btn = $('#themeToggle');
     if (btn) {
-      const icon = theme === 'winter' ? '☾' : theme === 'midnight' ? '☀' : '❄';
-      btn.textContent = icon;
-      const label = theme === 'winter' ? (lang === 'en' ? 'Switch theme' : 'Сменить тему') : theme === 'midnight' ? (lang === 'en' ? 'Switch theme' : 'Сменить тему') : (lang === 'en' ? 'Switch theme' : 'Сменить тему');
-      btn.setAttribute('aria-label', label);
-      btn.title = theme === 'winter' ? (lang === 'en' ? 'Theme: Winter' : 'Тема: Зима') : theme === 'midnight' ? (lang === 'en' ? 'Theme: Midnight' : 'Тема: Ночь') : (lang === 'en' ? 'Theme: Cozy' : 'Тема: Уют');
+      const icon = theme === 'winter' ? 'i-moon' : theme === 'midnight' ? 'i-sun' : 'i-snowflake';
+      btn.innerHTML = `<svg class="card-icon" aria-hidden="true"><use href="#${icon}"></use></svg>`;
+      btn.setAttribute('aria-label', t('theme.switch'));
+      btn.title = t('theme.' + theme);
     }
   }
   function cycleTheme() { const i = THEMES.indexOf(theme); applyTheme(THEMES[(i + 1) % THEMES.length]); }
@@ -867,9 +903,15 @@
     $$('[data-i18n-aria-label]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAriaLabel)); });
     const langBtn = $('#langToggle');
     if (langBtn) { langBtn.textContent = t('nav.lang'); langBtn.setAttribute('aria-label', t('nav.langAria')); }
+    const installBtn = $('#installBtn');
+    if (installBtn) {
+      installBtn.setAttribute('aria-label', t('nav.installAria'));
+      installBtn.title = t('nav.installAria');
+    }
     updateOfflineUI();
     renderDashboard();
     renderQuickResult();
+    document.dispatchEvent(new CustomEvent('secret-santa:lang'));
   }
 
   function uid(prefix = 'id') { return prefix + '_' + Math.random().toString(36).slice(2, 10); }
@@ -1188,25 +1230,33 @@
 
     const sess = game ? roomSession(game.code) : null;
     const canChat = !!(drawn && sess?.token);
+    const setEnabled = (enabled) => {
+      if (form) {
+        if (input) input.disabled = !enabled;
+        const b = form.querySelector('button[type="submit"]');
+        if (b) b.disabled = !enabled;
+      }
+      $$('[data-tpl]').forEach(btn => { btn.disabled = !enabled; });
+    };
     if (!drawn) {
       if (notice) notice.textContent = t('dash.chatNoDraw');
-      list.innerHTML = `<div class="chat-empty muted small">${escapeHtml(t('dash.chatNoDraw'))}</div>`;
-      if (form) { if (input) input.disabled = true; const b = form.querySelector('button[type="submit"]'); if (b) b.disabled = true; }
+      list.innerHTML = `<div class="chat-empty"><div class="card-media card-media--chat"><img src="assets/images/chat-waiting.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted small">${escapeHtml(t('dash.chatNoDraw'))}</span></div>`;
+      setEnabled(false);
       return;
     }
     if (!canChat) {
-      const msg = t('dash.backendOffline');
+      const msg = t('dash.chatUnavailable');
       if (notice) notice.textContent = msg;
-      list.innerHTML = `<div class="chat-empty muted small">${escapeHtml(msg)}</div>`;
-      if (form) { if (input) input.disabled = true; const b = form.querySelector('button[type="submit"]'); if (b) b.disabled = true; }
+      list.innerHTML = `<div class="chat-empty"><div class="card-media card-media--chat"><img src="assets/images/chat-waiting.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted small">${escapeHtml(msg)}</span></div>`;
+      setEnabled(false);
       return;
     }
 
-    if (form) { if (input) input.disabled = false; const b = form.querySelector('button[type="submit"]'); if (b) b.disabled = false; }
+    setEnabled(true);
     if (notice) notice.textContent = '';
     const msgs = chatCache[chatChannel] || [];
     if (!msgs.length) {
-      list.innerHTML = `<div class="chat-empty muted small">${escapeHtml(t('dash.chatEmpty'))}</div>`;
+      list.innerHTML = `<div class="chat-empty"><div class="card-media card-media--chat"><img src="assets/images/chat-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted small">${escapeHtml(t('dash.chatEmpty'))}</span></div>`;
     } else {
       list.innerHTML = msgs.map(m => {
         const cls = m.fromMe ? 'chat-msg chat-msg--me' : 'chat-msg chat-msg--them';
@@ -1328,13 +1378,11 @@
     const bs = $('#backendStatusLabel');
     if (bs) {
       const sess = roomSession(game.code);
-      if (sess && sess.token) {
-        bs.textContent = apiState.online ? `● ${t('dash.backendOnline')}` : (apiState.online === false ? `● ${t('dash.backendOffline')}` : '');
-        bs.style.color = apiState.online ? '#1f8a4c' : (apiState.online === false ? '#8a6a1f' : '');
-      } else {
-        bs.textContent = `● ${t('dash.backendOffline')}`;
-        bs.style.color = '#8a6a1f';
-      }
+      const online = !!(sess && sess.token && apiState.online);
+      const offline = !sess || !sess.token || apiState.online === false;
+      bs.textContent = online ? `● ${t('dash.backendOnline')}` : (offline ? `● ${t('dash.backendOffline')}` : '');
+      bs.classList.toggle('is-online', online);
+      bs.classList.toggle('is-offline', offline);
     }
 
     const drawn = game.assignments && Object.keys(game.assignments).length > 0;
@@ -1371,7 +1419,10 @@
         { done: drawn, label: t('dash.check4') },
         { done: (me.giftStatus || 'none') !== 'none', label: t('dash.check5') },
       ];
-      checklist.innerHTML = items.map(i => `<li class="${i.done ? 'is-done' : ''}"><span class="checklist__mark" aria-hidden="true">${i.done ? '✓' : '○'}</span><span>${escapeHtml(i.label)}</span></li>`).join('');
+      checklist.innerHTML = items.map(i => {
+        const mark = i.done ? 'i-check' : 'i-circle';
+        return `<li class="${i.done ? 'is-done' : ''}"><span class="checklist__mark" aria-hidden="true"><svg class="card-icon checklist__icon"><use href="#${mark}"></use></svg></span><span>${escapeHtml(i.label)}</span></li>`;
+      }).join('');
       if (items.every(i => i.done)) checklist.insertAdjacentHTML('beforeend', `<li class="checklist__done">${escapeHtml(t('dash.checkAllDone'))}</li>`);
     }
     $('#participantsCount').textContent = String(game.participants.length);
@@ -1487,12 +1538,12 @@
     const recipientProfile = $('#recipientProfile');
     if (drawn && game.assignments[me.id] && revealed) {
       const recv = game.participants.find(p => p.id === game.assignments[me.id]);
-      $('#myAssignment').classList.remove('muted');
+      $('#myAssignment').classList.remove('muted', 'assignment--art');
       $('#myAssignment').innerHTML = t('dash.recipientYou', { name: escapeHtml(recv ? recv.name : '—') });
       $('#recipientWishlist').classList.remove('hidden');
       $('#recipientWishlistList').innerHTML = (recv && recv.wishlist.length)
         ? recv.wishlist.map(w => `<li><span>${escapeHtml(w.text)}</span></li>`).join('')
-        : `<li><span class="muted">${escapeHtml(t('dash.recipientWishlistEmpty'))}</span></li>`;
+        : `<li class="list-empty-art"><div class="card-media card-media--state"><img src="assets/images/wishlist-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted">${escapeHtml(t('dash.recipientWishlistEmpty'))}</span></li>`;
       if (recipientProfile) {
         const addr = (recv?.address || '').trim();
         const note = (recv?.profileNote || '').trim();
@@ -1517,13 +1568,13 @@
         $('#recipientProfileEmpty').classList.toggle('hidden', hasAny);
       }
     } else if (drawn && game.assignments[me.id] && !revealed) {
-      $('#myAssignment').classList.remove('muted');
+      $('#myAssignment').classList.remove('muted', 'assignment--art');
       $('#myAssignment').textContent = t('dash.recipientReady');
       $('#recipientWishlist').classList.add('hidden');
       if (recipientProfile) recipientProfile.classList.add('hidden');
     } else {
-      $('#myAssignment').classList.add('muted');
-      $('#myAssignment').textContent = t('dash.recipientNone');
+      $('#myAssignment').classList.add('muted', 'assignment--art');
+      $('#myAssignment').innerHTML = `<div class="card-media card-media--state"><img src="assets/images/recipient-waiting.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span>${escapeHtml(t('dash.recipientNone'))}</span>`;
       $('#recipientWishlist').classList.add('hidden');
       if (recipientProfile) recipientProfile.classList.add('hidden');
     }
@@ -1531,7 +1582,7 @@
     // my wishlist
     $('#myWishlist').innerHTML = me.wishlist.length
       ? me.wishlist.map(w => `<li><span>${escapeHtml(w.text)}</span><button class="link-btn" data-rm-wish="${w.id}" type="button">${escapeHtml(t('dash.wishDelete'))}</button></li>`).join('')
-      : `<li><span class="muted">${escapeHtml(t('dash.myWishlistEmpty'))}</span></li>`;
+      : `<li class="list-empty-art"><div class="card-media card-media--state"><img src="assets/images/wishlist-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted">${escapeHtml(t('dash.myWishlistEmpty'))}</span></li>`;
     $$('[data-rm-wish]').forEach(btn => btn.onclick = async () => {
       const wid = btn.dataset.rmWish;
       const sess = roomSession(game.code);
@@ -1691,7 +1742,7 @@
     if (!game || !list) return;
     const sess = roomSession(game.code);
     if (!sess || !sess.token || !apiState.online) {
-      list.innerHTML = `<li><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
+      list.innerHTML = `<li class="list-empty-art"><div class="card-media card-media--state"><img src="assets/images/access-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
       if (notice) notice.textContent = '';
       return;
     }
@@ -1699,7 +1750,7 @@
       const data = await apiFetch(`/api/rooms/${game.code}/sessions`, { token: sess.token });
       const sessions = data.sessions || [];
       if (!sessions.length) {
-        list.innerHTML = `<li><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
+        list.innerHTML = `<li class="list-empty-art"><div class="card-media card-media--state"><img src="assets/images/access-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
       } else {
         list.innerHTML = sessions.slice(0, 10).map(s => {
           const cur = sess.sessionId && s.id === sess.sessionId;
@@ -1719,7 +1770,7 @@
       }
       if (notice) notice.textContent = apiState.base ? `API: ${apiState.base}` : '';
     } catch (e) {
-      list.innerHTML = `<li><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
+      list.innerHTML = `<li class="list-empty-art"><div class="card-media card-media--state"><img src="assets/images/access-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted small">${escapeHtml(t('dash.noSessions'))}</span></li>`;
       if (notice) notice.textContent = '';
     }
   }
@@ -1759,7 +1810,7 @@
       <li class="activity-item">
         <span class="activity-item__dot" aria-hidden="true"></span>
         <span><strong>${escapeHtml(activityText(ev, game))}</strong>${ev.createdAt ? ` <span class="muted small">· ${escapeHtml(formatTime(ev.createdAt))}</span>` : ''}</span>
-      </li>`).join('') : `<li><span class="muted small">${escapeHtml(t('dash.activityEmpty'))}</span></li>`;
+      </li>`).join('') : `<li class="list-empty-art"><div class="card-media card-media--state"><img src="assets/images/activity-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" /></div><span class="muted small">${escapeHtml(t('dash.activityEmpty'))}</span></li>`;
   }
 
   async function refreshDashboard() {
@@ -1787,23 +1838,38 @@
     loadActivity();
   }
 
+  function pairCountLabel(n) {
+    if (lang === 'en') return t(n === 1 ? 'quick.resultMetaOne' : 'quick.resultMetaMany', { n });
+    const mod10 = n % 10;
+    const mod100 = n % 100;
+    const key = (mod10 === 1 && mod100 !== 11) ? 'quick.resultMetaOne'
+      : (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) ? 'quick.resultMetaFew'
+      : 'quick.resultMetaMany';
+    return t(key, { n });
+  }
+
   function renderQuickResult() {
     const list = $('#quickResultList');
     const meta = $('#quickResultMeta');
+    const card = $('#quickResultCard');
+    const empty = $('#quickEmpty');
     const copyBtn = $('#quickCopyBtn');
     const csvBtn = $('#quickCsvBtn');
     const printBtn = $('#quickPrintBtn');
     if (!list) return;
-    if (!quickPairs.length) {
-      list.innerHTML = `<li><span class="muted small">${escapeHtml(t('quick.resultEmpty'))}</span></li>`;
+    const hasPairs = quickPairs.length > 0;
+    card?.classList.toggle('is-empty', !hasPairs);
+    empty?.classList.toggle('hidden', hasPairs);
+    if (!hasPairs) {
+      list.innerHTML = '';
       if (meta) meta.textContent = '';
       if (copyBtn) copyBtn.disabled = true;
       if (csvBtn) csvBtn.disabled = true;
       if (printBtn) printBtn.disabled = true;
       return;
     }
-    list.innerHTML = quickPairs.map((p, i) => `<li><span><strong>${escapeHtml(p.santa)}</strong> → ${escapeHtml(p.recipient)}</span><button class="link-btn" data-quick-link="${i}" type="button" title="${escapeHtml(t('quick.link'))}">🔗 ${escapeHtml(t('quick.link'))}</button></li>`).join('');
-    if (meta) meta.textContent = `${quickPairs.length}`;
+    list.innerHTML = quickPairs.map((p, i) => `<li><span class="quick-pair"><strong>${escapeHtml(p.santa)}</strong><span class="quick-pair__arrow" aria-hidden="true">→</span><span>${escapeHtml(p.recipient)}</span></span><button class="link-btn quick-link" data-quick-link="${i}" type="button" title="${escapeHtml(t('quick.link'))}"><svg class="card-icon" aria-hidden="true"><use href="#i-link"></use></svg>${escapeHtml(t('quick.link'))}</button></li>`).join('');
+    if (meta) meta.textContent = pairCountLabel(quickPairs.length);
     if (copyBtn) copyBtn.disabled = false;
     if (csvBtn) csvBtn.disabled = false;
     if (printBtn) printBtn.disabled = false;
@@ -2382,18 +2448,49 @@
   const themeToggle = $('#themeToggle');
   if (themeToggle) themeToggle.addEventListener('click', cycleTheme);
   let installPrompt = null;
+  let installDone = false;
   const installBtn = $('#installBtn');
+  const installFooterBtn = $('#installFooterBtn');
+  const installHint = $('#installHint');
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const updateInstallUI = () => {
+    if (installHint && !installDone) {
+      installHint.textContent = installPrompt ? t('install.ready') : (isIOS ? t('install.ios') : t('install.generic'));
+    }
+    if (installBtn) installBtn.classList.toggle('hidden', installDone || !installPrompt);
+    if (installFooterBtn) {
+      installFooterBtn.disabled = installDone;
+      installFooterBtn.classList.toggle('hidden', installDone);
+      installFooterBtn.textContent = installDone ? t('install.done') : t('footer.install');
+    }
+  };
+  const markInstalled = () => {
+    installDone = true;
+    installPrompt = null;
+    updateInstallUI();
+    if (installHint) installHint.textContent = t('install.done');
+    toast(t('install.done'));
+  };
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault(); installPrompt = e;
-    if (installBtn) installBtn.classList.remove('hidden');
+    updateInstallUI();
   });
-  if (installBtn) installBtn.addEventListener('click', async () => {
-    if (!installPrompt) return;
+  window.addEventListener('appinstalled', markInstalled);
+  document.addEventListener('secret-santa:lang', updateInstallUI);
+  const requestInstall = async () => {
+    if (!installPrompt) {
+      toast(isIOS ? t('install.ios') : t('install.generic'));
+      return;
+    }
     installPrompt.prompt();
     const { outcome } = await installPrompt.userChoice;
-    installPrompt = null; installBtn.classList.add('hidden');
-    if (outcome === 'accepted') toast(lang === 'en' ? 'App installed' : 'Приложение установлено');
-  });
+    installPrompt = null;
+    if (outcome === 'accepted') markInstalled();
+    else updateInstallUI();
+  };
+  if (installBtn) installBtn.addEventListener('click', requestInstall);
+  if (installFooterBtn) installFooterBtn.addEventListener('click', requestInstall);
+  updateInstallUI();
 
   window.addEventListener('offline', () => { updateOfflineUI(); });
   window.addEventListener('online', async () => {
