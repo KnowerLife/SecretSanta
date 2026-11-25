@@ -10,7 +10,7 @@ test-backend:
 	cd backend && python3 -m unittest discover -s tests -p 'test*.py' -v
 
 test: test-backend
-	node --check app.js
+	for f in app.js src/*.js; do node --input-type=module --check < "$$f"; done
 	node --check sw.js
 
 smoke:
