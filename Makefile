@@ -1,4 +1,4 @@
-.PHONY: frontend backend test test-backend smoke docker-up docker-down
+.PHONY: frontend backend test test-backend smoke screenshots docker-up docker-down
 
 frontend:
 	python3 -m http.server 8766
@@ -15,6 +15,9 @@ test: test-backend
 
 smoke:
 	python3 scripts/smoke_e2e.py
+
+screenshots:
+	node scripts/capture_screenshots.mjs
 
 docker-up:
 	docker compose up --build
