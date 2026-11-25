@@ -20,7 +20,7 @@
 - **Журнал событий** — организатор видит историю ключевых действий комнаты.
 - **Темы** — winter / midnight / cozy с сохранением выбора.
 - **RU / EN** — переключение языка интерфейса прямо в шапке сайта.
-- **PWA** — `manifest.webmanifest`, service worker, install-кнопка, offline-баннер, кеш последних сообщений и отложенная отправка сообщений.
+- **PWA** — `manifest.webmanifest`, service worker, карточка установки в футере и кнопка в шапке, offline-баннер, кеш последних сообщений и отложенная отправка сообщений.
 - **Локальное хранение** — данные сохраняются в `localStorage` браузера.
 
 ## Скриншоты
@@ -155,7 +155,7 @@ A modern web app for organizing a Secret Santa gift exchange: create a room, inv
 - **Activity log** — the organizer sees a history of key room events.
 - **Themes** — winter / midnight / cozy with the choice saved locally.
 - **RU / EN** — switch the interface language directly in the header.
-- **PWA** — `manifest.webmanifest`, service worker, install button, offline banner, cached recent messages, and queued message sending.
+- **PWA** — `manifest.webmanifest`, service worker, footer install card and header button, offline banner, cached recent messages, and queued message sending.
 - **Local storage** — data is saved in the browser’s `localStorage`.
 
 ## Screenshots
@@ -165,6 +165,10 @@ A modern web app for organizing a Secret Santa gift exchange: create a room, inv
 | ![Home page](docs/screenshots/home-en.jpg) | ![Create game](docs/screenshots/create-en.jpg) | ![Game dashboard](docs/screenshots/dashboard-en.jpg) |
 | **Quick draw** | **Anonymous chat** | **Activity log** |
 | ![Quick draw](docs/screenshots/quick-en.jpg) | ![Anonymous chat](docs/screenshots/chat-en.jpg) | ![Activity log](docs/screenshots/activity-en.jpg) |
+
+### Illustrations
+
+Ready-to-use image prompts, filenames, paths, sizes, alt text and insertion points are documented in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md). All 29 holiday scenes are connected: hero, steps, format cards, section and page headers, dashboard empty states, CTA, chat, invite panel, quick draw and social preview. Each scene has a RU/EN prompt, exact path, size, alt text and insertion point in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md).
 
 ## Quick Start
 

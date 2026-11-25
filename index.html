@@ -2,18 +2,64 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#A3CEFD" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Тайный Санта" />
   <title>Тайный Санта — организатор обмена подарками</title>
   <meta name="description" content="Простой и уютный способ организовать Тайный Санта: создайте игру, пригласите участников по коду и проведите честную жеребьёвку." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Тайный Санта — организатор обмена подарками" />
+  <meta property="og:description" content="Создайте игру, пригласите участников по коду и проведите честную жеребьёвку." />
+  <meta property="og:image" content="assets/images/social-cover.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="assets/images/social-cover.jpg" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=58" />
 </head>
 <body>
+  <svg class="icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 15a3 3 0 0 1-3 3H8l-4 3V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3z"/><path d="M8 10h8M8 14h5"/></symbol>
+    <symbol id="i-package" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10M7.5 5l9 4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M3 13h18M12 9v12"/><path d="M12 9C9 9 7 8 7 6s2-3 5 3c3-6 5-5 5-3s-2 3-5 3z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2"/><path d="M16 5a3 3 0 0 1 0 5.8M18 14a5 5 0 0 1 3 4.6V20h-3"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 3l5 7h-3l4 6H6l4-6H7z"/><path d="M12 16v5M9 21h6"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-6h6v6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 3.5 6 3.5 9S14.5 18 12 21c-2.5-3-3.5-6-3.5-9S9.5 6 12 3z"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M5 8h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5z"/><path d="M17 9h2a2 2 0 0 1 0 4h-2M8 3v3M12 3v3"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1.5a2 2 0 0 0 0-4H12a2 2 0 0 1 0-4h5a3 3 0 0 0 3-3c0-3.9-3.6-7-8-7z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="15" cy="8" r="1"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+    <symbol id="i-cookie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="10" r="1"/><circle cx="10" cy="15" r="1"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M13 16V8M18 16v-6"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+    <symbol id="i-user-check" viewBox="0 0 24 24"><circle cx="10" cy="8" r="3.5"/><path d="M3 20v-1.5A6.5 6.5 0 0 1 9.5 12H11"/><path d="M15 17l2 2 4-4"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M9 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3v-3H6V9h3zM20 7h-4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3v-3h-2V9h3z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M8 11l4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-snowflake" viewBox="0 0 24 24"><path d="M12 2v20M4 6l16 12M20 6L4 18M9 4l3 2 3-2M9 20l3-2 3 2M4 10l1-3 3 1M20 14l-1 3-3-1M4 14l1 3 3-1M20 10l-1-3-3 1"/></symbol>
+    <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M3 3l18 18M8.5 15.5a5 5 0 0 1 7 0M5.5 12.5a9 9 0 0 1 4-2.3M18.5 12.5a9 9 0 0 0-2.3-1.5M2.5 9.5a13 13 0 0 1 4-2.6M21.5 9.5a13 13 0 0 0-6.6-3.3M10 19h4"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2" transform="rotate(-12 12 12)"/><path d="M7.5 10.5v2M11 9.8v3M14.5 9.2v2M18 8.5v3"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 9v4M12 16h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+  </svg>
   <div class="page-bg" aria-hidden="true">
     <div class="page-bg__sky"></div>
     <div class="page-bg__snow"></div>
@@ -52,14 +98,14 @@
         <a href="#quick" data-nav="quick" data-i18n="nav.quick">Быстрая жеребьёвка</a>
         <a href="#join" data-nav="join" data-i18n="nav.join">Войти по коду</a>
         <a href="#dashboard" data-nav="dashboard" class="nav__pill" data-i18n="nav.dashboard">Моя игра</a>
-        <button id="installBtn" class="lang-toggle hidden" type="button" aria-label="Установить приложение" title="Установить приложение">⇩</button>
-        <button id="themeToggle" class="lang-toggle" type="button" aria-label="Сменить тему" title="Тема">☾</button>
+        <button id="installBtn" class="lang-toggle icon-toggle hidden" type="button" aria-label="Установить приложение" title="Установить приложение"><svg class="card-icon" aria-hidden="true"><use href="#i-download"></use></svg></button>
+        <button id="themeToggle" class="lang-toggle icon-toggle" type="button" aria-label="Сменить тему" title="Тема"><svg class="card-icon" aria-hidden="true"><use href="#i-moon"></use></svg></button>
         <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
       </nav>
     </div>
   </header>
   <div id="offlineBanner" class="offline-banner hidden" role="status" aria-live="polite">
-    <span aria-hidden="true">📡</span> <span id="offlineBannerText" data-i18n="nav.offline">Нет соединения — игра доступна офлайн, сообщения отправятся позже</span>
+    <svg class="card-icon" aria-hidden="true"><use href="#i-wifi-off"></use></svg> <span id="offlineBannerText" data-i18n="nav.offline">Нет соединения — игра доступна офлайн, сообщения отправятся позже</span>
   </div>
 
   <main id="main">
@@ -77,35 +123,60 @@
           </div>
           <p class="hero__note" data-i18n="hero.note">Бесплатно · Без регистрации · Данные сохраняются в вашем браузере</p>
           <div class="trust-strip" aria-label="Преимущества">
-            <span class="trust-chip" data-i18n="hero.trust.1">🔒 Приватная жеребьёвка</span>
-            <span class="trust-chip" data-i18n="hero.trust.2">💬 Анонимный чат</span>
-            <span class="trust-chip" data-i18n="hero.trust.3">📦 Адрес и анти-пожелания</span>
-            <span class="trust-chip" data-i18n="hero.trust.4">⚡ Демо за 1 клик</span>
+            <span class="trust-chip"><svg class="trust-icon" aria-hidden="true"><use href="#i-lock"></use></svg><span data-i18n="hero.trust.1">Приватная жеребьёвка</span></span>
+            <span class="trust-chip"><svg class="trust-icon" aria-hidden="true"><use href="#i-chat"></use></svg><span data-i18n="hero.trust.2">Анонимный чат</span></span>
+            <span class="trust-chip"><svg class="trust-icon" aria-hidden="true"><use href="#i-package"></use></svg><span data-i18n="hero.trust.3">Адрес и анти-пожелания</span></span>
+            <span class="trust-chip"><svg class="trust-icon" aria-hidden="true"><use href="#i-bolt"></use></svg><span data-i18n="hero.trust.4">Демо за 1 клик</span></span>
+          </div>
+        </div>
+        <div class="hero-preview" aria-hidden="true">
+          <span class="hero-preview__orb hero-preview__orb--one"></span>
+          <span class="hero-preview__orb hero-preview__orb--two"></span>
+          <div class="hero-preview__window">
+            <div class="hero-preview__head">
+              <span class="hero-preview__tag" data-i18n="dash.demoBadge">DEMO</span>
+              <span class="hero-preview__room"><span data-i18n="dash.roomCode">Код комнаты</span> <b>SANTA-2048</b></span>
+            </div>
+            <p class="hero-preview__title" data-i18n="dash.recipientTitle">Ваш получатель</p>
+            <div class="hero-preview__avatars"><span>А</span><span>М</span><span>И</span></div>
+            <div class="hero-preview__row"><strong>Анна</strong><svg class="card-icon"><use href="#i-gift"></use></svg></div>
+            <div class="hero-preview__row"><span data-i18n="dash.progressLabel">Готовность к обмену</span><strong>78%</strong></div>
+            <div class="hero-preview__bar"><span></span></div>
+            <p class="hero-preview__bubble" data-i18n="dash.tplThanks">Спасибо за подарок!</p>
           </div>
         </div>
       </div>
 
-      <div class="container section" style="padding-top:2rem;">
+      <div class="container section section--tight">
         <div class="section-head">
           <p class="section-kicker" data-i18n="modes.kicker">Выберите формат</p>
           <h2 data-i18n="modes.title">Как хотите начать?</h2>
           <p class="section-sub" data-i18n="modes.sub">Полная игра с комнатой, быстрая жеребьёвка или демо для знакомства.</p>
         </div>
         <div class="mode-grid">
-          <article class="snow-card snow-card--flat mode-card">
-            <div class="mode-card__icon" aria-hidden="true">🎁</div>
+          <article class="snow-card mode-card">
+            <span class="icon-tile mode-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-gift"></use></svg></span>
+            <div class="card-media card-media--mode">
+              <img src="assets/images/mode-online.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
+            </div>
             <h3 data-i18n="modes.full.title">Полная игра</h3>
             <p data-i18n="modes.full.text">Комната, приглашения, вишлисты, исключения, анонимный чат и статусы подарков.</p>
             <button class="btn btn-primary" data-nav="create" data-i18n="modes.full.cta">Создать игру</button>
           </article>
-          <article class="snow-card snow-card--flat mode-card">
-            <div class="mode-card__icon" aria-hidden="true">⚡</div>
+          <article class="snow-card mode-card">
+            <span class="icon-tile mode-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-bolt"></use></svg></span>
+            <div class="card-media card-media--mode">
+              <img src="assets/images/mode-quick.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
+            </div>
             <h3 data-i18n="modes.quick.title">Быстрая жеребьёвка</h3>
             <p data-i18n="modes.quick.text">Просто введите имена и получите пары — без комнаты и регистрации.</p>
             <button class="btn btn-secondary" data-nav="quick" data-i18n="modes.quick.cta">Открыть жеребьёвку</button>
           </article>
-          <article class="snow-card snow-card--flat mode-card">
-            <div class="mode-card__icon" aria-hidden="true">👀</div>
+          <article class="snow-card mode-card">
+            <span class="icon-tile mode-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-play"></use></svg></span>
+            <div class="card-media card-media--mode">
+              <img src="assets/images/mode-demo.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
+            </div>
             <h3 data-i18n="modes.demo.title">Посмотреть демо</h3>
             <p data-i18n="modes.demo.text">Загрузите пример игры, чтобы увидеть кабинет участника и организатора.</p>
             <button class="btn btn-ghost" id="demoBtnModes" data-i18n="modes.demo.cta">Открыть демо</button>
@@ -122,12 +193,9 @@
 
         <div class="steps-grid">
           <article class="snow-card step-card">
-            <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
             <div class="step-card__media">
               <div class="media-frame media-frame--step">
                 <img src="assets/images/step-create-game.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
-                <div class="media-fallback media-fallback--step">
-                </div>
               </div>
             </div>
             <div class="step-card__body">
@@ -138,12 +206,9 @@
           </article>
 
           <article class="snow-card step-card">
-            <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
             <div class="step-card__media">
               <div class="media-frame media-frame--step">
                 <img src="assets/images/step-invite-friends.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
-                <div class="media-fallback media-fallback--step">
-                </div>
               </div>
             </div>
             <div class="step-card__body">
@@ -154,12 +219,9 @@
           </article>
 
           <article class="snow-card step-card">
-            <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,20 Q25,10 55,18 Q95,2 140,14 Q180,0 220,10 Q260,2 300,16 Q340,6 370,14 Q390,8 400,24 L400,48 Z" fill="currentColor"/></svg></div>
             <div class="step-card__media">
               <div class="media-frame media-frame--step">
                 <img src="assets/images/step-draw-gifts.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
-                <div class="media-fallback media-fallback--step">
-                </div>
               </div>
             </div>
             <div class="step-card__body">
@@ -172,189 +234,201 @@
       </div>
 
       <div class="container section">
-        <div class="section-head">
-          <p class="section-kicker" data-i18n="audience.kicker">Для любой компании</p>
-          <h2 data-i18n="audience.title">Играйте с теми, кто вам дорог</h2>
-          <p class="section-sub" data-i18n="audience.sub">Тайный Санта подходит для друзей, семьи, коллег и команд на удалёнке.</p>
-        </div>
-        <div class="audience-grid">
-          <article class="snow-card snow-card--flat audience-card">
-            <div class="audience-card__icon" aria-hidden="true">🎄</div>
-            <h3 data-i18n="audience.friends.title">С друзьями</h3>
-            <p data-i18n="audience.friends.text">Добавьте интриги в встречу: каждый готовит сюрприз, а потом все угадывают своего Санту.</p>
-          </article>
-          <article class="snow-card snow-card--flat audience-card">
-            <div class="audience-card__icon" aria-hidden="true">🏢</div>
-            <h3 data-i18n="audience.work.title">С коллегами</h3>
-            <p data-i18n="audience.work.text">Идеально для офиса и удалёнки: единая ссылка, исключения, статусы подарков и анонимный чат.</p>
-          </article>
-          <article class="snow-card snow-card--flat audience-card">
-            <div class="audience-card__icon" aria-hidden="true">🏠</div>
-            <h3 data-i18n="audience.family.title">С семьёй</h3>
-            <p data-i18n="audience.family.text">Создайте тёплую традицию: от братьев и сестёр до бабушек и дедушек — каждый получит сюрприз.</p>
-          </article>
-          <article class="snow-card snow-card--flat audience-card">
-            <div class="audience-card__icon" aria-hidden="true">🌍</div>
-            <h3 data-i18n="audience.remote.title">На расстоянии</h3>
-            <p data-i18n="audience.remote.text">Участники в разных городах? Заполните адрес доставки в профиле и отправьте подарок курьером.</p>
-          </article>
-        </div>
-      </div>
-
-      <div class="container section">
-        <div class="section-head">
-          <p class="section-kicker" data-i18n="ideas.kicker">Идеи для вдохновения</p>
-          <h2 data-i18n="ideas.title">Подарки, которые порадуют</h2>
-          <p class="section-sub" data-i18n="ideas.sub">Собирайте вишлисты проще — вот категории, которые часто выбирают.</p>
-        </div>
-        <div class="features-grid">
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">☕</div>
-            <h3 data-i18n="ideas.cozy.title">Уют и дом</h3>
-            <p data-i18n="ideas.cozy.text">Кружки, пледы, свечи, чай и книги — тёплые подарки для домашнего вечера.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">🎨</div>
-            <h3 data-i18n="ideas.hobby.title">Хобби и интересы</h3>
-            <p data-i18n="ideas.hobby.text">Наборы для творчества, настолки, гаджеты и всё для любимого дела.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">🧴</div>
-            <h3 data-i18n="ideas.care.title">Забота о себе</h3>
-            <p data-i18n="ideas.care.text">Косметика, массажёры, ароматы — но сначала проверьте аллергии в профиле.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">🍫</div>
-            <h3 data-i18n="ideas.sweet.title">Вкусное</h3>
-            <p data-i18n="ideas.sweet.text">Конфеты, кофе, специи и домашние заготовки — сладкий финал праздника.</p>
-          </article>
-        </div>
-      </div>
-
-      <div class="container section section--narrow">
-        <div class="section-head">
-          <p class="section-kicker" data-i18n="rules.kicker">Правила жеребьёвки</p>
-          <h2 data-i18n="rules.title">Как мы обеспечиваем честность</h2>
-        </div>
-        <ol class="rules-list">
-          <li data-i18n="rules.1">Каждый участник дарит ровно одному человеку и получает подарок ровно от одного.</li>
-          <li data-i18n="rules.2">Никто не достаётся самому себе — жеребьёвка учитывает это автоматически.</li>
-          <li data-i18n="rules.3">Исключения и группы «сугроб» гарантируют, что нежелательные пары не встретятся.</li>
-          <li data-i18n="rules.4">Организатор не видит пары, пока не запущена жеребьёвка, а участники видят только своего получателя.</li>
-        </ol>
-      </div>
-
-      <div class="container section">
-        <div class="section-head">
-          <p class="section-kicker" data-i18n="features.kicker">Почему это удобно</p>
-          <h2 data-i18n="features.title">Всё для спокойной игры</h2>
-          <p class="section-sub" data-i18n="features.sub">Организатору — контроль, участникам — простота и интрига.</p>
-        </div>
-        <div class="features-grid">
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">🎁</div>
-            <h3 data-i18n="features.wishlist.title">Вишлисты и анти-пожелания</h3>
-            <p data-i18n="features.wishlist.text">Участники добавляют желания, адрес и что лучше не дарить — Санте проще выбрать.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">💬</div>
-            <h3 data-i18n="features.chat.title">Анонимный чат</h3>
-            <p data-i18n="features.chat.text">Санта и получатель могут уточнить детали, не раскрывая имена.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">🛡️</div>
-            <h3 data-i18n="features.exclusions.title">Исключения и честная жеребьёвка</h3>
-            <p data-i18n="features.exclusions.text">Учитывайте пары и ограничения — никто не получит самого себя.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-card__icon" aria-hidden="true">📊</div>
-            <h3 data-i18n="features.status.title">Статусы подарков</h3>
-            <p data-i18n="features.status.text">Организатор видит прогресс: кто уже выбрал, купил или отправил подарок.</p>
-          </article>
+        <div class="section-pair" data-pair="ideas">
+          <div class="pair-column">
+          <div class="section-head section-head--art art-audience">
+            <p class="section-kicker" data-i18n="audience.kicker">Для любой компании</p>
+            <h2 data-i18n="audience.title">Играйте с теми, кто вам дорог</h2>
+            <p class="section-sub" data-i18n="audience.sub">Тайный Санта подходит для друзей, семьи, коллег и команд на удалёнке.</p>
+          </div>
+          <div class="audience-grid">
+            <article class="snow-card audience-card">
+              <span class="icon-tile audience-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-tree"></use></svg></span>
+              <h3 data-i18n="audience.friends.title">С друзьями</h3>
+              <p data-i18n="audience.friends.text">Добавьте интриги в встречу: каждый готовит сюрприз, а потом все угадывают своего Санту.</p>
+            </article>
+            <article class="snow-card audience-card">
+              <span class="icon-tile audience-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-building"></use></svg></span>
+              <h3 data-i18n="audience.work.title">С коллегами</h3>
+              <p data-i18n="audience.work.text">Идеально для офиса и удалёнки: единая ссылка, исключения, статусы подарков и анонимный чат.</p>
+            </article>
+            <article class="snow-card audience-card">
+              <span class="icon-tile audience-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-home"></use></svg></span>
+              <h3 data-i18n="audience.family.title">С семьёй</h3>
+              <p data-i18n="audience.family.text">Создайте тёплую традицию: от братьев и сестёр до бабушек и дедушек — каждый получит сюрприз.</p>
+            </article>
+            <article class="snow-card audience-card">
+              <span class="icon-tile audience-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-globe"></use></svg></span>
+              <h3 data-i18n="audience.remote.title">На расстоянии</h3>
+              <p data-i18n="audience.remote.text">Участники в разных городах? Заполните адрес доставки в профиле и отправьте подарок курьером.</p>
+            </article>
+          </div>
+          </div>
+          <div class="pair-column">
+          <div class="section-head section-head--art art-ideas">
+            <p class="section-kicker" data-i18n="ideas.kicker">Идеи для вдохновения</p>
+            <h2 data-i18n="ideas.title">Подарки, которые порадуют</h2>
+            <p class="section-sub" data-i18n="ideas.sub">Собирайте вишлисты проще — вот категории, которые часто выбирают.</p>
+          </div>
+          <div class="features-grid">
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-coffee"></use></svg></span>
+              <h3 data-i18n="ideas.cozy.title">Уют и дом</h3>
+              <p data-i18n="ideas.cozy.text">Кружки, пледы, свечи, чай и книги — тёплые подарки для домашнего вечера.</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-palette"></use></svg></span>
+              <h3 data-i18n="ideas.hobby.title">Хобби и интересы</h3>
+              <p data-i18n="ideas.hobby.text">Наборы для творчества, настолки, гаджеты и всё для любимого дела.</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-sparkle"></use></svg></span>
+              <h3 data-i18n="ideas.care.title">Забота о себе</h3>
+              <p data-i18n="ideas.care.text">Косметика, массажёры, ароматы — но сначала проверьте аллергии в профиле.</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-cookie"></use></svg></span>
+              <h3 data-i18n="ideas.sweet.title">Вкусное</h3>
+              <p data-i18n="ideas.sweet.text">Конфеты, кофе, специи и домашние заготовки — сладкий финал праздника.</p>
+            </article>
+          </div>
+          </div>
         </div>
       </div>
 
       <div class="container section">
-        <div class="section-head">
-          <p class="section-kicker" data-i18n="privacy.kicker">Приватность</p>
-          <h2 data-i18n="privacy.title">Кто что видит</h2>
-          <p class="section-sub" data-i18n="privacy.sub">Тайна остаётся тайной: каждый видит ровно столько, сколько нужно.</p>
+        <div class="section-pair" data-pair="features">
+          <div class="pair-column">
+          <div class="section-head section-head--art art-rules">
+            <p class="section-kicker" data-i18n="rules.kicker">Правила жеребьёвки</p>
+            <h2 data-i18n="rules.title">Как мы обеспечиваем честность</h2>
+          </div>
+          <ol class="rules-list">
+            <li data-i18n="rules.1">Каждый участник дарит ровно одному человеку и получает подарок ровно от одного.</li>
+            <li data-i18n="rules.2">Никто не достаётся самому себе — жеребьёвка учитывает это автоматически.</li>
+            <li data-i18n="rules.3">Исключения и группы «сугроб» гарантируют, что нежелательные пары не встретятся.</li>
+            <li data-i18n="rules.4">Организатор не видит пары, пока не запущена жеребьёвка, а участники видят только своего получателя.</li>
+          </ol>
+          </div>
+          <div class="pair-column">
+          <div class="section-head section-head--art art-chat">
+            <p class="section-kicker" data-i18n="features.kicker">Почему это удобно</p>
+            <h2 data-i18n="features.title">Всё для спокойной игры</h2>
+            <p class="section-sub" data-i18n="features.sub">Организатору — контроль, участникам — простота и интрига.</p>
+          </div>
+          <div class="features-grid">
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-list"></use></svg></span>
+              <h3 data-i18n="features.wishlist.title">Вишлисты и анти-пожелания</h3>
+              <p data-i18n="features.wishlist.text">Участники добавляют желания, адрес и что лучше не дарить — Санте проще выбрать.</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-chat"></use></svg></span>
+              <h3 data-i18n="features.chat.title">Анонимный чат</h3>
+              <p data-i18n="features.chat.text">Санта и получатель могут уточнить детали, не раскрывая имена.</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-shield"></use></svg></span>
+              <h3 data-i18n="features.exclusions.title">Исключения и честная жеребьёвка</h3>
+              <p data-i18n="features.exclusions.text">Учитывайте пары и ограничения — никто не получит самого себя.</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-tile feature-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-chart"></use></svg></span>
+              <h3 data-i18n="features.status.title">Статусы подарков</h3>
+              <p data-i18n="features.status.text">Организатор видит прогресс: кто уже выбрал, купил или отправил подарок.</p>
+            </article>
+          </div>
+          </div>
         </div>
-        <div class="privacy-grid">
-          <article class="snow-card snow-card--flat privacy-card">
-            <div class="privacy-card__icon" aria-hidden="true">🗂️</div>
-            <h3 data-i18n="privacy.organizer.title">Организатор</h3>
-            <p data-i18n="privacy.organizer.text">Видит участников, статусы и готовность к обмену — но не видит, кто кому дарит.</p>
-          </article>
-          <article class="snow-card snow-card--flat privacy-card">
-            <div class="privacy-card__icon" aria-hidden="true">🎅</div>
-            <h3 data-i18n="privacy.santa.title">Санта</h3>
-            <p data-i18n="privacy.santa.text">Видит только своего получателя, его пожелания и профиль после жеребьёвки.</p>
-          </article>
-          <article class="snow-card snow-card--flat privacy-card">
-            <div class="privacy-card__icon" aria-hidden="true">🙂</div>
-            <h3 data-i18n="privacy.member.title">Участник</h3>
-            <p data-i18n="privacy.member.text">Видит только то, что дарит ему Санта, и свой анонимный чат. Другие пары скрыты.</p>
-          </article>
+      </div>
+
+      <div class="container section">
+        <div class="section-pair" data-pair="trust">
+          <div class="pair-column">
+          <div class="section-head section-head--art art-privacy">
+            <p class="section-kicker" data-i18n="privacy.kicker">Приватность</p>
+            <h2 data-i18n="privacy.title">Кто что видит</h2>
+            <p class="section-sub" data-i18n="privacy.sub">Тайна остаётся тайной: каждый видит ровно столько, сколько нужно.</p>
+          </div>
+          <div class="privacy-grid">
+            <article class="snow-card privacy-card">
+              <span class="icon-tile privacy-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-clipboard"></use></svg></span>
+              <h3 data-i18n="privacy.organizer.title">Организатор</h3>
+              <p data-i18n="privacy.organizer.text">Видит участников, статусы и готовность к обмену — но не видит, кто кому дарит.</p>
+            </article>
+            <article class="snow-card privacy-card">
+              <span class="icon-tile privacy-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-user-check"></use></svg></span>
+              <h3 data-i18n="privacy.santa.title">Санта</h3>
+              <p data-i18n="privacy.santa.text">Видит только своего получателя, его пожелания и профиль после жеребьёвки.</p>
+            </article>
+            <article class="snow-card privacy-card">
+              <span class="icon-tile privacy-card__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-user"></use></svg></span>
+              <h3 data-i18n="privacy.member.title">Участник</h3>
+              <p data-i18n="privacy.member.text">Видит только то, что дарит ему Санта, и свой анонимный чат. Другие пары скрыты.</p>
+            </article>
+          </div>
+          </div>
+          <div class="pair-column">
+          <div class="section-head section-head--art art-testimonials">
+            <p class="section-kicker" data-i18n="testimonials.kicker">Опыт игроков</p>
+            <h2 data-i18n="testimonials.title">Игры, которые запоминаются</h2>
+          </div>
+          <div class="testimonials-grid">
+            <article class="snow-card testimonial-card">
+              <span class="quote-icon" aria-hidden="true"><svg class="card-icon"><use href="#i-quote"></use></svg></span>
+              <p class="testimonial-card__quote" data-i18n="testimonials.1.text">«Запустили игру за 5 минут, все добавили пожелания, и никто не остался без подарка. Анонимный чат — огонь!»</p>
+              <div class="testimonial-card__author"><span class="testimonial-card__avatar">А</span><div><strong data-i18n="testimonials.1.name">Анна</strong><span data-i18n="testimonials.1.role">играла с друзьями</span></div></div>
+            </article>
+            <article class="snow-card testimonial-card">
+              <span class="quote-icon" aria-hidden="true"><svg class="card-icon"><use href="#i-quote"></use></svg></span>
+              <p class="testimonial-card__quote" data-i18n="testimonials.2.text">«Для удалённой команды это идеально: адреса в профиле, статусы подарков и понятная жеребьёвка.»</p>
+              <div class="testimonial-card__author"><span class="testimonial-card__avatar">И</span><div><strong data-i18n="testimonials.2.name">Игорь</strong><span data-i18n="testimonials.2.role">HR в IT-компании</span></div></div>
+            </article>
+            <article class="snow-card testimonial-card">
+              <span class="quote-icon" aria-hidden="true"><svg class="card-icon"><use href="#i-quote"></use></svg></span>
+              <p class="testimonial-card__quote" data-i18n="testimonials.3.text">«Семейная традиция получилась с первого раза. Даже бабушка разобралась по ссылке!»</p>
+              <div class="testimonial-card__author"><span class="testimonial-card__avatar">М</span><div><strong data-i18n="testimonials.3.name">Марина</strong><span data-i18n="testimonials.3.role">семейная игра</span></div></div>
+            </article>
+          </div>
+          </div>
         </div>
       </div>
 
       <div class="container section section--narrow">
-        <div class="section-head">
-          <p class="section-kicker" data-i18n="testimonials.kicker">Опыт игроков</p>
-          <h2 data-i18n="testimonials.title">Игры, которые запоминаются</h2>
-        </div>
-        <div class="testimonials-grid">
-          <article class="snow-card snow-card--flat testimonial-card">
-            <p class="testimonial-card__quote" data-i18n="testimonials.1.text">«Запустили игру за 5 минут, все добавили пожелания, и никто не остался без подарка. Анонимный чат — огонь!»</p>
-            <div class="testimonial-card__author"><span class="testimonial-card__avatar">А</span><div><strong data-i18n="testimonials.1.name">Анна</strong><span data-i18n="testimonials.1.role">играла с друзьями</span></div></div>
-          </article>
-          <article class="snow-card snow-card--flat testimonial-card">
-            <p class="testimonial-card__quote" data-i18n="testimonials.2.text">«Для удалённой команды это идеально: адреса в профиле, статусы подарков и понятная жеребьёвка.»</p>
-            <div class="testimonial-card__author"><span class="testimonial-card__avatar">И</span><div><strong data-i18n="testimonials.2.name">Игорь</strong><span data-i18n="testimonials.2.role">HR в IT-компании</span></div></div>
-          </article>
-          <article class="snow-card snow-card--flat testimonial-card">
-            <p class="testimonial-card__quote" data-i18n="testimonials.3.text">«Семейная традиция получилась с первого раза. Даже бабушка разобралась по ссылке!»</p>
-            <div class="testimonial-card__author"><span class="testimonial-card__avatar">М</span><div><strong data-i18n="testimonials.3.name">Марина</strong><span data-i18n="testimonials.3.role">семейная игра</span></div></div>
-          </article>
-        </div>
-      </div>
-
-      <div class="container section section--narrow">
-        <div class="section-head">
+        <div class="section-head section-head--art art-faq">
           <p class="section-kicker" data-i18n="faq.kicker">Вопросы и ответы</p>
           <h2 data-i18n="faq.title">Частые вопросы</h2>
         </div>
         <div class="faq-list">
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.1.q">Что такое «Тайный Санта»?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.1.a">Это игра, в которой каждый участник тайно готовит подарок другому человеку. Пары определяются случайной жеребьёвкой, а результат каждый узнаёт лично.</p></div>
           </details>
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.2.q">Нужна ли регистрация?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.2.a">Нет. Достаточно создать игру или войти по коду. В этой версии данные сохраняются локально в вашем браузере.</p></div>
           </details>
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.3.q">Кто увидит результат жеребьёвки?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.3.a">Только вы видите имя человека, которому готовите подарок. Остальные пары остаются тайной.</p></div>
           </details>
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.4.q">Сколько нужно участников?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.4.a">Минимум три человека, чтобы жеребьёвка прошла корректно и никто не получил самого себя.</p></div>
           </details>
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.5.q">Можно ли играть, если мы в разных городах?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.5.a">Да. Участники могут заполнить адрес доставки в профиле, а Санта отправит подарок курьером или почтой.</p></div>
           </details>
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.6.q">Можно ли задать исключения?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.6.a">Да. Организатор может указать пары, которые не должны дарить друг другу — например, супругов или коллег из одного отдела.</p></div>
           </details>
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.7.q">Что делать, если кто-то забыл подарок?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.7.a">Организатор видит статусы подарков и может напомнить участникам. Анонимный чат помогает уточнить детали без раскрытия тайны.</p></div>
           </details>
-          <details class="faq-item snow-card snow-card--flat">
+          <details class="faq-item snow-card">
             <summary data-i18n="faq.8.q">Можно ли провести жеребьёвку заново?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.8.a">Да. Организатор может сбросить жеребьёвку и запустить её снова, если состав или правила изменились.</p></div>
           </details>
@@ -362,8 +436,7 @@
       </div>
 
       <div class="container section section--narrow">
-        <div class="cta-card snow-card">
-          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
+        <div class="cta-card cta-card--art snow-card">
           <div class="cta-card__body">
             <p class="section-kicker" data-i18n="cta.kicker">Готовы начать?</p>
             <h2 data-i18n="cta.title">Организуйте Тайный Санта онлайн</h2>
@@ -376,17 +449,15 @@
         </div>
       </div>
     </section>
-
     <!-- CREATE -->
     <section id="view-create" class="view">
       <div class="container section section--narrow">
-        <div class="page-head">
+        <div class="page-head section-head--art art-create">
           <p class="section-kicker" data-i18n="create.kicker">Новая игра</p>
           <h1 data-i18n="create.title">Создать игру</h1>
           <p class="section-sub" data-i18n="create.sub">Заполните основные настройки — комната будет готова сразу после создания.</p>
         </div>
         <form id="createForm" class="snow-card form-card" novalidate>
-          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
           <div class="form-card__body form">
             <div class="field">
               <label for="gameName" data-i18n="create.gameName">Название игры</label>
@@ -434,13 +505,12 @@
     <!-- JOIN -->
     <section id="view-join" class="view">
       <div class="container section section--narrow">
-        <div class="page-head">
+        <div class="page-head section-head--art art-join">
           <p class="section-kicker" data-i18n="join.kicker">Присоединиться</p>
           <h1 data-i18n="join.title">Войти в игру</h1>
           <p class="section-sub" data-i18n="join.sub">Введите код комнаты и своё имя, чтобы присоединиться к обмену подарками.</p>
         </div>
         <form id="joinForm" class="snow-card form-card" novalidate>
-          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
           <div class="form-card__body form">
             <div class="field">
               <label for="joinCode" data-i18n="join.code">Код комнаты</label>
@@ -465,14 +535,13 @@
 
     <!-- QUICK DRAW -->
     <section id="view-quick" class="view">
-      <div class="container form-page">
-        <div class="section-head">
+      <div class="container section section--narrow">
+        <div class="section-head section-head--art art-quick">
           <p class="section-kicker" data-i18n="quick.kicker">Быстрый инструмент</p>
           <h1 data-i18n="quick.title">Быстрая жеребьёвка</h1>
           <p class="section-sub" data-i18n="quick.sub">Введите имена участников — каждый получит случайного получателя. Без регистрации и без комнаты.</p>
         </div>
         <div class="snow-card form-card" id="quickFormCard">
-          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
           <div class="form-card__body">
             <div class="field">
               <label for="quickNames" data-i18n="quick.namesLabel">Имена участников</label>
@@ -486,9 +555,11 @@
             <p id="quickError" class="error" role="alert" aria-live="polite"></p>
           </div>
         </div>
-        <div class="snow-card form-card" style="margin-top:16px;">
-          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
+        <div class="snow-card form-card quick-result-card is-empty" id="quickResultCard">
           <div class="form-card__body">
+            <div class="card-media card-media--quick">
+              <img src="assets/images/quick-draw-success.jpg" alt="" width="1200" height="675" loading="lazy" decoding="async" onerror="this.hidden=true" />
+            </div>
             <div class="panel-head">
               <div>
                 <h2 data-i18n="quick.resultTitle">Результат</h2>
@@ -500,12 +571,18 @@
                 <button id="quickPrintBtn" class="btn btn-ghost btn-sm" type="button" data-i18n="quick.print">Печать</button>
               </div>
             </div>
+            <div id="quickEmpty" class="quick-empty">
+              <span class="quick-empty__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-gift"></use></svg></span>
+              <p class="quick-empty__title" data-i18n="quick.resultEmptyTitle">Пары появятся здесь</p>
+              <p class="muted small" data-i18n="quick.resultEmpty">Здесь появятся пары после жеребьёвки.</p>
+            </div>
             <div id="quickPersonalCard" class="quick-personal hidden">
               <p class="section-kicker" data-i18n="quick.personalKicker">Ваша персональная ссылка</p>
               <h2 id="quickPersonalHello"></h2>
               <p class="quick-personal__label" data-i18n="quick.personalLabel">Вы дарите</p>
               <p class="quick-personal__recipient" id="quickPersonalRecipient"></p>
               <p class="muted small" data-i18n="quick.personalNote">Эту ссылку можно отправить только этому участнику — другие пары в ней не видны.</p>
+              <p class="muted small" data-i18n="quick.personalWarning">Ссылка лишь скрывает пары от случайного взгляда — отправляйте её только адресату.</p>
               <button id="quickPersonalCopyBtn" class="btn btn-secondary btn-sm" type="button" data-i18n="quick.personalCopy">Скопировать мою ссылку</button>
             </div>
             <ul id="quickResultList" class="list"></ul>
@@ -518,12 +595,11 @@
     <section id="view-dashboard" class="view">
       <div class="container section">
         <div id="noGame" class="snow-card empty-state">
-          <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
           <div class="empty-state__body">
             <div class="empty-state__media">
               <div class="media-frame media-frame--empty">
                 <img src="assets/images/dashboard-empty.jpg" alt="" width="1200" height="800" loading="eager" decoding="async" onerror="this.hidden=true" />
-                <div class="media-fallback media-fallback--empty">
+                <div class="media-fallback">
                   <div class="fallback-icon fallback-icon--red" aria-hidden="true"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="M4 8h16v4H4z"/><path d="M12 22V8"/><path d="M12 8c-1.5 0-4-1-4-3s2-2.5 4-1c2-1.5 4-.8 4 1s-2.5 3-4 3z"/></svg></div>
                 </div>
               </div>
@@ -540,7 +616,6 @@
 
         <div id="gameArea" class="hidden">
           <div class="snow-card game-header">
-            <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
             <div class="game-header__body">
               <div class="game-info">
                 <div class="game-code-row">
@@ -570,8 +645,7 @@
           </div>
 
           <div class="dash-grid">
-            <article class="snow-card panel panel--highlight">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
+            <article class="snow-card panel panel--highlight panel--wide">
               <div class="panel__body">
                 <div class="panel-head">
                   <div class="panel-icon panel-icon--red" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="M4 8h16v4H4z"/><path d="M12 22V8"/></svg></div>
@@ -595,13 +669,52 @@
                     <div id="recipientLinksRow" class="hidden"><dt data-i18n="dash.profileLinksLabel">Ссылки на товары</dt><dd id="recipientLinks"></dd></div>
                     <div id="recipientAllergiesRow" class="hidden"><dt data-i18n="dash.profileAllergiesLabel">Аллергии и табу</dt><dd id="recipientAllergies"></dd></div>
                   </dl>
-                  <p id="recipientProfileEmpty" class="muted small hidden" data-i18n="dash.recipientProfileEmpty">Получатель пока не заполнил профиль.</p>
+                  <div id="recipientProfileEmpty" class="state-empty hidden">
+                    <div class="card-media card-media--state">
+                      <img src="assets/images/profile-empty.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" />
+                    </div>
+                    <p class="muted small" data-i18n="dash.recipientProfileEmpty">Получатель пока не заполнил профиль.</p>
+                  </div>
                 </div>
               </div>
             </article>
 
-            <article class="snow-card panel">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,20 Q25,10 55,18 Q95,2 140,14 Q180,0 220,10 Q260,2 300,16 Q340,6 370,14 Q390,8 400,24 L400,48 Z" fill="currentColor"/></svg></div>
+            <article class="snow-card panel panel--narrow">
+              <div class="panel__body">
+                <div class="panel-head">
+                  <div class="panel-icon panel-icon--blue" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                  <div>
+                    <h2 data-i18n="dash.statusTitle">Статус игры</h2>
+                    <p class="muted small" data-i18n="dash.statusSub">Краткая сводка по текущей игре</p>
+                  </div>
+                </div>
+                <div class="status-rows">
+                  <div class="status-row"><span data-i18n="dash.statusPlayers">Участников</span><strong id="statPlayers">0</strong></div>
+                  <div class="status-row"><span data-i18n="dash.statusWishlists">С пожеланиями</span><strong id="statWishlists">0%</strong></div>
+                  <div class="status-row"><span data-i18n="dash.statusDraw">Жеребьёвка</span><strong id="statDraw">не проведена</strong></div>
+                  <div class="status-row"><span data-i18n="dash.statusGifts">Подарки готовы</span><strong id="statGifts">0%</strong></div>
+                </div>
+                <div class="progress-block" aria-live="polite">
+                  <div class="progress-block__label"><span data-i18n="dash.progressLabel">Готовность к обмену</span><strong id="progressPct">0%</strong></div>
+                  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-i18n-aria-label="dash.progressLabel" aria-label="Готовность к обмену"><span id="progressFill" style="width:0%"></span></div>
+                </div>
+                <div class="checklist-block">
+                  <h3 data-i18n="dash.checklistTitle">Что осталось сделать</h3>
+                  <ul id="gameChecklist" class="checklist"></ul>
+                </div>
+                <div class="field gift-status-field">
+                  <label for="myGiftStatus" data-i18n="dash.giftStatus">Мой статус подарка</label>
+                  <select id="myGiftStatus">
+                    <option value="none" data-i18n="dash.gift.none">Ещё не начал(а)</option>
+                    <option value="idea" data-i18n="dash.gift.idea">Выбираю идею</option>
+                    <option value="bought" data-i18n="dash.gift.bought">Подарок куплен</option>
+                    <option value="done" data-i18n="dash.gift.done">Подарок готов</option>
+                  </select>
+                </div>
+              </div>
+            </article>
+
+            <article class="snow-card panel panel--narrow">
               <div class="panel__body">
                 <div class="panel-head">
                   <div class="panel-icon panel-icon--gold" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
@@ -619,8 +732,36 @@
               </div>
             </article>
 
+            <article class="snow-card panel panel--wide" id="chatPanel">
+              <div class="panel__body">
+                <div class="panel-head">
+                  <div class="panel-icon panel-icon--gold" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                  <div>
+                    <h2 data-i18n="dash.chatTitle">Анонимный чат</h2>
+                    <p class="muted small" data-i18n="dash.chatSub">Общайтесь тайно с получателем или своим Сантой</p>
+                  </div>
+                </div>
+                <div class="chat-tabs">
+                  <button id="chatTabRecipient" class="btn btn-secondary btn-sm is-active" type="button" data-i18n="dash.chatToRecipient">Моему получателю</button>
+                  <button id="chatTabSanta" class="btn btn-ghost btn-sm" type="button" data-i18n="dash.chatToSanta">Моему Санте</button>
+                </div>
+                <div class="chat-templates" id="chatTemplates" aria-label="Шаблоны сообщений">
+                  <button class="chat-template" type="button" data-tpl="dash.tplSize"><svg class="card-icon" aria-hidden="true"><use href="#i-ruler"></use></svg><span data-i18n="dash.tplSize">Какой у вас размер?</span></button>
+                  <button class="chat-template" type="button" data-tpl="dash.tplAddress"><svg class="card-icon" aria-hidden="true"><use href="#i-package"></use></svg><span data-i18n="dash.tplAddress">Куда удобнее доставить?</span></button>
+                  <button class="chat-template" type="button" data-tpl="dash.tplAllergy"><svg class="card-icon" aria-hidden="true"><use href="#i-alert"></use></svg><span data-i18n="dash.tplAllergy">Есть аллергии?</span></button>
+                  <button class="chat-template" type="button" data-tpl="dash.tplThanks"><svg class="card-icon" aria-hidden="true"><use href="#i-gift"></use></svg><span data-i18n="dash.tplThanks">Спасибо за подарок!</span></button>
+                </div>
+                <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+                <form id="chatForm" class="inline-form inline-form--tight">
+                  <label class="sr-only" for="chatInput">Message</label>
+                  <input id="chatInput" type="text" maxlength="500" placeholder="Напишите анонимное сообщение..." data-i18n-placeholder="dash.chatPlaceholder" />
+                  <button class="btn btn-primary" type="submit" data-i18n="dash.chatSend">Отправить</button>
+                </form>
+                <p id="chatNotice" class="muted small"></p>
+              </div>
+            </article>
+
             <article class="snow-card panel" id="profilePanel">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,26 Q30,8 60,18 Q100,4 140,16 Q180,2 220,14 Q260,4 300,18 Q340,8 380,20 L400,26 L400,48 Z" fill="currentColor"/></svg></div>
               <div class="panel__body">
                 <div class="panel-head">
                   <div class="panel-icon panel-icon--blue" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
@@ -655,16 +796,15 @@
                     <textarea id="profileAllergies" rows="2" maxlength="500" placeholder="Например: аллергия на орехи" data-i18n-placeholder="dash.profileAllergiesPh"></textarea>
                   </div>
                   <p class="muted small" data-i18n="dash.profilePrivacy">Эти данные видит только ваш Санта после жеребьёвки.</p>
-                  <div class="form-actions" style="margin-top:10px;">
+                  <div class="form-actions form-actions--tight">
                     <button class="btn btn-secondary" type="submit" data-i18n="dash.profileSave">Сохранить профиль</button>
                   </div>
                 </form>
-                <p id="profileNotice" class="muted small" style="margin-top:8px;"></p>
+                <p id="profileNotice" class="muted small panel-note"></p>
               </div>
             </article>
 
             <article class="snow-card panel">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
               <div class="panel__body">
                 <div class="panel-head">
                   <div class="panel-icon panel-icon--green" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
@@ -684,7 +824,7 @@
                   <h3 class="wishlist-title" data-i18n="dash.exclusionsTitle">Исключения</h3>
                   <p class="muted small" data-i18n="dash.exclusionsSub">Кто не должен дарить кому</p>
                   <ul id="exclusionsList" class="list"></ul>
-                  <form id="exclusionForm" class="inline-form" style="margin-top:10px;">
+                  <form id="exclusionForm" class="inline-form inline-form--tight">
                     <label class="sr-only" for="exclusionA" data-i18n="dash.exclusionsA">Участник А</label>
                     <select id="exclusionA"></select>
                     <label class="sr-only" for="exclusionB" data-i18n="dash.exclusionsB">Участник Б</label>
@@ -706,44 +846,7 @@
               </div>
             </article>
 
-            <article class="snow-card panel">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
-              <div class="panel__body">
-                <div class="panel-head">
-                  <div class="panel-icon panel-icon--blue" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                  <div>
-                    <h2 data-i18n="dash.statusTitle">Статус игры</h2>
-                    <p class="muted small" data-i18n="dash.statusSub">Краткая сводка по текущей игре</p>
-                  </div>
-                </div>
-                <div class="status-rows">
-                  <div class="status-row"><span data-i18n="dash.statusPlayers">Участников</span><strong id="statPlayers">0</strong></div>
-                  <div class="status-row"><span data-i18n="dash.statusWishlists">С пожеланиями</span><strong id="statWishlists">0%</strong></div>
-                  <div class="status-row"><span data-i18n="dash.statusDraw">Жеребьёвка</span><strong id="statDraw">не проведена</strong></div>
-                  <div class="status-row"><span data-i18n="dash.statusGifts">Подарки готовы</span><strong id="statGifts">0%</strong></div>
-                </div>
-                <div class="progress-block" aria-live="polite">
-                  <div class="progress-block__label"><span data-i18n="dash.progressLabel">Готовность к обмену</span><strong id="progressPct">0%</strong></div>
-                  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressFill" style="width:0%"></span></div>
-                </div>
-                <div class="checklist-block">
-                  <h3 data-i18n="dash.checklistTitle">Что осталось сделать</h3>
-                  <ul id="gameChecklist" class="checklist"></ul>
-                </div>
-                <div class="field gift-status-field">
-                  <label for="myGiftStatus" data-i18n="dash.giftStatus">Мой статус подарка</label>
-                  <select id="myGiftStatus">
-                    <option value="none" data-i18n="dash.gift.none">Ещё не начал(а)</option>
-                    <option value="idea" data-i18n="dash.gift.idea">Выбираю идею</option>
-                    <option value="bought" data-i18n="dash.gift.bought">Подарок куплен</option>
-                    <option value="done" data-i18n="dash.gift.done">Подарок готов</option>
-                  </select>
-                </div>
-              </div>
-            </article>
-
             <article class="snow-card panel" id="accessPanel">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
               <div class="panel__body">
                 <div class="panel-head">
                   <div class="panel-icon panel-icon--red" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg></div>
@@ -752,11 +855,14 @@
                     <p class="muted small" data-i18n="dash.accessSub">Приглашение, ссылка и активные сессии</p>
                   </div>
                 </div>
-                <div class="inline-form" style="margin-bottom:12px;">
+                <div class="inline-form inline-form--spaced">
                   <button id="copyInviteBtn" class="btn btn-secondary" type="button" data-i18n="dash.copyInvite">Скопировать invite-ссылку</button>
                   <button id="refreshSessionsBtn" class="btn btn-ghost" type="button" data-i18n="dash.refreshSessions">Обновить сессии</button>
                 </div>
                 <div class="invite-generator">
+                  <div class="card-media card-media--invite">
+                    <img src="assets/images/invite-share.jpg" alt="" width="1200" height="900" loading="lazy" decoding="async" onerror="this.hidden=true" />
+                  </div>
                   <label for="inviteText" data-i18n="dash.inviteTextLabel">Текст приглашения</label>
                   <textarea id="inviteText" rows="4" readonly></textarea>
                   <div class="invite-share">
@@ -772,7 +878,6 @@
             </article>
 
             <article class="snow-card panel" id="activityPanel">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,8 70,17 Q110,3 150,13 Q190,1 230,14 Q270,4 310,13 Q350,3 380,18 Q392,12 400,21 L400,48 Z" fill="currentColor"/></svg></div>
               <div class="panel__body">
                 <div class="panel-head">
                   <div class="panel-icon panel-icon--green" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></div>
@@ -783,36 +888,6 @@
                 </div>
                 <ul id="activityList" class="list activity-list" aria-live="polite"></ul>
                 <p id="activityNotice" class="muted small"></p>
-              </div>
-            </article>
-
-            <article class="snow-card panel" id="chatPanel">
-              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
-              <div class="panel__body">
-                <div class="panel-head">
-                  <div class="panel-icon panel-icon--gold" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-                  <div>
-                    <h2 data-i18n="dash.chatTitle">Анонимный чат</h2>
-                    <p class="muted small" data-i18n="dash.chatSub">Общайтесь тайно с получателем или своим Сантой</p>
-                  </div>
-                </div>
-                <div class="chat-tabs">
-                  <button id="chatTabRecipient" class="btn btn-secondary btn-sm is-active" type="button" data-i18n="dash.chatToRecipient">Моему получателю</button>
-                  <button id="chatTabSanta" class="btn btn-ghost btn-sm" type="button" data-i18n="dash.chatToSanta">Моему Санте</button>
-                </div>
-                <div class="chat-templates" id="chatTemplates" aria-label="Шаблоны сообщений">
-                  <button class="chat-template" type="button" data-tpl="dash.tplSize">📏 <span data-i18n="dash.tplSize">Какой у вас размер?</span></button>
-                  <button class="chat-template" type="button" data-tpl="dash.tplAddress">📦 <span data-i18n="dash.tplAddress">Куда удобнее доставить?</span></button>
-                  <button class="chat-template" type="button" data-tpl="dash.tplAllergy">⚠️ <span data-i18n="dash.tplAllergy">Есть аллергии?</span></button>
-                  <button class="chat-template" type="button" data-tpl="dash.tplThanks">🎁 <span data-i18n="dash.tplThanks">Спасибо за подарок!</span></button>
-                </div>
-                <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
-                <form id="chatForm" class="inline-form" style="margin-top:10px;">
-                  <label class="sr-only" for="chatInput">Message</label>
-                  <input id="chatInput" type="text" maxlength="500" placeholder="Напишите анонимное сообщение..." data-i18n-placeholder="dash.chatPlaceholder" />
-                  <button class="btn btn-primary" type="submit" data-i18n="dash.chatSend">Отправить</button>
-                </form>
-                <p id="chatNotice" class="muted small"></p>
               </div>
             </article>
           </div>
@@ -850,6 +925,15 @@
           <span class="brand__text"><span data-i18n-html="brand.name" class="brand__name"><span class="brand__word">Тайный</span> <span class="brand__word brand__word--accent">Санта</span></span></span>
         </span>
         <p class="footer-brand__text" data-i18n="footer.tagline">Простой и уютный способ организовать обмен подарками.</p>
+        <div class="footer-install" id="installCard">
+          <span class="footer-install__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-download"></use></svg></span>
+          <div class="footer-install__body">
+            <p class="footer-install__title" data-i18n="footer.installTitle">Установите на главный экран</p>
+            <p class="footer-install__text" data-i18n="footer.installText">Открывайте игру в один тап, даже без сети.</p>
+            <p class="footer-install__hint" id="installHint" data-i18n="install.generic">Установите приложение через меню браузера.</p>
+          </div>
+          <button id="installFooterBtn" class="btn btn-secondary btn-sm" type="button" data-i18n="footer.install">Установить приложение</button>
+        </div>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
@@ -862,6 +946,7 @@
           <p class="footer-col__title" data-i18n="footer.sections">Разделы</p>
           <a href="#home" data-nav="home" data-i18n="nav.home">Главная</a>
           <a href="#home" data-nav="home" data-i18n="footer.how">Как это работает</a>
+          <a href="#quick" data-nav="quick" data-i18n="nav.quick">Быстрая жеребьёвка</a>
         </div>
       </div>
     </div>
@@ -874,7 +959,6 @@
   <div id="confirmModal" class="modal hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <div class="modal-backdrop" data-close-confirm></div>
     <div class="modal-card snow-card">
-      <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,24 Q20,8 50,18 Q80,4 120,14 Q160,2 200,12 Q240,0 280,14 Q320,4 360,16 Q385,10 400,22 L400,48 Z" fill="currentColor"/></svg></div>
       <div class="modal-card__body">
         <div class="modal-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div>
         <h2 id="confirmTitle" data-i18n="confirm.title">Подтверждение</h2>
@@ -888,6 +972,6 @@
   </div>
 
   <div id="toastLayer" class="toast-layer" aria-live="polite" aria-atomic="true"></div>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=58" defer></script>
 </body>
 </html>
