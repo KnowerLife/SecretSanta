@@ -1,5 +1,6 @@
+import asyncio
 import json
-from typing import AsyncIterator, Optional
+from typing import AsyncIterator
 
 # Redis pub/sub abstraction for horizontal scaling.
 # Durable replay source of truth remains room_events in DB.
@@ -46,3 +47,32 @@ class RealtimeBus:
                 await pubsub.close()
             except Exception:
                 pass
+
+
+_bus: RealtimeBus | None = None
+
+
+def get_bus(redis_url: str) -> RealtimeBus:
+    global _bus
+    if _bus is None or _bus.redis_url != redis_url:
+        _bus = RealtimeBus(redis_url)
+    return _bus
+
+
+def publish_sync(redis_url: str, room_code: str, event: dict) -> None:
+    """Best-effort publish from sync endpoints."""
+    async def _go():
+        bus = get_bus(redis_url)
+        await bus.connect()
+        await bus.publish(room_code, event)
+
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        try:
+            asyncio.run(_go())
+        except Exception:
+            return
+        return
+    # If a loop is running in this thread, skip best-effort sync publish.
+    return

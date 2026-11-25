@@ -104,6 +104,70 @@
 
 ---
 
+## 6. Аудитории: удалённая команда и доставка
+
+- **Путь в проекте:** `assets/images/audience-remote.jpg`
+- **Где используется:** секция «Для любой компании», карточка «На расстоянии».
+- **Размер:** 1200×900 px (4:3), горизонтальное.
+
+**Prompt (EN):**
+
+> Cozy editorial illustration, full-bleed opaque image, no transparency, no alpha channel, solid complete scene. A cheerful person packing a Secret Santa gift box at a home desk, a laptop showing soft silhouettes of a video call, a shipping label, winter decorations and a mug nearby. Warm friendly palette, clean modern illustration, no readable text on the label. Snowy white, sky blue, coral red, pine green, soft gold. No logos, no watermark, no UI, no transparent background, no cutout objects.
+
+**Промт (RU):**
+
+> Уютная редакционная иллюстрация, полностью непрозрачное изображение, без прозрачности и альфа-канала, цельная сцена. Весёлый человек упаковывает подарок для Тайного Санты за домашним столом, на ноутбуке мягкие силуэты видеозвонка, рядом наклейка для отправки, зимний декор и кружка. Тёплая дружелюбная палитра, чистый современный стиль, без читаемого текста на наклейке. Снежно-белый, небесно-голубой, кораллово-красный, хвойный зелёный, мягкое золото. Без логотипов, водяных знаков, UI, прозрачного фона и вырезанных объектов.
+
+---
+
+## 7. Фича: анонимный чат и приватность
+
+- **Путь в проекте:** `assets/images/feature-anonymous-chat.jpg`
+- **Где используется:** карточка «Анонимный чат» в блоке преимуществ.
+- **Размер:** 1200×900 px (4:3), горизонтальное.
+
+**Prompt (EN):**
+
+> Minimal modern vector illustration, full-bleed opaque image, no transparency, no alpha channel, solid complete scene. Two smartphones facing each other with soft anonymous chat bubbles and small gift icons between them, a gentle shield and snowflake motif in the background. Winter pastel blue, white and coral red palette, friendly and calm. Bubbles contain only abstract shapes and icons, no readable text. No logos, no watermark, no UI screenshots, no transparent background, no cutout objects.
+
+**Промт (RU):**
+
+> Минималистичная современная векторная иллюстрация, полностью непрозрачное изображение, без прозрачности и альфа-канала, цельная сцена. Два смартфона напротив друг друга, между ними мягкие «пузыри» анонимного чата и маленькие иконки подарков, на фоне аккуратный щит и снежинка. Зимняя пастельная палитра: голубой, белый, кораллово-красный, дружелюбно и спокойно. В пузырях только абстрактные формы и иконки, без читаемого текста. Без логотипов, водяных знаков, скриншотов UI, прозрачного фона и вырезанных объектов.
+
+---
+
+## 8. Приватность: кто что видит
+
+- **Путь в проекте:** `assets/images/privacy-who-sees.jpg`
+- **Где используется:** секция «Кто что видит» на главной.
+- **Размер:** 1600×900 px (16:9), горизонтальное.
+
+**Prompt (EN):**
+
+> Clean conceptual SaaS illustration, full-bleed opaque image, no transparency, no alpha channel, solid complete scene. Three friendly abstract character silhouettes — an organizer with a checklist, a Santa with a wrapped gift, and a participant with a mystery box — separated by soft translucent panels, suggesting that each role sees only its own information. Calm winter palette of sky blue, white, navy, coral red and soft gold. No text, no labels, no logos, no watermark, no UI, no transparent background, no cutout objects.
+
+**Промт (RU):**
+
+> Чистая концептуальная SaaS-иллюстрация, полностью непрозрачное изображение, без прозрачности и альфа-канала, цельная сцена. Три дружелюбные абстрактные фигуры: организатор со списком, Санта с упакованным подарком и участник с коробкой-сюрпризом; между ними мягкие полупрозрачные панели, показывающие, что каждый видит только свою часть информации. Спокойная зимняя палитра: небесно-голубой, белый, тёмно-синий, кораллово-красный, мягкое золото. Без текста, подписей, логотипов, водяных знаков, UI, прозрачного фона и вырезанных объектов.
+
+---
+
+## 9. Идеи подарков
+
+- **Путь в проекте:** `assets/images/gift-ideas.jpg`
+- **Где используется:** секция «Идеи для вдохновения» на главной.
+- **Размер:** 1600×900 px (16:9), горизонтальное.
+
+**Prompt (EN):**
+
+> Cheerful flat-lay illustration, full-bleed opaque image, no transparency, no alpha channel, solid complete scene. A tidy arrangement of gift ideas on a light winter table: a ceramic mug, a folded blanket, a book, a small craft kit, chocolates, a pine branch and a ribbon, all neatly composed with soft shadows. Palette: cream, snowy white, sky blue, coral red, pine green, soft gold. Modern clean festive style, warm and inspiring, no clutter. No text, no logos, no watermark, no UI, no transparent background, no cutout objects.
+
+**Промт (RU):**
+
+> Весёлая иллюстрация в стиле flat-lay, полностью непрозрачное изображение, без прозрачности и альфа-канала, цельная сцена. Аккуратная раскладка идей для подарков на светлом зимнем столе: керамическая кружка, сложенный плед, книга, небольшой набор для творчества, конфеты, веточка ели и лента; мягкие тени, чистые тёплые тона. Палитра: кремовый, снежно-белый, небесно-голубой, кораллово-красный, хвойный зелёный, мягкое золото. Современный чистый праздничный стиль, вдохновляюще и без перегруза. Без текста, логотипов, водяных знаков, UI, прозрачного фона и вырезанных объектов.
+
+---
+
 ## Рекомендация по использованию в коде
 
 В HTML/CSS использовать пути вида `assets/images/<имя>.jpg`. Для `<img>` добавить `onerror="this.hidden=true"`, чтобы при отсутствии файла макет оставался аккуратным. Для CSS-фонов использовать fallback-цвет/градиент перед `url(...)`.

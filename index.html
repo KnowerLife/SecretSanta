@@ -52,10 +52,15 @@
         <a href="#quick" data-nav="quick" data-i18n="nav.quick">Быстрая жеребьёвка</a>
         <a href="#join" data-nav="join" data-i18n="nav.join">Войти по коду</a>
         <a href="#dashboard" data-nav="dashboard" class="nav__pill" data-i18n="nav.dashboard">Моя игра</a>
+        <button id="installBtn" class="lang-toggle hidden" type="button" aria-label="Установить приложение" title="Установить приложение">⇩</button>
+        <button id="themeToggle" class="lang-toggle" type="button" aria-label="Сменить тему" title="Тема">☾</button>
         <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
       </nav>
     </div>
   </header>
+  <div id="offlineBanner" class="offline-banner hidden" role="status" aria-live="polite">
+    <span aria-hidden="true">📡</span> <span id="offlineBannerText" data-i18n="nav.offline">Нет соединения — игра доступна офлайн, сообщения отправятся позже</span>
+  </div>
 
   <main id="main">
     <!-- HOME -->
@@ -68,8 +73,43 @@
           <div class="hero__actions">
             <button class="btn btn-primary btn-lg" data-nav="create" data-i18n="hero.ctaCreate">Создать игру</button>
             <button class="btn btn-secondary btn-lg" data-nav="join" data-i18n="hero.ctaJoin">Войти по коду</button>
+            <button class="btn btn-ghost btn-lg" id="demoBtn" data-i18n="hero.ctaDemo">Посмотреть демо</button>
           </div>
           <p class="hero__note" data-i18n="hero.note">Бесплатно · Без регистрации · Данные сохраняются в вашем браузере</p>
+          <div class="trust-strip" aria-label="Преимущества">
+            <span class="trust-chip" data-i18n="hero.trust.1">🔒 Приватная жеребьёвка</span>
+            <span class="trust-chip" data-i18n="hero.trust.2">💬 Анонимный чат</span>
+            <span class="trust-chip" data-i18n="hero.trust.3">📦 Адрес и анти-пожелания</span>
+            <span class="trust-chip" data-i18n="hero.trust.4">⚡ Демо за 1 клик</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="container section" style="padding-top:2rem;">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="modes.kicker">Выберите формат</p>
+          <h2 data-i18n="modes.title">Как хотите начать?</h2>
+          <p class="section-sub" data-i18n="modes.sub">Полная игра с комнатой, быстрая жеребьёвка или демо для знакомства.</p>
+        </div>
+        <div class="mode-grid">
+          <article class="snow-card snow-card--flat mode-card">
+            <div class="mode-card__icon" aria-hidden="true">🎁</div>
+            <h3 data-i18n="modes.full.title">Полная игра</h3>
+            <p data-i18n="modes.full.text">Комната, приглашения, вишлисты, исключения, анонимный чат и статусы подарков.</p>
+            <button class="btn btn-primary" data-nav="create" data-i18n="modes.full.cta">Создать игру</button>
+          </article>
+          <article class="snow-card snow-card--flat mode-card">
+            <div class="mode-card__icon" aria-hidden="true">⚡</div>
+            <h3 data-i18n="modes.quick.title">Быстрая жеребьёвка</h3>
+            <p data-i18n="modes.quick.text">Просто введите имена и получите пары — без комнаты и регистрации.</p>
+            <button class="btn btn-secondary" data-nav="quick" data-i18n="modes.quick.cta">Открыть жеребьёвку</button>
+          </article>
+          <article class="snow-card snow-card--flat mode-card">
+            <div class="mode-card__icon" aria-hidden="true">👀</div>
+            <h3 data-i18n="modes.demo.title">Посмотреть демо</h3>
+            <p data-i18n="modes.demo.text">Загрузите пример игры, чтобы увидеть кабинет участника и организатора.</p>
+            <button class="btn btn-ghost" id="demoBtnModes" data-i18n="modes.demo.cta">Открыть демо</button>
+          </article>
         </div>
       </div>
 
@@ -131,6 +171,155 @@
         </div>
       </div>
 
+      <div class="container section">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="audience.kicker">Для любой компании</p>
+          <h2 data-i18n="audience.title">Играйте с теми, кто вам дорог</h2>
+          <p class="section-sub" data-i18n="audience.sub">Тайный Санта подходит для друзей, семьи, коллег и команд на удалёнке.</p>
+        </div>
+        <div class="audience-grid">
+          <article class="snow-card snow-card--flat audience-card">
+            <div class="audience-card__icon" aria-hidden="true">🎄</div>
+            <h3 data-i18n="audience.friends.title">С друзьями</h3>
+            <p data-i18n="audience.friends.text">Добавьте интриги в встречу: каждый готовит сюрприз, а потом все угадывают своего Санту.</p>
+          </article>
+          <article class="snow-card snow-card--flat audience-card">
+            <div class="audience-card__icon" aria-hidden="true">🏢</div>
+            <h3 data-i18n="audience.work.title">С коллегами</h3>
+            <p data-i18n="audience.work.text">Идеально для офиса и удалёнки: единая ссылка, исключения, статусы подарков и анонимный чат.</p>
+          </article>
+          <article class="snow-card snow-card--flat audience-card">
+            <div class="audience-card__icon" aria-hidden="true">🏠</div>
+            <h3 data-i18n="audience.family.title">С семьёй</h3>
+            <p data-i18n="audience.family.text">Создайте тёплую традицию: от братьев и сестёр до бабушек и дедушек — каждый получит сюрприз.</p>
+          </article>
+          <article class="snow-card snow-card--flat audience-card">
+            <div class="audience-card__icon" aria-hidden="true">🌍</div>
+            <h3 data-i18n="audience.remote.title">На расстоянии</h3>
+            <p data-i18n="audience.remote.text">Участники в разных городах? Заполните адрес доставки в профиле и отправьте подарок курьером.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="container section">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="ideas.kicker">Идеи для вдохновения</p>
+          <h2 data-i18n="ideas.title">Подарки, которые порадуют</h2>
+          <p class="section-sub" data-i18n="ideas.sub">Собирайте вишлисты проще — вот категории, которые часто выбирают.</p>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">☕</div>
+            <h3 data-i18n="ideas.cozy.title">Уют и дом</h3>
+            <p data-i18n="ideas.cozy.text">Кружки, пледы, свечи, чай и книги — тёплые подарки для домашнего вечера.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">🎨</div>
+            <h3 data-i18n="ideas.hobby.title">Хобби и интересы</h3>
+            <p data-i18n="ideas.hobby.text">Наборы для творчества, настолки, гаджеты и всё для любимого дела.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">🧴</div>
+            <h3 data-i18n="ideas.care.title">Забота о себе</h3>
+            <p data-i18n="ideas.care.text">Косметика, массажёры, ароматы — но сначала проверьте аллергии в профиле.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">🍫</div>
+            <h3 data-i18n="ideas.sweet.title">Вкусное</h3>
+            <p data-i18n="ideas.sweet.text">Конфеты, кофе, специи и домашние заготовки — сладкий финал праздника.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="container section section--narrow">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="rules.kicker">Правила жеребьёвки</p>
+          <h2 data-i18n="rules.title">Как мы обеспечиваем честность</h2>
+        </div>
+        <ol class="rules-list">
+          <li data-i18n="rules.1">Каждый участник дарит ровно одному человеку и получает подарок ровно от одного.</li>
+          <li data-i18n="rules.2">Никто не достаётся самому себе — жеребьёвка учитывает это автоматически.</li>
+          <li data-i18n="rules.3">Исключения и группы «сугроб» гарантируют, что нежелательные пары не встретятся.</li>
+          <li data-i18n="rules.4">Организатор не видит пары, пока не запущена жеребьёвка, а участники видят только своего получателя.</li>
+        </ol>
+      </div>
+
+      <div class="container section">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="features.kicker">Почему это удобно</p>
+          <h2 data-i18n="features.title">Всё для спокойной игры</h2>
+          <p class="section-sub" data-i18n="features.sub">Организатору — контроль, участникам — простота и интрига.</p>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">🎁</div>
+            <h3 data-i18n="features.wishlist.title">Вишлисты и анти-пожелания</h3>
+            <p data-i18n="features.wishlist.text">Участники добавляют желания, адрес и что лучше не дарить — Санте проще выбрать.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">💬</div>
+            <h3 data-i18n="features.chat.title">Анонимный чат</h3>
+            <p data-i18n="features.chat.text">Санта и получатель могут уточнить детали, не раскрывая имена.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">🛡️</div>
+            <h3 data-i18n="features.exclusions.title">Исключения и честная жеребьёвка</h3>
+            <p data-i18n="features.exclusions.text">Учитывайте пары и ограничения — никто не получит самого себя.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true">📊</div>
+            <h3 data-i18n="features.status.title">Статусы подарков</h3>
+            <p data-i18n="features.status.text">Организатор видит прогресс: кто уже выбрал, купил или отправил подарок.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="container section">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="privacy.kicker">Приватность</p>
+          <h2 data-i18n="privacy.title">Кто что видит</h2>
+          <p class="section-sub" data-i18n="privacy.sub">Тайна остаётся тайной: каждый видит ровно столько, сколько нужно.</p>
+        </div>
+        <div class="privacy-grid">
+          <article class="snow-card snow-card--flat privacy-card">
+            <div class="privacy-card__icon" aria-hidden="true">🗂️</div>
+            <h3 data-i18n="privacy.organizer.title">Организатор</h3>
+            <p data-i18n="privacy.organizer.text">Видит участников, статусы и готовность к обмену — но не видит, кто кому дарит.</p>
+          </article>
+          <article class="snow-card snow-card--flat privacy-card">
+            <div class="privacy-card__icon" aria-hidden="true">🎅</div>
+            <h3 data-i18n="privacy.santa.title">Санта</h3>
+            <p data-i18n="privacy.santa.text">Видит только своего получателя, его пожелания и профиль после жеребьёвки.</p>
+          </article>
+          <article class="snow-card snow-card--flat privacy-card">
+            <div class="privacy-card__icon" aria-hidden="true">🙂</div>
+            <h3 data-i18n="privacy.member.title">Участник</h3>
+            <p data-i18n="privacy.member.text">Видит только то, что дарит ему Санта, и свой анонимный чат. Другие пары скрыты.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="container section section--narrow">
+        <div class="section-head">
+          <p class="section-kicker" data-i18n="testimonials.kicker">Опыт игроков</p>
+          <h2 data-i18n="testimonials.title">Игры, которые запоминаются</h2>
+        </div>
+        <div class="testimonials-grid">
+          <article class="snow-card snow-card--flat testimonial-card">
+            <p class="testimonial-card__quote" data-i18n="testimonials.1.text">«Запустили игру за 5 минут, все добавили пожелания, и никто не остался без подарка. Анонимный чат — огонь!»</p>
+            <div class="testimonial-card__author"><span class="testimonial-card__avatar">А</span><div><strong data-i18n="testimonials.1.name">Анна</strong><span data-i18n="testimonials.1.role">играла с друзьями</span></div></div>
+          </article>
+          <article class="snow-card snow-card--flat testimonial-card">
+            <p class="testimonial-card__quote" data-i18n="testimonials.2.text">«Для удалённой команды это идеально: адреса в профиле, статусы подарков и понятная жеребьёвка.»</p>
+            <div class="testimonial-card__author"><span class="testimonial-card__avatar">И</span><div><strong data-i18n="testimonials.2.name">Игорь</strong><span data-i18n="testimonials.2.role">HR в IT-компании</span></div></div>
+          </article>
+          <article class="snow-card snow-card--flat testimonial-card">
+            <p class="testimonial-card__quote" data-i18n="testimonials.3.text">«Семейная традиция получилась с первого раза. Даже бабушка разобралась по ссылке!»</p>
+            <div class="testimonial-card__author"><span class="testimonial-card__avatar">М</span><div><strong data-i18n="testimonials.3.name">Марина</strong><span data-i18n="testimonials.3.role">семейная игра</span></div></div>
+          </article>
+        </div>
+      </div>
+
       <div class="container section section--narrow">
         <div class="section-head">
           <p class="section-kicker" data-i18n="faq.kicker">Вопросы и ответы</p>
@@ -152,6 +341,22 @@
           <details class="faq-item snow-card snow-card--flat">
             <summary data-i18n="faq.4.q">Сколько нужно участников?</summary>
             <div class="faq-item__answer"><p data-i18n="faq.4.a">Минимум три человека, чтобы жеребьёвка прошла корректно и никто не получил самого себя.</p></div>
+          </details>
+          <details class="faq-item snow-card snow-card--flat">
+            <summary data-i18n="faq.5.q">Можно ли играть, если мы в разных городах?</summary>
+            <div class="faq-item__answer"><p data-i18n="faq.5.a">Да. Участники могут заполнить адрес доставки в профиле, а Санта отправит подарок курьером или почтой.</p></div>
+          </details>
+          <details class="faq-item snow-card snow-card--flat">
+            <summary data-i18n="faq.6.q">Можно ли задать исключения?</summary>
+            <div class="faq-item__answer"><p data-i18n="faq.6.a">Да. Организатор может указать пары, которые не должны дарить друг другу — например, супругов или коллег из одного отдела.</p></div>
+          </details>
+          <details class="faq-item snow-card snow-card--flat">
+            <summary data-i18n="faq.7.q">Что делать, если кто-то забыл подарок?</summary>
+            <div class="faq-item__answer"><p data-i18n="faq.7.a">Организатор видит статусы подарков и может напомнить участникам. Анонимный чат помогает уточнить детали без раскрытия тайны.</p></div>
+          </details>
+          <details class="faq-item snow-card snow-card--flat">
+            <summary data-i18n="faq.8.q">Можно ли провести жеребьёвку заново?</summary>
+            <div class="faq-item__answer"><p data-i18n="faq.8.a">Да. Организатор может сбросить жеребьёвку и запустить её снова, если состав или правила изменились.</p></div>
           </details>
         </div>
       </div>
@@ -266,7 +471,7 @@
           <h1 data-i18n="quick.title">Быстрая жеребьёвка</h1>
           <p class="section-sub" data-i18n="quick.sub">Введите имена участников — каждый получит случайного получателя. Без регистрации и без комнаты.</p>
         </div>
-        <div class="snow-card form-card">
+        <div class="snow-card form-card" id="quickFormCard">
           <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,6 70,16 Q110,2 150,12 Q190,0 230,14 Q270,4 310,12 Q350,2 380,18 Q392,12 400,20 L400,48 Z" fill="currentColor"/></svg></div>
           <div class="form-card__body">
             <div class="field">
@@ -289,7 +494,19 @@
                 <h2 data-i18n="quick.resultTitle">Результат</h2>
                 <p class="muted small" id="quickResultMeta"></p>
               </div>
-              <button id="quickCopyBtn" class="btn btn-secondary btn-sm" type="button" data-i18n="quick.copy">Скопировать результат</button>
+              <div class="quick-actions">
+                <button id="quickCopyBtn" class="btn btn-secondary btn-sm" type="button" data-i18n="quick.copy">Скопировать результат</button>
+                <button id="quickCsvBtn" class="btn btn-ghost btn-sm" type="button" data-i18n="quick.csv">CSV</button>
+                <button id="quickPrintBtn" class="btn btn-ghost btn-sm" type="button" data-i18n="quick.print">Печать</button>
+              </div>
+            </div>
+            <div id="quickPersonalCard" class="quick-personal hidden">
+              <p class="section-kicker" data-i18n="quick.personalKicker">Ваша персональная ссылка</p>
+              <h2 id="quickPersonalHello"></h2>
+              <p class="quick-personal__label" data-i18n="quick.personalLabel">Вы дарите</p>
+              <p class="quick-personal__recipient" id="quickPersonalRecipient"></p>
+              <p class="muted small" data-i18n="quick.personalNote">Эту ссылку можно отправить только этому участнику — другие пары в ней не видны.</p>
+              <button id="quickPersonalCopyBtn" class="btn btn-secondary btn-sm" type="button" data-i18n="quick.personalCopy">Скопировать мою ссылку</button>
             </div>
             <ul id="quickResultList" class="list"></ul>
           </div>
@@ -336,15 +553,17 @@
                     </button>
                   </span>
                 </div>
-                <h1 id="gameTitleLabel" class="game-title">Игра</h1>
+                <h1 class="game-title"><span id="gameTitleLabel">Игра</span> <span id="demoBadge" class="demo-badge hidden" data-i18n="dash.demoBadge">DEMO</span></h1>
                 <p id="gameMetaLabel" class="game-meta muted"></p>
                 <p id="countdownLabel" class="countdown"></p>
                 <p id="backendStatusLabel" class="muted small"></p>
               </div>
               <div class="game-actions">
+                <button id="inviteBtn" class="btn btn-secondary" type="button" data-i18n="dash.inviteBtn">Пригласить</button>
                 <button id="drawBtn" class="btn btn-primary" type="button" data-i18n="dash.draw">Провести жеребьёвку</button>
                 <button id="revealBtn" class="btn btn-secondary hidden" type="button" data-i18n="dash.reveal">Показать, кому я дарю</button>
                 <button id="resetDrawBtn" class="btn btn-ghost btn-danger-text hidden" type="button" data-i18n="dash.reset">Сбросить жеребьёвку</button>
+                <button id="resetDemoBtn" class="btn btn-ghost hidden" type="button" data-i18n="dash.resetDemo">Пересоздать демо</button>
                 <button id="leaveBtn" class="btn btn-ghost" type="button" data-i18n="dash.leave">Выйти из игры</button>
               </div>
             </div>
@@ -366,6 +585,18 @@
                   <h3 class="wishlist-title" data-i18n="dash.recipientWishlist">Пожелания получателя</h3>
                   <ul id="recipientWishlistList" class="list"></ul>
                 </div>
+                <div id="recipientProfile" class="wishlist-view hidden">
+                  <h3 class="wishlist-title" data-i18n="dash.recipientProfileTitle">Профиль получателя</h3>
+                  <dl class="profile-dl">
+                    <div id="recipientAddressRow" class="hidden"><dt data-i18n="dash.profileAddress">Адрес / доставка</dt><dd id="recipientAddress"></dd></div>
+                    <div id="recipientNoteRow" class="hidden"><dt data-i18n="dash.profileNote">О себе / интересы</dt><dd id="recipientProfileNote"></dd></div>
+                    <div id="recipientAntiRow" class="hidden"><dt data-i18n="dash.profileAnti">Лучше не дарить</dt><dd id="recipientAntiWishlist"></dd></div>
+                    <div id="recipientSizeRow" class="hidden"><dt data-i18n="dash.profileSizeLabel">Размер / параметры</dt><dd id="recipientSize"></dd></div>
+                    <div id="recipientLinksRow" class="hidden"><dt data-i18n="dash.profileLinksLabel">Ссылки на товары</dt><dd id="recipientLinks"></dd></div>
+                    <div id="recipientAllergiesRow" class="hidden"><dt data-i18n="dash.profileAllergiesLabel">Аллергии и табу</dt><dd id="recipientAllergies"></dd></div>
+                  </dl>
+                  <p id="recipientProfileEmpty" class="muted small hidden" data-i18n="dash.recipientProfileEmpty">Получатель пока не заполнил профиль.</p>
+                </div>
               </div>
             </article>
 
@@ -385,6 +616,50 @@
                   <button class="btn btn-secondary" type="submit" data-i18n="dash.myWishlistAdd">Добавить</button>
                 </form>
                 <ul id="myWishlist" class="list"></ul>
+              </div>
+            </article>
+
+            <article class="snow-card panel" id="profilePanel">
+              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,26 Q30,8 60,18 Q100,4 140,16 Q180,2 220,14 Q260,4 300,18 Q340,8 380,20 L400,26 L400,48 Z" fill="currentColor"/></svg></div>
+              <div class="panel__body">
+                <div class="panel-head">
+                  <div class="panel-icon panel-icon--blue" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                  <div>
+                    <h2 data-i18n="dash.myProfileTitle">Мой профиль</h2>
+                    <p class="muted small" data-i18n="dash.myProfileSub">Помогите Санте: адрес для отправки и предпочтения</p>
+                  </div>
+                </div>
+                <form id="profileForm" class="form">
+                  <div class="field">
+                    <label for="profileAddress" data-i18n="dash.profileAddressLabel">Адрес для доставки (если нужно)</label>
+                    <input id="profileAddress" type="text" maxlength="300" placeholder="Город, адрес или способ передачи" data-i18n-placeholder="dash.profileAddressPh" />
+                  </div>
+                  <div class="field">
+                    <label for="profileNote" data-i18n="dash.profileNoteLabel">О себе / интересы</label>
+                    <textarea id="profileNote" rows="2" maxlength="800" placeholder="Например: люблю книги, чай, настолки" data-i18n-placeholder="dash.profileNotePh"></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="profileAnti" data-i18n="dash.profileAntiLabel">Что лучше не дарить</label>
+                    <textarea id="profileAnti" rows="2" maxlength="800" placeholder="Аллергии, непереносимые вещи и т.п." data-i18n-placeholder="dash.profileAntiPh"></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="profileSize" data-i18n="dash.profileSizeLabel">Размер / параметры</label>
+                    <input id="profileSize" type="text" maxlength="80" placeholder="Например: M, 42, 38 размер" data-i18n-placeholder="dash.profileSizePh" />
+                  </div>
+                  <div class="field">
+                    <label for="profileLinks" data-i18n="dash.profileLinksLabel">Ссылки на товары / вишлист</label>
+                    <textarea id="profileLinks" rows="2" maxlength="500" placeholder="Ссылки на товары, которые понравятся" data-i18n-placeholder="dash.profileLinksPh"></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="profileAllergies" data-i18n="dash.profileAllergiesLabel">Аллергии и табу</label>
+                    <textarea id="profileAllergies" rows="2" maxlength="500" placeholder="Например: аллергия на орехи" data-i18n-placeholder="dash.profileAllergiesPh"></textarea>
+                  </div>
+                  <p class="muted small" data-i18n="dash.profilePrivacy">Эти данные видит только ваш Санта после жеребьёвки.</p>
+                  <div class="form-actions" style="margin-top:10px;">
+                    <button class="btn btn-secondary" type="submit" data-i18n="dash.profileSave">Сохранить профиль</button>
+                  </div>
+                </form>
+                <p id="profileNotice" class="muted small" style="margin-top:8px;"></p>
               </div>
             </article>
 
@@ -417,6 +692,17 @@
                     <button class="btn btn-secondary" type="submit" data-i18n="dash.exclusionsAdd">Добавить исключение</button>
                   </form>
                 </div>
+
+                <div class="groups-block" id="groupsBlock">
+                  <h3 class="wishlist-title" data-i18n="dash.groupsTitle">Группы «сугроб»</h3>
+                  <p class="muted small" data-i18n="dash.groupsSub">Люди из одной группы не дарят друг другу — удобно для отделов и семей.</p>
+                  <ul id="groupsList" class="list"></ul>
+                  <form id="groupForm" class="group-form">
+                    <input id="groupName" type="text" maxlength="40" placeholder="Название группы" data-i18n-placeholder="dash.groupsNamePh" />
+                    <div id="groupMembers" class="group-members"></div>
+                    <button class="btn btn-secondary" type="submit" data-i18n="dash.groupsAdd">Создать группу</button>
+                  </form>
+                </div>
               </div>
             </article>
 
@@ -435,6 +721,14 @@
                   <div class="status-row"><span data-i18n="dash.statusWishlists">С пожеланиями</span><strong id="statWishlists">0%</strong></div>
                   <div class="status-row"><span data-i18n="dash.statusDraw">Жеребьёвка</span><strong id="statDraw">не проведена</strong></div>
                   <div class="status-row"><span data-i18n="dash.statusGifts">Подарки готовы</span><strong id="statGifts">0%</strong></div>
+                </div>
+                <div class="progress-block" aria-live="polite">
+                  <div class="progress-block__label"><span data-i18n="dash.progressLabel">Готовность к обмену</span><strong id="progressPct">0%</strong></div>
+                  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressFill" style="width:0%"></span></div>
+                </div>
+                <div class="checklist-block">
+                  <h3 data-i18n="dash.checklistTitle">Что осталось сделать</h3>
+                  <ul id="gameChecklist" class="checklist"></ul>
                 </div>
                 <div class="field gift-status-field">
                   <label for="myGiftStatus" data-i18n="dash.giftStatus">Мой статус подарка</label>
@@ -462,8 +756,33 @@
                   <button id="copyInviteBtn" class="btn btn-secondary" type="button" data-i18n="dash.copyInvite">Скопировать invite-ссылку</button>
                   <button id="refreshSessionsBtn" class="btn btn-ghost" type="button" data-i18n="dash.refreshSessions">Обновить сессии</button>
                 </div>
+                <div class="invite-generator">
+                  <label for="inviteText" data-i18n="dash.inviteTextLabel">Текст приглашения</label>
+                  <textarea id="inviteText" rows="4" readonly></textarea>
+                  <div class="invite-share">
+                    <button id="inviteCopyBtn" class="btn btn-secondary btn-sm" type="button" data-i18n="dash.inviteCopy">Скопировать текст</button>
+                    <button id="inviteTelegramBtn" class="btn btn-ghost btn-sm" type="button">Telegram</button>
+                    <button id="inviteWhatsappBtn" class="btn btn-ghost btn-sm" type="button">WhatsApp</button>
+                    <button id="inviteEmailBtn" class="btn btn-ghost btn-sm" type="button">Email</button>
+                  </div>
+                </div>
                 <ul id="sessionsList" class="list"></ul>
                 <p id="accessNotice" class="muted small"></p>
+              </div>
+            </article>
+
+            <article class="snow-card panel" id="activityPanel">
+              <div class="snow-card__cap" aria-hidden="true"><svg viewBox="0 0 400 48" preserveAspectRatio="none" focusable="false"><path d="M0,48 L0,22 Q30,8 70,17 Q110,3 150,13 Q190,1 230,14 Q270,4 310,13 Q350,3 380,18 Q392,12 400,21 L400,48 Z" fill="currentColor"/></svg></div>
+              <div class="panel__body">
+                <div class="panel-head">
+                  <div class="panel-icon panel-icon--green" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></div>
+                  <div>
+                    <h2 data-i18n="dash.activityTitle">Журнал событий</h2>
+                    <p class="muted small" data-i18n="dash.activitySub">Что происходило в игре (только для организатора)</p>
+                  </div>
+                </div>
+                <ul id="activityList" class="list activity-list" aria-live="polite"></ul>
+                <p id="activityNotice" class="muted small"></p>
               </div>
             </article>
 
@@ -480,6 +799,12 @@
                 <div class="chat-tabs">
                   <button id="chatTabRecipient" class="btn btn-secondary btn-sm is-active" type="button" data-i18n="dash.chatToRecipient">Моему получателю</button>
                   <button id="chatTabSanta" class="btn btn-ghost btn-sm" type="button" data-i18n="dash.chatToSanta">Моему Санте</button>
+                </div>
+                <div class="chat-templates" id="chatTemplates" aria-label="Шаблоны сообщений">
+                  <button class="chat-template" type="button" data-tpl="dash.tplSize">📏 <span data-i18n="dash.tplSize">Какой у вас размер?</span></button>
+                  <button class="chat-template" type="button" data-tpl="dash.tplAddress">📦 <span data-i18n="dash.tplAddress">Куда удобнее доставить?</span></button>
+                  <button class="chat-template" type="button" data-tpl="dash.tplAllergy">⚠️ <span data-i18n="dash.tplAllergy">Есть аллергии?</span></button>
+                  <button class="chat-template" type="button" data-tpl="dash.tplThanks">🎁 <span data-i18n="dash.tplThanks">Спасибо за подарок!</span></button>
                 </div>
                 <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
                 <form id="chatForm" class="inline-form" style="margin-top:10px;">

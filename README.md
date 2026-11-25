@@ -7,13 +7,20 @@
 ## Возможности
 
 - **Быстрый старт** — создание игры за минуту: название, дата обмена, бюджет и тема.
+- **Демо-игра** — готовый пример с участниками, вишлистами и жеребьёвкой; её можно пересоздать.
 - **Вход по коду** — участники подключаются по коду комнаты, без аккаунтов и email.
 - **Честная жеребьёвка** — случайное распределение пар, никто не получает самого себя.
-- **Приватный результат** — каждый участник видит только своего получателя.
-- **Пожелания к подаркам** — можно добавить wishlist и посмотреть пожелания получателя после жеребьёвки.
-- **Статус подготовки** — отслеживание участников, пожеланий и статуса подарка.
+- **Быстрая жеребьёвка** — roster из Names + персональные ссылки, CSV и печать результата.
+- **Приватный результат** — каждый участник видит только своего получателя; на главной есть блок «Кто что видит».
+- **Пожелания и профиль** — wishlist, анти-пожелания, адрес, размер, ссылки и аллергии.
+- **Группы «сугроб»** — участники одной группы не дарят друг другу; работает и в онлайн-комнате.
+- **Анонимный чат** — после жеребьёвки можно писать анонимно получателю или своему Санте; есть быстрые шаблоны сообщений.
+- **Приглашения** — генератор текста и кнопки Telegram / WhatsApp / Email.
+- **Статус подготовки** — чеклист «что осталось» и прогресс готовности к обмену.
+- **Журнал событий** — организатор видит историю ключевых действий комнаты.
+- **Темы** — winter / midnight / cozy с сохранением выбора.
 - **RU / EN** — переключение языка интерфейса прямо в шапке сайта.
-- **PWA-основа** — есть `manifest.webmanifest` и `service worker` для кеширования статики.
+- **PWA** — `manifest.webmanifest`, service worker, install-кнопка, offline-баннер, кеш последних сообщений и отложенная отправка сообщений.
 - **Локальное хранение** — данные сохраняются в `localStorage` браузера.
 
 ## Скриншоты
@@ -31,14 +38,14 @@ git clone <url-вашего-репозитория>
 cd SecretSanta
 
 # Терминал 1: backend API
-python3 -m backend.app.server --host 127.0.0.1 --port 8000
+PYTHONPATH=backend python3 -m app.server --host 127.0.0.1 --port 8000
 
 # Терминал 2: статический frontend
 python3 -m http.server 8766
 ```
 
 Откройте: `http://localhost:8766`  
-Frontend автоматически определит backend на `http://127.0.0.1:8000` и переключится в онлайн-режим (синхронизация комнаты, wishlist, жеребьёвка, SSE-обновления).
+Frontend автоматически определит backend на `http://127.0.0.1:8000` и переключится в онлайн-режим (синхронизация комнаты, wishlist, чат, жеребьёвка, SSE-обновления).
 
 ### Вариант B: Только frontend (локальный режим)
 
@@ -114,8 +121,9 @@ docker compose up --build
 ## Примечания
 
 - Frontend поддерживает **два режима**: онлайн (backend) и локальный fallback (`localStorage`).
-- Foundation backend уже реализует server-side draw, приватное назначение, wishlist/gift status, SSE, invites/sessions.
-- Для полноценного production остаются: полноценный UI управления invite/session, hardening безопасности/rate limiting, миграция на `backend/prod_stack` (Postgres/Redis/worker), e2e и наблюдаемость.
+- Foundation backend реализует server-side draw, приватное назначение, wishlist/gift status, расширенный профиль, исключения/группы, анонимный чат, SSE, organizer activity log, invites/sessions.
+- Проверка локально: `node --check app.js && node --check sw.js`, `PYTHONPATH=backend python3 -m unittest discover -s backend/tests -p 'test_*.py'`, `python3 -m unittest discover -s backend/prod_stack/tests -p 'test*.py'`, `python3 scripts/smoke_e2e.py`.
+- Для полноценного production остаются: реальная инфраструктура Postgres/Redis, deploy worker/SMTP/Sentry, e2e против prod stack и финальный cutover.
 
 ## Лицензия
 
@@ -132,13 +140,20 @@ A modern web app for organizing a Secret Santa gift exchange: create a room, inv
 ## Features
 
 - **Quick start** — create a game in a minute: name, exchange date, budget, and theme.
+- **Demo game** — a seeded example with participants, wishlists, and a draw; it can be reset.
 - **Join by code** — participants join with a room code, no accounts or email required.
 - **Fair draw** — random pair assignment where no one gets themselves.
-- **Private result** — each participant sees only their own recipient.
-- **Gift wishes** — add a wishlist and view the recipient’s wishes after the draw.
-- **Preparation status** — track participants, wishes, and gift readiness.
+- **Quick draw** — name roster with personal links, CSV export, and print view.
+- **Private result** — each participant sees only their own recipient; the landing page includes a “Who sees what” section.
+- **Wishes & profile** — wishlist, anti-wishes, address, size, links, and allergies.
+- **Snowdrift groups** — people in the same group never gift each other; works in online rooms too.
+- **Anonymous chat** — after the draw, message your recipient or your Santa anonymously, with quick reply templates.
+- **Invitations** — generated invite text plus Telegram / WhatsApp / Email share buttons.
+- **Preparation status** — a “what’s left” checklist and exchange readiness progress.
+- **Activity log** — the organizer sees a history of key room events.
+- **Themes** — winter / midnight / cozy with the choice saved locally.
 - **RU / EN** — switch the interface language directly in the header.
-- **PWA basics** — includes `manifest.webmanifest` and a `service worker` for static asset caching.
+- **PWA** — `manifest.webmanifest`, service worker, install button, offline banner, cached recent messages, and queued message sending.
 - **Local storage** — data is saved in the browser’s `localStorage`.
 
 ## Screenshots
@@ -156,14 +171,14 @@ git clone <your-repository-url>
 cd SecretSanta
 
 # Terminal 1: backend API
-python3 -m backend.app.server --host 127.0.0.1 --port 8000
+PYTHONPATH=backend python3 -m app.server --host 127.0.0.1 --port 8000
 
 # Terminal 2: static frontend
 python3 -m http.server 8766
 ```
 
 Open: `http://localhost:8766`  
-The frontend auto-detects the backend at `http://127.0.0.1:8000` and switches to online mode (room sync, wishlist, draw, SSE updates).
+The frontend auto-detects the backend at `http://127.0.0.1:8000` and switches to online mode (room sync, wishlist, chat, draw, SSE updates).
 
 ### Option B: Frontend only (local mode)
 
@@ -239,8 +254,9 @@ See [`backend/.env.example`](backend/.env.example):
 ## Notes
 
 - The frontend supports **two modes**: online (backend) and local fallback (`localStorage`).
-- The foundation backend already implements server-side draw, private assignment, wishlist/gift status, SSE, invites/sessions.
-- Remaining for full production: full invite/session management UI, security/rate-limiting hardening, migration to `backend/prod_stack` (Postgres/Redis/worker), e2e tests, and observability.
+- The foundation backend implements server-side draw, private assignment, wishlist/gift status, extended profile, exclusions/groups, anonymous chat, SSE, organizer activity log, invites/sessions.
+- Local verification: `node --check app.js && node --check sw.js`, `PYTHONPATH=backend python3 -m unittest discover -s backend/tests -p 'test_*.py'`, `python3 -m unittest discover -s backend/prod_stack/tests -p 'test*.py'`, `python3 scripts/smoke_e2e.py`.
+- Remaining for full production: real Postgres/Redis infrastructure, worker/SMTP/Sentry deployment, e2e tests against the prod stack, and final cutover.
 
 ## License
 

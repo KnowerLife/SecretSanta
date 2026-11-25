@@ -16,6 +16,8 @@ jobs:
       - name: Run backend tests
         working-directory: backend
         run: python -m unittest discover -s tests -p 'test*.py' -v
+      - name: Run prod-stack static contract tests
+        run: python -m unittest discover -s backend/prod_stack/tests -p 'test*.py' -v
 
   syntax-check:
     runs-on: ubuntu-latest
