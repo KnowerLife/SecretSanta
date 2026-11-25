@@ -1,63 +1,118 @@
 # Тайный Санта / Secret Santa
 
-Современное веб-приложение для организации игры «Тайный Санта»: создание комнаты, приглашение участников по коду, пожелания к подаркам и честная жеребьёвка. Интерфейс выполнен в зимнем праздничном стиле, поддерживает **RU/EN** и работает без регистрации.
+Веб-приложение для организации обмена подарками: создание комнаты, вход по коду, сбор пожеланий, честная жеребьёвка, приватный результат и анонимный чат. Интерфейс bilingual (**RU / EN**), темы `winter`, `midnight`, `cozy`, PWA с офлайн-очередью сообщений.
 
-![Главный экран Тайный Санта](docs/screenshots/home.jpg)
+> Frontend полностью статический и может работать без backend — состояние хранится в `localStorage`. При доступном backend включается онлайн-режим: синхронизация комнаты, SSE-события, серверная жеребьёвка, чат и журнал действий.
 
-## Возможности
-
-- **Быстрый старт** — создание игры за минуту: название, дата обмена, бюджет и тема.
-- **Демо-игра** — готовый пример с участниками, вишлистами и жеребьёвкой; её можно пересоздать.
-- **Вход по коду** — участники подключаются по коду комнаты, без аккаунтов и email.
-- **Честная жеребьёвка** — случайное распределение пар, никто не получает самого себя.
-- **Быстрая жеребьёвка** — roster из Names + персональные ссылки, CSV и печать результата.
-- **Приватный результат** — каждый участник видит только своего получателя; на главной есть блок «Кто что видит».
-- **Пожелания и профиль** — wishlist, анти-пожелания, адрес, размер, ссылки и аллергии.
-- **Группы «сугроб»** — участники одной группы не дарят друг другу; работает и в онлайн-комнате.
-- **Анонимный чат** — после жеребьёвки можно писать анонимно получателю или своему Санте; есть быстрые шаблоны сообщений.
-- **Приглашения** — генератор текста и кнопки Telegram / WhatsApp / Email.
-- **Статус подготовки** — чеклист «что осталось» и прогресс готовности к обмену.
-- **Журнал событий** — организатор видит историю ключевых действий комнаты.
-- **Темы** — winter / midnight / cozy с сохранением выбора.
-- **RU / EN** — переключение языка интерфейса прямо в шапке сайта.
-- **PWA** — `manifest.webmanifest`, service worker, карточка установки в футере и кнопка в шапке, offline-баннер, кеш последних сообщений и отложенная отправка сообщений.
-- **Локальное хранение** — данные сохраняются в `localStorage` браузера.
+---
 
 ## Скриншоты
 
-| Главная | Создание игры | Дашборд игры |
-|---|---|---|
-| ![Главная страница](docs/screenshots/home.jpg) | ![Создание игры](docs/screenshots/create.jpg) | ![Дашборд игры](docs/screenshots/dashboard.jpg) |
-| **Быстрая жеребьёвка** | **Анонимный чат** | **Журнал событий** |
-| ![Быстрая жеребьёвка](docs/screenshots/quick.jpg) | ![Анонимный чат](docs/screenshots/chat.jpg) | ![Журнал событий](docs/screenshots/activity.jpg) |
+Все изображения сгенерированы из реальных UI-сценариев через Playwright (`scripts/capture_screenshots.mjs`), а не являются макетами. Снимки сделаны после жеребьёвки, отправки сообщений и открытия служебных панелей.
+
+### Основной поток — RU
+
+| | |
+|---|---|
+| ![Главная: hero и режимы игры](docs/screenshots/home-hero-ru.jpg) **Главная** — hero, три режима игры, CTA и блок «как это работает». Первый экран с адаптивной сеткой и праздничной графикой. | ![Создание игры](docs/screenshots/create-game-ru.jpg) **Создание игры** — заполненная форма: название, организатор, дата, бюджет и тема. Поля проходят клиентскую проверку до отправки. |
+| ![Вход по коду](docs/screenshots/join-game-ru.jpg) **Вход по коду** — участник вводит код комнаты и имя; аккаунт и email не нужны. | ![Дашборд демо-игры](docs/screenshots/dashboard-demo-ru.jpg) **Дашборд после жеребьёвки** — демо-комната `DEMO-SANTA`, открытый получатель, ACTIONS и статус подготовки. |
+| ![Панель приглашения](docs/screenshots/invite-share-ru.jpg) **Приглашения** — сгенерированный текст, invite-ссылка и кнопки Telegram / WhatsApp / Email. | ![Пожелания получателя](docs/screenshots/recipient-wishlist-ru.jpg) **Пожелания получателя** — wishlist и профиль видны только после раскрытия назначения. |
+| ![Анонимный чат](docs/screenshots/chat-messages-ru.jpg) **Анонимный чат** — сообщение отправлено через backend, доступны быстрые шаблоны и две вкладки адресатов. | ![Журнал событий](docs/screenshots/activity-log-ru.jpg) **Журнал событий** — действия комнаты приходят через SSE и доступны организатору. |
+| ![Быстрая жеребьёвка](docs/screenshots/quick-draw-ru.jpg) **Быстрая жеребьёвка** — результат по списку имён, кнопки копирования, CSV, печати и персональной ссылки. | ![Установка PWA](docs/screenshots/install-footer-ru.jpg) **Установка PWA** — карточка в футере с подсказкой и кнопкой 44×44; в шапке появляется иконка установки. |
+
+### Основной поток — EN
+
+| | |
+|---|---|
+| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — hero, three game modes, CTA and the “how it works” section. | ![Create game form](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
+| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code plus name, no account or email. | ![Demo dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Dashboard after draw** — `DEMO-SANTA`, revealed recipient, actions and readiness checklist. |
+| ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email actions. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile become visible only after the reveal. |
+| ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — a message delivered through the backend, with templates and two recipient tabs. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven room events for the organizer. |
+| ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — name-based draw with copy, CSV, print and personal-link actions. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer card with a hint and a 44×44 button; the header icon appears when install is available. |
+
+### Дополнительные состояния
+
+| | |
+|---|---|
+| ![Тема midnight](docs/screenshots/theme-midnight-ru.jpg) **Midnight** — тёмная тема с сохранением выбора в `localStorage`. | ![Тема cozy](docs/screenshots/theme-cozy-ru.jpg) **Cozy** — тёплая тема; токены переключаются без смены компонентов. |
+| ![Мобильная главная](docs/screenshots/mobile-home-ru.jpg) **390 px** — мобильная главная: безопасные отступы, горизонтальная навигация и stacking hero. | ![Мобильная быстрая жеребьёвка](docs/screenshots/mobile-quick-ru.jpg) **390 px** — результат быстрой жеребьёвки без горизонтального переполнения. |
+
+---
+
+## Возможности
+
+- **Два режима работы** — локальный `localStorage` fallback и онлайн-режим с backend.
+- **Создание комнаты** — название, организатор, дата обмена, бюджет и тема.
+- **Вход по коду** — участники присоединяются по `SANTA-XXXX` или invite-ссылке, без регистрации.
+- **Демо-игра** — готовые участники, пожелания и жеребьёвка; демо можно пересоздать или сбросить.
+- **Честная жеребьёвка** — перестановка без самоназначений; поддерживает исключения и группы «сугроб».
+- **Быстрая жеребьёвка** — roster из имён, персональные ссылки, CSV и печать; без комнаты и регистрации.
+- **Приватность назначения** — получатель скрыт до явного нажатия «Показать, кому я дарю».
+- **Профиль и wishlist** — адрес, интересы, анти-пожелания, размер, ссылки и аллергии.
+- **Анонимный чат** — две вкладки (получатель / Санта), шаблоны сообщений, кеш и офлайн-очередь.
+- **Приглашения** — текст, invite-ссылка и шеринг в Telegram / WhatsApp / Email.
+- **Доступ и сессии** — список активных сессий, отзыв, member-tokens.
+- **Журнал событий** — история ключевых действий комнаты для организатора.
+- **Темы и языки** — `winter` / `midnight` / `cozy`, RU / EN, выбор сохраняется локально.
+- **PWA** — manifest, service worker, 192/512/maskable/Apple icons, offline-навигация, install-карточка.
+- **Доступность** — контраст текста ≥ 4.5:1, цели касания 44 px, видимый фокус, `prefers-reduced-motion`, без горизонтального скролла.
+
+---
+
+## Архитектура
+
+```text
+index.html ──┬─> styles.css            дизайн-токены, темы, компоненты, адаптив
+             ├─> app.js                State, i18n, роутинг хеша, API/SSE, PWA UI
+             │      ├─> localStorage   state, язык, тема, чат, offline-queue
+             │      └─> fetch/SSE ───> backend/app/server.py ─> SQLite
+             └─> sw.js                 cache shell + 29 изображений + иконки
+
+backend/app/
+  server.py      HTTP API, SSE, CORS, rate limit, auth
+  db.py          SQLite connections and migrations
+  auth.py        token / session helpers
+  draw.py        derangement draw
+  realtime.py    pub/sub for SSE
+  push.py        Web Push scaffold
+```
+
+Поток онлайн-игры:
+
+1. Frontend проверяет `GET /api/health` (таймаут 1.8 с). При успехе `apiState.online = true`.
+2. `POST /api/rooms` создаёт комнату; `POST /api/rooms/join` добавляет участников по invite-token.
+3. `POST /api/rooms/{code}/draw` запускает серверную жеребьёвку; assignment запрашивается отдельно через `GET .../assignment`.
+4. `GET .../events` держит SSE-соединение; события обновляютParticipants / chat / activity без polling.
+5. При офлайне сообщения складываются в `secret-santa-offline-queue` и отправляются после события `online`.
+
+---
 
 ## Быстрый запуск
 
-### Вариант A: Frontend + Backend (рекомендуется)
+### Вариант A — frontend + backend (рекомендуется)
 
 ```bash
-git clone <url-вашего-репозитория>
+git clone <repository-url>
 cd SecretSanta
 
-# Терминал 1: backend API
+# Терминал 1: API
 PYTHONPATH=backend python3 -m app.server --host 127.0.0.1 --port 8000
 
 # Терминал 2: статический frontend
-python3 -m http.server 8766
+python3 -m http.server 8080
 ```
 
-Откройте: `http://localhost:8766`  
-Frontend автоматически определит backend на `http://127.0.0.1:8000` и переключится в онлайн-режим (синхронизация комнаты, wishlist, чат, жеребьёвка, SSE-обновления).
+Откройте `http://127.0.0.1:8080/`. Frontend автоматически найдёт backend на `http://127.0.0.1:8000`.
 
-### Вариант B: Только frontend (локальный режим)
+### Вариант B — только frontend
 
 ```bash
-python3 -m http.server 8766
+python3 -m http.server 8080
 ```
 
-Данные сохраняются в `localStorage` текущего браузера. Подходит для демо/офлайн.
+Подходит для демо и офлайна: данные остаются в браузере, серверные функции (чат, SSE, журнал) недоступны.
 
-### Вариант C: Docker Compose
+### Вариант C — Docker Compose
 
 ```bash
 docker compose up --build
@@ -65,207 +120,280 @@ docker compose up --build
 
 - Frontend: `http://localhost:8766`
 - Backend: `http://localhost:8000`
+- SQLite volume: `secretsanta_data`
 
-## Как начать играть
+### Make-команды
 
-1. **Создайте игру** — нажмите «Создать игру», заполните название, дату обмена и бюджет.
-2. **Поделитесь кодом/ссылкой** — отправьте участникам код комнаты или invite-ссылку.
-3. **Участники присоединяются** — вход по коду/ссылке (в онлайн-режиме данные синхронизируются через backend).
-4. **Заполните пожелания** — каждый участник добавляет wishlist.
-5. **Проведите жеребьёвку** — когда участников минимум 3, организатор запускает draw.
-6. **Откройте получателя** — нажмите «Показать, кому я дарю» и подготовьте сюрприз.
+```bash
+make frontend      # static server on :8766
+make backend       # foundation API on :8000
+make test          # backend unittest + node --check
+make smoke         # scripts/smoke_e2e.py
+make screenshots   # regenerate docs/screenshots (needs playwright + servers)
+make docker-up
+make docker-down
+```
+
+---
+
+## Конфигурация
+
+### Backend
+
+См. [`backend/.env.example`](backend/.env.example):
+
+| Переменная | Назначение |
+|---|---|
+| `SECRET_SANTA_SECRET` | Секрет подписи токенов; в production обязательно заменить. |
+| `SECRET_SANTA_DB_PATH` | Путь к SQLite-файлу. |
+| `SECRET_SANTA_ALLOW_ORIGIN` | Разрешённый CORS origin. |
+| `SECRET_SANTA_TOKEN_TTL` | TTL токена доступа. |
+| `VAPID_*` | Опциональные ключи Web Push. |
+
+### Frontend
+
+API base можно переопределить до загрузки `app.js`:
+
+```html
+<script>window.SECRET_SANTA_API_BASE = 'http://127.0.0.1:8000';</script>
+```
+
+или через `localStorage.setItem('secret-santa-api-base', 'http://127.0.0.1:8000')`.
+
+Локальные ключи:
+
+| Key | Содержимое |
+|---|---|
+| `secret-santa-simple-v1` | Основное состояние: комнаты, участники, wishlist, assignment, демо. |
+| `secret-santa-theme` | `winter` / `midnight` / `cozy`. |
+| `secret-santa-lang` | `ru` / `en`. |
+| `secret-santa-api-base` | Адрес backend. |
+| `secret-santa-chat-cache` | Последние сообщения по комнатам. |
+| `secret-santa-offline-queue` | Неотправленные сообщения. |
+
+---
+
+## HTTP API (foundation backend)
+
+| Группа | Endpoints |
+|---|---|
+| Health / push config | `GET /api/health`, `GET /api/push/config`, `POST /api/push/subscribe`, `POST /api/push/unsubscribe` |
+| Rooms | `POST /api/rooms`, `POST /api/rooms/join`, `GET /api/rooms/{code}` |
+| Draw | `POST /api/rooms/{code}/draw`, `POST /api/rooms/{code}/draw/reset`, `GET /api/rooms/{code}/assignment` |
+| Members & access | `POST /api/rooms/{code}/member-tokens`, `GET /api/rooms/{code}/sessions`, `POST /api/rooms/{code}/sessions/revoke`, `POST /api/rooms/{code}/invites` |
+| Gifts | `POST /api/rooms/{code}/wishlist`, `DELETE /api/rooms/{code}/wishlist/{id}`, `POST /api/rooms/{code}/gift-status`, `POST /api/rooms/{code}/profile` |
+| Rules | `POST /api/rooms/{code}/exclusions`, `DELETE /api/rooms/{code}/exclusions/{a}/{b}` |
+| Chat & events | `GET/POST /api/rooms/{code}/messages?channel=to_recipient\|to_santa`, `GET /api/rooms/{code}/events` (SSE) |
+| Ops | `GET /api/rooms/{code}/activity`, `POST /api/rooms/{code}/notifications`, `POST /api/rooms/{code}/push/test` |
+
+Все защищённые методы ожидают `Authorization: Bearer <token>`; SSE передаёт токен в query-параметре `token`, потому что `EventSource` не поддерживает заголовки.
+
+---
+
+## PWA и офлайн
+
+- `manifest.webmanifest`: standalone display, `name`/`short_name`, `theme_color`, 192/512/maskable и Apple touch icon.
+- `sw.js`: `CACHE_NAME = 'secret-santa-v58-images'`; кеширует HTML, CSS, JS, manifest, иконки и все 29 сцен из `assets/images/`.
+- При изменении любого ассета поднимите версию в `CACHE_NAME` и в query-строках `styles.css?v=…` / `app.js?v=…` в `index.html` и `sw.js`.
+- Офлайн-навигация отдаёт закешированный shell; недоступные API-запросы не ломают интерфейс.
+- Установка: `beforeinstallprompt` → кнопка в шапке и карточка футера; `appinstalled` скрывает кнопки и показывает статус. На iOS показывается инструкция «Поделиться → На главный экран».
+
+---
+
+## Изображения
+
+Промты, точные пути, размеры, alt-текст и точки вставки описаны в [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md). Подключены все 29 сцен: hero, шаги, режимы, заголовки секций и страниц, пустые состояния, CTA, чат, приглашения, быстрая жеребьёвка и социальный превью. Глобальный фотобой не используется: фон страницы — CSS-снег и градиенты, изображения живут в `article`/`section`-блоках и защищены токеном `--surface-soft`.
+
+---
+
+## Разработка и проверки
+
+```bash
+# Syntax
+node --check app.js && node --check sw.js
+
+# Backend tests
+PYTHONPATH=backend python3 -m unittest discover -s backend/tests -p 'test_*.py'
+python3 -m unittest discover -s backend/prod_stack/tests -p 'test*.py'
+
+# End-to-end smoke
+python3 scripts/smoke_e2e.py
+```
+
+Что проверяется в UI: контраст текста, размеры целей 44 px, фокус только при `:focus-visible`, reduced motion, отсутствие горизонтального overflow на 390 / 768 / 1440 px, одинаковая высота карточек в сетках, загрузка всех изображений и офлайн-навигация.
+
+### Регенерация скриншотов
+
+```bash
+npm i --no-save playwright && npx playwright install chromium
+
+# Терминалы 1 и 2: frontend :8080 и backend :8000 (см. Быстрый запуск)
+node scripts/capture_screenshots.mjs
+```
+
+Скрипт очищает `docs/screenshots/*.jpg` и создаёт 24 новых снимка из сценариев. Для кастомных адресов используйте `SECRET_SANTA_BASE` и `SECRET_SANTA_API`.
+
+---
 
 ## Структура проекта
 
 ```text
 .
-├── index.html                  # Разметка приложения и экраны
-├── styles.css                  # Дизайн-система, компоненты, адаптив
-├── app.js                      # Frontend: UI, i18n, localStorage, backend API/SSE
-├── sw.js                       # Service Worker
-├── manifest.webmanifest        # PWA manifest
-├── docker-compose.yml          # Локальный запуск frontend + backend
-├── .github/workflows/ci.yml    # CI: backend tests + JS syntax check
+├── index.html                  Разметка экранов, иконки, i18n-атрибуты
+├── styles.css                  Токены, темы, компоненты, responsive
+├── app.js                      UI, state, i18n, API/SSE, localStorage, install flow
+├── sw.js                       Service Worker и offline cache
+├── manifest.webmanifest        PWA manifest
+├── docker-compose.yml          Локальный frontend + backend
+├── Makefile                    Короткие команды запуска и тестов
+├── scripts/
+│   ├── smoke_e2e.py            Backend smoke-тест
+│   └── capture_screenshots.mjs Генерация скриншотов README
+├── assets/images/              29 JPG-сцен + PROMPTS.md
+├── icons/                      192/512/maskable/Apple icons
+├── docs/screenshots/           24 актуальных скриншота
 ├── backend/
-│   ├── app/                    # Foundation backend (Python stdlib + SQLite)
-│   │   ├── server.py           # HTTP API, SSE, auth, draw, wishlist
-│   │   ├── db.py               # SQLite + migrations
-│   │   ├── auth.py             # Tokens/sessions
-│   │   ├── draw.py             # Derangement draw
-│   │   ├── realtime.py         # SSE/pubsub helper
-│   │   └── push.py             # Web Push scaffold
-│   ├── migrations/             # SQL migrations
-│   ├── tests/                  # unittest (draw, security, wishlist)
-│   ├── Dockerfile
+│   ├── app/                    Foundation API: server/db/auth/draw/realtime/push
+│   ├── migrations/             SQL миграции SQLite
+│   ├── tests/                  unittest
+│   ├── prod_stack/             FastAPI + Postgres + Redis scaffold
+│   ├── scripts/                notification worker, scheduler
 │   └── .env.example
-├── backend/prod_stack/         # Каркас миграции на FastAPI + Postgres + Redis
-├── assets/images/              # Иллюстрации и промты
-└── docs/screenshots/           # Скриншоты для README
+├── PRODUCTION_PLAN.md          Что осталось до production cutover
+└── .github/workflows/ci.yml    CI: backend tests + JS syntax check
 ```
 
 ## Технологии
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript, PWA (Manifest + Service Worker), Google Fonts (Nunito).
-- **Backend (foundation)**: Python stdlib `http.server`, SQLite, SSE, token-based sessions, server-side draw.
-- **Prod stack (scaffold)**: FastAPI, PostgreSQL, SQLAlchemy/Alembic, Redis, worker/notifications.
-- **CI**: GitHub Actions (unittest + JS syntax check).
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript, PWA, Manrope 400/500/600/700/800, hash-роутинг, CSS custom properties.
+- **Backend (foundation)**: Python stdlib `http.server`, SQLite, SSE, token-based sessions, server-side derangement draw.
+- **Prod stack (scaffold)**: FastAPI, PostgreSQL, SQLAlchemy/Alembic, Redis, worker / notifications.
+- **CI**: GitHub Actions — backend unittest + syntax check.
 
-## Конфигурация backend
+## Production status
 
-См. [`backend/.env.example`](backend/.env.example):
+Реализовано и проверено локально: локальный режим, foundation API, server-side draw, приватный assignment, wishlist/profile, exclusions/groups, чат, SSE, activity log, invites/sessions, PWA/offline, bilingual UI и три темы.
 
-- `SECRET_SANTA_SECRET` — секрет подписи токенов (обязательно сменить в production).
-- `SECRET_SANTA_DB_PATH` — путь к SQLite.
-- `SECRET_SANTA_ALLOW_ORIGIN` — CORS origin.
-- `SECRET_SANTA_TOKEN_TTL` — TTL токена.
-- `VAPID_*` — опционально для Web Push.
-
-## Примечания
-
-- Frontend поддерживает **два режима**: онлайн (backend) и локальный fallback (`localStorage`).
-- Foundation backend реализует server-side draw, приватное назначение, wishlist/gift status, расширенный профиль, исключения/группы, анонимный чат, SSE, organizer activity log, invites/sessions.
-- Проверка локально: `node --check app.js && node --check sw.js`, `PYTHONPATH=backend python3 -m unittest discover -s backend/tests -p 'test_*.py'`, `python3 -m unittest discover -s backend/prod_stack/tests -p 'test*.py'`, `python3 scripts/smoke_e2e.py`.
-- Для полноценного production остаются: реальная инфраструктура Postgres/Redis, deploy worker/SMTP/Sentry, e2e против prod stack и финальный cutover.
+Остаётся для полноценного production: реальная инфраструктура Postgres/Redis, deploy worker/SMTP/Sentry, HTTPS/domain и secrets, бэкапы и алерты, e2e-тесты против prod stack и финальный cutover. Детали — в [`PRODUCTION_PLAN.md`](PRODUCTION_PLAN.md).
 
 ## Лицензия
 
-Проект распространяется под лицензией [MIT](LICENSE).
+MIT, см. [LICENSE](LICENSE).
 
 ---
 
-# Secret Santa / Тайный Санта
+# Secret Santa / Тайный Санта (English)
 
-A modern web app for organizing a Secret Santa gift exchange: create a room, invite participants with a code, collect gift wishes, and run a fair draw. The interface features a winter holiday style, supports **RU/EN**, and works without registration.
+A web app for running a Secret Santa exchange: create a room, join by code, collect wishes, run a fair draw, reveal only your own recipient and chat anonymously. The UI is bilingual (**RU / EN**) with `winter`, `midnight` and `cozy` themes and a PWA with an offline message queue.
 
-![Secret Santa home screen](docs/screenshots/home-en.jpg)
-
-## Features
-
-- **Quick start** — create a game in a minute: name, exchange date, budget, and theme.
-- **Demo game** — a seeded example with participants, wishlists, and a draw; it can be reset.
-- **Join by code** — participants join with a room code, no accounts or email required.
-- **Fair draw** — random pair assignment where no one gets themselves.
-- **Quick draw** — name roster with personal links, CSV export, and print view.
-- **Private result** — each participant sees only their own recipient; the landing page includes a “Who sees what” section.
-- **Wishes & profile** — wishlist, anti-wishes, address, size, links, and allergies.
-- **Snowdrift groups** — people in the same group never gift each other; works in online rooms too.
-- **Anonymous chat** — after the draw, message your recipient or your Santa anonymously, with quick reply templates.
-- **Invitations** — generated invite text plus Telegram / WhatsApp / Email share buttons.
-- **Preparation status** — a “what’s left” checklist and exchange readiness progress.
-- **Activity log** — the organizer sees a history of key room events.
-- **Themes** — winter / midnight / cozy with the choice saved locally.
-- **RU / EN** — switch the interface language directly in the header.
-- **PWA** — `manifest.webmanifest`, service worker, footer install card and header button, offline banner, cached recent messages, and queued message sending.
-- **Local storage** — data is saved in the browser’s `localStorage`.
+> The frontend is fully static and works without a backend via `localStorage`. With the backend available it switches to online mode: room sync, SSE events, server-side draw, chat and activity log.
 
 ## Screenshots
 
-| Home | Create game | Game dashboard |
-|---|---|---|
-| ![Home page](docs/screenshots/home-en.jpg) | ![Create game](docs/screenshots/create-en.jpg) | ![Game dashboard](docs/screenshots/dashboard-en.jpg) |
-| **Quick draw** | **Anonymous chat** | **Activity log** |
-| ![Quick draw](docs/screenshots/quick-en.jpg) | ![Anonymous chat](docs/screenshots/chat-en.jpg) | ![Activity log](docs/screenshots/activity-en.jpg) |
+All screenshots are generated from real Playwright scenarios (`scripts/capture_screenshots.mjs`), not mockups. They capture post-draw, sent-message and opened-panel states.
 
-### Illustrations
+### Main flow — EN
 
-Ready-to-use image prompts, filenames, paths, sizes, alt text and insertion points are documented in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md). All 29 holiday scenes are connected: hero, steps, format cards, section and page headers, dashboard empty states, CTA, chat, invite panel, quick draw and social preview. Each scene has a RU/EN prompt, exact path, size, alt text and insertion point in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md).
+| | |
+|---|---|
+| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — hero, three game modes, CTA and “how it works”. | ![Create game](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
+| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code and name, no account or email. | ![Dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Dashboard after draw** — `DEMO-SANTA`, revealed recipient, actions and readiness checklist. |
+| ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email share actions. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile appear only after the reveal. |
+| ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — delivered message, reply templates and two recipient tabs. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven organizer events. |
+| ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — name-based result with copy, CSV, print and personal-link actions. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer hint plus 44×44 button; the header icon appears when install is available. |
 
-## Quick Start
+### Additional states
 
-### Option A: Frontend + Backend (recommended)
+| | |
+|---|---|
+| ![Midnight theme](docs/screenshots/theme-midnight-ru.jpg) **Midnight** — dark theme persisted in `localStorage`. | ![Cozy theme](docs/screenshots/theme-cozy-ru.jpg) **Cozy** — warm theme, same components and tokens. |
+| ![Mobile home](docs/screenshots/mobile-home-ru.jpg) **390 px** — safe areas, scrollable nav and stacked hero. | ![Mobile quick draw](docs/screenshots/mobile-quick-ru.jpg) **390 px** — quick draw result without horizontal overflow. |
 
-```bash
-git clone <your-repository-url>
-cd SecretSanta
+## Features
 
-# Terminal 1: backend API
-PYTHONPATH=backend python3 -m app.server --host 127.0.0.1 --port 8000
+- **Two runtime modes** — local `localStorage` fallback and online backend mode.
+- **Room setup** — name, organizer, exchange date, budget and theme.
+- **Join by code** — `SANTA-XXXX` or invite link, no registration.
+- **Demo game** — seeded participants, wishes and draw; resettable.
+- **Fair draw** — derangement, exclusions and snowdrift groups.
+- **Quick draw** — roster-only draw with personal links, CSV and print.
+- **Private assignment** — hidden until the organizer/participant reveals it.
+- **Profile & wishlist** — address, interests, anti-wishes, size, links and allergies.
+- **Anonymous chat** — recipient/Santa tabs, templates, cache and offline queue.
+- **Invitations** — generated text, invite link and Telegram / WhatsApp / Email.
+- **Access & sessions** — active sessions, revocation and member tokens.
+- **Activity log** — key room events for the organizer.
+- **Themes & languages** — winter/midnight/cozy, RU/EN, saved locally.
+- **PWA** — manifest, service worker, 192/512/maskable/Apple icons, offline navigation and install card.
+- **Accessibility** — ≥ 4.5:1 text contrast, 44 px targets, focus-visible, reduced motion, no horizontal overflow.
 
-# Terminal 2: static frontend
-python3 -m http.server 8766
-```
-
-Open: `http://localhost:8766`  
-The frontend auto-detects the backend at `http://127.0.0.1:8000` and switches to online mode (room sync, wishlist, chat, draw, SSE updates).
-
-### Option B: Frontend only (local mode)
-
-```bash
-python3 -m http.server 8766
-```
-
-Data is stored in the current browser’s `localStorage`. Good for demo/offline use.
-
-### Option C: Docker Compose
-
-```bash
-docker compose up --build
-```
-
-- Frontend: `http://localhost:8766`
-- Backend: `http://localhost:8000`
-
-## How to Start Playing
-
-1. **Create a game** — click “Create game”, fill in the name, exchange date, and budget.
-2. **Share the code/link** — send the room code or invite link to participants.
-3. **Participants join** — join by code/link (in online mode data syncs through backend).
-4. **Fill in wishes** — each participant adds a wishlist.
-5. **Run the draw** — when there are at least 3 participants, the organizer runs the draw.
-6. **Reveal your recipient** — click “Show who I’m gifting to” and prepare a surprise.
-
-## Project Structure
+## Architecture
 
 ```text
-.
-├── index.html                  # App markup and screens
-├── styles.css                  # Design system, components, responsive styles
-├── app.js                      # Frontend: UI, i18n, localStorage, backend API/SSE
-├── sw.js                       # Service Worker
-├── manifest.webmanifest        # PWA manifest
-├── docker-compose.yml          # Local frontend + backend run
-├── .github/workflows/ci.yml    # CI: backend tests + JS syntax check
-├── backend/
-│   ├── app/                    # Foundation backend (Python stdlib + SQLite)
-│   │   ├── server.py           # HTTP API, SSE, auth, draw, wishlist
-│   │   ├── db.py               # SQLite + migrations
-│   │   ├── auth.py             # Tokens/sessions
-│   │   ├── draw.py             # Derangement draw
-│   │   ├── realtime.py         # SSE/pubsub helper
-│   │   └── push.py             # Web Push scaffold
-│   ├── migrations/             # SQL migrations
-│   ├── tests/                  # unittest (draw, security, wishlist)
-│   ├── Dockerfile
-│   └── .env.example
-├── backend/prod_stack/         # FastAPI + Postgres + Redis migration scaffold
-├── assets/images/              # Illustrations and prompts
-└── docs/screenshots/           # README screenshots
+index.html ──┬─> styles.css        design tokens, themes, components, responsive
+             ├─> app.js            state, i18n, hash routing, API/SSE, PWA UI
+             │      ├─> localStorage
+             │      └─> fetch/SSE ─> backend/app/server.py ─> SQLite
+             └─> sw.js             shell cache + 29 images + icons
 ```
 
-## Tech Stack
+Flow: `/api/health` detection → `POST /api/rooms` → `POST /api/rooms/join` → `POST /api/rooms/{code}/draw` → `GET .../assignment`; SSE `GET .../events` refreshes participants, chat and activity. Offline chat messages are queued in `secret-santa-offline-queue` and flushed on `online`.
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript, PWA (Manifest + Service Worker), Google Fonts (Nunito).
-- **Backend (foundation)**: Python stdlib `http.server`, SQLite, SSE, token-based sessions, server-side draw.
-- **Prod stack (scaffold)**: FastAPI, PostgreSQL, SQLAlchemy/Alembic, Redis, worker/notifications.
-- **CI**: GitHub Actions (unittest + JS syntax check).
+## Quick start
 
-## Backend Configuration
+```bash
+# Frontend + backend
+PYTHONPATH=backend python3 -m app.server --host 127.0.0.1 --port 8000
+python3 -m http.server 8080
+# open http://127.0.0.1:8080/
 
-See [`backend/.env.example`](backend/.env.example):
+# Frontend only
+python3 -m http.server 8080
 
-- `SECRET_SANTA_SECRET` — token signing secret (must be changed in production).
-- `SECRET_SANTA_DB_PATH` — SQLite path.
-- `SECRET_SANTA_ALLOW_ORIGIN` — CORS origin.
-- `SECRET_SANTA_TOKEN_TTL` — token TTL.
-- `VAPID_*` — optional Web Push config.
+# Docker
+docker compose up --build
+# frontend :8766, backend :8000
+```
 
-## Notes
+Useful targets: `make frontend`, `make backend`, `make test`, `make smoke`, `make screenshots`, `make docker-up`, `make docker-down`.
 
-- The frontend supports **two modes**: online (backend) and local fallback (`localStorage`).
-- The foundation backend implements server-side draw, private assignment, wishlist/gift status, extended profile, exclusions/groups, anonymous chat, SSE, organizer activity log, invites/sessions.
-- Local verification: `node --check app.js && node --check sw.js`, `PYTHONPATH=backend python3 -m unittest discover -s backend/tests -p 'test_*.py'`, `python3 -m unittest discover -s backend/prod_stack/tests -p 'test*.py'`, `python3 scripts/smoke_e2e.py`.
-- Remaining for full production: real Postgres/Redis infrastructure, worker/SMTP/Sentry deployment, e2e tests against the prod stack, and final cutover.
+## Configuration and storage
+
+Backend env is documented in [`backend/.env.example`](backend/.env.example): `SECRET_SANTA_SECRET`, `SECRET_SANTA_DB_PATH`, `SECRET_SANTA_ALLOW_ORIGIN`, `SECRET_SANTA_TOKEN_TTL`, `VAPID_*`.
+
+Frontend API base can be overridden with `window.SECRET_SANTA_API_BASE` or `localStorage.setItem('secret-santa-api-base', ...)`. Local keys: `secret-santa-simple-v1`, `secret-santa-theme`, `secret-santa-lang`, `secret-santa-api-base`, `secret-santa-chat-cache`, `secret-santa-offline-queue`.
+
+## HTTP API (foundation)
+
+- Health/push: `GET /api/health`, `GET /api/push/config`, `POST /api/push/subscribe`, `POST /api/push/unsubscribe`.
+- Rooms: `POST /api/rooms`, `POST /api/rooms/join`, `GET /api/rooms/{code}`.
+- Draw: `POST /api/rooms/{code}/draw`, `/draw/reset`, `GET /api/rooms/{code}/assignment`.
+- Gifts: `POST/DELETE /api/rooms/{code}/wishlist`, `POST .../gift-status`, `POST .../profile`.
+- Rules: `POST/DELETE /api/rooms/{code}/exclusions`.
+- Chat/events: `GET/POST /api/rooms/{code}/messages?channel=to_recipient|to_santa`, `GET /api/rooms/{code}/events` (SSE).
+- Ops: `GET /api/rooms/{code}/activity`, `POST .../notifications`, `POST .../push/test`.
+
+Protected routes use `Authorization: Bearer <token>`; SSE sends the token via the `token` query parameter.
+
+## PWA, images and verification
+
+`sw.js` uses `secret-santa-v58-images` and caches the shell, icons and all 29 images. Bump the cache name and `?v=` query strings in `index.html`/`sw.js` whenever assets change. Image prompts, paths, sizes, alt text and insertion points live in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md).
+
+Checks:
+
+```bash
+node --check app.js && node --check sw.js
+PYTHONPATH=backend python3 -m unittest discover -s backend/tests -p 'test_*.py'
+python3 scripts/smoke_e2e.py
+node scripts/capture_screenshots.mjs   # needs playwright + running frontend/backend
+```
+
+Screenshot regeneration requires Playwright (`npm i --no-save playwright && npx playwright install chromium`) and both local servers; optional `SECRET_SANTA_BASE`/`SECRET_SANTA_API` override URLs. The script replaces all 24 JPGs in `docs/screenshots/`.
+
+## Production status
+
+Local mode, foundation API, server-side draw, private assignment, wishes/profile, exclusions/groups, chat, SSE, activity log, invites/sessions, PWA/offline, bilingual UI and three themes are implemented and verified. Remaining work: Postgres/Redis infrastructure, worker/SMTP/Sentry deployment, HTTPS/domain/secrets, backups and alerts, prod-stack e2e and final cutover — see [`PRODUCTION_PLAN.md`](PRODUCTION_PLAN.md).
 
 ## License
 
-This project is licensed under the [MIT](LICENSE) license.
+MIT — see [LICENSE](LICENSE).
