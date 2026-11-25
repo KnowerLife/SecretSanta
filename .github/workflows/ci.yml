@@ -27,4 +27,4 @@ jobs:
         with:
           node-version: '20'
       - name: Check frontend JS syntax
-        run: node --check app.js && node --check sw.js
+        run: for f in app.js src/*.js; do node --input-type=module --check < "$f"; done && node --check sw.js
