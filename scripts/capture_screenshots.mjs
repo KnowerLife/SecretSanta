@@ -74,6 +74,19 @@ async function captureHome(lang, suffix) {
   await context.close();
 }
 
+async function captureSiteGuide(lang, suffix) {
+  const { context, page } = await newPage(lang);
+  await shotEl(page, '#siteGuide', `guide-site${suffix}`);
+  await context.close();
+}
+
+async function captureRoomGuide(lang, suffix) {
+  const { context, page } = await newPage(lang);
+  await loadDemoRoom(page);
+  await shotEl(page, '#roomGuide', `guide-room${suffix}`);
+  await context.close();
+}
+
 async function captureCreate(lang, suffix) {
   const { context, page } = await newPage(lang);
   await go(page, 'create');
@@ -243,9 +256,11 @@ async function captureMobile() {
 
 for (const [lang, suffix] of [['ru', '-ru'], ['en', '-en']]) {
   await captureHome(lang, suffix);
+  await captureSiteGuide(lang, suffix);
   await captureCreate(lang, suffix);
   await captureJoin(lang, suffix);
   await captureDemo(lang, suffix);
+  await captureRoomGuide(lang, suffix);
   await captureInvite(lang, suffix);
   await captureWishlist(lang, suffix);
   await captureOnline(lang, suffix);
