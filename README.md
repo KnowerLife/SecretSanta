@@ -15,7 +15,7 @@
 | | |
 |---|---|
 | ![Главная: hero и режимы игры](docs/screenshots/home-hero-ru.jpg) **Главная** — hero, три режима игры, CTA и блок «как это работает». Первый экран с адаптивной сеткой и праздничной графикой. | ![Создание игры](docs/screenshots/create-game-ru.jpg) **Создание игры** — заполненная форма: название, организатор, дата, бюджет и тема. Поля проходят клиентскую проверку до отправки. |
-| ![Вход по коду](docs/screenshots/join-game-ru.jpg) **Вход по коду** — участник вводит код комнаты и имя; аккаунт и email не нужны. | ![Дашборд демо-игры](docs/screenshots/dashboard-demo-ru.jpg) **Дашборд после жеребьёвки** — демо-комната `DEMO-SANTA`, открытый получатель, ACTIONS и статус подготовки. |
+| ![Вход по коду](docs/screenshots/join-game-ru.jpg) **Вход по коду** — участник вводит код комнаты и имя; аккаунт и email не нужны. | ![Дашборд демо-игры](docs/screenshots/dashboard-demo-ru.jpg) **Комната после жеребьёвки** — демо-комната `DEMO-SANTA`, компактная шапка, вкладки разделов, получатель, статус, вишлист и чат. |
 | ![Панель приглашения](docs/screenshots/invite-share-ru.jpg) **Приглашения** — сгенерированный текст, invite-ссылка и кнопки Telegram / WhatsApp / Email. | ![Пожелания получателя](docs/screenshots/recipient-wishlist-ru.jpg) **Пожелания получателя** — wishlist и профиль видны только после раскрытия назначения. |
 | ![Анонимный чат](docs/screenshots/chat-messages-ru.jpg) **Анонимный чат** — сообщение отправлено через backend, доступны быстрые шаблоны и две вкладки адресатов. | ![Журнал событий](docs/screenshots/activity-log-ru.jpg) **Журнал событий** — действия комнаты приходят через SSE и доступны организатору. |
 | ![Быстрая жеребьёвка](docs/screenshots/quick-draw-ru.jpg) **Быстрая жеребьёвка** — результат по списку имён, кнопки копирования, CSV, печати и персональной ссылки. | ![Установка PWA](docs/screenshots/install-footer-ru.jpg) **Установка PWA** — карточка в футере с подсказкой и кнопкой 44×44; в шапке появляется иконка установки. |
@@ -42,6 +42,7 @@
 ## Возможности
 
 - **Два режима работы** — локальный `localStorage` fallback и онлайн-режим с backend.
+- **Комната без хаоса** — компактная шапка и три вкладки: «Обзор», «Участники», «Доступ».
 - **Создание комнаты** — название, организатор, дата обмена, бюджет и тема.
 - **Вход по коду** — участники присоединяются по `SANTA-XXXX` или invite-ссылке, без регистрации.
 - **Демо-игра** — готовые участники, пожелания и жеребьёвка; демо можно пересоздать или сбросить.
@@ -193,7 +194,7 @@ API base можно переопределить до загрузки `app.js`:
 ## PWA и офлайн
 
 - `manifest.webmanifest`: standalone display, `name`/`short_name`, `theme_color`, 192/512/maskable и Apple touch icon.
-- `sw.js`: `CACHE_NAME = 'secret-santa-v58-images'`; кеширует HTML, CSS, JS, manifest, иконки и все 29 сцен из `assets/images/`.
+- `sw.js`: `CACHE_NAME = 'secret-santa-v59-dashboard'`; кеширует HTML, CSS, JS, manifest, иконки и все 29 сцен из `assets/images/`.
 - При изменении любого ассета поднимите версию в `CACHE_NAME` и в query-строках `styles.css?v=…` / `app.js?v=…` в `index.html` и `sw.js`.
 - Офлайн-навигация отдаёт закешированный shell; недоступные API-запросы не ломают интерфейс.
 - Установка: `beforeinstallprompt` → кнопка в шапке и карточка футера; `appinstalled` скрывает кнопки и показывает статус. На iOS показывается инструкция «Поделиться → На главный экран».
@@ -297,7 +298,7 @@ All screenshots are generated from real Playwright scenarios (`scripts/capture_s
 | | |
 |---|---|
 | ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — hero, three game modes, CTA and “how it works”. | ![Create game](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
-| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code and name, no account or email. | ![Dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Dashboard after draw** — `DEMO-SANTA`, revealed recipient, actions and readiness checklist. |
+| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code and name, no account or email. | ![Dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Room after draw** — `DEMO-SANTA`, compact header, section tabs, revealed recipient, status, wishes and chat. |
 | ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email share actions. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile appear only after the reveal. |
 | ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — delivered message, reply templates and two recipient tabs. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven organizer events. |
 | ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — name-based result with copy, CSV, print and personal-link actions. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer hint plus 44×44 button; the header icon appears when install is available. |
@@ -312,6 +313,7 @@ All screenshots are generated from real Playwright scenarios (`scripts/capture_s
 ## Features
 
 - **Two runtime modes** — local `localStorage` fallback and online backend mode.
+- **Calm room workspace** — compact header and three sections: Overview, People and Access.
 - **Room setup** — name, organizer, exchange date, budget and theme.
 - **Join by code** — `SANTA-XXXX` or invite link, no registration.
 - **Demo game** — seeded participants, wishes and draw; resettable.
@@ -377,7 +379,7 @@ Protected routes use `Authorization: Bearer <token>`; SSE sends the token via th
 
 ## PWA, images and verification
 
-`sw.js` uses `secret-santa-v58-images` and caches the shell, icons and all 29 images. Bump the cache name and `?v=` query strings in `index.html`/`sw.js` whenever assets change. Image prompts, paths, sizes, alt text and insertion points live in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md).
+`sw.js` uses `secret-santa-v59-dashboard` and caches the shell, icons and all 29 images. Bump the cache name and `?v=` query strings in `index.html`/`sw.js` whenever assets change. Image prompts, paths, sizes, alt text and insertion points live in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md).
 
 Checks:
 

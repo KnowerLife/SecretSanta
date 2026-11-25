@@ -127,6 +127,7 @@ async function captureInvite(lang, suffix) {
   await loadDemoRoom(page);
   await page.evaluate(() => document.querySelector('#inviteBtn')?.click());
   await page.waitForFunction(() => (document.querySelector('#inviteText')?.value || '').length > 20);
+  await page.waitForFunction(() => document.querySelector('[data-dash-pane="access"]')?.classList.contains('is-active'));
   await shotEl(page, '#accessPanel', `invite-share${suffix}`);
   await context.close();
 }
@@ -185,8 +186,12 @@ async function captureOnline(lang, suffix) {
   const { context, page } = await newPage(lang);
   await createOnlineRoom(page, lang);
 
+  await page.evaluate(() => document.querySelector('[data-dash-tab="access"]')?.click());
+  await page.waitForFunction(() => document.querySelector('[data-dash-pane="access"]')?.classList.contains('is-active'));
   await shotEl(page, '#activityPanel', `activity-log${suffix}`);
 
+  await page.evaluate(() => document.querySelector('[data-dash-tab="overview"]')?.click());
+  await page.waitForFunction(() => document.querySelector('[data-dash-pane="overview"]')?.classList.contains('is-active'));
   const message = lang === 'ru' ? 'Привет! Какой у вас размер?' : 'Hi! What size do you wear?';
   await page.fill('#chatInput', message);
   await page.locator('#chatForm button[type="submit"]').click();

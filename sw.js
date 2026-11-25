@@ -1,9 +1,9 @@
-const CACHE_NAME = 'secret-santa-v58-images';
+const CACHE_NAME = 'secret-santa-v59-dashboard';
 const ASSETS = [
   './',
   './index.html',
-  './styles.css?v=58',
-  './app.js?v=58',
+  './styles.css?v=59',
+  './app.js?v=59',
   './manifest.webmanifest',
   './icons/icon.svg',
   './icons/icon-maskable.svg',

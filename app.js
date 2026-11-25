@@ -395,6 +395,10 @@
       'dash.accessTitle': 'Доступ и сессии',
       'dash.accessSub': 'Приглашение, ссылка и активные сессии',
       'dash.inviteBtn': 'Пригласить',
+      'dash.tabsAria': 'Разделы комнаты',
+      'dash.tabOverview': 'Обзор',
+      'dash.tabPeople': 'Участники',
+      'dash.tabAccess': 'Доступ',
       'dash.inviteTextLabel': 'Текст приглашения',
       'dash.inviteCopy': 'Скопировать текст',
       'dash.inviteGreeting': 'Привет! Приглашаю тебя в Тайный Санта «{name}».',
@@ -791,6 +795,10 @@
       'dash.accessTitle': 'Access & sessions',
       'dash.accessSub': 'Invite link and active sessions',
       'dash.inviteBtn': 'Invite',
+      'dash.tabsAria': 'Room sections',
+      'dash.tabOverview': 'Overview',
+      'dash.tabPeople': 'People',
+      'dash.tabAccess': 'Access',
       'dash.inviteTextLabel': 'Invite message',
       'dash.inviteCopy': 'Copy text',
       'dash.inviteGreeting': 'Hi! I invite you to the Secret Santa game “{name}”.',
@@ -1352,6 +1360,26 @@
     el.value = lines.join('\n');
   }
 
+  let dashTab = 'overview';
+  function setDashTab(tab, opts = {}) {
+    if (!tab) return;
+    dashTab = tab;
+    $$('.dash-tab[data-dash-tab]').forEach(btn => {
+      const active = btn.dataset.dashTab === tab;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    $$('[data-dash-pane]').forEach(pane => {
+      const active = pane.dataset.dashPane === tab;
+      pane.classList.toggle('is-active', active);
+      pane.hidden = !active;
+    });
+    if (opts.scroll) {
+      const pane = document.querySelector(`[data-dash-pane="${tab}"]`);
+      if (pane) pane.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
   function renderDashboard() {
     const game = currentGame(); const me = currentMe(game);
     if (!game || !me) { $('#noGame').classList.remove('hidden'); $('#gameArea').classList.add('hidden'); setNotice(''); return; }
@@ -1367,6 +1395,7 @@
     if (game.theme) parts.push(game.theme);
     $('#gameMetaLabel').textContent = parts.join(' · ');
     renderInviteText(game);
+    setDashTab(dashTab || 'overview');
 
     const d = daysUntil(game.eventDate);
     if (d === null) $('#countdownLabel').textContent = '';
@@ -1951,6 +1980,7 @@
       if (nav === 'quick') { hideQuickPersonal(); if (location.hash.includes('?')) location.hash = 'quick'; }
       navigate(nav);
     }));
+    $$('[data-dash-tab]').forEach(btn => btn.addEventListener('click', () => setDashTab(btn.dataset.dashTab, { scroll: true })));
     window.addEventListener('hashchange', () => {
       const raw = location.hash.replace('#', ''); const v = raw.split('?')[0];
       if (views.includes(v)) navigate(v);
@@ -2333,7 +2363,15 @@
     });
 
     const inviteBtn = $('#inviteBtn');
-    if (inviteBtn) inviteBtn.addEventListener('click', () => { const b = $('#copyInviteBtn'); if (b) b.click(); else { const game = currentGame(); if (game) { navigator.clipboard?.writeText(location.origin + location.pathname + '#join?code=' + encodeURIComponent(game.code)); toast(t('toast.copiedLink')); } } });
+    if (inviteBtn) inviteBtn.addEventListener('click', () => {
+      setDashTab('access', { scroll: true });
+      const b = $('#copyInviteBtn');
+      if (b) b.click();
+      else {
+        const game = currentGame();
+        if (game) { navigator.clipboard?.writeText(location.origin + location.pathname + '#join?code=' + encodeURIComponent(game.code)); toast(t('toast.copiedLink')); }
+      }
+    });
     const inviteCopyBtn = $('#inviteCopyBtn');
     if (inviteCopyBtn) inviteCopyBtn.addEventListener('click', async () => {
       const text = $('#inviteText')?.value || ''; if (!text) return;
