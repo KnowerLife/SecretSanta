@@ -399,6 +399,65 @@
       'dash.tabOverview': 'Обзор',
       'dash.tabPeople': 'Участники',
       'dash.tabAccess': 'Доступ',
+      'dash.presetWishTitle': 'Идеи для вишлиста',
+      'dash.presetAntiTitle': 'Что не дарить',
+      'preset.wish.1': 'Книга или аудиокнига',
+      'preset.wish.2': 'Тёплый плед',
+      'preset.wish.3': 'Кружка для кофе или чайный набор',
+      'preset.wish.4': 'Настольная игра или пазл',
+      'preset.wish.5': 'Сертификат в кино или театр',
+      'preset.wish.6': 'Средства для ухода без отдушек',
+      'preset.anti.1': 'Без парфюмерии',
+      'preset.anti.2': 'Без сладкого',
+      'preset.anti.3': 'Без свечей и ароматизаторов',
+      'preset.anti.4': 'Без одежды — не знаю размер',
+      'preset.anti.5': 'Без алкоголя',
+      'preset.anti.6': 'Без орехов и шоколада',
+      'home.more.title': 'Подробнее об игре',
+      'home.more.sub': 'Правила, возможности, приватность и отзывы',
+      'guide.site.kicker': 'С чего начать',
+      'guide.site.title': 'Пять шагов до обмена подарками',
+      'guide.site.sub': 'Откройте шаг — покажем, куда нажать и что проверить.',
+      'guide.room.kicker': 'Как начать',
+      'guide.room.title': 'Ваш план на игру',
+      'guide.railAria': 'Шаги инструкции',
+      'guide.allDone': 'Всё готово — приятного обмена!',
+      'guide.site.1.title': 'Выберите формат',
+      'guide.site.1.text': 'Полная игра — с комнатой, приглашениями и чатом. Быстрая жеребьёвка — когда нужны только пары. Демо — чтобы посмотреть изнутри.',
+      'guide.site.1.tip': 'Не знаете, с чего начать? Откройте демо — там уже есть участники и проведённая жеребьёвка.',
+      'guide.site.2.title': 'Создайте комнату',
+      'guide.site.2.text': 'Задайте название, дату и бюджет. Сразу после создания появится код для участников.',
+      'guide.site.2.tip': 'Код комнаты можно скопировать прямо в шапке игры.',
+      'guide.site.3.title': 'Пригласите участников',
+      'guide.site.3.text': 'Поделитесь кодом или ссылкой. Участники добавляют пожелания и профиль для Санты.',
+      'guide.site.3.tip': 'Минимум три участника — иначе жеребьёвка не запустится.',
+      'guide.site.4.title': 'Подскажите Санте',
+      'guide.site.4.text': 'Добавьте идеи в вишлист и заполните профиль: адрес, размеры и анти-пожелания.',
+      'guide.site.4.tip': 'В комнате есть готовые идеи и список «что не дарить» — достаточно нажать на подсказку.',
+      'guide.site.5.title': 'Проведите обмен',
+      'guide.site.5.text': 'Запустите жеребьёвку, подготовьте подарок и обменяйтесь в выбранный день.',
+      'guide.site.5.tip': 'Статус подарка и анонимный чат помогают не забыть про обмен.',
+      'guide.room.1.title': 'Соберите команду',
+      'guide.room.1.text': 'Пригласите друзей по коду или ссылке — для жеребьёвки нужно минимум три человека.',
+      'guide.room.1.tip': 'Кнопка «Пригласить» откроет раздел «Доступ» с готовым текстом и ссылкой.',
+      'guide.room.1.cta': 'Пригласить',
+      'guide.room.2.title': 'Добавьте пожелания',
+      'guide.room.2.text': 'Добавьте несколько идей в вишлист: так Санте проще выбрать подарок в вашем бюджете.',
+      'guide.room.2.tip': 'Готовые чипы добавляют пожелание сразу — вводить ничего не нужно.',
+      'guide.room.2.cta': 'К подсказкам',
+      'guide.room.3.title': 'Заполните профиль',
+      'guide.room.3.text': 'Укажите адрес, интересы, размер и что лучше не дарить — данные увидит только ваш Санта.',
+      'guide.room.3.tip': 'Чип «Что не дарить» сохранится в профиле; его увидит только ваш Санта.',
+      'guide.room.3.cta': 'В профиль',
+      'guide.room.4.title': 'Проведите жеребьёвку',
+      'guide.room.4.text': 'Когда все готовы, запустите жеребьёвку: пары станут известны только после нажатия.',
+      'guide.room.4.tip': 'Если состав изменился, жеребьёвку можно сбросить и провести заново.',
+      'guide.room.4.cta': 'К жеребьёвке',
+      'guide.room.4.doneCta': 'Посмотреть получателя',
+      'guide.room.5.title': 'Подготовьте подарок',
+      'guide.room.5.text': 'Отметьте статус подарка и напишите получателю в анонимном чате, если нужно уточнить детали.',
+      'guide.room.5.tip': 'В чате есть шаблоны: спросите про размер, адрес или аллергии анонимно.',
+      'guide.room.5.cta': 'Отметить подарок',
       'dash.inviteTextLabel': 'Текст приглашения',
       'dash.inviteCopy': 'Скопировать текст',
       'dash.inviteGreeting': 'Привет! Приглашаю тебя в Тайный Санта «{name}».',
@@ -799,6 +858,65 @@
       'dash.tabOverview': 'Overview',
       'dash.tabPeople': 'People',
       'dash.tabAccess': 'Access',
+      'dash.presetWishTitle': 'Wishlist ideas',
+      'dash.presetAntiTitle': 'Better not gift',
+      'preset.wish.1': 'Book or audiobook',
+      'preset.wish.2': 'Warm blanket',
+      'preset.wish.3': 'Coffee mug or tea set',
+      'preset.wish.4': 'Board game or puzzle',
+      'preset.wish.5': 'Cinema or theatre gift card',
+      'preset.wish.6': 'Fragrance-free skincare',
+      'preset.anti.1': 'No perfume',
+      'preset.anti.2': 'No sweets',
+      'preset.anti.3': 'No candles or air fresheners',
+      'preset.anti.4': 'No clothing — unsure of size',
+      'preset.anti.5': 'No alcohol',
+      'preset.anti.6': 'No nuts or chocolate',
+      'home.more.title': 'More about the game',
+      'home.more.sub': 'Rules, features, privacy and player stories',
+      'guide.site.kicker': 'Start here',
+      'guide.site.title': 'Five steps to a gift exchange',
+      'guide.site.sub': 'Open a step to see where to go and what to check.',
+      'guide.room.kicker': 'Getting started',
+      'guide.room.title': 'Your game plan',
+      'guide.railAria': 'Guide steps',
+      'guide.allDone': 'All set — enjoy the exchange!',
+      'guide.site.1.title': 'Pick a format',
+      'guide.site.1.text': 'Full game comes with a room, invites and chat. Quick draw is just for pairs. Demo shows how everything works.',
+      'guide.site.1.tip': 'Not sure where to start? Open the demo — it already has participants and a completed draw.',
+      'guide.site.2.title': 'Create a room',
+      'guide.site.2.text': 'Set the name, date and budget. You’ll get a room code right after creating it.',
+      'guide.site.2.tip': 'You can copy the room code from the game header.',
+      'guide.site.3.title': 'Invite participants',
+      'guide.site.3.text': 'Share the code or link. Participants add wishes and a profile for their Santa.',
+      'guide.site.3.tip': 'You need at least three participants to run the draw.',
+      'guide.site.4.title': 'Help your Santa',
+      'guide.site.4.text': 'Add wishes and fill in your profile: address, sizes and things to avoid.',
+      'guide.site.4.tip': 'The room has ready-made ideas and a “better not gift” list — just tap a suggestion.',
+      'guide.site.5.title': 'Run the exchange',
+      'guide.site.5.text': 'Run the draw, prepare your gift and exchange on the chosen day.',
+      'guide.site.5.tip': 'Gift status and anonymous chat help you keep track of the exchange.',
+      'guide.room.1.title': 'Gather the team',
+      'guide.room.1.text': 'Invite friends by code or link — you need at least three people for the draw.',
+      'guide.room.1.tip': 'The Invite button opens Access with a ready-made message and link.',
+      'guide.room.1.cta': 'Invite',
+      'guide.room.2.title': 'Add wishes',
+      'guide.room.2.text': 'Add a few ideas to your wishlist so Santa can pick something within the budget.',
+      'guide.room.2.tip': 'Ready-made chips add a wish instantly — no typing needed.',
+      'guide.room.2.cta': 'To ideas',
+      'guide.room.3.title': 'Fill in your profile',
+      'guide.room.3.text': 'Add your address, interests, size and what not to gift — only your Santa sees it.',
+      'guide.room.3.tip': 'A “better not gift” chip is saved in your profile; only your Santa sees it.',
+      'guide.room.3.cta': 'To profile',
+      'guide.room.4.title': 'Run the draw',
+      'guide.room.4.text': 'When everyone is ready, run the draw. Pairs are revealed only after you confirm.',
+      'guide.room.4.tip': 'If the group changes, you can reset the draw and run it again.',
+      'guide.room.4.cta': 'To draw',
+      'guide.room.4.doneCta': 'View recipient',
+      'guide.room.5.title': 'Prepare the gift',
+      'guide.room.5.text': 'Update your gift status and message your recipient anonymously if you need details.',
+      'guide.room.5.tip': 'Chat templates let you ask about size, address or allergies anonymously.',
+      'guide.room.5.cta': 'Mark gift',
       'dash.inviteTextLabel': 'Invite message',
       'dash.inviteCopy': 'Copy text',
       'dash.inviteGreeting': 'Hi! I invite you to the Secret Santa game “{name}”.',
@@ -909,6 +1027,8 @@
     $$('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
     $$('[data-i18n-placeholder]').forEach(el => { el.setAttribute('placeholder', t(el.dataset.i18nPlaceholder)); });
     $$('[data-i18n-aria-label]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAriaLabel)); });
+    renderSiteGuide();
+    updateNavHint();
     const langBtn = $('#langToggle');
     if (langBtn) { langBtn.textContent = t('nav.lang'); langBtn.setAttribute('aria-label', t('nav.langAria')); }
     const installBtn = $('#installBtn');
@@ -1380,6 +1500,154 @@
     }
   }
 
+  let siteGuideStep = 0;
+  let roomGuideStep = null;
+  const SITE_GUIDE = [
+    {
+      id: 'format', title: 'guide.site.1.title', text: 'guide.site.1.text', tip: 'guide.site.1.tip', image: 'assets/images/guide-format.jpg',
+      cta: [
+        { key: 'nav.create', nav: 'create', cls: 'btn-primary' },
+        { key: 'nav.join', nav: 'join', cls: 'btn-secondary' },
+        { key: 'hero.ctaDemo', action: 'demo', cls: 'btn-ghost' },
+      ],
+    },
+    {
+      id: 'create', title: 'guide.site.2.title', text: 'guide.site.2.text', tip: 'guide.site.2.tip', image: 'assets/images/step-create-game.jpg',
+      cta: [
+        { key: 'nav.create', nav: 'create', cls: 'btn-primary' },
+        { key: 'nav.join', nav: 'join', cls: 'btn-secondary' },
+      ],
+    },
+    {
+      id: 'invite', title: 'guide.site.3.title', text: 'guide.site.3.text', tip: 'guide.site.3.tip', image: 'assets/images/step-invite-friends.jpg',
+      cta: [
+        { key: 'hero.ctaDemo', action: 'demo', cls: 'btn-primary' },
+        { key: 'nav.create', nav: 'create', cls: 'btn-secondary' },
+      ],
+    },
+    {
+      id: 'prep', title: 'guide.site.4.title', text: 'guide.site.4.text', tip: 'guide.site.4.tip', image: 'assets/images/guide-prep.jpg',
+      cta: [{ key: 'hero.ctaDemo', action: 'demo', cls: 'btn-primary' }],
+    },
+    {
+      id: 'draw', title: 'guide.site.5.title', text: 'guide.site.5.text', tip: 'guide.site.5.tip', image: 'assets/images/step-draw-gifts.jpg',
+      cta: [
+        { key: 'hero.ctaDemo', action: 'demo', cls: 'btn-primary' },
+        { key: 'nav.quick', nav: 'quick', cls: 'btn-secondary' },
+      ],
+    },
+  ];
+  const ROOM_GUIDE = [
+    { id: 'team', title: 'guide.room.1.title', text: 'guide.room.1.text', tip: 'guide.room.1.tip', image: 'assets/images/guide-room-team.jpg', cta: 'guide.room.1.cta', tab: 'access', focus: '#copyInviteBtn' },
+    { id: 'wishes', title: 'guide.room.2.title', text: 'guide.room.2.text', tip: 'guide.room.2.tip', image: 'assets/images/guide-room-wishes.jpg', cta: 'guide.room.2.cta', tab: 'overview', focus: '#wishText' },
+    { id: 'profile', title: 'guide.room.3.title', text: 'guide.room.3.text', tip: 'guide.room.3.tip', image: 'assets/images/guide-room-profile.jpg', cta: 'guide.room.3.cta', tab: 'people', focus: '#profileAnti' },
+    { id: 'draw', title: 'guide.room.4.title', text: 'guide.room.4.text', tip: 'guide.room.4.tip', image: 'assets/images/guide-room-draw.jpg', cta: 'guide.room.4.cta', tab: 'overview', focus: '#drawBtn' },
+    { id: 'gift', title: 'guide.room.5.title', text: 'guide.room.5.text', tip: 'guide.room.5.tip', image: 'assets/images/guide-room-gift.jpg', cta: 'guide.room.5.cta', tab: 'overview', focus: '#myGiftStatus' },
+  ];
+  const WISH_PRESETS = ['preset.wish.1', 'preset.wish.2', 'preset.wish.3', 'preset.wish.4', 'preset.wish.5', 'preset.wish.6'];
+  const ANTI_PRESETS = ['preset.anti.1', 'preset.anti.2', 'preset.anti.3', 'preset.anti.4', 'preset.anti.5', 'preset.anti.6'];
+
+  function guideRailHtml(steps, activeIndex, panelId, doneFlags) {
+    return steps.map((step, i) => {
+      const done = doneFlags ? doneFlags[i] : false;
+      const active = i === activeIndex;
+      const cls = ['guide__step', active ? 'is-active' : '', done ? 'is-done' : ''].filter(Boolean).join(' ');
+      const mark = done
+        ? '<svg class="card-icon" aria-hidden="true"><use href="#i-check"></use></svg>'
+        : `<span class="guide__step-num">${i + 1}</span>`;
+      return `<button class="${cls}" type="button" role="tab" aria-selected="${active}" aria-controls="${panelId}" data-guide-step="${i}">${mark}<span data-i18n="${step.title}">${escapeHtml(t(step.title))}</span></button>`;
+    }).join('');
+  }
+  function guideDialogue(step) {
+    return `<div class="guide__copy">
+      <h3 data-i18n="${step.title}">${escapeHtml(t(step.title))}</h3>
+      <p data-i18n="${step.text}">${escapeHtml(t(step.text))}</p>
+      <div class="guide__tip"><svg class="card-icon" aria-hidden="true"><use href="#i-sparkle"></use></svg><span data-i18n="${step.tip}">${escapeHtml(t(step.tip))}</span></div>
+    </div>`;
+  }
+  function renderSiteGuide(index = siteGuideStep) {
+    const rail = $('#siteGuideRail'); const detail = $('#siteGuideDetail'); if (!rail || !detail) return;
+    siteGuideStep = Math.max(0, Math.min(index, SITE_GUIDE.length - 1));
+    const step = SITE_GUIDE[siteGuideStep];
+    rail.innerHTML = guideRailHtml(SITE_GUIDE, siteGuideStep, 'siteGuideDetail');
+    const actions = step.cta.map(c => c.nav
+      ? `<button class="btn ${c.cls}" type="button" data-nav="${c.nav}" data-i18n="${c.key}">${escapeHtml(t(c.key))}</button>`
+      : `<button class="btn ${c.cls}" type="button" data-guide-action="${c.action}" data-i18n="${c.key}">${escapeHtml(t(c.key))}</button>`).join('');
+    const media = step.image
+      ? `<div class="guide__media"><img src="${step.image}" alt="" width="600" height="400" loading="lazy" decoding="async" /></div>`
+      : '';
+    detail.innerHTML = `${guideDialogue(step)}${media}<div class="guide__actions">${actions}</div>`;
+    const progress = $('#siteGuideProgress'); if (progress) progress.textContent = `${siteGuideStep + 1} / ${SITE_GUIDE.length}`;
+  }
+  function roomStepDone(id, game, me) {
+    if (!game) return false;
+    if (id === 'team') return (game.participants || []).length >= 3;
+    if (id === 'wishes') return ((me && me.wishlist) || []).length > 0;
+    if (id === 'profile') return !!(me && (me.address || me.profileNote || me.antiWishlist || me.size || me.links || me.allergies));
+    if (id === 'draw') return Object.keys(game.assignments || {}).length > 0;
+    if (id === 'gift') return !!(me && ['bought', 'done'].includes(me.giftStatus));
+    return false;
+  }
+  function renderRoomGuide(game, me, index = roomGuideStep) {
+    const rail = $('#roomGuideRail'); const detail = $('#roomGuideDetail'); if (!rail || !detail) return;
+    const doneFlags = ROOM_GUIDE.map(s => roomStepDone(s.id, game, me));
+    const current = doneFlags.indexOf(false);
+    const drawn = doneFlags[3];
+    const activeIndex = index === null || index === undefined
+      ? (current === -1 ? ROOM_GUIDE.length - 1 : current)
+      : Math.max(0, Math.min(index, ROOM_GUIDE.length - 1));
+    roomGuideStep = activeIndex;
+    const step = ROOM_GUIDE[activeIndex];
+    rail.innerHTML = guideRailHtml(ROOM_GUIDE, activeIndex, 'roomGuideDetail', doneFlags);
+    const focus = step.id === 'draw' && drawn ? '#myAssignment' : step.focus;
+    const ctaKey = step.id === 'draw' && drawn ? 'guide.room.4.doneCta' : step.cta;
+    const actions = `<div class="guide__actions"><button class="btn btn-primary" type="button" data-guide-go="${step.tab}" data-guide-focus="${focus}" data-i18n="${ctaKey}">${escapeHtml(t(ctaKey))}</button></div>`;
+    const media = step.image
+      ? `<div class="guide__media"><img src="${step.image}" alt="" width="800" height="600" loading="lazy" decoding="async" /></div>`
+      : '';
+    detail.innerHTML = `${guideDialogue(step)}${media}${actions}`;
+    const progress = $('#roomGuideProgress');
+    if (progress) progress.textContent = current === -1 ? t('guide.allDone') : `${doneFlags.filter(Boolean).length} / ${ROOM_GUIDE.length}`;
+  }
+  function renderPresetChips(game, me) {
+    $$('[data-preset]').forEach(box => {
+      const anti = box.dataset.preset === 'anti';
+      const keys = anti ? ANTI_PRESETS : WISH_PRESETS;
+      const wishes = (me && me.wishlist || []).map(w => String(w.text || ''));
+      const antiText = (me && me.antiWishlist) || '';
+      box.innerHTML = keys.map(key => {
+        const text = t(key);
+        const added = anti ? antiText.includes(text) : wishes.includes(text);
+        const cls = ['preset-chip', anti ? 'preset-chip--anti' : '', added ? 'is-added' : ''].filter(Boolean).join(' ');
+        const icon = added ? 'i-check' : anti ? 'i-alert' : 'i-gift';
+        return `<button class="${cls}" type="button" data-preset-key="${key}" data-preset-kind="${anti ? 'anti' : 'wish'}" aria-pressed="${added}"><svg class="card-icon" aria-hidden="true"><use href="#${icon}"></use></svg><span data-i18n="${key}">${escapeHtml(text)}</span></button>`;
+      }).join('');
+    });
+  }
+  function focusGuideTarget(selector) {
+    if (!selector) return;
+    setTimeout(() => {
+      const el = $(selector);
+      if (el && el.getClientRects().length) { el.focus(); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+    }, 220);
+  }
+  async function addWish(text) {
+    const game = currentGame(); const me = currentMe(game); if (!game || !me || !text) return false;
+    const sess = roomSession(game.code);
+    if (sess && sess.token && game.backend) {
+      try {
+        const data = await apiFetch(`/api/rooms/${game.code}/wishlist`, { method: 'POST', token: sess.token, body: { text } });
+        me.wishlist.push({ id: data.item?.id || uid('w'), text });
+        saveState(); renderDashboard(); toast(t('toast.wishAdded')); refreshDashboard();
+        return true;
+      } catch (err) { console.warn(err); toast(err.message || t('toast.drawFail')); return false; }
+    }
+    me.wishlist.push({ id: uid('w'), text });
+    pushLocalActivity(game, 'room.wishlist_updated', { memberId: me.id, name: me.name });
+    saveState(); renderDashboard(); loadActivity(); toast(t('toast.wishAdded'));
+    return true;
+  }
+
   function renderDashboard() {
     const game = currentGame(); const me = currentMe(game);
     if (!game || !me) { $('#noGame').classList.remove('hidden'); $('#gameArea').classList.add('hidden'); setNotice(''); return; }
@@ -1396,6 +1664,8 @@
     $('#gameMetaLabel').textContent = parts.join(' · ');
     renderInviteText(game);
     setDashTab(dashTab || 'overview');
+    renderRoomGuide(game, me);
+    renderPresetChips(game, me);
 
     const d = daysUntil(game.eventDate);
     if (d === null) $('#countdownLabel').textContent = '';
@@ -1967,6 +2237,49 @@
     renderDashboard();
   }
 
+  function updateNavHint() {
+    const wrap = $('.nav-wrap');
+    const nav = wrap?.querySelector('.nav');
+    if (!wrap || !nav) return;
+    const overflow = nav.scrollWidth - nav.clientWidth;
+    wrap.classList.toggle('is-scrollable', overflow > 4 && nav.scrollLeft < overflow - 4);
+  }
+
+  const ART_IMAGES = {
+    'art-audience': 'assets/images/audience-remote.jpg',
+    'art-ideas': 'assets/images/gift-ideas.jpg',
+    'art-chat': 'assets/images/feature-anonymous-chat.jpg',
+    'art-privacy': 'assets/images/privacy-who-sees.jpg',
+    'art-rules': 'assets/images/rules-fair-draw.jpg',
+    'art-testimonials': 'assets/images/testimonials-friends.jpg',
+    'art-faq': 'assets/images/faq-help.jpg',
+    'art-create': 'assets/images/create-game-head.jpg',
+    'art-join': 'assets/images/join-game-head.jpg',
+    'art-quick': 'assets/images/quick-draw-head.jpg',
+    'cta-card--art': 'assets/images/cta-celebration.jpg',
+  };
+
+  function initLazyArt() {
+    const targets = [];
+    $$('.section-head--art, .cta-card--art').forEach(el => {
+      const key = Object.keys(ART_IMAGES).find(cls => el.classList.contains(cls));
+      if (key) targets.push([el, ART_IMAGES[key]]);
+    });
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(([el, src]) => el.style.setProperty('--art-image', `url("${src}")`));
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.style.setProperty('--art-image', `url("${el.dataset.artSrc}")`);
+        observer.unobserve(el);
+      });
+    }, { rootMargin: '300px 0px' });
+    targets.forEach(([el, src]) => { el.dataset.artSrc = src; observer.observe(el); });
+  }
+
   function wire() {
     const demoBtn = $('#demoBtn');
     if (demoBtn) demoBtn.addEventListener('click', createDemoGame);
@@ -1974,13 +2287,42 @@
     if (demoBtnModes) demoBtnModes.addEventListener('click', createDemoGame);
     const resetDemoBtn = $('#resetDemoBtn');
     if (resetDemoBtn) resetDemoBtn.addEventListener('click', () => { createDemoGame(); });
-    $$('[data-nav]').forEach(el => el.addEventListener('click', (e) => {
-      e.preventDefault();
-      const nav = el.dataset.nav || el.getAttribute('href').replace('#', '');
-      if (nav === 'quick') { hideQuickPersonal(); if (location.hash.includes('?')) location.hash = 'quick'; }
-      navigate(nav);
-    }));
+    document.addEventListener('click', async (e) => {
+      const preset = e.target.closest('[data-preset-key]');
+      if (preset) {
+        const text = t(preset.dataset.presetKey);
+        if (preset.dataset.presetKind === 'wish') { await addWish(text); return; }
+        const field = $('#profileAnti'); if (!field) return;
+        const current = field.value.trim();
+        if (current.includes(text)) return;
+        field.value = current ? `${current}, ${text}` : text;
+        $('#profileForm')?.requestSubmit();
+        return;
+      }
+      const el = e.target.closest('[data-nav]');
+      if (el) {
+        e.preventDefault();
+        const nav = el.dataset.nav || (el.getAttribute('href') || '').replace('#', '');
+        if (nav === 'quick') { hideQuickPersonal(); if (location.hash.includes('?')) location.hash = 'quick'; }
+        navigate(nav);
+        return;
+      }
+      const action = e.target.closest('[data-guide-action]');
+      if (action) { if (action.dataset.guideAction === 'demo') createDemoGame(); return; }
+      const go = e.target.closest('[data-guide-go]');
+      if (go) { setDashTab(go.dataset.guideGo, { scroll: true }); focusGuideTarget(go.dataset.guideFocus); return; }
+      const step = e.target.closest('[data-guide-step]');
+      if (step) {
+        const i = Number(step.dataset.guideStep);
+        if (step.closest('#siteGuide')) renderSiteGuide(i);
+        else { roomGuideStep = i; renderRoomGuide(currentGame(), currentMe(currentGame()), i); }
+      }
+    });
     $$('[data-dash-tab]').forEach(btn => btn.addEventListener('click', () => setDashTab(btn.dataset.dashTab, { scroll: true })));
+    const navEl = $('.nav');
+    if (navEl) navEl.addEventListener('scroll', updateNavHint, { passive: true });
+    window.addEventListener('resize', updateNavHint);
+    updateNavHint();
     window.addEventListener('hashchange', () => {
       const raw = location.hash.replace('#', ''); const v = raw.split('?')[0];
       if (views.includes(v)) navigate(v);
@@ -2201,21 +2543,8 @@
 
     $('#wishlistForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const game = currentGame(); const me = currentMe(game); if (!game || !me) return;
-      const input = $('#wishText'); const text = input.value.trim(); if (!text) return;
-      const sess = roomSession(game.code);
-      if (sess && sess.token && game.backend) {
-        try {
-          const data = await apiFetch(`/api/rooms/${game.code}/wishlist`, { method: 'POST', token: sess.token, body: { text } });
-          me.wishlist.push({ id: data.item?.id || uid('w'), text });
-          saveState(); input.value = ''; renderDashboard(); toast(t('toast.wishAdded'));
-          refreshDashboard();
-          return;
-        } catch (err) { console.warn(err); toast(err.message || t('toast.drawFail')); return; }
-      }
-      me.wishlist.push({ id: uid('w'), text });
-      pushLocalActivity(game, 'room.wishlist_updated', { memberId: me.id, name: me.name });
-      saveState(); input.value = ''; renderDashboard(); loadActivity(); toast(t('toast.wishAdded'));
+      const input = $('#wishText'); const text = (input?.value || '').trim(); if (!text) return;
+      if (await addWish(text)) input.value = '';
     });
 
     const chatTabRecipient = $('#chatTabRecipient');
@@ -2286,6 +2615,8 @@
         toast(err.message || 'Error');
       } finally {
         if (btn) btn.disabled = false;
+        renderPresetChips(game, me);
+        renderRoomGuide(game, me);
       }
     });
 
@@ -2480,6 +2811,7 @@
   }
 
   // init
+  initLazyArt();
   wire();
   const langBtn = $('#langToggle');
   if (langBtn) langBtn.addEventListener('click', () => applyLang(lang === 'ru' ? 'en' : 'ru'));

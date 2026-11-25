@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=59" />
+  <link rel="stylesheet" href="styles.css?v=66" />
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -92,16 +92,19 @@
         </span>
         <span class="brand__text"><span data-i18n-html="brand.name" class="brand__name"><span class="brand__word">Тайный</span> <span class="brand__word brand__word--accent">Санта</span></span></span>
       </a>
-      <nav class="nav" aria-label="Основная навигация" data-i18n-aria-label="nav.aria">
-        <a href="#home" data-nav="home" data-i18n="nav.home">Главная</a>
-        <a href="#create" data-nav="create" data-i18n="nav.create">Создать игру</a>
-        <a href="#quick" data-nav="quick" data-i18n="nav.quick">Быстрая жеребьёвка</a>
-        <a href="#join" data-nav="join" data-i18n="nav.join">Войти по коду</a>
-        <a href="#dashboard" data-nav="dashboard" class="nav__pill" data-i18n="nav.dashboard">Моя игра</a>
-        <button id="installBtn" class="lang-toggle icon-toggle hidden" type="button" aria-label="Установить приложение" title="Установить приложение"><svg class="card-icon" aria-hidden="true"><use href="#i-download"></use></svg></button>
-        <button id="themeToggle" class="lang-toggle icon-toggle" type="button" aria-label="Сменить тему" title="Тема"><svg class="card-icon" aria-hidden="true"><use href="#i-moon"></use></svg></button>
-        <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
-      </nav>
+      <div class="nav-wrap">
+        <nav class="nav" aria-label="Основная навигация" data-i18n-aria-label="nav.aria">
+          <a href="#home" data-nav="home" data-i18n="nav.home">Главная</a>
+          <a href="#create" data-nav="create" data-i18n="nav.create">Создать игру</a>
+          <a href="#quick" data-nav="quick" data-i18n="nav.quick">Быстрая жеребьёвка</a>
+          <a href="#join" data-nav="join" data-i18n="nav.join">Войти по коду</a>
+          <a href="#dashboard" data-nav="dashboard" class="nav__pill" data-i18n="nav.dashboard">Моя игра</a>
+          <button id="installBtn" class="lang-toggle icon-toggle hidden" type="button" aria-label="Установить приложение" title="Установить приложение"><svg class="card-icon" aria-hidden="true"><use href="#i-download"></use></svg></button>
+          <button id="themeToggle" class="lang-toggle icon-toggle" type="button" aria-label="Сменить тему" title="Тема"><svg class="card-icon" aria-hidden="true"><use href="#i-moon"></use></svg></button>
+          <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch to English">EN</button>
+        </nav>
+        <span class="nav-scroll-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+      </div>
     </div>
   </header>
   <div id="offlineBanner" class="offline-banner hidden" role="status" aria-live="polite">
@@ -148,6 +151,21 @@
       </div>
 
       <div class="container section section--tight">
+        <div class="snow-card guide guide--site" id="siteGuide">
+          <div class="guide__head">
+            <div>
+              <p class="section-kicker" data-i18n="guide.site.kicker">С чего начать</p>
+              <h2 data-i18n="guide.site.title">Пять шагов до обмена подарками</h2>
+              <p class="section-sub" data-i18n="guide.site.sub">Откройте шаг — покажем, куда нажать и что проверить.</p>
+            </div>
+            <span class="guide__progress" id="siteGuideProgress">1 / 5</span>
+          </div>
+          <div class="guide__rail" id="siteGuideRail" role="tablist" data-i18n-aria-label="guide.railAria" aria-label="Шаги инструкции"></div>
+          <div class="guide__detail" id="siteGuideDetail" role="tabpanel"></div>
+        </div>
+      </div>
+
+      <div class="container section section--compact">
         <div class="section-head">
           <p class="section-kicker" data-i18n="modes.kicker">Выберите формат</p>
           <h2 data-i18n="modes.title">Как хотите начать?</h2>
@@ -184,57 +202,14 @@
         </div>
       </div>
 
-      <div class="container section">
-        <div class="section-head">
-          <p class="section-kicker" data-i18n="steps.kicker">Как это работает</p>
-          <h2 data-i18n="steps.title">Три простых шага до праздника</h2>
-          <p class="section-sub" data-i18n="steps.sub">Создайте игру, соберите участников и проведите жеребьёвку — всё понятно и без лишних действий.</p>
-        </div>
-
-        <div class="steps-grid">
-          <article class="snow-card step-card">
-            <div class="step-card__media">
-              <div class="media-frame media-frame--step">
-                <img src="assets/images/step-create-game.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
-              </div>
-            </div>
-            <div class="step-card__body">
-              <span class="step-card__num" data-i18n="steps.1.num">Шаг 1</span>
-              <h3 data-i18n="steps.1.title">Создайте игру</h3>
-              <p data-i18n="steps.1.text">Укажите название, дату обмена и бюджет. Комната с кодом для участников будет готова сразу.</p>
-            </div>
-          </article>
-
-          <article class="snow-card step-card">
-            <div class="step-card__media">
-              <div class="media-frame media-frame--step">
-                <img src="assets/images/step-invite-friends.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
-              </div>
-            </div>
-            <div class="step-card__body">
-              <span class="step-card__num" data-i18n="steps.2.num">Шаг 2</span>
-              <h3 data-i18n="steps.2.title">Соберите участников</h3>
-              <p data-i18n="steps.2.text">Поделитесь кодом комнаты. Участники войдут, добавят себя и смогут оставить пожелания к подарку.</p>
-            </div>
-          </article>
-
-          <article class="snow-card step-card">
-            <div class="step-card__media">
-              <div class="media-frame media-frame--step">
-                <img src="assets/images/step-draw-gifts.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
-              </div>
-            </div>
-            <div class="step-card__body">
-              <span class="step-card__num" data-i18n="steps.3.num">Шаг 3</span>
-              <h3 data-i18n="steps.3.title">Проведите жеребьёвку</h3>
-              <p data-i18n="steps.3.text">Когда все готовы, запустите жеребьёвку. Каждый участник увидит только своего получателя.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <div class="container section">
-        <div class="section-pair" data-pair="ideas">
+      <div class="container section section--compact">
+        <details class="snow-card info-disclosure" id="homeInfo">
+          <summary>
+            <span class="info-disclosure__icon" aria-hidden="true"><svg class="card-icon"><use href="#i-sparkle"></use></svg></span>
+            <span class="info-disclosure__copy"><strong data-i18n="home.more.title">Подробнее об игре</strong><small data-i18n="home.more.sub">Правила, возможности, приватность и отзывы</small></span>
+          </summary>
+          <div class="info-disclosure__body">
+            <div class="section-pair" data-pair="ideas">
           <div class="pair-column">
           <div class="section-head section-head--art art-audience">
             <p class="section-kicker" data-i18n="audience.kicker">Для любой компании</p>
@@ -294,10 +269,7 @@
           </div>
           </div>
         </div>
-      </div>
-
-      <div class="container section">
-        <div class="section-pair" data-pair="features">
+        <div class="section-pair section-pair--spaced" data-pair="features">
           <div class="pair-column">
           <div class="section-head section-head--art art-rules">
             <p class="section-kicker" data-i18n="rules.kicker">Правила жеребьёвки</p>
@@ -340,10 +312,7 @@
           </div>
           </div>
         </div>
-      </div>
-
-      <div class="container section">
-        <div class="section-pair" data-pair="trust">
+        <div class="section-pair section-pair--spaced" data-pair="trust">
           <div class="pair-column">
           <div class="section-head section-head--art art-privacy">
             <p class="section-kicker" data-i18n="privacy.kicker">Приватность</p>
@@ -392,9 +361,11 @@
           </div>
           </div>
         </div>
+          </div>
+        </details>
       </div>
 
-      <div class="container section section--narrow">
+      <div class="container section section--compact section--narrow">
         <div class="section-head section-head--art art-faq">
           <p class="section-kicker" data-i18n="faq.kicker">Вопросы и ответы</p>
           <h2 data-i18n="faq.title">Частые вопросы</h2>
@@ -435,7 +406,7 @@
         </div>
       </div>
 
-      <div class="container section section--narrow">
+      <div class="container section section--compact section--narrow">
         <div class="cta-card cta-card--art snow-card">
           <div class="cta-card__body">
             <p class="section-kicker" data-i18n="cta.kicker">Готовы начать?</p>
@@ -598,7 +569,7 @@
           <div class="empty-state__body">
             <div class="empty-state__media">
               <div class="media-frame media-frame--empty">
-                <img src="assets/images/dashboard-empty.jpg" alt="" width="1200" height="800" loading="eager" decoding="async" onerror="this.hidden=true" />
+                <img src="assets/images/dashboard-empty.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async" onerror="this.hidden=true" />
                 <div class="media-fallback">
                   <div class="fallback-icon fallback-icon--red" aria-hidden="true"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="M4 8h16v4H4z"/><path d="M12 22V8"/><path d="M12 8c-1.5 0-4-1-4-3s2-2.5 4-1c2-1.5 4-.8 4 1s-2.5 3-4 3z"/></svg></div>
                 </div>
@@ -657,6 +628,18 @@
               <svg class="card-icon" aria-hidden="true"><use href="#i-lock"></use></svg>
               <span data-i18n="dash.tabAccess">Доступ</span>
             </button>
+          </div>
+
+          <div class="snow-card guide guide--room" id="roomGuide">
+            <div class="guide__head">
+              <div>
+                <p class="section-kicker" data-i18n="guide.room.kicker">Как начать</p>
+                <h2 data-i18n="guide.room.title">Ваш план на игру</h2>
+              </div>
+              <span class="guide__progress" id="roomGuideProgress">0 / 5</span>
+            </div>
+            <div class="guide__rail" id="roomGuideRail" role="tablist" data-i18n-aria-label="guide.railAria" aria-label="Шаги инструкции"></div>
+            <div class="guide__detail" id="roomGuideDetail" role="tabpanel"></div>
           </div>
 
           <div class="dash-grid">
@@ -744,6 +727,16 @@
                   <input id="wishText" type="text" placeholder="Например: книга или тёплый плед" maxlength="120" data-i18n-placeholder="dash.myWishlistPh" />
                   <button class="btn btn-secondary" type="submit" data-i18n="dash.myWishlistAdd">Добавить</button>
                 </form>
+                <div class="preset-box">
+                  <div class="preset-group">
+                    <span class="preset-group__title" data-i18n="dash.presetWishTitle">Идеи для вишлиста</span>
+                    <div class="preset-chips" data-preset="wish"></div>
+                  </div>
+                  <div class="preset-group preset-group--anti">
+                    <span class="preset-group__title" data-i18n="dash.presetAntiTitle">Что не дарить</span>
+                    <div class="preset-chips" data-preset="anti"></div>
+                  </div>
+                </div>
                 <ul id="myWishlist" class="list"></ul>
               </div>
             </article>
@@ -995,6 +988,6 @@
   </div>
 
   <div id="toastLayer" class="toast-layer" aria-live="polite" aria-atomic="true"></div>
-  <script src="app.js?v=59" defer></script>
+  <script src="app.js?v=66" defer></script>
 </body>
 </html>

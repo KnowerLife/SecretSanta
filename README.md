@@ -14,8 +14,9 @@
 
 | | |
 |---|---|
-| ![Главная: hero и режимы игры](docs/screenshots/home-hero-ru.jpg) **Главная** — hero, три режима игры, CTA и блок «как это работает». Первый экран с адаптивной сеткой и праздничной графикой. | ![Создание игры](docs/screenshots/create-game-ru.jpg) **Создание игры** — заполненная форма: название, организатор, дата, бюджет и тема. Поля проходят клиентскую проверку до отправки. |
+| ![Главная: hero и режимы игры](docs/screenshots/home-hero-ru.jpg) **Главная** — компактный вход: интерактивный гид, три формата игры и свёрнутые подробности. Меньше прокрутки, та же праздничная графика. | ![Создание игры](docs/screenshots/create-game-ru.jpg) **Создание игры** — заполненная форма: название, организатор, дата, бюджет и тема. Поля проходят клиентскую проверку до отправки. |
 | ![Вход по коду](docs/screenshots/join-game-ru.jpg) **Вход по коду** — участник вводит код комнаты и имя; аккаунт и email не нужны. | ![Дашборд демо-игры](docs/screenshots/dashboard-demo-ru.jpg) **Комната после жеребьёвки** — демо-комната `DEMO-SANTA`, компактная шапка, вкладки разделов, получатель, статус, вишлист и чат. |
+| ![Интерактивная инструкция на сайте](docs/screenshots/guide-site-ru.jpg) **Инструкция на сайте** — пять шагов с подсказками и кнопками перехода к созданию, входу и демо. | ![План в комнате](docs/screenshots/guide-room-ru.jpg) **План в комнате** — выполненные шаги отмечены, текущий шаг ведёт к нужному блоку. |
 | ![Панель приглашения](docs/screenshots/invite-share-ru.jpg) **Приглашения** — сгенерированный текст, invite-ссылка и кнопки Telegram / WhatsApp / Email. | ![Пожелания получателя](docs/screenshots/recipient-wishlist-ru.jpg) **Пожелания получателя** — wishlist и профиль видны только после раскрытия назначения. |
 | ![Анонимный чат](docs/screenshots/chat-messages-ru.jpg) **Анонимный чат** — сообщение отправлено через backend, доступны быстрые шаблоны и две вкладки адресатов. | ![Журнал событий](docs/screenshots/activity-log-ru.jpg) **Журнал событий** — действия комнаты приходят через SSE и доступны организатору. |
 | ![Быстрая жеребьёвка](docs/screenshots/quick-draw-ru.jpg) **Быстрая жеребьёвка** — результат по списку имён, кнопки копирования, CSV, печати и персональной ссылки. | ![Установка PWA](docs/screenshots/install-footer-ru.jpg) **Установка PWA** — карточка в футере с подсказкой и кнопкой 44×44; в шапке появляется иконка установки. |
@@ -24,8 +25,9 @@
 
 | | |
 |---|---|
-| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — hero, three game modes, CTA and the “how it works” section. | ![Create game form](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
-| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code plus name, no account or email. | ![Demo dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Dashboard after draw** — `DEMO-SANTA`, revealed recipient, actions and readiness checklist. |
+| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — compact entry: interactive guide, three game modes and collapsed deep-dive sections. Less scrolling, same festive art. | ![Create game form](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
+| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code plus name, no account or email. | ![Demo dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Room after draw** — `DEMO-SANTA`, compact header, section tabs, recipient, status, wishes and chat. |
+| ![Interactive site guide](docs/screenshots/guide-site-en.jpg) **Site guide** — five steps with tips and buttons to create, join or open the demo. | ![Room game plan](docs/screenshots/guide-room-en.jpg) **Room game plan** — completed steps are marked and the current one points to the right block. |
 | ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email actions. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile become visible only after the reveal. |
 | ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — a message delivered through the backend, with templates and two recipient tabs. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven room events for the organizer. |
 | ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — name-based draw with copy, CSV, print and personal-link actions. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer card with a hint and a 44×44 button; the header icon appears when install is available. |
@@ -43,6 +45,8 @@
 
 - **Два режима работы** — локальный `localStorage` fallback и онлайн-режим с backend.
 - **Комната без хаоса** — компактная шапка и три вкладки: «Обзор», «Участники», «Доступ».
+- **Интерактивный гид** — пошаговый план на сайте и в комнате: подсказки, переходы к нужному блоку и отметка выполненных шагов.
+- **Готовые подсказки** — чипы с идеями для вишлиста и списком «что не дарить» добавляются в один клик.
 - **Создание комнаты** — название, организатор, дата обмена, бюджет и тема.
 - **Вход по коду** — участники присоединяются по `SANTA-XXXX` или invite-ссылке, без регистрации.
 - **Демо-игра** — готовые участники, пожелания и жеребьёвка; демо можно пересоздать или сбросить.
@@ -67,7 +71,7 @@ index.html ──┬─> styles.css            дизайн-токены, тем
              ├─> app.js                State, i18n, роутинг хеша, API/SSE, PWA UI
              │      ├─> localStorage   state, язык, тема, чат, offline-queue
              │      └─> fetch/SSE ───> backend/app/server.py ─> SQLite
-             └─> sw.js                 cache shell + 29 изображений + иконки
+             └─> sw.js                 cache shell + 5 критичных сцен + иконки, остальные 31 — по запросу
 
 backend/app/
   server.py      HTTP API, SSE, CORS, rate limit, auth
@@ -194,7 +198,7 @@ API base можно переопределить до загрузки `app.js`:
 ## PWA и офлайн
 
 - `manifest.webmanifest`: standalone display, `name`/`short_name`, `theme_color`, 192/512/maskable и Apple touch icon.
-- `sw.js`: `CACHE_NAME = 'secret-santa-v59-dashboard'`; кеширует HTML, CSS, JS, manifest, иконки и все 29 сцен из `assets/images/`.
+- `sw.js`: `CACHE_NAME = 'secret-santa-v66-art'`; в `install` попадают HTML, CSS, JS, manifest, иконки и 5 сцен первого экрана. Остальные 31 сцена кешируются при первом появлении на экране (см. `IMAGE_ASSETS`), поэтому стартовый запрос заметно легче.
 - При изменении любого ассета поднимите версию в `CACHE_NAME` и в query-строках `styles.css?v=…` / `app.js?v=…` в `index.html` и `sw.js`.
 - Офлайн-навигация отдаёт закешированный shell; недоступные API-запросы не ломают интерфейс.
 - Установка: `beforeinstallprompt` → кнопка в шапке и карточка футера; `appinstalled` скрывает кнопки и показывает статус. На iOS показывается инструкция «Поделиться → На главный экран».
@@ -203,7 +207,7 @@ API base можно переопределить до загрузки `app.js`:
 
 ## Изображения
 
-Промты, точные пути, размеры, alt-текст и точки вставки описаны в [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md). Подключены все 29 сцен: hero, шаги, режимы, заголовки секций и страниц, пустые состояния, CTA, чат, приглашения, быстрая жеребьёвка и социальный превью. Глобальный фотобой не используется: фон страницы — CSS-снег и градиенты, изображения живут в `article`/`section`-блоках и защищены токеном `--surface-soft`.
+Промты, точные пути, размеры, alt-текст и точки вставки описаны в [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md). Подключены все 36 сцен: hero, шаги, режимы, заголовки секций и страниц, пустые состояния, CTA, чат, приглашения, быстрая жеребьёвка и социальный превью. Все JPG прошли пакетную оптимизацию (`strip`, sRGB, progressive, quality 74): 3.8 МБ → 1.2 МБ. Фоновые сцены секций подключаются через `IntersectionObserver` по мере приближения к экрану, hero остаётся на первом экране: начальный набор изображений главной — около 163 КБ вместо ~936 КБ. Глобальный фотобой не используется: фон страницы — CSS-снег и градиенты, изображения живут в `article`/`section`-блоках и защищены токеном `--surface-soft`.
 
 ---
 
@@ -232,7 +236,7 @@ npm i --no-save playwright && npx playwright install chromium
 node scripts/capture_screenshots.mjs
 ```
 
-Скрипт очищает `docs/screenshots/*.jpg` и создаёт 24 новых снимка из сценариев. Для кастомных адресов используйте `SECRET_SANTA_BASE` и `SECRET_SANTA_API`.
+Скрипт очищает `docs/screenshots/*.jpg` и создаёт 28 новых снимков из сценариев. Для кастомных адресов используйте `SECRET_SANTA_BASE` и `SECRET_SANTA_API`.
 
 ---
 
@@ -250,9 +254,9 @@ node scripts/capture_screenshots.mjs
 ├── scripts/
 │   ├── smoke_e2e.py            Backend smoke-тест
 │   └── capture_screenshots.mjs Генерация скриншотов README
-├── assets/images/              29 JPG-сцен + PROMPTS.md
+├── assets/images/              36 JPG-сцен + PROMPTS.md
 ├── icons/                      192/512/maskable/Apple icons
-├── docs/screenshots/           24 актуальных скриншота
+├── docs/screenshots/           28 актуальных скриншотов
 ├── backend/
 │   ├── app/                    Foundation API: server/db/auth/draw/realtime/push
 │   ├── migrations/             SQL миграции SQLite
@@ -297,8 +301,9 @@ All screenshots are generated from real Playwright scenarios (`scripts/capture_s
 
 | | |
 |---|---|
-| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — hero, three game modes, CTA and “how it works”. | ![Create game](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
-| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code and name, no account or email. | ![Dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Room after draw** — `DEMO-SANTA`, compact header, section tabs, revealed recipient, status, wishes and chat. |
+| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — compact entry: interactive guide, three game modes and collapsed deep-dive sections. | ![Create game](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
+| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code and name, no account or email. | ![Dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Room after draw** — `DEMO-SANTA`, compact header, section tabs, recipient, status, wishes and chat. |
+| ![Interactive site guide](docs/screenshots/guide-site-en.jpg) **Site guide** — five steps with tips and buttons to create, join or open the demo. | ![Room game plan](docs/screenshots/guide-room-en.jpg) **Room game plan** — completed steps are marked and the current one points to the right block. |
 | ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email share actions. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile appear only after the reveal. |
 | ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — delivered message, reply templates and two recipient tabs. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven organizer events. |
 | ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — name-based result with copy, CSV, print and personal-link actions. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer hint plus 44×44 button; the header icon appears when install is available. |
@@ -314,6 +319,8 @@ All screenshots are generated from real Playwright scenarios (`scripts/capture_s
 
 - **Two runtime modes** — local `localStorage` fallback and online backend mode.
 - **Calm room workspace** — compact header and three sections: Overview, People and Access.
+- **Interactive guide** — a step-by-step plan on the site and in the room, with tips, jump-to controls and completed-step tracking.
+- **Ready-made suggestions** — one-tap chips for wishlist ideas and a “better not gift” list.
 - **Room setup** — name, organizer, exchange date, budget and theme.
 - **Join by code** — `SANTA-XXXX` or invite link, no registration.
 - **Demo game** — seeded participants, wishes and draw; resettable.
@@ -336,7 +343,7 @@ index.html ──┬─> styles.css        design tokens, themes, components, re
              ├─> app.js            state, i18n, hash routing, API/SSE, PWA UI
              │      ├─> localStorage
              │      └─> fetch/SSE ─> backend/app/server.py ─> SQLite
-             └─> sw.js             shell cache + 29 images + icons
+             └─> sw.js             shell cache + 5 critical images + icons, 31 on demand
 ```
 
 Flow: `/api/health` detection → `POST /api/rooms` → `POST /api/rooms/join` → `POST /api/rooms/{code}/draw` → `GET .../assignment`; SSE `GET .../events` refreshes participants, chat and activity. Offline chat messages are queued in `secret-santa-offline-queue` and flushed on `online`.
@@ -379,7 +386,7 @@ Protected routes use `Authorization: Bearer <token>`; SSE sends the token via th
 
 ## PWA, images and verification
 
-`sw.js` uses `secret-santa-v59-dashboard` and caches the shell, icons and all 29 images. Bump the cache name and `?v=` query strings in `index.html`/`sw.js` whenever assets change. Image prompts, paths, sizes, alt text and insertion points live in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md).
+`sw.js` uses `secret-santa-v66-art`. The install step caches the shell, icons and 5 above-the-fold images; the remaining 31 images are cached on first use. All 36 JPGs are stripped, progressive and compressed to quality 74 (3.8 MB → 1.2 MB), and decorative section backgrounds are attached by `IntersectionObserver`: the home page now starts with ~163 KB of images instead of ~936 KB. Bump the cache name and `?v=` query strings in `index.html`/`sw.js` whenever assets change. Image prompts, paths, sizes, alt text and insertion points live in [`assets/images/PROMPTS.md`](assets/images/PROMPTS.md).
 
 Checks:
 
@@ -390,7 +397,7 @@ python3 scripts/smoke_e2e.py
 node scripts/capture_screenshots.mjs   # needs playwright + running frontend/backend
 ```
 
-Screenshot regeneration requires Playwright (`npm i --no-save playwright && npx playwright install chromium`) and both local servers; optional `SECRET_SANTA_BASE`/`SECRET_SANTA_API` override URLs. The script replaces all 24 JPGs in `docs/screenshots/`.
+Screenshot regeneration requires Playwright (`npm i --no-save playwright && npx playwright install chromium`) and both local servers; optional `SECRET_SANTA_BASE`/`SECRET_SANTA_API` override URLs. The script replaces all 28 JPGs in `docs/screenshots/`.
 
 ## Production status
 

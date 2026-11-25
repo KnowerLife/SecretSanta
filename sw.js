@@ -1,9 +1,9 @@
-const CACHE_NAME = 'secret-santa-v59-dashboard';
-const ASSETS = [
+const CACHE_NAME = 'secret-santa-v66-art';
+const SHELL_ASSETS = [
   './',
   './index.html',
-  './styles.css?v=59',
-  './app.js?v=59',
+  './styles.css?v=66',
+  './app.js?v=66',
   './manifest.webmanifest',
   './icons/icon.svg',
   './icons/icon-maskable.svg',
@@ -11,6 +11,13 @@ const ASSETS = [
   './icons/icon-512.png',
   './icons/icon-maskable-512.png',
   './icons/apple-touch-icon.png',
+  './assets/images/hero-winter-scene.jpg',
+  './assets/images/guide-format.jpg',
+  './assets/images/mode-online.jpg',
+  './assets/images/mode-quick.jpg',
+  './assets/images/mode-demo.jpg'
+];
+const IMAGE_ASSETS = [
   './assets/images/hero-winter-scene.jpg',
   './assets/images/step-create-game.jpg',
   './assets/images/step-invite-friends.jpg',
@@ -39,9 +46,17 @@ const ASSETS = [
   './assets/images/wishlist-empty.jpg',
   './assets/images/invite-share.jpg',
   './assets/images/access-empty.jpg',
-  './assets/images/activity-empty.jpg'
+  './assets/images/activity-empty.jpg',
+  './assets/images/guide-format.jpg',
+  './assets/images/guide-prep.jpg',
+  './assets/images/guide-room-team.jpg',
+  './assets/images/guide-room-wishes.jpg',
+  './assets/images/guide-room-profile.jpg',
+  './assets/images/guide-room-draw.jpg',
+  './assets/images/guide-room-gift.jpg'
 ];
-self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS))); self.skipWaiting(); });
+const PRECACHE = Array.from(new Set(SHELL_ASSETS));
+self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(PRECACHE))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k))))); self.clients.claim(); });
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
@@ -58,8 +73,10 @@ self.addEventListener('fetch', e => {
     return;
   }
   e.respondWith(caches.match(e.request).then(cached => cached || fetch(e.request).then(r => {
-    const copy = r.clone();
-    caches.open(CACHE_NAME).then(c => c.put(e.request, copy));
+    if (r.ok) {
+      const copy = r.clone();
+      caches.open(CACHE_NAME).then(c => c.put(e.request, copy));
+    }
     return r;
   })));
 });
