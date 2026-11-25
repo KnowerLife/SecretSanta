@@ -28,6 +28,8 @@
 | Главная | Создание игры | Дашборд игры |
 |---|---|---|
 | ![Главная страница](docs/screenshots/home.jpg) | ![Создание игры](docs/screenshots/create.jpg) | ![Дашборд игры](docs/screenshots/dashboard.jpg) |
+| **Быстрая жеребьёвка** | **Анонимный чат** | **Журнал событий** |
+| ![Быстрая жеребьёвка](docs/screenshots/quick.jpg) | ![Анонимный чат](docs/screenshots/chat.jpg) | ![Журнал событий](docs/screenshots/activity.jpg) |
 
 ## Быстрый запуск
 
@@ -161,6 +163,8 @@ A modern web app for organizing a Secret Santa gift exchange: create a room, inv
 | Home | Create game | Game dashboard |
 |---|---|---|
 | ![Home page](docs/screenshots/home-en.jpg) | ![Create game](docs/screenshots/create-en.jpg) | ![Game dashboard](docs/screenshots/dashboard-en.jpg) |
+| **Quick draw** | **Anonymous chat** | **Activity log** |
+| ![Quick draw](docs/screenshots/quick-en.jpg) | ![Anonymous chat](docs/screenshots/chat-en.jpg) | ![Activity log](docs/screenshots/activity-en.jpg) |
 
 ## Quick Start
 
