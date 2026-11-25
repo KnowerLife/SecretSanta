@@ -10,34 +10,29 @@
 
 Все изображения сгенерированы из реальных UI-сценариев через Playwright (`scripts/capture_screenshots.mjs`), а не являются макетами. Снимки сделаны после жеребьёвки, отправки сообщений и открытия служебных панелей.
 
-### Основной поток — RU
+### Основной поток / Main flow
+
+| RU | EN |
+|---|---|
+| ![Главная: hero и режимы игры](docs/screenshots/home-hero-ru.jpg) **Главная** — интерактивный гид, три формата игры и свёрнутые подробности. | ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — interactive guide, three game modes and collapsed deep-dive sections. |
+| ![Интерактивная инструкция на сайте](docs/screenshots/guide-site-ru.jpg) **Инструкция на сайте** — пять шагов с подсказками и кнопками перехода к нужному действию. | ![Interactive site guide](docs/screenshots/guide-site-en.jpg) **Site guide** — five steps with tips and jump-to controls. |
+| ![Создание игры](docs/screenshots/create-game-ru.jpg) **Создание игры** — заполненная форма с клиентской проверкой перед отправкой. | ![Create game form](docs/screenshots/create-game-en.jpg) **Create game** — filled form with client-side validation before submit. |
+| ![Вход по коду](docs/screenshots/join-game-ru.jpg) **Вход по коду** — код комнаты и имя, без регистрации и email. | ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code and name, no account or email. |
+| ![Дашборд демо-игры](docs/screenshots/dashboard-demo-ru.jpg) **Комната после жеребьёвки** — `DEMO-SANTA`, шапка, вкладки, получатель, вишлист и чат. | ![Dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Room after draw** — `DEMO-SANTA`, header, section tabs, recipient, wishes and chat. |
+| ![План в комнате](docs/screenshots/guide-room-ru.jpg) **План в комнате** — выполненные шаги отмечены, текущий ведёт к нужному блоку. | ![Room game plan](docs/screenshots/guide-room-en.jpg) **Room game plan** — completed steps are marked, current one points to the right block. |
+| ![Панель приглашения](docs/screenshots/invite-share-ru.jpg) **Приглашения** — текст, invite-ссылка и кнопки Telegram / WhatsApp / Email. | ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email. |
+| ![Пожелания получателя](docs/screenshots/recipient-wishlist-ru.jpg) **Пожелания получателя** — wishlist и профиль видны только после раскрытия. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile visible only after reveal. |
+| ![Анонимный чат](docs/screenshots/chat-messages-ru.jpg) **Анонимный чат** — доставка через backend, шаблоны и две вкладки адресатов. | ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — delivered through backend, templates and two recipient tabs. |
+| ![Журнал событий](docs/screenshots/activity-log-ru.jpg) **Журнал событий** — SSE-события комнаты для организатора. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven room events for the organizer. |
+| ![Быстрая жеребьёвка](docs/screenshots/quick-draw-ru.jpg) **Быстрая жеребьёвка** — результат, копирование, CSV, печать и персональная ссылка. | ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — result with copy, CSV, print and personal link. |
+| ![Установка PWA](docs/screenshots/install-footer-ru.jpg) **Установка PWA** — карточка в футере и иконка в шапке. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer card and header icon. |
+
+### Темы и адаптив / Themes and responsive
 
 | | |
 |---|---|
-| ![Главная: hero и режимы игры](docs/screenshots/home-hero-ru.jpg) **Главная** — компактный вход: интерактивный гид, три формата игры и свёрнутые подробности. Меньше прокрутки, та же праздничная графика. | ![Создание игры](docs/screenshots/create-game-ru.jpg) **Создание игры** — заполненная форма: название, организатор, дата, бюджет и тема. Поля проходят клиентскую проверку до отправки. |
-| ![Вход по коду](docs/screenshots/join-game-ru.jpg) **Вход по коду** — участник вводит код комнаты и имя; аккаунт и email не нужны. | ![Дашборд демо-игры](docs/screenshots/dashboard-demo-ru.jpg) **Комната после жеребьёвки** — демо-комната `DEMO-SANTA`, компактная шапка, вкладки разделов, получатель, статус, вишлист и чат. |
-| ![Интерактивная инструкция на сайте](docs/screenshots/guide-site-ru.jpg) **Инструкция на сайте** — пять шагов с подсказками и кнопками перехода к созданию, входу и демо. | ![План в комнате](docs/screenshots/guide-room-ru.jpg) **План в комнате** — выполненные шаги отмечены, текущий шаг ведёт к нужному блоку. |
-| ![Панель приглашения](docs/screenshots/invite-share-ru.jpg) **Приглашения** — сгенерированный текст, invite-ссылка и кнопки Telegram / WhatsApp / Email. | ![Пожелания получателя](docs/screenshots/recipient-wishlist-ru.jpg) **Пожелания получателя** — wishlist и профиль видны только после раскрытия назначения. |
-| ![Анонимный чат](docs/screenshots/chat-messages-ru.jpg) **Анонимный чат** — сообщение отправлено через backend, доступны быстрые шаблоны и две вкладки адресатов. | ![Журнал событий](docs/screenshots/activity-log-ru.jpg) **Журнал событий** — действия комнаты приходят через SSE и доступны организатору. |
-| ![Быстрая жеребьёвка](docs/screenshots/quick-draw-ru.jpg) **Быстрая жеребьёвка** — результат по списку имён, кнопки копирования, CSV, печати и персональной ссылки. | ![Установка PWA](docs/screenshots/install-footer-ru.jpg) **Установка PWA** — карточка в футере с подсказкой и кнопкой 44×44; в шапке появляется иконка установки. |
-
-### Основной поток — EN
-
-| | |
-|---|---|
-| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — compact entry: interactive guide, three game modes and collapsed deep-dive sections. Less scrolling, same festive art. | ![Create game form](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
-| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code plus name, no account or email. | ![Demo dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Room after draw** — `DEMO-SANTA`, compact header, section tabs, recipient, status, wishes and chat. |
-| ![Interactive site guide](docs/screenshots/guide-site-en.jpg) **Site guide** — five steps with tips and buttons to create, join or open the demo. | ![Room game plan](docs/screenshots/guide-room-en.jpg) **Room game plan** — completed steps are marked and the current one points to the right block. |
-| ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email actions. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile become visible only after the reveal. |
-| ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — a message delivered through the backend, with templates and two recipient tabs. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven room events for the organizer. |
-| ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — name-based draw with copy, CSV, print and personal-link actions. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer card with a hint and a 44×44 button; the header icon appears when install is available. |
-
-### Дополнительные состояния
-
-| | |
-|---|---|
-| ![Тема midnight](docs/screenshots/theme-midnight-ru.jpg) **Midnight** — тёмная тема с сохранением выбора в `localStorage`. | ![Тема cozy](docs/screenshots/theme-cozy-ru.jpg) **Cozy** — тёплая тема; токены переключаются без смены компонентов. |
-| ![Мобильная главная](docs/screenshots/mobile-home-ru.jpg) **390 px** — мобильная главная: безопасные отступы, горизонтальная навигация и stacking hero. | ![Мобильная быстрая жеребьёвка](docs/screenshots/mobile-quick-ru.jpg) **390 px** — результат быстрой жеребьёвки без горизонтального переполнения. |
+| ![Тема midnight](docs/screenshots/theme-midnight-ru.jpg) **Midnight** — тёмная тема, выбор сохраняется в `localStorage`. | ![Тема cozy](docs/screenshots/theme-cozy-ru.jpg) **Cozy** — тёплая тема, те же компоненты и токены. |
+| ![Мобильная главная](docs/screenshots/mobile-home-ru.jpg) **390 px, главная** — безопасные отступы, горизонтальная навигация, stacked hero. | ![Мобильная быстрая жеребьёвка](docs/screenshots/mobile-quick-ru.jpg) **390 px, быстрая жеребьёвка** — результат без горизонтального переполнения. |
 
 ---
 
@@ -295,25 +290,7 @@ A web app for running a Secret Santa exchange: create a room, join by code, coll
 
 ## Screenshots
 
-All screenshots are generated from real Playwright scenarios (`scripts/capture_screenshots.mjs`), not mockups. They capture post-draw, sent-message and opened-panel states.
-
-### Main flow — EN
-
-| | |
-|---|---|
-| ![Home hero and game modes](docs/screenshots/home-hero-en.jpg) **Home** — compact entry: interactive guide, three game modes and collapsed deep-dive sections. | ![Create game](docs/screenshots/create-game-en.jpg) **Create game** — filled form with name, organizer, date, budget and theme. |
-| ![Join by code](docs/screenshots/join-game-en.jpg) **Join by code** — room code and name, no account or email. | ![Dashboard after draw](docs/screenshots/dashboard-demo-en.jpg) **Room after draw** — `DEMO-SANTA`, compact header, section tabs, recipient, status, wishes and chat. |
-| ![Interactive site guide](docs/screenshots/guide-site-en.jpg) **Site guide** — five steps with tips and buttons to create, join or open the demo. | ![Room game plan](docs/screenshots/guide-room-en.jpg) **Room game plan** — completed steps are marked and the current one points to the right block. |
-| ![Invite panel](docs/screenshots/invite-share-en.jpg) **Invitations** — generated text, invite link and Telegram / WhatsApp / Email share actions. | ![Recipient wishlist](docs/screenshots/recipient-wishlist-en.jpg) **Recipient wishes** — wishlist and profile appear only after the reveal. |
-| ![Anonymous chat](docs/screenshots/chat-messages-en.jpg) **Anonymous chat** — delivered message, reply templates and two recipient tabs. | ![Activity log](docs/screenshots/activity-log-en.jpg) **Activity log** — SSE-driven organizer events. |
-| ![Quick draw result](docs/screenshots/quick-draw-en.jpg) **Quick draw** — name-based result with copy, CSV, print and personal-link actions. | ![PWA install card](docs/screenshots/install-footer-en.jpg) **PWA install** — footer hint plus 44×44 button; the header icon appears when install is available. |
-
-### Additional states
-
-| | |
-|---|---|
-| ![Midnight theme](docs/screenshots/theme-midnight-ru.jpg) **Midnight** — dark theme persisted in `localStorage`. | ![Cozy theme](docs/screenshots/theme-cozy-ru.jpg) **Cozy** — warm theme, same components and tokens. |
-| ![Mobile home](docs/screenshots/mobile-home-ru.jpg) **390 px** — safe areas, scrollable nav and stacked hero. | ![Mobile quick draw](docs/screenshots/mobile-quick-ru.jpg) **390 px** — quick draw result without horizontal overflow. |
+The same real Playwright captures are shown above in the bilingual table (RU/EN columns). Additional states cover `midnight` and `cozy` themes and 390 px mobile views.
 
 ## Features
 
