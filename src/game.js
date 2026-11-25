@@ -1,10 +1,10 @@
-import { state, saveState } from './storage.js?v=67';
-import { uid } from './utils.js?v=67';
-import { getLang } from './i18n.js?v=67';
-import { activityText } from './dates.js?v=67';
-import { navigate } from './router.js?v=67';
-import { renderDashboard } from './room.js?v=67';
-import { toast } from './feedback.js?v=67';
+import { state, saveState } from './storage.js?v=68';
+import { uid } from './utils.js?v=68';
+import { getLang } from './i18n.js?v=68';
+import { activityText } from './dates.js?v=68';
+import { navigate } from './router.js?v=68';
+import { renderDashboard } from './room.js?v=68';
+import { toast } from './feedback.js?v=68';
 
 // Модель игры: исключения, жеребьёвка, активность и демо.
 function ensureGame(game) {

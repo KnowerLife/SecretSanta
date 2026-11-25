@@ -8,7 +8,7 @@
 - [x] **B. Auth / Access / Sessions** — реализовано (invite/member tokens, sessions, revoke, rate limit basic)
 - [x] **C. Realtime / Notifications scaffold** — SSE + room_events replay, push scaffold, notification jobs; worker/provider hooks подготовлены; анонимный чат (MVP), organizer activity log
 - [x] **D. PWA / Offline** — manifest, SW cache versioning, offline shell fallback, offline-баннер, отложенная отправка чата и background sync
-- [x] **E. Frontend integration** — online backend mode + localStorage fallback, SSE auto-refresh, extended UI (темы, быстрая жеребьёвка, приглашения, чеклист, группы, профиль, журнал)
+- [x] **E. Frontend integration** — online backend mode + localStorage fallback, SSE auto-refresh, extended UI (темы, быстрая жеребьёвка, приглашения, чеклист, группы, профиль, журнал); с v67 клиент разбит на ES-модули в `src/`
 - [x] **F. CI / Docker / Tests / Docs** — CI, docker-compose, env example, unit/e2e security tests, README/plan updated
 - [~] **Prod stack migration (FastAPI+Postgres+Redis)** — scaffold + parity improvements в `backend/prod_stack/` (требует infra/зависимостей/полного cutover)
 - [ ] **Operational deployment** — требует реальной инфраструктуры/секретов (VAPID/SMTP/Sentry/домен/хостинг)
@@ -71,9 +71,11 @@
 
 - [x] Unit/e2e tests: `backend/tests/test_draw.py`, `test_security_e2e.py`, `test_wishlist.py`, `test_messages.py`, `test_profile_extended.py`
 - [x] Smoke script `scripts/smoke_e2e.py` (profile, exclusions, activity)
-- [x] Lighthouse (главная, RU, темы winter/midnight/cozy): accessibility / best practices / SEO = 1.0
+- [x] Коммитируемый браузерный набор `scripts/verify_frontend.mjs` + `scripts/frontend-checks/` (19 проверок, включая Lighthouse); запуск через `npm run verify:frontend` или `make verify-frontend`
+- [x] Lighthouse (12 прогонов: home/dashboard × winter/midnight/cozy × RU/EN): accessibility / best practices / SEO = 1.0
+- [x] v68: контраст зелёных акцентов в `cozy` доведён до 4.91:1; кэш SW и query-версии подняты до v68
 - [x] Static contract tests `backend/prod_stack/tests/test_api_contracts.py` (routes, activity, groups, chat)
-- [x] CI: `.github/workflows/ci.yml` (unittest + prod-stack contracts + JS syntax)
+- [x] CI: `.github/workflows/ci.yml` (unittest + prod-stack contracts + JS syntax + 19 браузерных проверок)
 - [x] Docker: `backend/Dockerfile`, root `docker-compose.yml`
 - [x] Env: `backend/.env.example`
 - [x] Docs: README RU/EN, backend READMEs, этот план, image prompts

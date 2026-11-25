@@ -1,5 +1,5 @@
-import { $ } from './utils.js?v=67';
-import { t } from './i18n.js?v=67';
+import { $ } from './utils.js?v=68';
+import { t } from './i18n.js?v=68';
 
 // Три темы интерфейса и переключение между ними.
 const THEME_KEY = 'secret-santa-theme';

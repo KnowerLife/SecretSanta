@@ -1,7 +1,7 @@
-import { $ } from './utils.js?v=67';
-import { t } from './i18n.js?v=67';
-import { toast } from './feedback.js?v=67';
-import { updateOfflineUI, flushOfflineQueue } from './offline.js?v=67';
+import { $ } from './utils.js?v=68';
+import { t } from './i18n.js?v=68';
+import { toast } from './feedback.js?v=68';
+import { updateOfflineUI, flushOfflineQueue } from './offline.js?v=68';
 
 // PWA-установка и сетевые события приложения.
 export function initInstall() {

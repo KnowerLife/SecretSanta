@@ -1,10 +1,10 @@
-import { I18N } from './i18n-data.js?v=67';
-import { $, $$ } from './utils.js?v=67';
-import { renderSiteGuide } from './guides.js?v=67';
-import { updateNavHint } from './router.js?v=67';
-import { updateOfflineUI } from './offline.js?v=67';
-import { renderDashboard } from './room.js?v=67';
-import { renderQuickResult } from './quick.js?v=67';
+import { I18N } from './i18n-data.js?v=68';
+import { $, $$ } from './utils.js?v=68';
+import { renderSiteGuide } from './guides.js?v=68';
+import { updateNavHint } from './router.js?v=68';
+import { updateOfflineUI } from './offline.js?v=68';
+import { renderDashboard } from './room.js?v=68';
+import { renderQuickResult } from './quick.js?v=68';
 
 // Переводы, текущий язык и применение локализации.
 const LANG_KEY = 'secret-santa-lang';

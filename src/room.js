@@ -1,12 +1,12 @@
-import { $, $$, escapeHtml, uid } from './utils.js?v=67';
-import { t } from './i18n.js?v=67';
-import { apiState, apiFetch, detectBackend, roomSession, setRoomSession } from './api.js?v=67';
-import { state, saveState, clearChatCacheForCode } from './storage.js?v=67';
-import { currentGame, currentMe, ensureGame, recomputeExclusions, pushLocalActivity, localActivity, groupPairs, pairKey, isExcluded } from './game.js?v=67';
-import { formatDate, daysUntil, formatTime, activityText } from './dates.js?v=67';
-import { renderChat, loadChatMessages, resetChatState, invalidateChat, hasChatLoaded, hasAnyChatLoaded } from './chat.js?v=67';
-import { renderRoomGuide, renderPresetChips } from './guides.js?v=67';
-import { toast, setNotice } from './feedback.js?v=67';
+import { $, $$, escapeHtml, uid } from './utils.js?v=68';
+import { t } from './i18n.js?v=68';
+import { apiState, apiFetch, detectBackend, roomSession, setRoomSession } from './api.js?v=68';
+import { state, saveState, clearChatCacheForCode } from './storage.js?v=68';
+import { currentGame, currentMe, ensureGame, recomputeExclusions, pushLocalActivity, localActivity, groupPairs, pairKey, isExcluded } from './game.js?v=68';
+import { formatDate, daysUntil, formatTime, activityText } from './dates.js?v=68';
+import { renderChat, loadChatMessages, resetChatState, invalidateChat, hasChatLoaded, hasAnyChatLoaded } from './chat.js?v=68';
+import { renderRoomGuide, renderPresetChips } from './guides.js?v=68';
+import { toast, setNotice } from './feedback.js?v=68';
 
 // Комната: рендер, синхронизация с бэкендом, SSE и доступ.
 function inviteUrl(game) {

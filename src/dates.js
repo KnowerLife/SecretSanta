@@ -1,4 +1,4 @@
-import { locale, t } from './i18n.js?v=67';
+import { locale, t } from './i18n.js?v=68';
 
 // Локальное форматирование дат и текста событий активности.
 function formatDate(dateStr) {

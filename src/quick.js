@@ -1,6 +1,6 @@
-import { t, getLang } from './i18n.js?v=67';
-import { $, $$, escapeHtml, b64urlDecode, quickPersonalUrl } from './utils.js?v=67';
-import { toast } from './feedback.js?v=67';
+import { t, getLang } from './i18n.js?v=68';
+import { $, $$, escapeHtml, b64urlDecode, quickPersonalUrl } from './utils.js?v=68';
+import { toast } from './feedback.js?v=68';
 
 // Быстрая жеребьёвка и персональные ссылки на пары.
 let quickPairs = [];

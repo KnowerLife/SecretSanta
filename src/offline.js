@@ -1,11 +1,11 @@
-import { $, uid } from './utils.js?v=67';
-import { getOfflineQueue, setOfflineQueue } from './storage.js?v=67';
-import { roomSession, apiFetch } from './api.js?v=67';
-import { t } from './i18n.js?v=67';
-import { toast } from './feedback.js?v=67';
-import { currentGame } from './game.js?v=67';
-import { invalidateChat, loadChatMessages } from './chat.js?v=67';
-import { loadActivity } from './room.js?v=67';
+import { $, uid } from './utils.js?v=68';
+import { getOfflineQueue, setOfflineQueue } from './storage.js?v=68';
+import { roomSession, apiFetch } from './api.js?v=68';
+import { t } from './i18n.js?v=68';
+import { toast } from './feedback.js?v=68';
+import { currentGame } from './game.js?v=68';
+import { invalidateChat, loadChatMessages } from './chat.js?v=68';
+import { loadActivity } from './room.js?v=68';
 
 // Офлайн-баннер и отправка очереди сообщений.
 function queueOfflineMessage(entry) {

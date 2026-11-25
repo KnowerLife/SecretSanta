@@ -1,10 +1,10 @@
-import { $, $$, escapeHtml, uid } from './utils.js?v=67';
-import { t, locale } from './i18n.js?v=67';
-import { currentGame, currentMe } from './game.js?v=67';
-import { roomSession, apiFetch, apiState } from './api.js?v=67';
-import { getChatStore, saveChatStore, clearChatCacheForCode } from './storage.js?v=67';
-import { toast } from './feedback.js?v=67';
-import { queueOfflineMessage } from './offline.js?v=67';
+import { $, $$, escapeHtml, uid } from './utils.js?v=68';
+import { t, locale } from './i18n.js?v=68';
+import { currentGame, currentMe } from './game.js?v=68';
+import { roomSession, apiFetch, apiState } from './api.js?v=68';
+import { getChatStore, saveChatStore, clearChatCacheForCode } from './storage.js?v=68';
+import { toast } from './feedback.js?v=68';
+import { queueOfflineMessage } from './offline.js?v=68';
 
 // Анонимный чат: рендер, загрузка и отправка сообщений.
 let chatChannel = 'to_recipient';
