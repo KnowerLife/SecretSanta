@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=58" />
+  <link rel="stylesheet" href="styles.css?v=59" />
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -644,7 +644,23 @@
             </div>
           </div>
 
+          <div class="dash-toolbar" role="group" data-i18n-aria-label="dash.tabsAria" aria-label="Разделы комнаты">
+            <button class="dash-tab is-active" type="button" data-dash-tab="overview" aria-pressed="true" aria-controls="dashPaneOverview">
+              <svg class="card-icon" aria-hidden="true"><use href="#i-chart"></use></svg>
+              <span data-i18n="dash.tabOverview">Обзор</span>
+            </button>
+            <button class="dash-tab" type="button" data-dash-tab="people" aria-pressed="false" aria-controls="dashPanePeople">
+              <svg class="card-icon" aria-hidden="true"><use href="#i-user-check"></use></svg>
+              <span data-i18n="dash.tabPeople">Участники</span>
+            </button>
+            <button class="dash-tab" type="button" data-dash-tab="access" aria-pressed="false" aria-controls="dashPaneAccess">
+              <svg class="card-icon" aria-hidden="true"><use href="#i-lock"></use></svg>
+              <span data-i18n="dash.tabAccess">Доступ</span>
+            </button>
+          </div>
+
           <div class="dash-grid">
+            <section class="dash-pane is-active" id="dashPaneOverview" data-dash-pane="overview">
             <article class="snow-card panel panel--highlight panel--wide">
               <div class="panel__body">
                 <div class="panel-head">
@@ -761,6 +777,9 @@
               </div>
             </article>
 
+            </section>
+
+            <section class="dash-pane" id="dashPanePeople" data-dash-pane="people" hidden>
             <article class="snow-card panel" id="profilePanel">
               <div class="panel__body">
                 <div class="panel-head">
@@ -846,6 +865,9 @@
               </div>
             </article>
 
+            </section>
+
+            <section class="dash-pane" id="dashPaneAccess" data-dash-pane="access" hidden>
             <article class="snow-card panel" id="accessPanel">
               <div class="panel__body">
                 <div class="panel-head">
@@ -890,6 +912,7 @@
                 <p id="activityNotice" class="muted small"></p>
               </div>
             </article>
+            </section>
           </div>
 
           <p id="dashNotice" class="notice hidden" role="status" aria-live="polite"></p>
@@ -972,6 +995,6 @@
   </div>
 
   <div id="toastLayer" class="toast-layer" aria-live="polite" aria-atomic="true"></div>
-  <script src="app.js?v=58" defer></script>
+  <script src="app.js?v=59" defer></script>
 </body>
 </html>
