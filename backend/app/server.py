@@ -36,8 +36,8 @@ def get_member(conn, room_id, member_id):
     return conn.execute('SELECT * FROM room_members WHERE id = ? AND room_id = ?', (member_id, room_id)).fetchone()
 
 
-def require_auth_room_member(conn, handler, room_row):
-    token = parse_bearer(handler.headers.get('Authorization'))
+def require_auth_room_member(conn, handler, room_row, token_override=None):
+    token = token_override or parse_bearer(handler.headers.get('Authorization'))
     payload = verify_token(token) if token else None
     if not payload:
         raise ApiError(HTTPStatus.UNAUTHORIZED, 'auth_required')
@@ -83,6 +83,12 @@ def safe_member_row(row):
         'role': d['role'],
         'giftStatus': d.get('gift_status') or 'none',
         'joinedAt': d.get('created_at'),
+        'address': d.get('address') or '',
+        'profileNote': d.get('profile_note') or '',
+        'antiWishlist': d.get('anti_wishlist') or '',
+        'size': d.get('size') or '',
+        'links': d.get('links') or '',
+        'allergies': d.get('allergies') or '',
     }
 
 
@@ -95,7 +101,12 @@ def get_my_assignment(conn, room_id, member_id):
     if not draw:
         return None, None
     asn = conn.execute(
-        'SELECT a.*, rm.name_snapshot AS recipient_name FROM assignments a JOIN room_members rm ON rm.id = a.recipient_member_id WHERE a.draw_run_id = ? AND a.santa_member_id = ?',
+        '''SELECT a.*, rm.name_snapshot AS recipient_name, rm.address AS recipient_address,
+                  rm.profile_note AS recipient_profile_note, rm.anti_wishlist AS recipient_anti_wishlist,
+                  rm.size AS recipient_size, rm.links AS recipient_links, rm.allergies AS recipient_allergies
+           FROM assignments a
+           JOIN room_members rm ON rm.id = a.recipient_member_id
+           WHERE a.draw_run_id = ? AND a.santa_member_id = ?''',
         (draw['id'], member_id),
     ).fetchone()
     return draw, asn
@@ -262,6 +273,12 @@ class Handler(BaseHTTPRequestHandler):
                         'assignment': {
                             'recipientMemberId': asn['recipient_member_id'],
                             'recipientName': asn['recipient_name'],
+                            'recipientAddress': asn['recipient_address'] or '',
+                            'recipientProfileNote': asn['recipient_profile_note'] or '',
+                            'recipientAntiWishlist': asn['recipient_anti_wishlist'] or '',
+                            'recipientSize': asn['recipient_size'] or '',
+                            'recipientLinks': asn['recipient_links'] or '',
+                            'recipientAllergies': asn['recipient_allergies'] or '',
                         }
                     })
 
@@ -280,6 +297,9 @@ class Handler(BaseHTTPRequestHandler):
                     rows = conn.execute('SELECT id, created_at, expires_at, revoked_at, last_seen_at, user_agent FROM auth_sessions WHERE room_id=? AND member_id=? ORDER BY created_at DESC', (room['id'], member['id'])).fetchall()
                     return self._send_json(200, {'ok': True, 'sessions': rows_to_dicts(rows)})
 
+            if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'activity':
+                return self._get_activity(parts[2].upper(), query)
+
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'events':
                 code = parts[2].upper()
                 token = parse_bearer(self.headers.get('Authorization')) or (query.get('token') or [None])[0]
@@ -290,8 +310,8 @@ class Handler(BaseHTTPRequestHandler):
                         raise ApiError(404, 'room_not_found')
                     if not payload:
                         raise ApiError(401, 'auth_required')
-                    # validate session/member
-                    require_auth_room_member(conn, self, room)
+                    # validate session/member (EventSource can only send the token in the query string)
+                    require_auth_room_member(conn, self, room, token_override=token)
                 last_event_id = self.headers.get('Last-Event-ID') or (query.get('lastEventId') or [None])[0]
                 return self._handle_sse(room, last_event_id)
 
@@ -337,6 +357,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self._add_wishlist_item(parts[2].upper(), body)
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'gift-status':
                 return self._set_gift_status(parts[2].upper(), body)
+            if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'profile':
+                return self._update_profile(parts[2].upper(), body)
             if len(parts) == 4 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'messages':
                 return self._send_message(parts[2].upper(), body)
 
@@ -348,11 +370,13 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_DELETE(self):
         try:
-            path, _ = self._route()
+            path, query = self._route()
             self._rate_limit_or_raise(path)
             parts = [p for p in path.split('/') if p]
             if len(parts) == 5 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'wishlist':
                 return self._delete_wishlist_item(parts[2].upper(), parts[4])
+            if len(parts) == 6 and parts[0] == 'api' and parts[1] == 'rooms' and parts[3] == 'exclusions':
+                return self._delete_exclusion(parts[2].upper(), parts[4], parts[5], query)
             raise ApiError(404, 'not_found')
         except ApiError as e:
             return self._send_json(e.status, {'ok': False, 'error': e.message, 'details': e.details})
@@ -579,8 +603,61 @@ class Handler(BaseHTTPRequestHandler):
             exists = conn.execute('SELECT 1 FROM exclusions WHERE room_id=? AND member_a_id=? AND member_b_id=?', (room['id'], x, y)).fetchone()
             if not exists:
                 conn.execute('INSERT INTO exclusions(id,room_id,member_a_id,member_b_id,created_at) VALUES (?,?,?,?,?)', (new_id('ex'), room['id'], x, y, now_iso()))
-                emit_room_event(conn, room, 'room.exclusion_added', member['id'], {})
+                group_name = (body.get('groupName') or '').strip()
+                emit_room_event(conn, room, 'room.exclusion_added', member['id'], {'groupName': group_name} if group_name else {})
             return self._send_json(200, {'ok': True})
+
+    def _delete_exclusion(self, code, a, b, query=None):
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            if member['role'] != 'organizer':
+                raise ApiError(403, 'organizer_required')
+            if latest_draw(conn, room['id']):
+                raise ApiError(409, 'draw_already_run')
+            x, y = sorted([a, b])
+            conn.execute('DELETE FROM exclusions WHERE room_id=? AND member_a_id=? AND member_b_id=?', (room['id'], x, y))
+            payload = {'a': x, 'b': y}
+            group_name = ((query or {}).get('groupName') or [None])[0]
+            if group_name:
+                payload['groupName'] = group_name
+            emit_room_event(conn, room, 'room.exclusion_removed', member['id'], payload)
+            return self._send_json(200, {'ok': True})
+
+    def _get_activity(self, code, query=None):
+        try:
+            limit = max(1, min(50, int(((query or {}).get('limit') or [20])[0])))
+        except (TypeError, ValueError):
+            limit = 20
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            if member['role'] != 'organizer':
+                raise ApiError(403, 'organizer_required')
+            names = {r['id']: r['name_snapshot'] for r in conn.execute(
+                'SELECT id, name_snapshot FROM room_members WHERE room_id=?', (room['id'],)
+            ).fetchall()}
+            rows = conn.execute(
+                'SELECT id, type, actor_member_id, payload_json, created_at FROM room_events WHERE room_id=? ORDER BY rowid DESC LIMIT ?',
+                (room['id'], limit),
+            ).fetchall()
+            events = []
+            for r in rows:
+                payload = json_loads(r['payload_json'] or '{}') or {}
+                actor_id = r['actor_member_id'] or payload.get('memberId')
+                events.append({
+                    'id': r['id'],
+                    'type': r['type'],
+                    'createdAt': r['created_at'],
+                    'actorId': actor_id,
+                    'actorName': names.get(actor_id, ''),
+                    'payload': payload,
+                })
+            return self._send_json(200, {'ok': True, 'events': events})
 
     def _run_draw(self, code, body):
         with db_conn() as conn:
@@ -708,6 +785,31 @@ class Handler(BaseHTTPRequestHandler):
             emit_room_event(conn, room, 'room.gift_status_updated', member['id'], {'memberId': member['id'], 'giftStatus': status})
             return self._send_json(200, {'ok': True, 'status': status})
 
+    def _update_profile(self, code, body):
+        address = (body.get('address') or '').strip()
+        profile_note = (body.get('profileNote') or body.get('profile_note') or '').strip()
+        anti_wishlist = (body.get('antiWishlist') or body.get('anti_wishlist') or '').strip()
+        size = (body.get('size') or '').strip()
+        links = (body.get('links') or '').strip()
+        allergies = (body.get('allergies') or '').strip()
+        if len(address) > 300: raise ApiError(400, 'address_too_long')
+        if len(profile_note) > 800: raise ApiError(400, 'profile_note_too_long')
+        if len(anti_wishlist) > 800: raise ApiError(400, 'anti_wishlist_too_long')
+        if len(size) > 80: raise ApiError(400, 'size_too_long')
+        if len(links) > 500: raise ApiError(400, 'links_too_long')
+        if len(allergies) > 500: raise ApiError(400, 'allergies_too_long')
+        with db_conn() as conn:
+            room = get_room_by_code(conn, code)
+            if not room:
+                raise ApiError(404, 'room_not_found')
+            member, _ = require_auth_room_member(conn, self, room)
+            conn.execute(
+                'UPDATE room_members SET address=?, profile_note=?, anti_wishlist=?, size=?, links=?, allergies=? WHERE id=? AND room_id=?',
+                (address, profile_note, anti_wishlist, size, links, allergies, member['id'], room['id'])
+            )
+            emit_room_event(conn, room, 'room.profile_updated', member['id'], {'memberId': member['id']})
+            return self._send_json(200, {'ok': True, 'profile': {'address': address, 'profileNote': profile_note, 'antiWishlist': anti_wishlist, 'size': size, 'links': links, 'allergies': allergies}})
+
     def _reset_draw(self, code, body):
         with db_conn() as conn:
             room = get_room_by_code(conn, code)
@@ -718,6 +820,7 @@ class Handler(BaseHTTPRequestHandler):
                 raise ApiError(403, 'organizer_required')
             draw = latest_draw(conn, room['id'])
             if draw:
+                conn.execute('DELETE FROM messages WHERE draw_run_id=?', (draw['id'],))
                 conn.execute('DELETE FROM assignments WHERE draw_run_id=?', (draw['id'],))
                 conn.execute('DELETE FROM draw_runs WHERE id=?', (draw['id'],))
             emit_room_event(conn, room, 'room.draw_reset', member['id'], {})
@@ -753,9 +856,9 @@ class Handler(BaseHTTPRequestHandler):
             rows = conn.execute(
                 '''SELECT id, from_member_id, to_member_id, text, created_at, channel
                    FROM messages
-                   WHERE room_id=? AND ((from_member_id=? AND to_member_id=?) OR (from_member_id=? AND to_member_id=?))
+                   WHERE room_id=? AND draw_run_id=? AND ((from_member_id=? AND to_member_id=?) OR (from_member_id=? AND to_member_id=?))
                    ORDER BY created_at ASC, rowid ASC LIMIT 200''',
-                (room['id'], member['id'], peer['id'], peer['id'], member['id'])
+                (room['id'], draw['id'], member['id'], peer['id'], peer['id'], member['id'])
             ).fetchall()
             msgs = [{'id': r['id'], 'fromMe': r['from_member_id'] == member['id'], 'text': r['text'], 'createdAt': r['created_at'], 'channel': r['channel']} for r in rows]
             return self._send_json(200, {'ok': True, 'channel': channel, 'messages': msgs})

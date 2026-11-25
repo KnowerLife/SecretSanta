@@ -43,6 +43,12 @@ class RoomMember(Base):
     name_snapshot = Column(String, nullable=False)
     role = Column(String, nullable=False, default="participant")
     gift_status = Column(String, nullable=False, default="none")
+    address = Column(Text, nullable=True)
+    profile_note = Column(Text, nullable=True)
+    anti_wishlist = Column(Text, nullable=True)
+    size = Column(Text, nullable=True)
+    links = Column(Text, nullable=True)
+    allergies = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     room = relationship("Room", back_populates="members")
     __table_args__ = (UniqueConstraint("room_id", "user_id", name="uq_room_member_user"),)
@@ -151,6 +157,18 @@ class WishlistItem(Base):
     id = Column(String, primary_key=True)
     room_id = Column(String, ForeignKey("rooms.id", ondelete="CASCADE"), nullable=False, index=True)
     member_id = Column(String, ForeignKey("room_members.id", ondelete="CASCADE"), nullable=False, index=True)
+    text = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class Message(Base):
+    __tablename__ = "messages"
+    id = Column(String, primary_key=True)
+    room_id = Column(String, ForeignKey("rooms.id", ondelete="CASCADE"), nullable=False, index=True)
+    draw_run_id = Column(String, ForeignKey("draw_runs.id", ondelete="SET NULL"), nullable=True, index=True)
+    from_member_id = Column(String, ForeignKey("room_members.id", ondelete="CASCADE"), nullable=False, index=True)
+    to_member_id = Column(String, ForeignKey("room_members.id", ondelete="CASCADE"), nullable=False, index=True)
+    channel = Column(String, nullable=False)  # to_recipient | to_santa
     text = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 

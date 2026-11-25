@@ -1,9 +1,12 @@
+import json
 from datetime import datetime
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from sqlalchemy.orm import Session
 from ..db.session import get_db
 from ..db import models
+from ..core.config import settings
 from ..core.security import hash_token, new_id, sign_token
+from ..services.realtime import publish_sync
 from .authz import auth_member
 
 router = APIRouter(prefix="/rooms", tags=["access"])
@@ -88,6 +91,10 @@ def add_exclusion(code: str, body: dict, authorization: str | None = Header(None
     exists = db.query(models.Exclusion).filter_by(room_id=room.id, member_a_id=x, member_b_id=y).first()
     if not exists:
         db.add(models.Exclusion(id=new_id("ex"), room_id=room.id, member_a_id=x, member_b_id=y))
-        db.add(models.RoomEvent(id=new_id("evt"), room_id=room.id, type="room.exclusion_added", actor_member_id=member.id, payload_json="{}"))
+        payload = {}
+        evt = models.RoomEvent(id=new_id("evt"), room_id=room.id, type="room.exclusion_added", actor_member_id=member.id, payload_json=json.dumps(payload))
+        db.add(evt)
         db.commit()
+        data = {"roomCode": room.code, "eventDbId": evt.id}
+        publish_sync(settings.redis_url, room.code, {"id": evt.id, "type": evt.type, "data": data, "ts": int(datetime.utcnow().timestamp() * 1000)})
     return {"ok": True}
