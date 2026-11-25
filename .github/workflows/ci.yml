@@ -28,3 +28,33 @@ jobs:
           node-version: '20'
       - name: Check frontend JS syntax
         run: for f in app.js src/*.js; do node --input-type=module --check < "$f"; done && node --check sw.js
+
+  frontend-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install frontend check dependencies
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Run browser regression suite
+        run: |
+          python3 -m http.server 8080 > /tmp/secret-santa-frontend.log 2>&1 &
+          PYTHONPATH=backend python3 -m app.server --host 127.0.0.1 --port 8000 > /tmp/secret-santa-backend.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/ > /dev/null && curl -fsS http://127.0.0.1:8000/api/health > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8080/ > /dev/null
+          curl -fsS http://127.0.0.1:8000/api/health > /dev/null
+          npm run verify:frontend

@@ -1,4 +1,4 @@
-.PHONY: frontend backend test test-backend smoke screenshots docker-up docker-down
+.PHONY: frontend backend test test-backend deps-frontend verify-frontend verify-frontend-quick smoke screenshots docker-up docker-down
 
 frontend:
 	python3 -m http.server 8766
@@ -12,6 +12,16 @@ test-backend:
 test: test-backend
 	for f in app.js src/*.js; do node --input-type=module --check < "$$f"; done
 	node --check sw.js
+
+deps-frontend:
+	npm ci --ignore-scripts
+	npx playwright install chromium
+
+verify-frontend:
+	node scripts/verify_frontend.mjs
+
+verify-frontend-quick:
+	node scripts/verify_frontend.mjs --quick
 
 smoke:
 	python3 scripts/smoke_e2e.py

@@ -1,6 +1,6 @@
-import { $, $$, escapeHtml } from './utils.js?v=67';
-import { t } from './i18n.js?v=67';
-import { currentGame, currentMe } from './game.js?v=67';
+import { $, $$, escapeHtml } from './utils.js?v=68';
+import { t } from './i18n.js?v=68';
+import { currentGame, currentMe } from './game.js?v=68';
 
 // Пошаговые гиды сайта и комнаты, пресеты вишлиста.
 let siteGuideStep = 0;

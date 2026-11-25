@@ -1,5 +1,5 @@
-import { $ } from './utils.js?v=67';
-import { t } from './i18n.js?v=67';
+import { $ } from './utils.js?v=68';
+import { t } from './i18n.js?v=68';
 
 // Уведомления и модальное подтверждение действий.
 function toast(msg) {
@@ -11,11 +11,6 @@ function toast(msg) {
 function setNotice(msg) { const n = $('#dashNotice'); if (!n) return; if (msg) { n.textContent = msg; n.classList.remove('hidden'); } else { n.textContent = ''; n.classList.add('hidden'); } }
 let confirmCb = null;
 let lastFocusBeforeModal = null;
-let quickPairs = [];
-let chatChannel = 'to_recipient';
-let chatCache = { to_recipient: [], to_santa: [] };
-let chatLoadedKey = '';
-let chatLoading = false;
 function openConfirm(text, cb) {
   $('#confirmText').textContent = text;
   confirmCb = cb;

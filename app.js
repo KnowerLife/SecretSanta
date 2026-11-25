@@ -1,15 +1,15 @@
-import { $, parseHashParams } from './src/utils.js?v=67';
-import { setRoomSession, detectBackend } from './src/api.js?v=67';
-import { getLang, applyLang } from './src/i18n.js?v=67';
-import { applyTheme, cycleTheme } from './src/theme.js?v=67';
-import { views, navigate } from './src/router.js?v=67';
-import { currentGame } from './src/game.js?v=67';
-import { refreshDashboard } from './src/room.js?v=67';
-import { flushOfflineQueue } from './src/offline.js?v=67';
-import { showQuickPersonal } from './src/quick.js?v=67';
-import { initLazyArt } from './src/lazy-art.js?v=67';
-import { wire } from './src/wire.js?v=67';
-import { initInstall } from './src/install.js?v=67';
+import { $, parseHashParams } from './src/utils.js?v=68';
+import { setRoomSession, detectBackend } from './src/api.js?v=68';
+import { getLang, applyLang } from './src/i18n.js?v=68';
+import { applyTheme, cycleTheme } from './src/theme.js?v=68';
+import { views, navigate } from './src/router.js?v=68';
+import { currentGame } from './src/game.js?v=68';
+import { refreshDashboard } from './src/room.js?v=68';
+import { flushOfflineQueue } from './src/offline.js?v=68';
+import { showQuickPersonal } from './src/quick.js?v=68';
+import { initLazyArt } from './src/lazy-art.js?v=68';
+import { wire } from './src/wire.js?v=68';
+import { initInstall } from './src/install.js?v=68';
 
 // init
 initLazyArt();

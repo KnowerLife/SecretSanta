@@ -1,14 +1,14 @@
-import { $, $$, makeCode, uid, downloadText } from './utils.js?v=67';
-import { state, saveState, clearChatCacheForCode } from './storage.js?v=67';
-import { apiState, apiFetch, detectBackend, roomSession, setRoomSession } from './api.js?v=67';
-import { t, getLang } from './i18n.js?v=67';
-import { toast, openConfirm, closeConfirm, confirmOk } from './feedback.js?v=67';
-import { views, navigate, updateNavHint } from './router.js?v=67';
-import { ensureGame, recomputeExclusions, currentGame, currentMe, derangement, pairKey, groupPairs, isExcluded, pushLocalActivity, createDemoGame } from './game.js?v=67';
-import { renderChat, loadChatMessages, sendChatMessage, resetChatState, setChatChannel } from './chat.js?v=67';
-import { renderSiteGuide, renderRoomGuide, renderPresetChips, focusGuideTarget, setRoomGuideStep } from './guides.js?v=67';
-import { setDashTab, addWish, refreshDashboard, renderDashboard, syncRoomFromBackend, disconnectSSE, connectSSE, loadSessions, loadActivity, inviteUrl } from './room.js?v=67';
-import { hideQuickPersonal, renderQuickResult, setQuickPairs, getQuickPairs } from './quick.js?v=67';
+import { $, $$, makeCode, uid, downloadText } from './utils.js?v=68';
+import { state, saveState, clearChatCacheForCode } from './storage.js?v=68';
+import { apiState, apiFetch, detectBackend, roomSession, setRoomSession } from './api.js?v=68';
+import { t, getLang } from './i18n.js?v=68';
+import { toast, openConfirm, closeConfirm, confirmOk } from './feedback.js?v=68';
+import { views, navigate, updateNavHint } from './router.js?v=68';
+import { ensureGame, recomputeExclusions, currentGame, currentMe, derangement, pairKey, groupPairs, isExcluded, pushLocalActivity, createDemoGame } from './game.js?v=68';
+import { renderChat, loadChatMessages, sendChatMessage, resetChatState, setChatChannel } from './chat.js?v=68';
+import { renderSiteGuide, renderRoomGuide, renderPresetChips, focusGuideTarget, setRoomGuideStep } from './guides.js?v=68';
+import { setDashTab, addWish, refreshDashboard, renderDashboard, syncRoomFromBackend, disconnectSSE, connectSSE, loadSessions, loadActivity, inviteUrl } from './room.js?v=68';
+import { hideQuickPersonal, renderQuickResult, setQuickPairs, getQuickPairs } from './quick.js?v=68';
 
 // Единая регистрация обработчиков DOM-событий приложения.
 function wire() {

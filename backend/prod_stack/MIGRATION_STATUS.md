@@ -1,7 +1,7 @@
 # Migration Status (prod stack)
 
 ## Completed in this iteration
-- **Frontend access/session UI**: управление invite/member токенами, ротация member token, просмотр и отзыв сессий в текущей комнате (онлайн backend). Реализовано в `SecretSanta/app.js`, `SecretSanta/index.html`.
+- **Frontend access/session UI**: управление invite/member токенами, ротация member token, просмотр и отзыв сессий в текущей комнате (онлайн backend). Реализовано в `SecretSanta/src/` (начиная с v67 ES-модули, bootstrap в `SecretSanta/app.js`) и `SecretSanta/index.html`.
 - **FastAPI/Postgres/Alembic scaffold (API contracts migration target)**:
   - `fastapi_app/main.py`, `core/config.py`, `core/security.py`, `db/models.py`, `db/session.py`
   - `services/draw.py`, `services/notifications.py`, `services/realtime.py` (Redis abstraction)

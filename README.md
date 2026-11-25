@@ -57,6 +57,12 @@ SecretSanta/
 ├── styles.css          # Темы, сетки, декоративные фоны (.section-head--art, .cta-card--art) и адаптив
 ├── app.js              # Тонкий bootstrap: инициализация модулей и первичный роутинг
 ├── sw.js               # Service Worker: кэш оболочки, модулей и ассетов
+├── package.json        # Скрипты и dev-зависимости браузерных проверок
+├── scripts/
+│   ├── verify_frontend.mjs   # Запуск всех браузерных проверок
+│   ├── frontend-checks/      # 19 проверок: UX, i18n, PWA, Lighthouse и др.
+│   ├── capture_screenshots.mjs
+│   └── smoke_e2e.py
 ├── src/                # Прикладная логика, разбитая по ответственности
 │   ├── i18n-data.js    # RU/EN-словарь
 │   ├── i18n.js         # Переводы, язык и применение локализации
@@ -101,7 +107,7 @@ python3 -m http.server 8080
 
 ```bash
 # Проверка синтаксиса ES-модулей, service worker и чистоты diff
-for f in app.js src/*.js; do node --experimental-default-type=module --check "$f"; done
+for f in app.js src/*.js; do node --input-type=module --check < "$f"; done
 node --check sw.js
 git diff --check
 
@@ -109,7 +115,24 @@ git diff --check
 find assets/images -name '*.jpg' -exec stat -f%z {} \; | awk '{s+=$1} END {print s}'
 ```
 
-Начиная с v67 клиентская логика разбита на ES-модули в `src/`, а `app.js` выполняет только bootstrap. При обновлении состава файлов в `assets/images/` или `src/` не забывайте синхронизировать списки ассетов в `sw.js` и обновлять версии кэша и query-параметров (`?v=...`) в `index.html`, `app.js`, `src/` и `sw.js`.
+### Браузерные проверки
+
+Набор из 19 проверок лежит в `scripts/frontend-checks/` и запускается через `scripts/verify_frontend.mjs`. Он ожидает frontend на `127.0.0.1:8080` и backend на `127.0.0.1:8000`.
+
+```bash
+# Установка зависимостей и браузера Playwright (один раз)
+make deps-frontend
+
+# Быстрый прогон без Lighthouse
+make verify-frontend-quick
+
+# Полный прогон, включая 12 запусков Lighthouse
+make verify-frontend
+```
+
+То же через npm: `npm run verify:frontend:quick` и `npm run verify:frontend`. Проверки завершаются с ошибкой при ухудшении i18n-паритета, верстки, PWA/offline, контраста (<4.5:1) и Lighthouse. Lighthouse запускается через `npx lighthouse@12`, отдельно его ставить не нужно; при необходимости можно задать `SECRET_SANTA_LH_PORT` и `SECRET_SANTA_LH_OUT`. Полный набор выполняется в CI в job `frontend-checks`.
+
+Начиная с v67 клиентская логика разбита на ES-модули в `src/`, а `app.js` выполняет только bootstrap; в v68 исправлен контраст темы `cozy` и все query-версии/кэш подняты до 68. При обновлении состава файлов в `assets/images/`, `styles.css` или `src/` не забывайте синхронизировать списки ассетов в `sw.js` и обновлять версии кэша и query-параметров (`?v=...`) в `index.html`, `app.js`, `src/` и `sw.js`.
 
 ---
 

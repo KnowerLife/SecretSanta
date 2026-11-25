@@ -1,4 +1,4 @@
-import { state } from './storage.js?v=67';
+import { state } from './storage.js?v=68';
 
 // HTTP-клиент, базовый URL и сессии комнаты.
 const API_BASE_KEY = 'secret-santa-api-base';

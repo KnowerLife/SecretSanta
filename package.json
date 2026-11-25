@@ -1,0 +1,15 @@
+{
+  "name": "secret-santa-frontend-checks",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser regression suite and screenshot capture for SecretSanta",
+  "scripts": {
+    "verify:frontend": "node scripts/verify_frontend.mjs",
+    "verify:frontend:quick": "node scripts/verify_frontend.mjs --quick",
+    "screenshots": "node scripts/capture_screenshots.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.55.1"
+  }
+}

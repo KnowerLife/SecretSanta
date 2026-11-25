@@ -1,5 +1,5 @@
-import { $, $$ } from './utils.js?v=67';
-import { disconnectSSE, refreshDashboard, renderDashboard } from './room.js?v=67';
+import { $, $$ } from './utils.js?v=68';
+import { disconnectSSE, refreshDashboard, renderDashboard } from './room.js?v=68';
 
 // Переключение видов и синхронизация hash-навигации.
 const views = ['home', 'create', 'join', 'quick', 'dashboard'];

@@ -1,4 +1,4 @@
-import { $$ } from './utils.js?v=67';
+import { $$ } from './utils.js?v=68';
 
 // Ленивая загрузка декоративных фонов через IntersectionObserver.
 const ART_IMAGES = {
