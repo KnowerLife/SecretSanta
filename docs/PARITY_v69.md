@@ -81,7 +81,6 @@
 
 ## Известные ограничения
 
-- Production-образы проверены реальной сборкой и запуском: `docker compose config`, `docker build`, `docker compose up`, healthcheck API, SSR и прокси `/api` через web, обработка задачи воркером; браузерные проверки против compose — 10/10. Docker Desktop установлен локально для этой проверки.
 - SSE-шина работает в памяти одного процесса; горизонтальное масштабирование потребует Redis или другого брокера.
 - `backend/prod_stack/` остаётся каркасом; рабочий production-стенд v69 поднимается через `docker-compose.v69.yml`.
 - `SECRET_SANTA_SECRET` по умолчанию равен `dev-insecure-change-me`; в проде обязательна замена.
