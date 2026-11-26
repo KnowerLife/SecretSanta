@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [69.2.2] — 2026-11-26
+
+### Fixed
+
+- Нормализация владельца GHCR: шаг workflow больше не добавляет кавычки в имя образа, поэтому docker принимает теги `ghcr.io/knowerlife/...`.
+- Тег образа по умолчанию обновлён до `v69.2.2`; теги `v69.2.0` и `v69.2.1` остаются неудачными попытками публикации и не рекомендуются для деплоя.
+
 ## [69.2.1] — 2026-11-26
 
 ### Fixed
@@ -118,7 +125,8 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.1...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.2...HEAD
+[69.2.2]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.1...v69.2.2
 [69.2.1]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.0...v69.2.1
 [69.2.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.1...v69.2.0
 [69.1.1]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.0...v69.1.1
