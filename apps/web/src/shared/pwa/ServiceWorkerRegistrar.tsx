@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useI18n } from '../../app/providers/i18n.tsx';
+import { assetPath } from '../base.ts';
 import { LOCAL_MODE_EVENT, apiFetch, hasDirtyRooms, isLocalMode } from '../api/client.ts';
 import { flushQueue } from './offlineQueue.ts';
 
@@ -11,7 +12,7 @@ export function ServiceWorkerRegistrar() {
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      void navigator.serviceWorker.register('/sw.js').catch(() => undefined);
+      void navigator.serviceWorker.register(assetPath('sw.js')).catch(() => undefined);
     }
     setOffline(!navigator.onLine);
     setLocalMode(isLocalMode());
