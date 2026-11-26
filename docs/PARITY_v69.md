@@ -7,7 +7,7 @@
 | Проверка | Результат |
 | :--- | :--- |
 | `npm run verify:frontend:quick` | 18/18 (`FRONTEND_CHECKS 18 FAILED 0`) |
-| `npm run verify:frontend` (19 проверок, включая 12 Lighthouse-прогонов) | 18 функциональных проверок пройдены; `lh_final` не зелёный только из-за флуктуаций performance: 0.87 в 1-м прогоне и 0.97–0.98 в 2 из 12 во 2-м; accessibility / best-practices / SEO = 1.00 во всех 12 |
+| `npm run verify:frontend` (19 проверок, включая 12 Lighthouse-прогонов) | 18 функциональных проверок пройдены; `lh_final` не зелёный только из-за флуктуаций performance: 1-й прогон 0.87, 2-й — 0.97–0.98 в 2 из 12, 3-й — 0.97 в 1 из 12; accessibility / best-practices / SEO = 1.00 во всех 36 прогонах |
 | `make test` | 12 backend-тестов, `OK` |
 | Старые файлы `index.html`, `app.js`, `src/`, `styles.css`, `sw.js`, `backend/`, `scripts/` | не изменены |
 
