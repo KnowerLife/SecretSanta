@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-labelledby="art-privacy-who-sees-winter-title art-privacy-who-sees-winter-desc">
+<title id="art-privacy-who-sees-winter-title">Кто что видит</title>
+<desc id="art-privacy-who-sees-winter-desc">Who sees what. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-privacy-who-sees-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-privacy-who-sees-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-privacy-who-sees-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="675" fill="url(#art-privacy-who-sees-winter-sky)"/>
+<circle cx="910.3" cy="142.6" r="326.4" fill="url(#art-privacy-who-sees-winter-glow)"/>
+<circle cx="910.3" cy="142.6" r="56.4" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 389 C216 341.7, 408 449.7, 648 395.7 S984 335, 1200 416 L1200 675 L0 675 Z" fill="#BFD8EA"/>
+<path d="M0 482.8 C264 442.3, 456 516.6, 696 476.1 S1008 442.3, 1200 496.3 L1200 675 L0 675 Z" fill="url(#art-privacy-who-sees-winter-ground)"/>
+<path d="M0 482.8 C264 442.3, 456 516.6, 696 476.1 S1008 442.3, 1200 496.3" fill="none" stroke="#F8FCFF" stroke-width="8.1" opacity="0.5"/>
+<circle cx="926.8" cy="71.9" r="2.8" fill="#F8FCFF" opacity="0.41"/>
+<circle cx="31.2" cy="98.2" r="1.8" fill="#F8FCFF" opacity="0.71"/>
+<circle cx="186.5" cy="42" r="3.6" fill="#F8FCFF" opacity="0.69"/>
+<circle cx="38.2" cy="136" r="2.6" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="1047.9" cy="481.1" r="2.9" fill="#F8FCFF" opacity="0.63"/>
+<circle cx="262.1" cy="261.2" r="2.7" fill="#F8FCFF" opacity="0.58"/>
+<circle cx="938.2" cy="323.3" r="1.5" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="580.8" cy="506.5" r="2.7" fill="#F8FCFF" opacity="0.70"/>
+<circle cx="817.9" cy="487.1" r="1.9" fill="#F8FCFF" opacity="0.42"/>
+<circle cx="766.2" cy="491.4" r="2.8" fill="#F8FCFF" opacity="0.61"/>
+<circle cx="771.5" cy="315.8" r="1.7" fill="#F8FCFF" opacity="0.53"/>
+<circle cx="1028.9" cy="264.7" r="3.6" fill="#F8FCFF" opacity="0.39"/>
+<circle cx="883.1" cy="144.7" r="2.5" fill="#F8FCFF" opacity="0.75"/>
+<circle cx="912.7" cy="360.3" r="1.3" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="1056.1" cy="479.2" r="2.5" fill="#F8FCFF" opacity="0.49"/>
+<circle cx="291.4" cy="291.9" r="3" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="794.6" cy="376.2" r="1.5" fill="#F8FCFF" opacity="0.53"/>
+<circle cx="801.7" cy="157.9" r="2.7" fill="#F8FCFF" opacity="0.69"/>
+<rect x="94" y="469.5" width="4" height="17.7" fill="#183B70"/>
+<path d="M96 409.2 L77.4 444.7 L87.6 444.7 L73.7 471.3 L118.3 471.3 L104.4 444.7 L114.6 444.7 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="527.4" width="4" height="20.9" fill="#183B70"/>
+<path d="M252 456.5 L229.9 498.2 L242.1 498.2 L225.5 529.5 L278.5 529.5 L261.9 498.2 L274.1 498.2 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="461.1" width="4" height="17.2" fill="#183B70"/>
+<path d="M1044 402.5 L1024.5 437 L1035.2 437 L1020.6 462.8 L1067.4 462.8 L1052.8 437 L1063.5 437 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="529.6" width="4" height="21.5" fill="#183B70"/>
+<path d="M1152 456.5 L1134.8 499.5 L1144.2 499.5 L1131.3 531.7 L1172.7 531.7 L1159.8 499.5 L1169.2 499.5 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="816" cy="529" rx="109.7" ry="19.9" fill="#183B70" opacity="0.12"/>
+<circle cx="912.3" cy="296.9" r="6.1" fill="#E9675F" opacity="0.65"/>
+<circle cx="866.3" cy="545.8" r="7.1" fill="#DFA93E" opacity="0.65"/>
+<circle cx="763.9" cy="286" r="5.5" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(816 425.3) scale(2)">
+<path d="M-22 -6 V-24 C-22 -42 22 -42 22 -24 V-6" fill="none" stroke="#F8FCFF" stroke-width="10"/>
+<rect x="-38" y="-6" width="76" height="58" rx="9" fill="#F8FCFF"/>
+<circle cx="0" cy="18" r="7" fill="#E9675F"/>
+<path d="M0 24 V35" fill="none" stroke="#E9675F" stroke-width="5" stroke-linecap="round"/>
+</g>
+</svg>

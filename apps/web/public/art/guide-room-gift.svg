@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-labelledby="art-guide-room-gift-winter-title art-guide-room-gift-winter-desc">
+<title id="art-guide-room-gift-winter-title">Гид. Подарок</title>
+<desc id="art-guide-room-gift-winter-desc">Room guide. Gift. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-guide-room-gift-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-guide-room-gift-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-guide-room-gift-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="600" fill="url(#art-guide-room-gift-winter-sky)"/>
+<circle cx="566.7" cy="141.4" r="299.7" fill="url(#art-guide-room-gift-winter-glow)"/>
+<circle cx="566.7" cy="141.4" r="51.8" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 341.7 C144 299.7, 272 395.7, 432 347.7 S656 293.7, 800 365.7 L800 600 L0 600 Z" fill="#BFD8EA"/>
+<path d="M0 432 C176 396, 304 462, 464 426 S672 396, 800 444 L800 600 L0 600 Z" fill="url(#art-guide-room-gift-winter-ground)"/>
+<path d="M0 432 C176 396, 304 462, 464 426 S672 396, 800 444" fill="none" stroke="#F8FCFF" stroke-width="7.2" opacity="0.5"/>
+<circle cx="451.6" cy="361.5" r="1.9" fill="#F8FCFF" opacity="0.32"/>
+<circle cx="78.2" cy="193.9" r="2.1" fill="#F8FCFF" opacity="0.78"/>
+<circle cx="623.1" cy="17" r="1.9" fill="#F8FCFF" opacity="0.39"/>
+<circle cx="237.9" cy="207.6" r="2.7" fill="#F8FCFF" opacity="0.69"/>
+<circle cx="282.3" cy="185.5" r="1.7" fill="#F8FCFF" opacity="0.81"/>
+<circle cx="664.9" cy="286.3" r="2.7" fill="#F8FCFF" opacity="0.54"/>
+<circle cx="105.1" cy="43.5" r="1.1" fill="#F8FCFF" opacity="0.69"/>
+<circle cx="607.3" cy="226.4" r="3.2" fill="#F8FCFF" opacity="0.57"/>
+<circle cx="127.1" cy="102.4" r="2.7" fill="#F8FCFF" opacity="0.38"/>
+<circle cx="319" cy="303.9" r="2.6" fill="#F8FCFF" opacity="0.45"/>
+<circle cx="95.3" cy="174.4" r="1.6" fill="#F8FCFF" opacity="0.69"/>
+<circle cx="756.3" cy="90" r="1.1" fill="#F8FCFF" opacity="0.57"/>
+<circle cx="57.2" cy="155.2" r="1.7" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="621.3" cy="394.2" r="2.5" fill="#F8FCFF" opacity="0.70"/>
+<rect x="62" y="419.9" width="4" height="17.7" fill="#183B70"/>
+<path d="M64 359.7 L48.2 395.1 L56.9 395.1 L45 421.7 L83 421.7 L71.1 395.1 L79.8 395.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="166" y="452.9" width="4" height="15" fill="#183B70"/>
+<path d="M168 401.7 L152.2 431.8 L160.9 431.8 L149 454.4 L187 454.4 L175.1 431.8 L183.8 431.8 Z" fill="#183B70" opacity="0.9"/>
+<rect x="694" y="410.6" width="4" height="16.7" fill="#183B70"/>
+<path d="M696 353.7 L678.5 387.2 L688.1 387.2 L675 412.3 L717 412.3 L703.9 387.2 L713.5 387.2 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="448" cy="441.1" rx="85.7" ry="15.6" fill="#183B70" opacity="0.12"/>
+<circle cx="587.9" cy="393.5" r="3.3" fill="#E9675F" opacity="0.65"/>
+<circle cx="559.9" cy="284.2" r="3.9" fill="#DFA93E" opacity="0.65"/>
+<circle cx="562.4" cy="390.1" r="4.3" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(448 360) scale(1.6)">
+<rect x="-46" y="-10" width="92" height="60" rx="5" fill="#F8FCFF"/>
+<rect x="-46" y="-10" width="92" height="15" rx="4" fill="#E9675F" opacity="0.92"/>
+<rect x="-8" y="4" width="16" height="46" fill="#DFA93E" opacity="0.85"/>
+<path d="M0 -10 C-34 -18 -36 -49 -16 -44 C-6 -42 -2 -26 0 -10 C2 -26 6 -42 16 -44 C36 -49 34 -18 0 -10 Z" fill="#E9675F"/>
+<circle cx="0" cy="-10" r="6" fill="#DFA93E"/>
+</g>
+</svg>

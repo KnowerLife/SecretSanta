@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-labelledby="art-create-game-head-winter-title art-create-game-head-winter-desc">
+<title id="art-create-game-head-winter-title">Создание игры</title>
+<desc id="art-create-game-head-winter-desc">Create a game. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-create-game-head-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-create-game-head-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-create-game-head-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="675" fill="url(#art-create-game-head-winter-sky)"/>
+<circle cx="930.8" cy="161.9" r="347.5" fill="url(#art-create-game-head-winter-glow)"/>
+<circle cx="930.8" cy="161.9" r="60" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 387.1 C216 339.8, 408 447.8, 648 393.8 S984 333.1, 1200 414.1 L1200 675 L0 675 Z" fill="#BFD8EA"/>
+<path d="M0 484.1 C264 443.6, 456 517.8, 696 477.3 S1008 443.6, 1200 497.6 L1200 675 L0 675 Z" fill="url(#art-create-game-head-winter-ground)"/>
+<path d="M0 484.1 C264 443.6, 456 517.8, 696 477.3 S1008 443.6, 1200 497.6" fill="none" stroke="#F8FCFF" stroke-width="8.1" opacity="0.5"/>
+<circle cx="975.7" cy="154.2" r="1.2" fill="#F8FCFF" opacity="0.40"/>
+<circle cx="724.8" cy="74.8" r="3.4" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="611.7" cy="178.8" r="2.7" fill="#F8FCFF" opacity="0.41"/>
+<circle cx="808" cy="426.3" r="3.4" fill="#F8FCFF" opacity="0.58"/>
+<circle cx="494.5" cy="309.3" r="1.4" fill="#F8FCFF" opacity="0.76"/>
+<circle cx="872.4" cy="368.8" r="3.6" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="920.6" cy="113.4" r="2.6" fill="#F8FCFF" opacity="0.76"/>
+<circle cx="911.9" cy="275" r="3" fill="#F8FCFF" opacity="0.57"/>
+<circle cx="1127.8" cy="480.8" r="1.6" fill="#F8FCFF" opacity="0.44"/>
+<circle cx="1081.9" cy="421.2" r="2.2" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="730.5" cy="103.4" r="3.2" fill="#F8FCFF" opacity="0.57"/>
+<circle cx="678.4" cy="504.9" r="2.2" fill="#F8FCFF" opacity="0.74"/>
+<circle cx="299.5" cy="24.2" r="1.8" fill="#F8FCFF" opacity="0.66"/>
+<circle cx="1082.5" cy="413.5" r="1.5" fill="#F8FCFF" opacity="0.39"/>
+<circle cx="607.9" cy="245.1" r="2.9" fill="#F8FCFF" opacity="0.59"/>
+<circle cx="229" cy="386.5" r="2.9" fill="#F8FCFF" opacity="0.39"/>
+<circle cx="302.7" cy="375.5" r="2.4" fill="#F8FCFF" opacity="0.49"/>
+<circle cx="857.9" cy="370.5" r="2.6" fill="#F8FCFF" opacity="0.80"/>
+<rect x="94" y="472.9" width="4" height="19.3" fill="#183B70"/>
+<path d="M96 407.3 L79.1 445.9 L88.4 445.9 L75.7 474.8 L116.3 474.8 L103.6 445.9 L112.9 445.9 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="520.7" width="4" height="19.5" fill="#183B70"/>
+<path d="M252 454.6 L230.2 493.5 L242.2 493.5 L225.8 522.6 L278.2 522.6 L261.8 493.5 L273.8 493.5 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="460" width="4" height="17.5" fill="#183B70"/>
+<path d="M1044 400.6 L1020 435.5 L1033.2 435.5 L1015.2 461.8 L1072.8 461.8 L1054.8 435.5 L1068 435.5 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="528.8" width="4" height="21.8" fill="#183B70"/>
+<path d="M1152 454.6 L1133 498.2 L1143.4 498.2 L1129.2 531 L1174.8 531 L1160.6 498.2 L1171 498.2 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="816" cy="533.4" rx="114.4" ry="20.8" fill="#183B70" opacity="0.12"/>
+<circle cx="650.4" cy="384.4" r="7.1" fill="#E9675F" opacity="0.65"/>
+<circle cx="873.7" cy="540.6" r="6.6" fill="#DFA93E" opacity="0.65"/>
+<circle cx="913.9" cy="297.6" r="5.7" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(816 425.3) scale(2.1)">
+<rect x="-46" y="-38" width="92" height="84" rx="8" fill="#F8FCFF"/>
+<path d="M-46 -30 A8 8 0 0 1 -38 -38 H38 A8 8 0 0 1 46 -30 V-16 H-46 Z" fill="#E9675F"/>
+<line x1="-28" y1="-48" x2="-28" y2="-29" stroke="#F8FCFF" stroke-width="5" stroke-linecap="round"/>
+<line x1="28" y1="-48" x2="28" y2="-29" stroke="#F8FCFF" stroke-width="5" stroke-linecap="round"/>
+<rect x="-9" y="0" width="18" height="20" rx="3" fill="none" stroke="#DFA93E" stroke-width="3"/>
+<circle cx="-28" cy="9" r="4" fill="#BFD8EA"/>
+<circle cx="28" cy="9" r="4" fill="#BFD8EA"/>
+<circle cx="-28" cy="29" r="4" fill="#BFD8EA"/>
+<circle cx="28" cy="29" r="4" fill="#BFD8EA"/>
+</g>
+</svg>

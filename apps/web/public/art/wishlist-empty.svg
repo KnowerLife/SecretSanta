@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-labelledby="art-wishlist-empty-winter-title art-wishlist-empty-winter-desc">
+<title id="art-wishlist-empty-winter-title">Пустой вишлист</title>
+<desc id="art-wishlist-empty-winter-desc">Empty wishlist. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-wishlist-empty-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-wishlist-empty-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-wishlist-empty-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#art-wishlist-empty-winter-sky)"/>
+<circle cx="916" cy="227.7" r="437" fill="url(#art-wishlist-empty-winter-glow)"/>
+<circle cx="916" cy="227.7" r="75.5" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 516.9 C216 453.9, 408 597.9, 648 525.9 S984 444.9, 1200 552.9 L1200 900 L0 900 Z" fill="#BFD8EA"/>
+<path d="M0 654.8 C264 600.8, 456 699.8, 696 645.8 S1008 600.8, 1200 672.8 L1200 900 L0 900 Z" fill="url(#art-wishlist-empty-winter-ground)"/>
+<path d="M0 654.8 C264 600.8, 456 699.8, 696 645.8 S1008 600.8, 1200 672.8" fill="none" stroke="#F8FCFF" stroke-width="10.8" opacity="0.5"/>
+<circle cx="38.3" cy="170.3" r="2.7" fill="#F8FCFF" opacity="0.48"/>
+<circle cx="756.1" cy="547.6" r="3.1" fill="#F8FCFF" opacity="0.75"/>
+<circle cx="878.1" cy="637.9" r="3" fill="#F8FCFF" opacity="0.48"/>
+<circle cx="885.9" cy="181.1" r="3.8" fill="#F8FCFF" opacity="0.46"/>
+<circle cx="491" cy="565.3" r="4.6" fill="#F8FCFF" opacity="0.57"/>
+<circle cx="784.4" cy="603.2" r="4" fill="#F8FCFF" opacity="0.56"/>
+<circle cx="1022.4" cy="79.1" r="2.9" fill="#F8FCFF" opacity="0.48"/>
+<circle cx="785.6" cy="50.6" r="4.4" fill="#F8FCFF" opacity="0.75"/>
+<circle cx="297.4" cy="618.7" r="4.6" fill="#F8FCFF" opacity="0.81"/>
+<circle cx="691.5" cy="530.6" r="4.5" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="398.3" cy="417.9" r="2.2" fill="#F8FCFF" opacity="0.59"/>
+<circle cx="442" cy="139.1" r="3.5" fill="#F8FCFF" opacity="0.51"/>
+<circle cx="278.6" cy="264" r="1.9" fill="#F8FCFF" opacity="0.74"/>
+<circle cx="538.8" cy="474.6" r="4.8" fill="#F8FCFF" opacity="0.44"/>
+<circle cx="252.2" cy="367.7" r="1.5" fill="#F8FCFF" opacity="0.33"/>
+<circle cx="67.7" cy="634.4" r="3.9" fill="#F8FCFF" opacity="0.43"/>
+<circle cx="883.4" cy="283.6" r="3.1" fill="#F8FCFF" opacity="0.72"/>
+<circle cx="1025.7" cy="572.6" r="2.2" fill="#F8FCFF" opacity="0.38"/>
+<rect x="94" y="622.7" width="4" height="23.2" fill="#183B70"/>
+<path d="M96 543.9 L73 590.3 L85.6 590.3 L68.4 625 L123.6 625 L106.4 590.3 L119 590.3 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="694.5" width="4" height="25.8" fill="#183B70"/>
+<path d="M252 606.9 L232.2 658.4 L243.1 658.4 L228.3 697.1 L275.7 697.1 L260.9 658.4 L271.8 658.4 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="633.8" width="4" height="29.1" fill="#183B70"/>
+<path d="M1044 534.9 L1020.4 593.1 L1033.4 593.1 L1015.7 636.7 L1072.3 636.7 L1054.6 593.1 L1067.6 593.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="697.3" width="4" height="26.6" fill="#183B70"/>
+<path d="M1152 606.9 L1134.5 660.1 L1144.1 660.1 L1131 700 L1173 700 L1159.9 660.1 L1169.5 660.1 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="756" cy="647.1" rx="113.3" ry="20.6" fill="#183B70" opacity="0.12"/>
+<circle cx="762.3" cy="413.4" r="6.8" fill="#E9675F" opacity="0.65"/>
+<circle cx="712.3" cy="678.2" r="7.4" fill="#DFA93E" opacity="0.65"/>
+<circle cx="595.7" cy="451.9" r="4.1" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(756 540) scale(2.1)">
+<rect x="-40" y="-46" width="80" height="94" rx="6" fill="#F8FCFF"/>
+<rect x="-29" y="-29" width="13" height="13" rx="2" fill="none" stroke="#E9675F" stroke-width="3"/>
+<path d="M-26 -23 L-23 -20 L-17 -28" fill="none" stroke="#E9675F" stroke-width="3" stroke-linecap="round"/>
+<line x1="-8" y1="-23" x2="26" y2="-23" stroke="#183B70" stroke-width="2" opacity="0.34"/>
+<rect x="-29" y="-6" width="13" height="13" rx="2" fill="none" stroke="#183B70" stroke-width="2" opacity="0.45"/>
+<line x1="-8" y1="0" x2="26" y2="0" stroke="#183B70" stroke-width="2" opacity="0.34"/>
+<rect x="-29" y="17" width="13" height="13" rx="2" fill="none" stroke="#183B70" stroke-width="2" opacity="0.45"/>
+<line x1="-8" y1="23" x2="20" y2="23" stroke="#183B70" stroke-width="2" opacity="0.34"/>
+</g>
+</svg>

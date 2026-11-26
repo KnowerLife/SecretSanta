@@ -5,6 +5,7 @@
 **Веб-приложение и PWA для игры «Тайный Санта»: честная серверная жеребьёвка, анонимный чат, комнаты с SSE, профили и вишлисты, RU/EN, три темы и офлайн-очередь.**
 
 [![CI](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci.yml/badge.svg)](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci.yml)
+[![CI v69](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml/badge.svg)](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml)
 [![PWA Offline Ready](https://img.shields.io/badge/PWA-Offline%20Ready-183B70?style=flat-square)](#pwa--offline)
 [![Visuals](https://img.shields.io/badge/Visuals-v68%20Paper%20Cut--Outs-2F7A5B?style=flat-square)](#графика-и-ассеты)
 [![Architecture](https://img.shields.io/badge/ES%20modules-18%20files-FF6960?style=flat-square)](#архитектура)
@@ -22,6 +23,7 @@
 ## Содержание
 
 - [О проекте](#о-проекте)
+- [v69: TypeScript-стек](#v69-typescript-стек)
 - [Быстрый старт](#быстрый-старт)
 - [Что можно делать](#что-можно-делать)
 - [Архитектура](#архитектура)
@@ -58,6 +60,31 @@ SecretSanta — самостоятельный frontend на ES-модулях �
 - **Доступность.** Контраст ≥ 4.5:1, цели нажатия ≥ 44 px, `focus-visible`, `aria-live`, `prefers-reduced-motion`, без горизонтального overflow.
 
 Текущая версия ассетов — **v68**: в v67 frontend разбит на 18 ES-модулей, в v68 исправлен контраст темы `cozy` и все query-версии/кэш service worker подняты до `68`.
+
+---
+
+## v69: TypeScript-стек
+
+**Статус:** v68 остаётся рабочей точкой входа; v69 разрабатывается параллельно в `apps/` и `packages/` и ещё не объявлен релизом. Переключение деплоя произойдёт только после паритета и релизной ветки `release/v69.0.0`.
+
+| Слой | v68 (стабильный) | v69 (в разработке) |
+| :--- | :--- | :--- |
+| Frontend | ES-модули, `index.html`, `styles.css` | React 19 + Vite 8 (Rolldown), TanStack Start/Router/Query, Mantine 9, FSD |
+| Backend | Python stdlib + SQLite | Hono 4 + TypeScript на Node.js 22 + `node:sqlite` |
+| Графика | JPG/paper cut-out в `assets/images/` | 36 детерминированных SVG-сцен в `packages/art` |
+| Процесс | прямые коммиты в `main` | Gitflow (`develop`, `feature/*`, `release/*`) + OpenSpec SDD |
+
+Локальный запуск v69:
+
+```bash
+npm ci --ignore-scripts
+npm run dev:api    # Hono API на http://127.0.0.1:8787
+npm run dev        # SSR-приложение на http://localhost:3000
+```
+
+Проверки v69: `npm run typecheck`, `npm test`, `npm run build`, `npx openspec validate migrate-v69-ts-stack --strict`.
+
+База данных нового API лежит в `apps/api/data/app.db` и **не совпадает** с `backend/data/app.db`: данные v68 не изменяются. План перехода, спецификации и задачи хранятся в [`openspec/changes/migrate-v69-ts-stack/`](openspec/changes/migrate-v69-ts-stack/), процесс — в [`docs/GITFLOW.md`](docs/GITFLOW.md) и [`docs/RELEASES.md`](docs/RELEASES.md).
 
 ---
 
@@ -537,7 +564,7 @@ PYTHONPATH=.. python3 migrate_sqlite_to_postgres.py
 
 ## Как править проект
 
-1. Создайте ветку от `main` и внесите изменение.
+1. Для v68 создайте ветку от `main`; для v69 — от `develop` (см. [`docs/GITFLOW.md`](docs/GITFLOW.md)).
 2. Если меняются `assets/images/`, `styles.css`, `app.js` или `src/`, синхронизируйте списки в `sw.js` и поднимите версию везде: `index.html`, `app.js`, `src/*.js`, `sw.js`, документация (сейчас v68 → v69).
 3. Прогоните:
 
@@ -548,7 +575,7 @@ PYTHONPATH=.. python3 migrate_sqlite_to_postgres.py
    ```
 
 4. Перед релизом — `npm run verify:frontend` и `npm run screenshots`, если менялся UI.
-5. Коммит и push в `main`; CI должен быть зелёным.
+5. Для v69: pushes в `feature/*` и `develop`, в `main` — только релизной/hotfix-веткой по явной просьбе владельца; CI должен быть зелёным. Для v68 сохраняется прежний порядок.
 
 ---
 

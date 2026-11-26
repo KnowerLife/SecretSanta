@@ -1,0 +1,13 @@
+{
+  "name": "@secret-santa/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./i18n": "./src/i18n.ts",
+    "./i18n-data": "./src/i18n-data.ts",
+    "./draw": "./src/draw.ts",
+    "./contracts": "./src/contracts.ts"
+  }
+}

@@ -1,0 +1,23 @@
+name: CI v69
+
+on:
+  push:
+    branches: [develop, 'feature/**', 'release/**']
+  pull_request:
+    branches: [develop, main]
+
+jobs:
+  typecheck-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: OpenSpec validation
+        run: npx openspec validate migrate-v69-ts-stack --strict

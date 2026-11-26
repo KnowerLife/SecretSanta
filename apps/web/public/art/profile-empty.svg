@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-labelledby="art-profile-empty-winter-title art-profile-empty-winter-desc">
+<title id="art-profile-empty-winter-title">Пустой профиль получателя</title>
+<desc id="art-profile-empty-winter-desc">Empty recipient profile. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-profile-empty-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-profile-empty-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-profile-empty-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#art-profile-empty-winter-sky)"/>
+<circle cx="922.5" cy="197.9" r="436.1" fill="url(#art-profile-empty-winter-glow)"/>
+<circle cx="922.5" cy="197.9" r="75.3" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 520.2 C216 457.2, 408 601.2, 648 529.2 S984 448.2, 1200 556.2 L1200 900 L0 900 Z" fill="#BFD8EA"/>
+<path d="M0 653.8 C264 599.8, 456 698.8, 696 644.8 S1008 599.8, 1200 671.8 L1200 900 L0 900 Z" fill="url(#art-profile-empty-winter-ground)"/>
+<path d="M0 653.8 C264 599.8, 456 698.8, 696 644.8 S1008 599.8, 1200 671.8" fill="none" stroke="#F8FCFF" stroke-width="10.8" opacity="0.5"/>
+<circle cx="601.9" cy="427.7" r="3.8" fill="#F8FCFF" opacity="0.55"/>
+<circle cx="5.2" cy="69.1" r="1.9" fill="#F8FCFF" opacity="0.67"/>
+<circle cx="104.7" cy="575" r="1.7" fill="#F8FCFF" opacity="0.63"/>
+<circle cx="802.2" cy="249.7" r="2.6" fill="#F8FCFF" opacity="0.66"/>
+<circle cx="64.7" cy="565" r="4.5" fill="#F8FCFF" opacity="0.47"/>
+<circle cx="30.9" cy="144.5" r="2.2" fill="#F8FCFF" opacity="0.62"/>
+<circle cx="739.8" cy="495" r="2.9" fill="#F8FCFF" opacity="0.54"/>
+<circle cx="1020.7" cy="503.9" r="4.2" fill="#F8FCFF" opacity="0.63"/>
+<circle cx="320.1" cy="398.2" r="2.4" fill="#F8FCFF" opacity="0.34"/>
+<circle cx="858.4" cy="337.7" r="4.6" fill="#F8FCFF" opacity="0.58"/>
+<circle cx="649.7" cy="81.2" r="2.8" fill="#F8FCFF" opacity="0.58"/>
+<circle cx="203.7" cy="433.8" r="3" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="699.3" cy="271.9" r="3.4" fill="#F8FCFF" opacity="0.77"/>
+<circle cx="1189.7" cy="111.6" r="3.3" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="370.3" cy="22.2" r="2.3" fill="#F8FCFF" opacity="0.50"/>
+<circle cx="273.3" cy="303.2" r="3.3" fill="#F8FCFF" opacity="0.70"/>
+<circle cx="952" cy="174.6" r="3.9" fill="#F8FCFF" opacity="0.74"/>
+<circle cx="885.1" cy="156.4" r="4.4" fill="#F8FCFF" opacity="0.59"/>
+<rect x="94" y="636.7" width="4" height="26.3" fill="#183B70"/>
+<path d="M96 547.2 L75.6 599.8 L86.8 599.8 L71.5 639.3 L120.5 639.3 L105.2 599.8 L116.4 599.8 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="699.6" width="4" height="26.3" fill="#183B70"/>
+<path d="M252 610.2 L229.6 662.8 L241.9 662.8 L225.1 702.2 L278.9 702.2 L262.1 662.8 L274.4 662.8 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="618.4" width="4" height="23.6" fill="#183B70"/>
+<path d="M1044 538.2 L1018.9 585.4 L1032.7 585.4 L1013.9 620.8 L1074.1 620.8 L1055.3 585.4 L1069.1 585.4 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="686.8" width="4" height="22.5" fill="#183B70"/>
+<path d="M1152 610.2 L1131 655.3 L1142.6 655.3 L1126.8 689.1 L1177.2 689.1 L1161.4 655.3 L1173 655.3 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="756" cy="648.9" rx="115.2" ry="20.9" fill="#183B70" opacity="0.12"/>
+<circle cx="878.6" cy="622.6" r="4.5" fill="#E9675F" opacity="0.65"/>
+<circle cx="895.7" cy="487.4" r="5.1" fill="#DFA93E" opacity="0.65"/>
+<circle cx="848.8" cy="648.8" r="7.5" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(756 540) scale(2.1)">
+<path d="M-40 10 C-40 -12 -26 -24 -12 -22 C-2 -20 2 -10 -4 -2 L-14 8 L-6 16 C-2 20 -4 28 -12 30 C-26 34 -40 26 -40 10 Z" fill="#F8FCFF"/>
+<path d="M40 10 C40 -12 26 -24 12 -22 C2 -20 -2 -10 4 -2 L14 8 L6 16 C2 20 4 28 12 30 C26 34 40 26 40 10 Z" fill="#DFA93E" opacity="0.9"/>
+<path d="M-7 -5 C-2 -13 2 -13 7 -5" fill="none" stroke="#E9675F" stroke-width="4" stroke-linecap="round"/>
+</g>
+</svg>
