@@ -9,5 +9,8 @@
     "./i18n-data": "./src/i18n-data.ts",
     "./draw": "./src/draw.ts",
     "./contracts": "./src/contracts.ts"
+  },
+  "scripts": {
+    "check:unused-keys": "node scripts/check-unused-keys.mjs"
   }
 }

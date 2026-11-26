@@ -14,14 +14,18 @@
   "scripts": {
     "verify:frontend": "node scripts/verify_frontend.mjs",
     "verify:frontend:quick": "node scripts/verify_frontend.mjs --quick",
+    "verify:frontend:v69": "node scripts/verify_frontend_v69.mjs",
+    "verify:frontend:v69:quick": "node scripts/verify_frontend_v69.mjs --quick",
+    "check:i18n-unused": "npm run check:unused-keys --workspace @secret-santa/shared",
     "screenshots": "node scripts/capture_screenshots.mjs",
     "dev": "npm run dev --workspace @secret-santa/web",
     "dev:api": "npm run dev --workspace @secret-santa/api",
     "build": "npm run build --workspace @secret-santa/api && npm run build --workspace @secret-santa/web",
     "typecheck": "tsc --noEmit -p packages/shared/tsconfig.json && tsc --noEmit -p packages/art/tsconfig.json && tsc --noEmit -p apps/api/tsconfig.json && tsc --noEmit -p apps/web/tsconfig.json",
-    "test": "node --test packages/shared/src/*.test.ts packages/art/src/*.test.ts apps/api/src/*.test.ts",
+    "test": "node --test packages/shared/src/*.test.ts packages/art/src/*.test.ts apps/api/src/*.test.ts apps/web/src/shared/api/localState.test.ts apps/web/src/features/quick-draw/pairs.test.ts",
     "art": "node packages/art/scripts/generate.ts",
-    "openspec:validate": "openspec validate migrate-v69-ts-stack --strict"
+    "migrate:v68": "node apps/api/src/migrate-v68.ts",
+    "openspec:validate": "openspec validate --all --strict"
   },
   "dependencies": {
     "@hono/node-server": "2.1.11",

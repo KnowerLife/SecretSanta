@@ -53,7 +53,9 @@ export const loadRoomBootstrap = createServerFn({ method: 'GET' })
         ok: true,
         room: roomData.room,
         me: roomData.me,
-        assignment,
+        // Имя получателя раскрывается только явным действием в UI: в SSR-данные
+        // попадает лишь факт жеребьёвки, подробности запрашивает браузер.
+        assignment: { drawn: assignment.drawn, recipient: null },
         messages: messages.messages,
       };
     } catch (error) {

@@ -12,12 +12,12 @@ import {
 } from './i18n.ts';
 
 test('словарь содержит полный bilingual-набор ключей', () => {
-  assert.ok(Object.keys(I18N.ru).length >= 450);
-  assert.ok(Object.keys(I18N.en).length >= 450);
-  assert.equal(Object.keys(I18N.ru).length, 458);
-  assert.equal(Object.keys(I18N.en).length, 457);
-  assert.equal(keys('ru').length, 458);
-  assert.equal(keys('en').length, 457);
+  // 9 дублирующих ключей v68 удалены при паритете: 485 → 476.
+  assert.ok(Object.keys(I18N.ru).length >= 476);
+  assert.ok(Object.keys(I18N.en).length >= 476);
+  assert.equal(Object.keys(I18N.ru).length, Object.keys(I18N.en).length);
+  assert.equal(keys('ru').length, keys('en').length);
+  assert.equal(missingKeys().length, 0);
 });
 
 test('известные ключи разрешаются в обеих локалях', () => {
@@ -38,14 +38,14 @@ test('подстановка параметров заменяет плейсх�
   assert.equal(t('ru', 'quick.resultMetaOne', {}), '{n} пара');
 });
 
-test('fallback: EN падает на RU, неизвестный ключ остаётся ключом', () => {
-  assert.equal(t('en', 'quick.resultMetaFew', { n: 2 }), '2 пары');
+test('fallback: неизвестный ключ остаётся ключом, плюрал заполнен в обеих локалях', () => {
+  assert.equal(t('en', 'quick.resultMetaFew', { n: 2 }), '2 pairs');
   assert.equal(t('en', 'no.such.key'), 'no.such.key');
-  assert.equal(hasKey('en', 'quick.resultMetaFew'), false);
+  assert.equal(hasKey('en', 'quick.resultMetaFew'), true);
 });
 
-test('missingKeys содержит только известный RU-плюральный ключ', () => {
-  assert.deepEqual(missingKeys(), ['quick.resultMetaFew']);
+test('missingKeys пуст: RU и EN словари синхронизированы', () => {
+  assert.deepEqual(missingKeys(), []);
 });
 
 test('pluralRu реализует русские правила плюрализации', () => {

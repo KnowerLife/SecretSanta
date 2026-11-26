@@ -1,4 +1,6 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
+import type { LegacyIdentity } from '@secret-santa/shared/contracts';
+import { get } from './db.ts';
 
 const SECRET = process.env.SECRET_SANTA_SECRET ?? 'dev-insecure-change-me';
 const DEFAULT_TTL = Number(process.env.SECRET_SANTA_TOKEN_TTL ?? 604800);
@@ -44,6 +46,38 @@ export function verifyToken(token: string, secret = SECRET): TokenPayload | null
 
 export function hashToken(token: string): string {
   return createHash('sha256').update(token).digest('hex');
+}
+
+export interface LegacyTokenRow {
+  kind: 'session' | 'invite' | 'member';
+  room_id: string;
+  member_id: string | null;
+  session_id: string | null;
+  new_token: string | null;
+}
+
+/** Находит соответствие для токена, выданного v68. */
+export function legacyRecord(token: string): LegacyTokenRow | null {
+  if (!token || token.includes('.')) return null;
+  try {
+    return get<LegacyTokenRow>(
+      'SELECT kind, room_id, member_id, session_id, new_token FROM legacy_token_map WHERE old_hash = ?',
+      hashToken(token),
+    ) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export function legacyIdentity(token: string): LegacyIdentity | null {
+  const row = legacyRecord(token);
+  if (!row) return null;
+  return {
+    kind: row.kind,
+    roomId: row.room_id,
+    memberId: row.member_id ?? undefined,
+    sessionId: row.session_id ?? undefined,
+  };
 }
 
 export function newId(prefix: string): string {

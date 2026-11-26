@@ -1,0 +1,78 @@
+# Production-стек v69. Скопируйте .env.example в .env перед запуском.
+#   cp .env.example .env
+#   docker compose -f docker-compose.v69.yml up -d --build
+
+services:
+  api:
+    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.0}
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    env_file: .env
+    environment:
+      PORT: ${PORT:-8787}
+      # Путь обязан оставаться внутри монтируемого тома.
+      SECRET_SANTA_V69_DB_PATH: /app/apps/api/data/app.db
+    volumes:
+      - v69_api_data:/app/apps/api/data
+    networks:
+      - v69
+    ports:
+      - "${PORT:-8787}:${PORT:-8787}"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          node -e "fetch('http://127.0.0.1:' + (process.env.PORT || 8787) + '/api/health')
+            .then((r) => { if (!r.ok) process.exit(1); })
+            .catch(() => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  web:
+    image: secret-santa-web:${V69_IMAGE_TAG:-v69.1.0}
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        SECRET_SANTA_API_TARGET: ${SECRET_SANTA_API_TARGET:-http://api:8787}
+    env_file: .env
+    environment:
+      SECRET_SANTA_API_TARGET: ${SECRET_SANTA_API_TARGET:-http://api:8787}
+    networks:
+      - v69
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  worker:
+    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.0}
+    # Команда workspace запускается из корня монорепозитория.
+    working_dir: /app
+    env_file: .env
+    environment:
+      PORT: ${PORT:-8787}
+      SECRET_SANTA_V69_DB_PATH: /app/apps/api/data/app.db
+    volumes:
+      - v69_api_data:/app/apps/api/data
+    networks:
+      - v69
+    # Отдельный процесс напоминаний; скрипт объявлен в apps/api/package.json.
+    command: npm run worker --workspace @secret-santa/api
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  v69:
+    driver: bridge
+
+volumes:
+  v69_api_data:

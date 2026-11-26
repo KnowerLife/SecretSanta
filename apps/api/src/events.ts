@@ -4,11 +4,16 @@ export interface RoomEvent {
   actor: string | null;
   payload: unknown;
   createdAt: string;
+  roomCode?: string;
+  seq?: number;
+  eventDbId?: string;
+  /** Служебный кадр подключения не имеет id, как и в v68. */
+  omitId?: boolean;
 }
 
 type Listener = (event: RoomEvent) => void;
 
-/** Оpentown in-memory шина для одного процесса; для horizontal scaling нужен Redis. */
+/** In-memory шина одного процесса; для горизонтального масштабирования нужен Redis. */
 class RoomEventBus {
   private listeners = new Map<string, Set<Listener>>();
 
@@ -32,9 +37,14 @@ class RoomEventBus {
 export const roomEvents = new RoomEventBus();
 
 export function formatSse(event: RoomEvent): string {
-  return `id: ${event.id}\nevent: ${event.type}\ndata: ${JSON.stringify({
+  const data = {
     actor: event.actor,
     payload: event.payload,
     createdAt: event.createdAt,
-  })}\n\n`;
+    ...(event.roomCode ? { roomCode: event.roomCode } : {}),
+    ...(event.seq !== undefined ? { seq: event.seq } : {}),
+    ...(event.eventDbId ? { eventDbId: event.eventDbId } : {}),
+  };
+  const id = event.omitId ? '' : `id: ${event.id}\n`;
+  return `${id}event: ${event.type}\ndata: ${JSON.stringify(data)}\n\n`;
 }
