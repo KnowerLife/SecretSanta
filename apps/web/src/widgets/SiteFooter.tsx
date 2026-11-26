@@ -45,9 +45,27 @@ export function SiteFooter() {
         </section>
 
         <div className="footer-bottom">
-          <span>{t('footer.copy')}</span>
+          <a
+            className="footer-bottom__link"
+            href="https://github.com/KnowerLife/SecretSanta"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('footer.copyLink')}
+          >
+            {t('footer.copy')}
+          </a>
           <span aria-hidden="true">·</span>
           <span>{t('footer.made')}</span>
+          <span aria-hidden="true">·</span>
+          <a
+            className="footer-bottom__link"
+            href="https://github.com/KnowerLife"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('footer.github')}
+          >
+            GitHub
+          </a>
         </div>
       </div>
     </footer>

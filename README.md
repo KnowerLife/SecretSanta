@@ -6,7 +6,7 @@
 
 [![CI v69](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml/badge.svg)](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml)
 [![Pages demo](https://img.shields.io/badge/Pages-live%20demo-2F6FB0?style=flat-square&logo=github)](https://knowerlife.github.io/SecretSanta/)
-[![v69.4.0](https://img.shields.io/badge/version-v69.4.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
+[![v9.5.0](https://img.shields.io/badge/version-v9.5.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-183B70?style=flat-square)](#pwa-и-офлайн)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6B4EFF?style=flat-square)](#лицензия)
 
@@ -196,13 +196,13 @@ CI на `ubuntu-24.04` прогоняет типопроверку, тесты, 
 ## Релизы и откат
 
 - **Демо:** workflow `.github/workflows/deploy-pages.yml` публикует витрину из `develop` и `main` или вручную. Отдельный тег для Pages не нужен.
-- **Полный стек:** `.github/workflows/publish-images.yml` публикует образы в GHCR по тегу `v*` или вручную. Актуальный релиз — `v69.4.0`, предыдущий рабочий — `v69.3.0`; тег `stable` указывает на последний стабильный релиз.
+- **Полный стек:** `.github/workflows/publish-images.yml` публикует образы в GHCR по тегу `v*` или вручную. Final-релиз — `v9.5.0` (образы также с тегом `95`), предыдущий рабочий — `v69.4.0`; тег `stable` указывает на последний стабильный релиз.
 
 ```bash
-git tag -a v69.4.0 -m "v69.4.0"
-git tag -a stable -m "Stable: v69.4.0"
-git push origin v69.4.0 stable
-docker manifest inspect ghcr.io/<владелец>/secret-santa-api:v69.4.0
+git tag -a v9.5.0 -m "v9.5.0"
+git tag -a stable -m "Stable: v9.5.0"
+git push origin v9.5.0 stable
+docker manifest inspect ghcr.io/<владелец>/secret-santa-api:95
 ```
 
 Для отката сохраните том `v69_api_data`, проверьте совместимость миграций и пересоздайте сервисы:
