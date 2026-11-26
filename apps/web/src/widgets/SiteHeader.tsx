@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useI18n } from '../app/providers/i18n.tsx';
 import { useSettings } from '../app/providers/settings.tsx';
+import { tokenKey } from '../shared/api/client.ts';
 import { LocalSyncPrompt } from '../features/local-play/LocalSyncPrompt.tsx';
 import './pwa-install.css';
 
@@ -24,6 +25,19 @@ export interface PwaInstallState {
 
 const PWA_INSTALLED_KEY = 'ss:v69:pwa-installed';
 const THEME_ORDER = ['winter', 'midnight', 'cozy'] as const;
+const TOKEN_PREFIX = tokenKey('');
+
+/** Находит комнату с активной сессией, не раскрывая сам токен. */
+function storedRoomCode(): string | null {
+  if (typeof window === 'undefined') return null;
+  for (let index = 0; index < window.localStorage.length; index += 1) {
+    const key = window.localStorage.key(index);
+    if (key?.startsWith(TOKEN_PREFIX) && window.localStorage.getItem(key)) {
+      return key.slice(TOKEN_PREFIX.length);
+    }
+  }
+  return null;
+}
 
 export function detectIos(): boolean {
   if (typeof navigator === 'undefined') return false;
@@ -118,6 +132,11 @@ export function SiteHeader() {
   const { locale, setLocale, theme, setTheme } = useSettings();
   const { pathname } = useLocation();
   const install = usePwaInstall();
+  const [roomCode, setRoomCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    setRoomCode(storedRoomCode());
+  }, [pathname]);
 
   const links = [
     { to: '/', label: t('nav.home') },
@@ -150,6 +169,16 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          {roomCode && (
+            <Link
+              className="nav__link nav__link--pill"
+              to="/room/$code"
+              params={{ code: roomCode }}
+              data-active={pathname.startsWith('/room/')}
+            >
+              {t('nav.dashboard')}
+            </Link>
+          )}
         </nav>
 
         <div className="nav__controls">

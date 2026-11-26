@@ -356,7 +356,7 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
 
       {tab === 'overview' && (
         <div className="dashboard__stack">
-          <div className="grid grid--2">
+          <div className="grid dash-overview">
             <RevealCard
               recipient={assignment?.recipient ?? null}
               drawn={drawn}

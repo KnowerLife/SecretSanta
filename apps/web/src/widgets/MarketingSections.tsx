@@ -17,9 +17,21 @@ function Head({ kicker, title, sub }: { kicker: string; title: string; sub: stri
   );
 }
 
-function SceneCard({ id, title, text, cta }: { id: SceneId; title: string; text: string; cta?: ReactNode }) {
+function SceneCard({
+  id,
+  title,
+  text,
+  cta,
+  className = '',
+}: {
+  id: SceneId;
+  title: string;
+  text: string;
+  cta?: ReactNode;
+  className?: string;
+}) {
   return (
-    <article className="card">
+    <article className={`card ${className}`.trim()}>
       <div className="card__scene">
         <Scene id={id} />
       </div>
@@ -76,10 +88,11 @@ export function ModesSection() {
     <section className="section section--tint" id="modes">
       <div className="container">
         <Head kicker={t('modes.kicker')} title={t('modes.title')} sub={t('modes.sub')} />
-        <div className="grid grid--3">
+        <div className="grid grid--3 mode-grid">
           {modes.map((mode) => (
             <SceneCard
               key={mode.key}
+              className="mode-card"
               id={mode.id}
               title={t(`modes.${mode.key}.title`)}
               text={t(`modes.${mode.key}.text`)}
@@ -143,7 +156,7 @@ export function FeaturesSection() {
     <section className="section section--tint" id="features">
       <div className="container">
         <Head kicker={t('features.kicker')} title={t('features.title')} sub={t('features.sub')} />
-        <div className="grid grid--2">
+        <div className="grid grid--4">
           {features.map((feature) => (
             <SceneCard
               key={feature.key}
@@ -203,7 +216,7 @@ export function AudienceSection() {
     <section className="section">
       <div className="container">
         <Head kicker={t('audience.kicker')} title={t('audience.title')} sub={t('audience.sub')} />
-        <div className="grid grid--2">
+        <div className="grid grid--4">
           {['friends', 'work', 'family', 'remote'].map((item) => (
             <SceneCard
               key={item}
@@ -224,7 +237,7 @@ export function IdeasSection() {
     <section className="section section--tint">
       <div className="container">
         <Head kicker={t('ideas.kicker')} title={t('ideas.title')} sub={t('ideas.sub')} />
-        <div className="grid grid--2">
+        <div className="grid grid--4">
           {['cozy', 'hobby', 'care', 'sweet'].map((item) => (
             <div className="card card__body" key={item}>
               <h3>{t(`ideas.${item}.title`)}</h3>

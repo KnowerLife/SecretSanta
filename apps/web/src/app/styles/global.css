@@ -1,66 +1,185 @@
+/* v69 tokens повторяют ритм v68, но остаются семантическими для всех трёх тем. */
 :root {
-  --santa-bg: #f7fbff;
+  --santa-font: 'Manrope', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --santa-container: 1160px;
+
+  --santa-sky: #d4e9fb;
+  --santa-bg: #f4f9ff;
   --santa-surface: #ffffff;
-  --santa-surface-2: #eff6fc;
-  --santa-ink: #14345c;
-  --santa-muted: #526c86;
-  --santa-line: #d8e6f3;
-  --santa-accent: #c9433b;
-  --santa-primary: #2f6fb0;
+  --santa-surface-2: #f2f7fd;
+  --santa-surface-tint: #eaf3ff;
+  --santa-ink: #1e3557;
+  --santa-muted: #4a6483;
+  --santa-line: #e3edf8;
+  --santa-line-strong: #cfdfef;
+
+  --santa-accent: #c93b35;
+  --santa-accent-hover: #b12e29;
+  --santa-accent-soft: #fff0ee;
+  --santa-primary: #2b5f9e;
+  --santa-primary-hover: #1f4d84;
+  --santa-primary-soft: #e9f2fd;
+  --santa-primary-text: #2b5f9e;
   --santa-on-accent: #ffffff;
   --santa-on-primary: #ffffff;
-  --santa-primary-text: #2f6fb0;
-  --santa-glow: rgba(47, 111, 176, 0.12);
-  --santa-radius: 22px;
-  --santa-shadow: 0 20px 50px rgba(20, 52, 92, 0.1);
+  --santa-on-soft-accent: #a3302b;
+
+  --santa-glow: rgba(43, 95, 158, 0.12);
+  --santa-warm-glow: rgba(201, 59, 53, 0.1);
+  --santa-header-bg: rgba(255, 255, 255, 0.74);
+  --santa-header-border: rgba(20, 42, 73, 0.06);
+  --santa-input-bg: #f6faff;
+  --santa-overlay: rgba(9, 21, 46, 0.42);
+  --santa-toast-bg: #183b70;
+  --santa-toast-ink: #ffffff;
+  --santa-toast-shadow: 0 12px 30px rgba(24, 59, 112, 0.28);
+  --santa-success: #2c7a5b;
+  --santa-warning: #775713;
+
+  --santa-footer-bg: #122b4d;
+  --santa-footer-ink: #f0f6ff;
+  --santa-footer-body: #cbddfe;
+  --santa-footer-accent: #ff9e96;
+  --santa-footer-line: rgba(203, 221, 254, 0.18);
+
+  --santa-radius: 24px;
+  --santa-radius-sm: 16px;
+  --santa-radius-control: 14px;
+  --santa-shadow-sm: 0 4px 14px rgba(21, 49, 87, 0.05);
+  --santa-shadow: 0 14px 40px rgba(21, 49, 87, 0.08);
+  --santa-shadow-lg: 0 24px 60px rgba(21, 49, 87, 0.14);
   color-scheme: light;
 }
 
 :root[data-theme='midnight'] {
-  --santa-bg: #0c1d3b;
-  --santa-surface: #14294b;
-  --santa-surface-2: #1b355a;
-  --santa-ink: #f2f7f7;
-  --santa-muted: #a9c0d6;
-  --santa-line: #2b4b71;
-  --santa-accent: #e7c37b;
-  --santa-primary: #63bfae;
-  --santa-on-accent: #0c1d3b;
-  --santa-on-primary: #0c1d3b;
-  --santa-primary-text: #63bfae;
-  --santa-glow: rgba(99, 191, 174, 0.14);
-  --santa-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  --santa-sky: #09152e;
+  --santa-bg: #0e1c39;
+  --santa-surface: #152748;
+  --santa-surface-2: #1b3158;
+  --santa-surface-tint: #203a69;
+  --santa-ink: #edf4ff;
+  --santa-muted: #a6bedd;
+  --santa-line: rgba(169, 203, 255, 0.12);
+  --santa-line-strong: rgba(169, 203, 255, 0.24);
+
+  --santa-accent: #cf443d;
+  --santa-accent-hover: #b5312b;
+  --santa-accent-soft: #38243b;
+  --santa-primary: #a9cbff;
+  --santa-primary-hover: #c9ddff;
+  --santa-primary-soft: #203a69;
+  --santa-primary-text: #a9cbff;
+  --santa-on-accent: #ffffff;
+  --santa-on-primary: #0e1c39;
+  --santa-on-soft-accent: #ff9e96;
+
+  --santa-glow: rgba(169, 203, 255, 0.1);
+  --santa-warm-glow: rgba(207, 68, 61, 0.14);
+  --santa-header-bg: rgba(9, 21, 46, 0.8);
+  --santa-header-border: rgba(169, 203, 255, 0.1);
+  --santa-input-bg: #1b3158;
+  --santa-overlay: rgba(2, 8, 20, 0.62);
+  --santa-toast-bg: #203a69;
+  --santa-toast-ink: #f5f9ff;
+  --santa-toast-shadow: 0 12px 30px rgba(0, 0, 0, 0.42);
+  --santa-success: #79d2a9;
+  --santa-warning: #f0c66d;
+
+  --santa-footer-bg: #09152e;
+  --santa-footer-ink: #f5f9ff;
+  --santa-footer-body: #c4d5f0;
+  --santa-footer-accent: #ff9e96;
+  --santa-footer-line: rgba(169, 203, 255, 0.18);
+
+  --santa-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.18);
+  --santa-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+  --santa-shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.38);
   color-scheme: dark;
 }
 
 :root[data-theme='cozy'] {
-  --santa-bg: #fff8ef;
-  --santa-surface: #fffdf8;
-  --santa-surface-2: #fae8d2;
-  --santa-ink: #5b382b;
-  --santa-muted: #7a5a47;
-  --santa-line: #ecd6be;
-  --santa-accent: #a95035;
-  --santa-primary: #d6a03f;
+  --santa-sky: #f7e3d2;
+  --santa-bg: #fff8f2;
+  --santa-surface: #fffdfb;
+  --santa-surface-2: #fbf2ea;
+  --santa-surface-tint: #f7e9dd;
+  --santa-ink: #4d3224;
+  --santa-muted: #705742;
+  --santa-line: #eddfd3;
+  --santa-line-strong: #dfc9b5;
+
+  --santa-accent: #a84336;
+  --santa-accent-hover: #8f352a;
+  --santa-accent-soft: #fbeae5;
+  --santa-primary: #82482a;
+  --santa-primary-hover: #6b3a22;
+  --santa-primary-soft: #f9eee5;
+  --santa-primary-text: #82482a;
   --santa-on-accent: #ffffff;
-  --santa-on-primary: #3c2418;
-  --santa-primary-text: #7d5410;
-  --santa-glow: rgba(190, 95, 66, 0.12);
-  --santa-shadow: 0 20px 50px rgba(91, 56, 43, 0.12);
+  --santa-on-primary: #ffffff;
+  --santa-on-soft-accent: #8f352a;
+
+  --santa-glow: rgba(130, 72, 42, 0.1);
+  --santa-warm-glow: rgba(168, 67, 54, 0.12);
+  --santa-header-bg: rgba(255, 253, 251, 0.78);
+  --santa-header-border: rgba(90, 56, 38, 0.07);
+  --santa-input-bg: #fdf5ef;
+  --santa-overlay: rgba(53, 33, 22, 0.5);
+  --santa-toast-bg: #4a2e20;
+  --santa-toast-ink: #fff8f2;
+  --santa-toast-shadow: 0 12px 30px rgba(90, 56, 38, 0.32);
+  --santa-success: #487156;
+  --santa-warning: #705014;
+
+  --santa-footer-bg: #352116;
+  --santa-footer-ink: #fff8f2;
+  --santa-footer-body: #f0ded1;
+  --santa-footer-accent: #ffb3a8;
+  --santa-footer-line: rgba(240, 222, 209, 0.18);
+
+  --santa-shadow-sm: 0 4px 14px rgba(90, 56, 38, 0.05);
+  --santa-shadow: 0 14px 40px rgba(90, 56, 38, 0.09);
+  --santa-shadow-lg: 0 24px 60px rgba(90, 56, 38, 0.14);
   color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 html,
 body {
   margin: 0;
   min-height: 100%;
-  background: var(--santa-bg);
-  color: var(--santa-ink);
 }
 
 body {
+  background: var(--santa-sky);
+  color: var(--santa-ink);
+  font-family: var(--santa-font);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   transition: background-color 220ms ease, color 220ms ease;
 }
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: var(--santa-ink);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+h1 { font-size: clamp(2.2rem, 5.4vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); }
+h3 { font-size: 1.3rem; line-height: 1.3; letter-spacing: -0.02em; }
+p { margin: 0; }
 
 *,
 *::before,
@@ -69,7 +188,7 @@ body {
 }
 
 :focus-visible {
-  outline: 3px solid var(--santa-accent);
+  outline: 3px solid var(--santa-primary);
   outline-offset: 3px;
 }
 
@@ -88,42 +207,53 @@ a {
 img,
 svg {
   max-width: 100%;
+  vertical-align: middle;
 }
 
 .container {
-  width: min(1180px, calc(100% - 40px));
+  width: min(var(--santa-container), calc(100% - 2.5rem));
   margin-inline: auto;
 }
 
 .site-shell {
   min-height: 100vh;
   background:
-    radial-gradient(1100px 540px at 8% -10%, var(--santa-glow), transparent 70%),
-    var(--santa-bg);
+    radial-gradient(rgba(255, 255, 255, 0.55) 1px, transparent 1px) 0 0 / 42px 42px,
+    radial-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px) 14px 14px / 28px 28px,
+    radial-gradient(ellipse 45% 38% at 12% 18%, var(--santa-glow), transparent 70%),
+    radial-gradient(ellipse 40% 34% at 88% 12%, var(--santa-warm-glow), transparent 70%),
+    linear-gradient(180deg, var(--santa-sky) 0%, var(--santa-bg) 42%, var(--santa-bg) 100%);
+  background-attachment: fixed;
 }
 
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 20;
-  border-bottom: 1px solid var(--santa-line);
-  background: color-mix(in srgb, var(--santa-bg) 88%, transparent);
-  backdrop-filter: blur(14px);
+  z-index: 50;
+  padding-top: env(safe-area-inset-top);
+  border-bottom: 1px solid var(--santa-header-border);
+  background: var(--santa-header-bg);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
 
 .site-header__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 18px;
-  min-height: 72px;
+  gap: 0.8rem 1.5rem;
+  min-height: 66px;
+  padding: 0.65rem 0;
 }
 
 .brand {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
-  gap: 10px;
+  gap: 0.65rem;
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: clamp(1.55rem, 2.4vw, 2rem);
+  line-height: 1;
   letter-spacing: -0.02em;
   text-decoration: none;
   white-space: nowrap;
@@ -132,8 +262,8 @@ svg {
 .brand__mark {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 12px;
   background: var(--santa-accent);
   color: var(--santa-on-accent);
@@ -146,27 +276,42 @@ svg {
 
 .nav {
   display: flex;
+  flex: 1;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 0.15rem;
+  min-width: 0;
   margin-left: auto;
 }
 
 .nav__link {
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--santa-radius-control);
+  font-size: 0.93rem;
+  font-weight: 700;
+  color: var(--santa-muted);
   text-decoration: none;
   transition: background-color 160ms ease, color 160ms ease;
 }
 
 .nav__link:hover {
-  background: var(--santa-surface-2);
+  background: var(--santa-primary-soft);
+  color: var(--santa-primary-text);
 }
 
 .nav__link[data-active='true'] {
-  background: var(--santa-primary);
-  color: var(--santa-on-primary);
+  background: var(--santa-primary-soft);
+  color: var(--santa-primary-text);
+}
+
+.nav__link--pill {
+  border: 1px solid var(--santa-line-strong);
+  background: var(--santa-surface);
+  color: var(--santa-primary-text);
+  box-shadow: var(--santa-shadow-sm);
 }
 
 .nav__controls {
@@ -181,15 +326,16 @@ svg {
   width: 44px;
   height: 44px;
   border: 1px solid var(--santa-line);
-  border-radius: 14px;
-  background: var(--santa-surface);
-  color: var(--santa-ink);
+  border-radius: var(--santa-radius-control);
+  background: var(--santa-surface-2);
+  color: var(--santa-muted);
   cursor: pointer;
   font-size: 1rem;
 }
 
 .icon-button:hover {
   border-color: var(--santa-primary);
+  color: var(--santa-primary-text);
 }
 
 .skip-link {
@@ -209,10 +355,10 @@ svg {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 48px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
-  padding: 72px 0 60px;
+  padding: 3.75rem 0 1.25rem;
 }
 
 .hero__eyebrow,
@@ -222,7 +368,7 @@ svg {
   border: 1px solid var(--santa-line);
   border-radius: 999px;
   background: var(--santa-surface);
-  color: var(--santa-accent);
+  color: var(--santa-primary-text);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -231,7 +377,7 @@ svg {
 
 .hero h1 {
   margin: 20px 0 18px;
-  font-size: clamp(2.7rem, 6vw, 4.8rem);
+  font-size: clamp(3rem, 6vw, 5.4rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
 }
@@ -256,36 +402,44 @@ svg {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 46px;
-  padding: 11px 20px;
+  min-height: 48px;
+  padding: 0.8rem 1.4rem;
   border: 1px solid transparent;
-  border-radius: 13px;
-  font-weight: 700;
+  border-radius: var(--santa-radius-control);
+  font-family: inherit;
+  font-weight: 800;
   font-size: 0.95rem;
+  line-height: 1.2;
+  white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, color 160ms ease;
 }
 
 .btn:hover {
   transform: translateY(-1px);
 }
 
-.btn--primary {
-  background: var(--santa-primary);
-  color: var(--santa-on-primary);
-  box-shadow: 0 10px 24px var(--santa-glow);
+.btn--primary,
+.btn--accent {
+  background: var(--santa-accent);
+  color: var(--santa-on-accent);
+  box-shadow: 0 10px 24px var(--santa-warm-glow);
+}
+
+.btn--primary:hover,
+.btn--accent:hover {
+  background: var(--santa-accent-hover);
 }
 
 .btn--secondary {
   border-color: var(--santa-line);
-  background: var(--santa-surface);
-  color: var(--santa-ink);
+  background: var(--santa-primary-soft);
+  color: var(--santa-primary-text);
 }
 
-.btn--accent {
-  background: var(--santa-accent);
-  color: var(--santa-on-accent);
+.btn--secondary:hover {
+  background: var(--santa-surface-tint);
 }
 
 .hero__note {
@@ -322,7 +476,21 @@ svg {
 }
 
 .section {
-  padding: 68px 0;
+  position: relative;
+  padding: 4.5rem 0;
+}
+
+.section--tight {
+  padding: 2rem 0 1rem;
+}
+
+.section--compact {
+  padding: 2.25rem 0;
+}
+
+.section--narrow {
+  width: min(860px, calc(100% - 2.5rem));
+  margin-inline: auto;
 }
 
 .section--tint {
@@ -357,6 +525,10 @@ svg {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .grid--2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -366,11 +538,11 @@ svg {
   border: 1px solid var(--santa-line);
   border-radius: var(--santa-radius);
   background: var(--santa-surface);
-  box-shadow: var(--santa-shadow);
+  box-shadow: var(--santa-shadow-sm);
 }
 
 .card__body {
-  padding: 24px;
+  padding: 1.25rem;
 }
 
 .card h3 {
@@ -394,6 +566,60 @@ svg {
   border-radius: 0;
   height: 100%;
   object-fit: cover;
+}
+
+/* Компактные сетки легаси: по четыре карточки в ряд на широком экране. */
+.grid--4 .card__scene {
+  height: 132px;
+}
+
+.grid--4 .card__body {
+  padding: 1.1rem;
+}
+
+.grid--4 .card h3 {
+  min-height: 2.4em;
+  font-size: 1.05rem;
+}
+
+.grid--4 .card p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.mode-grid {
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--santa-line);
+  border-radius: var(--santa-radius);
+  box-shadow: var(--santa-shadow-sm);
+}
+
+.mode-grid .card {
+  border: 0;
+  border-right: 1px solid var(--santa-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.mode-grid .card:last-child {
+  border-right: 0;
+}
+
+.mode-grid .card:first-child {
+  background: var(--santa-accent-soft);
+}
+
+.mode-grid .card__scene {
+  height: 160px;
+}
+
+.mode-grid .card__body {
+  padding: 1.1rem;
+}
+
+.mode-grid .card p {
+  margin-bottom: 12px;
 }
 
 .step-num {
@@ -445,17 +671,52 @@ svg {
 }
 
 .site-footer {
-  padding: 46px 0;
-  border-top: 1px solid var(--santa-line);
-  color: var(--santa-muted);
-  font-size: 0.9rem;
+  margin-top: 2rem;
+  padding: 3.5rem 0 2rem;
+  background: var(--santa-footer-bg);
+  color: var(--santa-footer-ink);
+  font-size: 0.95rem;
+}
+
+.site-footer strong {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1.15rem;
+}
+
+.site-footer p,
+.site-footer a {
+  color: var(--santa-footer-body);
+}
+
+.site-footer a {
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--santa-footer-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.2fr;
+  gap: 2.5rem;
+}
+
+.footer-inner > div:last-child {
+  grid-column: 1 / -1;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--santa-footer-line);
+  color: var(--santa-footer-body);
+}
+
+.footer-install {
+  padding: 1rem;
+  border: 1px solid var(--santa-footer-line);
+  border-radius: var(--santa-radius-sm);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .form-layout {
@@ -469,7 +730,7 @@ svg {
 .form-card {
   padding: 30px;
   border: 1px solid var(--santa-line);
-  border-radius: 26px;
+  border-radius: var(--santa-radius);
   background: var(--santa-surface);
   box-shadow: var(--santa-shadow);
 }
@@ -500,12 +761,14 @@ svg {
 .field textarea,
 .field select {
   width: 100%;
+  min-height: 48px;
   padding: 12px 14px;
-  border: 1px solid var(--santa-line);
-  border-radius: 12px;
-  background: var(--santa-bg);
+  border: 1px solid var(--santa-line-strong);
+  border-radius: var(--santa-radius-control);
+  background: var(--santa-input-bg);
   color: var(--santa-ink);
   font: inherit;
+  font-size: 0.95rem;
 }
 
 .field textarea {
@@ -598,9 +861,9 @@ svg {
 
 .tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 22px;
-  overflow-x: auto;
 }
 
 .tab {
@@ -608,25 +871,28 @@ svg {
   min-height: 44px;
   padding: 10px 18px;
   border: 1px solid var(--santa-line);
-  border-radius: 999px;
-  background: var(--santa-surface);
-  color: var(--santa-ink);
+  border-radius: var(--santa-radius-control);
+  background: var(--santa-surface-2);
+  color: var(--santa-muted);
   cursor: pointer;
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .tab[data-active='true'] {
-  border-color: var(--santa-primary);
-  background: var(--santa-primary);
-  color: var(--santa-on-primary);
+  border-color: var(--santa-line-strong);
+  background: var(--santa-surface);
+  color: var(--santa-primary-text);
+  box-shadow: var(--santa-shadow-sm);
 }
 
 .panel {
-  padding: 24px;
+  min-width: 0;
+  padding: 1.25rem;
   border: 1px solid var(--santa-line);
-  border-radius: 22px;
+  border-radius: var(--santa-radius);
   background: var(--santa-surface);
+  box-shadow: var(--santa-shadow-sm);
 }
 
 .panel h2 {
@@ -779,61 +1045,92 @@ svg {
   }
 
   .grid--3,
+  .grid--4,
   .stat-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .nav__link {
-    padding: 9px 10px;
-    font-size: 0.84rem;
-  }
 }
 
-@media (max-width: 640px) {
-  .container {
-    width: min(100% - 28px, 1180px);
-  }
-
+@media (max-width: 760px) {
   .site-header__inner {
-    flex-wrap: wrap;
     gap: 8px;
-    padding: 10px 0;
   }
 
   .nav {
+    flex: 1 0 100%;
     order: 3;
     width: 100%;
     margin-left: 0;
-    overflow-x: auto;
   }
 
   .nav__controls {
     margin-left: auto;
   }
 
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(100% - 1.25rem, var(--santa-container));
+  }
+
   .hero {
     gap: 24px;
-    padding: 42px 0 36px;
+    padding: 2.5rem 0 2rem;
   }
 
   .section {
-    padding: 44px 0;
+    padding: 2.75rem 0;
   }
 
   .grid--3,
+  .grid--4,
   .grid--2,
   .stat-grid,
   .chat {
     grid-template-columns: 1fr;
   }
 
+  .grid--3,
+  .grid--4,
+  .grid--2 {
+    gap: 14px;
+  }
+
   .cta-band {
-    padding: 26px;
+    padding: 1.5rem;
   }
 
   .form-card,
   .panel {
-    padding: 20px;
+    padding: 1.25rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .btn-row {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav__link {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.86rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .btn-row > .btn {
+    flex: 1 1 100%;
   }
 }
 
@@ -852,6 +1149,16 @@ svg {
 .dashboard__stack {
   display: grid;
   gap: 18px;
+}
+
+/* Легаси-пропорция обзора: 7/5 вместо двух равных колонок. */
+.dash-overview {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: start;
+}
+
+.dash-overview > .dashboard__stack {
+  gap: 14px;
 }
 
 .dashboard__stack > .grid,
@@ -1267,6 +1574,42 @@ svg {
   }
 }
 
+@media (max-width: 800px) {
+  /* Легаси-гайд на узких экранах — вертикальный список без скрытого скролла. */
+  .site-guide .site-guide__rail {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .site-guide .site-guide__step {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .dash-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mode-grid {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .mode-grid .card {
+    border-right: 0;
+    border-bottom: 1px solid var(--santa-line);
+    border-radius: var(--santa-radius-sm);
+    box-shadow: var(--santa-shadow-sm);
+  }
+
+  .mode-grid .card:last-child {
+    border-bottom: 0;
+  }
+}
+
 @media (max-width: 640px) {
   .dashboard__head .room-code {
     order: 2;
@@ -1280,4 +1623,54 @@ svg {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+/* Шапка сохраняет высоту легаси: подсказка по установке остаётся в футере. */
+.site-header .install-hint--header {
+  display: none;
+}
+
+/* Диалоги и уведомления Mantine используют геометрию и цвета легаси. */
+.mantine-Modal-overlay {
+  background: var(--santa-overlay);
+  backdrop-filter: blur(6px);
+}
+
+.mantine-Modal-content {
+  border: 1px solid var(--santa-line);
+  border-radius: var(--santa-radius);
+  background: var(--santa-surface);
+  color: var(--santa-ink);
+  box-shadow: var(--santa-shadow-lg);
+}
+
+.mantine-Modal-header {
+  margin-bottom: 0.5rem;
+  padding: 1.25rem 1.5rem 0.5rem;
+  color: var(--santa-ink);
+  font-weight: 800;
+}
+
+.mantine-Modal-body {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.mantine-Notifications-notification,
+.mantine-Notification-root {
+  border: 0;
+  border-radius: var(--santa-radius-sm);
+  background: var(--santa-toast-bg) !important;
+  color: var(--santa-toast-ink) !important;
+  box-shadow: var(--santa-toast-shadow);
+  font-family: var(--santa-font);
+}
+
+.mantine-Notification-body,
+.mantine-Notification-title,
+.mantine-Notification-description {
+  color: inherit !important;
+}
+
+.mantine-Notification-closeButton {
+  color: var(--santa-toast-ink) !important;
 }

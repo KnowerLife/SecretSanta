@@ -27,6 +27,13 @@ export const Route = createRootRoute({
       // Mantine styles MUST be first: route-level and component styles override them.
       { rel: 'stylesheet', href: mantineCoreStyles },
       { rel: 'stylesheet', href: mantineNotificationsStyles },
+      // Тот же шрифт, что и в легаси-вёрстке: сохраняем знакомую ритмику текста.
+      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap',
+      },
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
       { rel: 'manifest', href: '/manifest.webmanifest' },
       { rel: 'apple-touch-icon', href: '/icon-192.svg' },
