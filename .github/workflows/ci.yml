@@ -5,9 +5,11 @@ on:
     branches: [main]
   pull_request:
 
+# Playwright 1.55 has no --with-deps package list for Ubuntu 26.04, which
+# ubuntu-latest started using in November 2026. Pin the supported 24.04 image.
 jobs:
   test-backend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,7 +22,7 @@ jobs:
         run: python -m unittest discover -s backend/prod_stack/tests -p 'test*.py' -v
 
   syntax-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,7 +32,7 @@ jobs:
         run: for f in app.js src/*.js; do node --input-type=module --check < "$f"; done && node --check sw.js
 
   frontend-checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
