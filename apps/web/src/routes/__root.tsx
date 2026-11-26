@@ -8,6 +8,7 @@ import { AppProviders } from '../app/providers/AppProviders.tsx';
 import { useSettings } from '../app/providers/settings.tsx';
 import { NotFoundPage } from '../pages/NotFoundPage.tsx';
 import { ServiceWorkerRegistrar } from '../shared/pwa/ServiceWorkerRegistrar.tsx';
+import { assetPath } from '../shared/base.ts';
 import { FestiveSky } from '../shared/ui/FestiveDecor.tsx';
 import { SiteFooter } from '../widgets/SiteFooter.tsx';
 import { SiteHeader } from '../widgets/SiteHeader.tsx';
@@ -36,9 +37,9 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap',
       },
-      { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-      { rel: 'manifest', href: '/manifest.webmanifest' },
-      { rel: 'apple-touch-icon', href: '/icon-192.svg' },
+      { rel: 'icon', type: 'image/svg+xml', href: assetPath('favicon.svg') },
+      { rel: 'manifest', href: assetPath('manifest.webmanifest') },
+      { rel: 'apple-touch-icon', href: assetPath('icon-192.svg') },
     ],
   }),
   notFoundComponent: NotFoundPage,

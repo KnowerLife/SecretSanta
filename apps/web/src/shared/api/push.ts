@@ -1,5 +1,6 @@
 /** Подписка на Web Push через service worker. Все внешние API проверяются на существование (мок-безопасно). */
 
+import { assetPath } from '../base.ts';
 import { serverFetch } from './http.ts';
 import type { FetchOptions } from './http.ts';
 
@@ -99,7 +100,7 @@ export async function subscribeToPush(
 
   const registration =
     (await navigator.serviceWorker.ready.catch(() => null)) ??
-    (await navigator.serviceWorker.register('/sw.js').catch(() => null));
+    (await navigator.serviceWorker.register(assetPath('sw.js')).catch(() => null));
   if (!registration?.pushManager?.subscribe) throw new Error('push_unsupported');
 
   const subscription = await registration.pushManager.subscribe({
