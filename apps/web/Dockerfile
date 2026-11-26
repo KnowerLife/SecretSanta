@@ -1,5 +1,5 @@
 # Сборка из корня монорепозитория:
-#   docker build -f apps/web/Dockerfile -t secret-santa-web:v69.1.0 \
+#   docker build -f apps/web/Dockerfile -t secret-santa-web:v69.1.1 \
 #     --build-arg SECRET_SANTA_API_TARGET=http://api:8787 .
 FROM node:22.22.3-bookworm-slim AS build
 WORKDIR /app

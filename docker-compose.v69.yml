@@ -4,7 +4,7 @@
 
 services:
   api:
-    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.0}
+    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.1}
     build:
       context: .
       dockerfile: apps/api/Dockerfile
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: secret-santa-web:${V69_IMAGE_TAG:-v69.1.0}
+    image: secret-santa-web:${V69_IMAGE_TAG:-v69.1.1}
     build:
       context: .
       dockerfile: apps/web/Dockerfile
@@ -52,7 +52,7 @@ services:
     restart: unless-stopped
 
   worker:
-    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.0}
+    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.1}
     # Команда workspace запускается из корня монорепозитория.
     working_dir: /app
     env_file: .env

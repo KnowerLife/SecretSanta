@@ -1,6 +1,6 @@
 # Паритет v68 → v69
 
-Дата проверки: 2026-11-26. Документ фиксирует фактическое состояние полного паритета: v69.1.0 воспроизводит игровые сценарии и UX v68 в архитектуре TanStack Start + Hono + Mantine. v68 остаётся эталоном и рабочим резервом; старые файлы не удалены.
+Дата проверки: 2026-11-26. Документ фиксирует фактическое состояние полного паритета: v69.1.1 воспроизводит игровые сценарии и UX v68 в архитектуре TanStack Start + Hono + Mantine. v68 остаётся эталоном и рабочим резервом; старые файлы не удалены.
 
 ## Итог
 
@@ -55,6 +55,7 @@
 | `npm run typecheck` (4 tsconfig) | без ошибок |
 | `npm test` | 52/52 (shared, art, api, push, worker, migration, локальная игра, быстрая жеребьёвка) |
 | `npm run build` | client + SSR server собраны |
+| `docker compose -f docker-compose.v69.yml build/up` | оба образа собраны, API healthy, SSR и `/api` через web доступны, воркер обработал задачу из `notification_jobs` |
 | `make test` | 12/12, без регрессий v68 |
 | `npm run verify:frontend:v69:quick` | `FRONTEND_V69_CHECKS 10 FAILED 0`, 0 ошибок консоли |
 | `npm run verify:frontend:v69` | `FRONTEND_V69_CHECKS 11 FAILED 0`, Lighthouse accessibility 1.00 для 3 тем × RU/EN |
@@ -80,7 +81,7 @@
 
 ## Известные ограничения
 
-- Docker CLI в среде проверки недоступен: `Dockerfile` и `docker-compose.v69.yml` проверены статическими проверками синтаксиса и парсерами YAML, но `docker build` и `docker compose config` не запускались.
+- Production-образы проверены реальной сборкой и запуском: `docker compose config`, `docker build`, `docker compose up`, healthcheck API, SSR и прокси `/api` через web, обработка задачи воркером; браузерные проверки против compose — 10/10. Docker Desktop установлен локально для этой проверки.
 - SSE-шина работает в памяти одного процесса; горизонтальное масштабирование потребует Redis или другого брокера.
 - `backend/prod_stack/` остаётся каркасом; рабочий production-стенд v69 поднимается через `docker-compose.v69.yml`.
 - `SECRET_SANTA_SECRET` по умолчанию равен `dev-insecure-change-me`; в проде обязательна замена.
