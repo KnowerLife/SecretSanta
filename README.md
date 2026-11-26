@@ -18,6 +18,7 @@
 - [Архитектура](#архитектура)
 - [HTTP API](#http-api)
 - [PWA и offline](#pwa--offline)
+- [GitHub Pages: статическая витрина](#github-pages-статическая-витрина)
 - [Локализация, темы и доступность](#локализация-темы-и-доступность)
 - [Графика](#графика)
 - [Тесты и качество](#тесты-и-качество)
@@ -93,6 +94,16 @@ docker compose -f docker-compose.v69.yml up --build
 
 Service worker кэширует оболочку приложения и статические SVG-сцены. Очередь офлайн-действий хранится в localStorage и отправляется на сервер после восстановления связи. Установка PWA предлагается через баннер в интерфейсе; `pushEnabled()` показывает кнопки уведомлений только при рабочей конфигурации VAPID.
 
+## GitHub Pages: статическая витрина
+
+Помимо полного SSR/API-стека репозиторий собирает статическую витрину для GitHub Pages: главную, `/create`, `/join`, `/quick-draw`, RU/EN, три темы, PWA-установку и детерминированные SVG-сцены. Сборка prerender'ит страницы, оставляя SPA-оболочку для неизвестных путей.
+
+```bash
+PAGES_BASE=/<имя-репозитория> npm run build:pages   # вывод: apps/web/dist/client
+```
+
+Workflow `.github/workflows/deploy-pages.yml` публикует витрину при пуше в `main` или вручную. Комнаты `/room/$code` исключены из prerender: для них нужен API и SSE, поэтому по таким ссылкам показывается пояснение. Push, общий чат и серверная жеребьёвка доступны только в полном деплое. Подробности — [`docs/GITHUB_PAGES.md`](docs/GITHUB_PAGES.md).
+
 ## Локализация, темы и доступность
 
 RU и EN синхронизированы (`npm run check:i18n-unused` сообщает о неиспользуемых ключах). Три темы — `winter`, `midnight`, `cozy` — задаются через CSS-токены и общие SVG-палитры. Интерфейс сохраняет выбранные язык и тему в localStorage, поддерживает клавиатурную навигацию, видимый фокус и `prefers-reduced-motion`.
@@ -108,6 +119,7 @@ npm run typecheck              # все пакеты
 npm test                       # Unit-тесты shared/art/api/web
 npm run check:i18n-unused      # Словарь RU/EN
 npm run build                  # API и SSR
+npm run build:pages            # Статическая витрина для GitHub Pages
 npm run verify:frontend:v69    # Браузерные сценарии + Lighthouse (3 темы × RU/EN)
 npm audit --audit-level=high   # Уязвимости зависимостей
 npx openspec validate --all --strict
@@ -126,6 +138,8 @@ CI запускает типопроверку, тесты, сборку, вал
 | `REDIS_URL` | Включает Redis Pub/Sub для SSE между процессами |
 | `V69_IMAGE_REGISTRY`, `V69_IMAGE_NAMESPACE`, `V69_IMAGE_TAG` | Источник образов для production-стека |
 | `PORT` | Порт API (по умолчанию `8787`) |
+| `PAGES_BASE` | Подпуть витрины на Pages (например, `/SecretSanta`); задаётся workflow автоматически |
+| `VITE_API_BASE` | Необязательный внешний API для витрины; без него формы работают локально |
 
 Приложение не открывает порт, если production-секрет слабый или известен как заглушка. Приватный VAPID-ключ никогда не попадает в логи и ответы API.
 
@@ -157,8 +171,8 @@ apps/api/         Hono API, миграции, воркер
 apps/web/         TanStack Start, страницы, компоненты, стили
 packages/shared/  Контракты и локализация
 packages/art/     Генератор SVG-сцен
-scripts/          Браузерные проверки v69
-docs/             GITFLOW и RELEASES
+scripts/          Браузерные проверки v69 и подготовка Pages-артефакта
+docs/             GITFLOW, RELEASES и GITHUB_PAGES
 openspec/         Спецификации и архив изменений
 ```
 
