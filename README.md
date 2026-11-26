@@ -10,6 +10,8 @@
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-183B70?style=flat-square)](#pwa-и-офлайн)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6B4EFF?style=flat-square)](#лицензия)
 
+**Язык: 🇷🇺 Русский · [🇬🇧 English](README.en.md)**
+
 **[🎁 Открыть демо](https://knowerlife.github.io/SecretSanta/)** · **[Быстрый старт](#быстрый-старт)** · **[Архитектура](#архитектура-и-поток-данных)**
 
 <p align="center">
