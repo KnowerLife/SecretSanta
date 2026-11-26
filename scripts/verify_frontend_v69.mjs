@@ -85,9 +85,16 @@ async function post(pathname, body, token) {
 function cleanup() {
   for (const child of children.splice(0)) {
     try {
-      child.kill('SIGTERM');
+      // Дочерние процессы запущены detached: завершаем всю группу, иначе
+      // npm/vinxi оставляет сервер и удерживает потоки в CI.
+      if (child.pid) process.kill(-child.pid, 'SIGTERM');
+      else child.kill('SIGTERM');
     } catch {
-      // already gone
+      try {
+        child.kill('SIGTERM');
+      } catch {
+        // already gone
+      }
     }
   }
 }
@@ -97,11 +104,13 @@ if (START) {
     cwd: ROOT,
     env: { ...process.env, PORT: '8787' },
     stdio: ['ignore', 'pipe', 'pipe'],
+    detached: true,
   });
   const webProcess = spawn('npm', ['run', 'dev'], {
     cwd: ROOT,
     env: { ...process.env, SECRET_SANTA_API_TARGET: API },
     stdio: ['ignore', 'pipe', 'pipe'],
+    detached: true,
   });
   children.push(apiProcess, webProcess);
   process.on('exit', cleanup);
@@ -327,9 +336,10 @@ if (!QUICK) {
   });
 }
 
-cleanup();
+const exitCode = failures.length ? 1 : 0;
 console.log(`FRONTEND_V69_CHECKS ${passed.length + failures.length} FAILED ${failures.length}`);
 if (failures.length) {
   console.log(`failed: ${failures.join(', ')}`);
-  process.exitCode = 1;
 }
+cleanup();
+process.exit(exitCode);
