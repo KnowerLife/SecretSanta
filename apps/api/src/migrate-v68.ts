@@ -10,6 +10,7 @@ import { existsSync, mkdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { fileURLToPath } from 'node:url';
+import { assertProductionSecret, signingSecret } from './config.ts';
 import { hashLegacyToken, LEGACY_TOKEN_MAP_DDL, signV69Token } from './migration-tokens.ts';
 import type { LegacyTokenKind } from './migration-tokens.ts';
 
@@ -93,7 +94,7 @@ function epochSeconds(value: unknown, fallback: number): number {
  */
 export function reconstructV68SessionToken(
   input: V68SessionTokenInput,
-  secret = process.env.SECRET_SANTA_SECRET ?? 'dev-insecure-change-me',
+  secret = signingSecret(),
   ttl = defaultTokenTtl(),
 ): string {
   const iat = epochSeconds(input.createdAt, Math.floor(Date.now() / 1000));
@@ -214,6 +215,7 @@ function countByIds(db: DatabaseSync, table: string, column: string, ids: string
 }
 
 export function runMigration(options: MigrationOptions): MigrationResult {
+  assertProductionSecret();
   const source = resolve(options.source);
   const target = resolve(options.target);
   const dryRun = options.dryRun === true;
@@ -747,6 +749,7 @@ function main(): void {
       );
       return;
     }
+    assertProductionSecret();
     const result = runMigration({
       source: args.source ?? process.env.SECRET_SANTA_V68_DB_PATH ?? DEFAULT_SOURCE,
       target: args.target ?? process.env.SECRET_SANTA_V69_DB_PATH ?? DEFAULT_TARGET,

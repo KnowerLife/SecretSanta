@@ -4,7 +4,7 @@
 
 services:
   api:
-    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.1}
+    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-api:${V69_IMAGE_TAG:-v69.1.1}
     build:
       context: .
       dockerfile: apps/api/Dockerfile
@@ -13,12 +13,16 @@ services:
       PORT: ${PORT:-8787}
       # Путь обязан оставаться внутри монтируемого тома.
       SECRET_SANTA_V69_DB_PATH: /app/apps/api/data/app.db
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
     volumes:
       - v69_api_data:/app/apps/api/data
     networks:
       - v69
     ports:
       - "${PORT:-8787}:${PORT:-8787}"
+    depends_on:
+      redis:
+        condition: service_healthy
     healthcheck:
       test:
         - CMD-SHELL
@@ -33,7 +37,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: secret-santa-web:${V69_IMAGE_TAG:-v69.1.1}
+    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-web:${V69_IMAGE_TAG:-v69.1.1}
     build:
       context: .
       dockerfile: apps/web/Dockerfile
@@ -52,13 +56,14 @@ services:
     restart: unless-stopped
 
   worker:
-    image: secret-santa-api:${V69_IMAGE_TAG:-v69.1.1}
+    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-api:${V69_IMAGE_TAG:-v69.1.1}
     # Команда workspace запускается из корня монорепозитория.
     working_dir: /app
     env_file: .env
     environment:
       PORT: ${PORT:-8787}
       SECRET_SANTA_V69_DB_PATH: /app/apps/api/data/app.db
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
     volumes:
       - v69_api_data:/app/apps/api/data
     networks:
@@ -66,8 +71,21 @@ services:
     # Отдельный процесс напоминаний; скрипт объявлен в apps/api/package.json.
     command: npm run worker --workspace @secret-santa/api
     depends_on:
+      redis:
+        condition: service_healthy
       api:
         condition: service_healthy
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - v69
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
     restart: unless-stopped
 
 networks:

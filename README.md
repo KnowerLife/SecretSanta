@@ -96,8 +96,11 @@ npm run migrate:v68            # копия v68 → apps/api/data/app.db
 ```bash
 npm run worker --workspace @secret-santa/api
 cp .env.example .env
+# Обязательно замените заглушки SECRET_SANTA_SECRET и VAPID-ключей в .env.
 docker compose -f docker-compose.v69.yml up --build
 ```
+
+Образ API запускается с `NODE_ENV=production`, поэтому при слабом или заглушечном `SECRET_SANTA_SECRET` процесс остановится до открытия порта. Compose поднимает Redis и передаёт `REDIS_URL` API и воркеру; вне compose без `REDIS_URL` события остаются в памяти одного процесса. Вне production для локальной разработки сохранено прежнее тестовое значение секрета.
 
 Подробности — [`apps/api/WORKER.md`](apps/api/WORKER.md). База нового API лежит в `apps/api/data/app.db` и отделена от `backend/data/app.db`: миграция не изменяет источник и сохраняет счётчики. Архив плана перехода и спецификации хранятся в [`openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/`](openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/) и `openspec/specs/`; результаты сверки — в [`docs/PARITY_v69.md`](docs/PARITY_v69.md), процесс — в [`docs/GITFLOW.md`](docs/GITFLOW.md) и [`docs/RELEASES.md`](docs/RELEASES.md).
 
@@ -482,6 +485,31 @@ Lighthouse запускается через `npx lighthouse@12` автомат�
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | — | Web Push; без них работает заглушка |
 | `SECRET_SANTA_DEBUG` | — | Подробности ошибок в ответе |
 
+#### VAPID-ключи (P-256)
+
+API использует ES256, поэтому нужна пара P-256: приватный ключ живёт только в окружении, публичный отдаётся клиенту через `/api/push/config`. Формат публичного ключа — base64url от 65 байт `0x04 || x || y`.
+
+```bash
+# Приватный ключ: временный файл, не коммитить и не выводить в логи
+openssl ecparam -name prime256v1 -genkey -noout | openssl pkcs8 -topk8 -nocrypt -outform PEM > vapid-private.pem
+
+# Публичный ключ: base64url(0x04 || x || y), 65 байт
+node -e "const fs=require('node:fs'); const {createPublicKey}=require('node:crypto'); const {x,y}=createPublicKey(fs.readFileSync('vapid-private.pem')).export({format:'jwk'}); const raw=Buffer.concat([Buffer.from([4]),Buffer.from(x,'base64url'),Buffer.from(y,'base64url')]); process.stdout.write(raw.toString('base64url')+'\n')"
+```
+
+Значения `VAPID_PRIVATE_KEY` и `VAPID_PUBLIC_KEY` записываются в `.env` (локально) или в секрет-менеджер деплоя; `VAPID_PRIVATE_KEY` принимает PEM целиком или тот же PEM в base64url. После переноса значения в окружение временный файл `vapid-private.pem` нужно удалить. `VAPID_SUBJECT` — контакт в форме `mailto:admin@example.com` или `https://example.com/`.
+
+Ротация пары:
+
+1. Сгенерируйте новую пару и задайте оба ключа в окружении API **и** воркера; `VAPID_SUBJECT` сохраните или обновите осознанно.
+2. Перезапустите оба процесса, чтобы они подхватили новые значения:
+   ```bash
+   docker compose -f docker-compose.v69.yml up -d --force-recreate api worker
+   ```
+3. Проверьте `/api/push/config`: `enabled=true` и новый `publicKey`. Приватный ключ не должен появляться ни в ответах API, ни в логах; логируйте только факт наличия ключа.
+4. Старые подписки, созданные с прежним публичным ключом, могут получать отказы провайдера. Порядок обработки: недействительные записи удаляются из `push_subscriptions`, клиенты заново подписываются, получив новый `publicKey` из `/api/push/config`. До внедрения обработки соответствующих кодов ответа проверьте логи и выполните переподписку вручную.
+5. Ротация VAPID не меняет сессионные токены: смена `SECRET_SANTA_SECRET`, напротив, инвалидирует все текущие сессии.
+
 ### Frontend
 
 - Глобальная переменная `window.SECRET_SANTA_API_BASE` или `localStorage['secret-santa-api-base']` задаёт адрес API; по умолчанию `http://127.0.0.1:8000`.
@@ -504,6 +532,49 @@ Lighthouse запускается через `npx lighthouse@12` автомат�
 - статические тесты контрактов и безопасности.
 
 Подробный статус — [`backend/prod_stack/MIGRATION_STATUS.md`](backend/prod_stack/MIGRATION_STATUS.md) и [`PRODUCTION_PLAN.md`](PRODUCTION_PLAN.md).
+
+### Публикация образов v69
+
+Workflow `.github/workflows/publish-images.yml` собирает и публикует образы `secret-santa-api` и `secret-santa-web` в GHCR по git-тегу `v*` или вручную через `workflow_dispatch`. Токен публикации — встроенный `GITHUB_TOKEN` с правом `packages: write`; его не нужно добавлять в `.env` или передавать в сборку.
+
+```bash
+git tag v69.1.2
+git push origin v69.1.2
+```
+
+После публикации тега `v69.1.2` появятся образы `ghcr.io/<владелец>/secret-santa-api:v69.1.2` и `:latest` (аналогично для web). Для ручного запуска используйте кнопку **Run workflow** и укажите нужный тег в поле `tag`. Потребительские настройки:
+
+```bash
+export V69_IMAGE_REGISTRY=ghcr.io
+export V69_IMAGE_NAMESPACE=<владелец-репозитория>
+export V69_IMAGE_TAG=v69.1.2
+docker compose -f docker-compose.v69.yml pull api web
+```
+
+Пустые `V69_IMAGE_REGISTRY` / `V69_IMAGE_NAMESPACE` сохраняют локальные имена `secret-santa-api` / `secret-santa-web`, поэтому текущий локальный запуск не меняется.
+
+### Откат v69
+
+Откат выполняется на том же хосте и с тем же файлом compose; цель — вернуть предыдущие образы, не теряя данные.
+
+1. Выберите последний известный рабочий тег (например, `v69.1.1`) и задайте его в `.env` или окружении деплоя:
+   ```bash
+   export V69_IMAGE_TAG=v69.1.1
+   ```
+2. Если образы берутся из GHCR, задайте те же `V69_IMAGE_REGISTRY` и `V69_IMAGE_NAMESPACE`, что и при публикации. Для локально собранных образов оставьте их пустыми.
+3. Сохраните именованный том `v69_api_data`: не выполняйте `docker compose down -v` и не удаляйте том вручную. API и воркер используют один и тот же путь `/app/apps/api/data` и должны видеть ту же базу.
+4. Проверьте совместимость схемы: предыдущая версия образа должна работать с текущим набором миграций из `apps/api/migrations` и состоянием таблицы `schema_migrations`. Если откат требует более старой схемы, восстановите БД из резервной копии, сделанной до обновления, и только затем запускайте стек. Не применяйте миграции нового тега после отката.
+5. Подтяните предыдущие образы и пересоздайте сервисы:
+   ```bash
+   docker compose -f docker-compose.v69.yml pull api web
+   docker compose -f docker-compose.v69.yml up -d --no-build --force-recreate
+   ```
+6. Проверьте healthcheck API напрямую и через SSR-прокси:
+   ```bash
+   curl -fsS "http://127.0.0.1:${PORT:-8787}/api/health"
+   curl -fsS http://127.0.0.1:3000/api/health
+   ```
+7. Убедитесь, что воркер продолжает обрабатывать `notification_jobs`, а SSE/VAPID-контракты соответствуют предыдущему тегу. При необходимости верните `V69_IMAGE_TAG` к новому значению и повторите шаги 5–6.
 
 Ограничения каркаса, которые стоит знать до деплоя:
 

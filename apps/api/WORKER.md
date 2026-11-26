@@ -23,6 +23,30 @@ docker compose -f docker-compose.v69.yml up -d --build
 docker compose -f docker-compose.v69.yml up -d worker
 ```
 
+## VAPID-ключи и ротация
+
+Воркер и API должны использовать одну и ту же пару P-256 (ES256): приватный ключ живёт только в окружении, публичный ключ доступен клиентам через `/api/push/config` в формате base64url от 65 байт `0x04 || x || y`.
+
+```bash
+# Временный файл с приватным ключом: не коммитить и не логировать
+openssl ecparam -name prime256v1 -genkey -noout | openssl pkcs8 -topk8 -nocrypt -outform PEM > vapid-private.pem
+
+# Публичный ключ для VAPID_PUBLIC_KEY
+node -e "const fs=require('node:fs'); const {createPublicKey}=require('node:crypto'); const {x,y}=createPublicKey(fs.readFileSync('vapid-private.pem')).export({format:'jwk'}); const raw=Buffer.concat([Buffer.from([4]),Buffer.from(x,'base64url'),Buffer.from(y,'base64url')]); process.stdout.write(raw.toString('base64url')+'\n')"
+```
+
+Запишите `VAPID_PRIVATE_KEY`, `VAPID_PUBLIC_KEY` и `VAPID_SUBJECT` в `.env` или секрет-менеджер, после чего удалите `vapid-private.pem`. `VAPID_PRIVATE_KEY` принимает PEM целиком или тот же PEM в base64url. Приватный ключ не должен попадать ни в логи, ни в ответы API: в логах достаточно факта наличия ключа.
+
+Ротация:
+
+1. Сгенерируйте новую пару и задайте оба ключа для API и воркера; `VAPID_SUBJECT` меняйте только если изменился контакт.
+2. Перезапустите оба процесса, чтобы они подхватили новые значения:
+   ```bash
+   docker compose -f docker-compose.v69.yml up -d --force-recreate api worker
+   ```
+3. Проверьте `/api/push/config`: `enabled=true` и новый `publicKey`; убедитесь, что приватный ключ не логируется.
+4. Старые подписки, созданные с прежним публичным ключом, после ротации могут получать отказы провайдера. Недействительные записи должны удаляться из `push_subscriptions`, а клиенты — заново подписываться с новым `publicKey`. До внедрения обработки таких ответов проверяйте логи воркера и при необходимости инициируйте переподписку вручную.
+
 ## Мониторинг
 
 Логи процесса:
