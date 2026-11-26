@@ -4,6 +4,23 @@
 
 ## [Unreleased]
 
+## [69.1.1] — 2026-11-26
+
+### Fixed
+
+- API-образ: в runtime добавлены исходники `@secret-santa/shared` и `apps/api/tsconfig.json`; сборка и запуск контейнера теперь работают.
+- Проверены реальные `docker build`, `docker compose up`, healthcheck API, SSR через web-прокси и обработка задачи воркером; браузерные проверки v69 против compose — 10/10.
+
+### Changed
+
+- Тег образов по умолчанию обновлён до `v69.1.1` в compose, `.env.example` и инструкциях сборки.
+
+### Security
+
+- `postcss` обновлён с 8.5.6 до 8.5.33: `npm audit` сообщает о 0 уязвимостях.
+
+v69.1.1 — рекомендуемая точка входа для деплоя. v68 остаётся эталоном и рабочим резервом.
+
 ## [69.1.0] — 2026-11-26
 
 ### Added
@@ -34,7 +51,7 @@
 
 > Docker CLI в среде проверки недоступен: `docker build` и `docker compose up` не запускались. Конфигурация проверена статически и требует повторной проверки в среде с Docker.
 
-v69.1.0 — рекомендуемая точка входа для разработки и деплоя. v68 остаётся эталоном и рабочим резервом; его файлы и проверки сохранены.
+На момент релиза v69.1.0 рекомендуемой точкой входа был этот выпуск; v68 остаётся эталоном и рабочим резервом.
 
 ## [69.0.0] — 2026-11-26
 
@@ -71,7 +88,8 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.0...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.1...HEAD
+[69.1.1]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.0...v69.1.1
 [69.1.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.0.0...v69.1.0
 [69.0.0]: https://github.com/KnowerLife/SecretSanta/compare/v68.0.0...v69.0.0
 [68.0.0]: https://github.com/KnowerLife/SecretSanta/releases/tag/v68.0.0
