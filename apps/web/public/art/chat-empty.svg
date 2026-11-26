@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-labelledby="art-chat-empty-winter-title art-chat-empty-winter-desc">
+<title id="art-chat-empty-winter-title">Пустой чат</title>
+<desc id="art-chat-empty-winter-desc">Empty chat. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-chat-empty-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-chat-empty-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-chat-empty-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#art-chat-empty-winter-sky)"/>
+<circle cx="882.4" cy="189.1" r="454.2" fill="url(#art-chat-empty-winter-glow)"/>
+<circle cx="882.4" cy="189.1" r="78.5" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 503.3 C216 440.3, 408 584.3, 648 512.3 S984 431.3, 1200 539.3 L1200 900 L0 900 Z" fill="#BFD8EA"/>
+<path d="M0 655.3 C264 601.3, 456 700.3, 696 646.3 S1008 601.3, 1200 673.3 L1200 900 L0 900 Z" fill="url(#art-chat-empty-winter-ground)"/>
+<path d="M0 655.3 C264 601.3, 456 700.3, 696 646.3 S1008 601.3, 1200 673.3" fill="none" stroke="#F8FCFF" stroke-width="10.8" opacity="0.5"/>
+<circle cx="720.1" cy="95.3" r="2.2" fill="#F8FCFF" opacity="0.74"/>
+<circle cx="1188.9" cy="197.7" r="1.8" fill="#F8FCFF" opacity="0.69"/>
+<circle cx="89.4" cy="176.6" r="4" fill="#F8FCFF" opacity="0.63"/>
+<circle cx="403.1" cy="676" r="3.3" fill="#F8FCFF" opacity="0.46"/>
+<circle cx="1160.6" cy="355.2" r="3.9" fill="#F8FCFF" opacity="0.43"/>
+<circle cx="971.2" cy="544.3" r="2.9" fill="#F8FCFF" opacity="0.50"/>
+<circle cx="633.1" cy="275" r="2.6" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="951.2" cy="254.9" r="4.1" fill="#F8FCFF" opacity="0.71"/>
+<circle cx="136.4" cy="396.9" r="3.5" fill="#F8FCFF" opacity="0.34"/>
+<circle cx="49" cy="543.9" r="2.9" fill="#F8FCFF" opacity="0.47"/>
+<circle cx="83.3" cy="5" r="2.9" fill="#F8FCFF" opacity="0.35"/>
+<circle cx="547.5" cy="86.8" r="3.3" fill="#F8FCFF" opacity="0.77"/>
+<circle cx="1101.4" cy="378.1" r="2.4" fill="#F8FCFF" opacity="0.59"/>
+<circle cx="952.5" cy="285.3" r="3.2" fill="#F8FCFF" opacity="0.40"/>
+<circle cx="620.1" cy="161" r="3.2" fill="#F8FCFF" opacity="0.39"/>
+<circle cx="1150" cy="339.4" r="2.3" fill="#F8FCFF" opacity="0.45"/>
+<circle cx="1187.3" cy="572.7" r="2.6" fill="#F8FCFF" opacity="0.61"/>
+<circle cx="789" cy="394.2" r="3.9" fill="#F8FCFF" opacity="0.66"/>
+<rect x="94" y="609.7" width="4" height="23.4" fill="#183B70"/>
+<path d="M96 530.3 L77.2 577 L87.5 577 L73.4 612.1 L118.6 612.1 L104.5 577 L114.8 577 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="689.2" width="4" height="28.2" fill="#183B70"/>
+<path d="M252 593.3 L227 649.7 L240.7 649.7 L222 692 L282 692 L263.3 649.7 L277 649.7 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="613" width="4" height="27" fill="#183B70"/>
+<path d="M1044 521.3 L1018 575.2 L1032.3 575.2 L1012.9 615.7 L1075.1 615.7 L1055.7 575.2 L1070 575.2 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="675.4" width="4" height="24.1" fill="#183B70"/>
+<path d="M1152 593.3 L1130.9 641.5 L1142.5 641.5 L1126.7 677.8 L1177.3 677.8 L1161.5 641.5 L1173.1 641.5 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="756" cy="649.6" rx="115.9" ry="21.1" fill="#183B70" opacity="0.12"/>
+<circle cx="919.2" cy="522.9" r="7.5" fill="#E9675F" opacity="0.65"/>
+<circle cx="918" cy="586.2" r="4.4" fill="#DFA93E" opacity="0.65"/>
+<circle cx="897.9" cy="657.6" r="5" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(756 540) scale(2.1)">
+<rect x="-50" y="-32" width="84" height="52" rx="13" fill="#F8FCFF"/>
+<path d="M-34 18 L-36 34 L-14 20 Z" fill="#F8FCFF"/>
+<rect x="-4" y="-12" width="58" height="44" rx="12" fill="#F8FCFF"/>
+<path d="M42 30 L50 42 L26 32 Z" fill="#F8FCFF"/>
+<circle cx="-26" cy="-6" r="4" fill="#E9675F"/>
+<circle cx="-12" cy="-6" r="4" fill="#DFA93E"/>
+<circle cx="24" cy="10" r="4" fill="#E9675F"/>
+</g>
+</svg>
