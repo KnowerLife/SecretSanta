@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-labelledby="art-mode-quick-winter-title art-mode-quick-winter-desc">
+<title id="art-mode-quick-winter-title">Режим быстрой жеребьёвки</title>
+<desc id="art-mode-quick-winter-desc">Quick draw mode. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-mode-quick-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-mode-quick-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-mode-quick-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="800" fill="url(#art-mode-quick-winter-sky)"/>
+<circle cx="904.4" cy="200.3" r="366.3" fill="url(#art-mode-quick-winter-glow)"/>
+<circle cx="904.4" cy="200.3" r="63.3" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 459.8 C216 403.8, 408 531.8, 648 467.8 S984 395.8, 1200 491.8 L1200 800 L0 800 Z" fill="#BFD8EA"/>
+<path d="M0 576.5 C264 528.5, 456 616.5, 696 568.5 S1008 528.5, 1200 592.5 L1200 800 L0 800 Z" fill="url(#art-mode-quick-winter-ground)"/>
+<path d="M0 576.5 C264 528.5, 456 616.5, 696 568.5 S1008 528.5, 1200 592.5" fill="none" stroke="#F8FCFF" stroke-width="9.6" opacity="0.5"/>
+<circle cx="526.6" cy="112.2" r="2" fill="#F8FCFF" opacity="0.39"/>
+<circle cx="1128.2" cy="288.2" r="2.5" fill="#F8FCFF" opacity="0.61"/>
+<circle cx="69.8" cy="401.3" r="1.4" fill="#F8FCFF" opacity="0.73"/>
+<circle cx="157.3" cy="575.8" r="3.1" fill="#F8FCFF" opacity="0.39"/>
+<circle cx="754.4" cy="411.5" r="4.1" fill="#F8FCFF" opacity="0.64"/>
+<circle cx="632.8" cy="584.3" r="1.8" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="459" cy="194.8" r="1.7" fill="#F8FCFF" opacity="0.61"/>
+<circle cx="507.3" cy="260.4" r="2.1" fill="#F8FCFF" opacity="0.55"/>
+<circle cx="383.2" cy="142" r="2.7" fill="#F8FCFF" opacity="0.76"/>
+<circle cx="387.9" cy="218.3" r="3.5" fill="#F8FCFF" opacity="0.35"/>
+<circle cx="852.5" cy="226.9" r="4.1" fill="#F8FCFF" opacity="0.58"/>
+<circle cx="108.3" cy="294.2" r="1.6" fill="#F8FCFF" opacity="0.47"/>
+<circle cx="676.4" cy="468" r="4.1" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="521.5" cy="423.3" r="1.6" fill="#F8FCFF" opacity="0.67"/>
+<circle cx="632" cy="586.6" r="1.7" fill="#F8FCFF" opacity="0.75"/>
+<circle cx="422.7" cy="451.9" r="2.6" fill="#F8FCFF" opacity="0.77"/>
+<circle cx="576.9" cy="349.6" r="3" fill="#F8FCFF" opacity="0.36"/>
+<circle cx="260.6" cy="35.5" r="3.5" fill="#F8FCFF" opacity="0.70"/>
+<rect x="94" y="557.8" width="4" height="21.8" fill="#183B70"/>
+<path d="M96 483.8 L76.8 527.3 L87.3 527.3 L72.9 560 L119.1 560 L104.7 527.3 L115.2 527.3 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="619" width="4" height="23.3" fill="#183B70"/>
+<path d="M252 539.8 L233.6 586.4 L243.7 586.4 L229.9 621.3 L274.1 621.3 L260.3 586.4 L270.4 586.4 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="544.3" width="4" height="20.2" fill="#183B70"/>
+<path d="M1044 475.8 L1020.9 516.1 L1033.6 516.1 L1016.2 546.4 L1071.8 546.4 L1054.4 516.1 L1067.1 516.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="615.3" width="4" height="22.2" fill="#183B70"/>
+<path d="M1152 539.8 L1134.3 584.2 L1144.1 584.2 L1130.8 617.6 L1173.2 617.6 L1159.9 584.2 L1169.7 584.2 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="816" cy="610.9" rx="113" ry="20.6" fill="#183B70" opacity="0.12"/>
+<circle cx="940.4" cy="389.1" r="3.8" fill="#E9675F" opacity="0.65"/>
+<circle cx="680.2" cy="613.3" r="3.9" fill="#DFA93E" opacity="0.65"/>
+<circle cx="939.3" cy="431.7" r="5.9" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(816 504) scale(2.1)">
+<rect x="-52" y="-32" width="104" height="64" rx="6" fill="#F8FCFF"/>
+<path d="M-52 -32 L0 7 L52 -32 Z" fill="#BFD8EA" opacity="0.42"/>
+<path d="M-52 32 L-14 -2 M52 32 L14 -2" fill="none" stroke="#183B70" stroke-width="2" opacity="0.26"/>
+<circle cx="0" cy="3" r="8" fill="#E9675F"/>
+</g>
+</svg>

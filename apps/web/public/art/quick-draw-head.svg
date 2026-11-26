@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-labelledby="art-quick-draw-head-winter-title art-quick-draw-head-winter-desc">
+<title id="art-quick-draw-head-winter-title">Быстрая жеребьёвка</title>
+<desc id="art-quick-draw-head-winter-desc">Quick draw. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-quick-draw-head-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-quick-draw-head-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-quick-draw-head-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="675" fill="url(#art-quick-draw-head-winter-sky)"/>
+<circle cx="905.1" cy="151.8" r="346.4" fill="url(#art-quick-draw-head-winter-glow)"/>
+<circle cx="905.1" cy="151.8" r="59.8" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 376.2 C216 328.9, 408 436.9, 648 382.9 S984 322.2, 1200 403.2 L1200 675 L0 675 Z" fill="#BFD8EA"/>
+<path d="M0 491.3 C264 450.8, 456 525, 696 484.5 S1008 450.8, 1200 504.8 L1200 675 L0 675 Z" fill="url(#art-quick-draw-head-winter-ground)"/>
+<path d="M0 491.3 C264 450.8, 456 525, 696 484.5 S1008 450.8, 1200 504.8" fill="none" stroke="#F8FCFF" stroke-width="8.1" opacity="0.5"/>
+<circle cx="779.2" cy="191.8" r="3.6" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="94.2" cy="122.4" r="2.5" fill="#F8FCFF" opacity="0.45"/>
+<circle cx="616.8" cy="509.8" r="1.6" fill="#F8FCFF" opacity="0.44"/>
+<circle cx="497.1" cy="331.3" r="1.8" fill="#F8FCFF" opacity="0.45"/>
+<circle cx="418.4" cy="428.2" r="2.5" fill="#F8FCFF" opacity="0.71"/>
+<circle cx="323.8" cy="18.2" r="2.4" fill="#F8FCFF" opacity="0.49"/>
+<circle cx="625.3" cy="510.7" r="3" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="974.4" cy="124.3" r="2.2" fill="#F8FCFF" opacity="0.71"/>
+<circle cx="1130.6" cy="445.5" r="3.5" fill="#F8FCFF" opacity="0.37"/>
+<circle cx="41.4" cy="125" r="3.5" fill="#F8FCFF" opacity="0.35"/>
+<circle cx="911.6" cy="510.6" r="1.8" fill="#F8FCFF" opacity="0.70"/>
+<circle cx="186.2" cy="489.5" r="2.1" fill="#F8FCFF" opacity="0.40"/>
+<circle cx="916" cy="182.8" r="2.6" fill="#F8FCFF" opacity="0.36"/>
+<circle cx="672.4" cy="340.5" r="2.1" fill="#F8FCFF" opacity="0.36"/>
+<circle cx="69.8" cy="10.6" r="2" fill="#F8FCFF" opacity="0.38"/>
+<circle cx="714.2" cy="425.4" r="1.6" fill="#F8FCFF" opacity="0.47"/>
+<circle cx="270.9" cy="452.5" r="2.4" fill="#F8FCFF" opacity="0.71"/>
+<circle cx="161.9" cy="472.7" r="2.3" fill="#F8FCFF" opacity="0.74"/>
+<rect x="94" y="467" width="4" height="20.8" fill="#183B70"/>
+<path d="M96 396.4 L76.1 437.9 L87.1 437.9 L72.2 469.1 L119.8 469.1 L104.9 437.9 L115.9 437.9 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="502.2" width="4" height="17.2" fill="#183B70"/>
+<path d="M252 443.7 L229.7 478.1 L242 478.1 L225.3 503.9 L278.7 503.9 L262 478.1 L274.3 478.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="460.5" width="4" height="20.8" fill="#183B70"/>
+<path d="M1044 389.7 L1019.6 431.3 L1033 431.3 L1014.8 462.6 L1073.2 462.6 L1055 431.3 L1068.4 431.3 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="514.6" width="4" height="20.9" fill="#183B70"/>
+<path d="M1152 443.7 L1127.6 485.4 L1141 485.4 L1122.7 516.7 L1181.3 516.7 L1163 485.4 L1176.4 485.4 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="816" cy="532.3" rx="113.2" ry="20.6" fill="#183B70" opacity="0.12"/>
+<circle cx="940.6" cy="516.1" r="5.2" fill="#E9675F" opacity="0.65"/>
+<circle cx="924.6" cy="332.9" r="6.1" fill="#DFA93E" opacity="0.65"/>
+<circle cx="670" cy="536.3" r="4.8" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(816 425.3) scale(2.1)">
+<polygon points="0,-48 12,-16 46,-16 18,4 28,38 0,18 -28,38 -18,4 -46,-16 -12,-16" fill="#E9675F"/>
+<circle cx="40" cy="-34" r="5" fill="#DFA93E"/>
+<circle cx="-38" cy="34" r="4" fill="#DFA93E" opacity="0.75"/>
+</g>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-labelledby="art-guide-prep-winter-title art-guide-prep-winter-desc">
+<title id="art-guide-prep-winter-title">Гид. Подготовка</title>
+<desc id="art-guide-prep-winter-desc">Guide. Preparation. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-guide-prep-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-guide-prep-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-guide-prep-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="800" height="600" fill="url(#art-guide-prep-winter-sky)"/>
+<circle cx="618" cy="138.8" r="312.5" fill="url(#art-guide-prep-winter-glow)"/>
+<circle cx="618" cy="138.8" r="54" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 343.3 C144 301.3, 272 397.3, 432 349.3 S656 295.3, 800 367.3 L800 600 L0 600 Z" fill="#BFD8EA"/>
+<path d="M0 428.5 C176 392.5, 304 458.5, 464 422.5 S672 392.5, 800 440.5 L800 600 L0 600 Z" fill="url(#art-guide-prep-winter-ground)"/>
+<path d="M0 428.5 C176 392.5, 304 458.5, 464 422.5 S672 392.5, 800 440.5" fill="none" stroke="#F8FCFF" stroke-width="7.2" opacity="0.5"/>
+<circle cx="718.1" cy="452.9" r="1.8" fill="#F8FCFF" opacity="0.49"/>
+<circle cx="422.1" cy="151.2" r="2.4" fill="#F8FCFF" opacity="0.47"/>
+<circle cx="191.3" cy="100" r="2.5" fill="#F8FCFF" opacity="0.43"/>
+<circle cx="628.5" cy="273.7" r="2.6" fill="#F8FCFF" opacity="0.75"/>
+<circle cx="782" cy="286.7" r="1.6" fill="#F8FCFF" opacity="0.33"/>
+<circle cx="407.8" cy="447.9" r="3.1" fill="#F8FCFF" opacity="0.60"/>
+<circle cx="586.3" cy="408.8" r="3.1" fill="#F8FCFF" opacity="0.41"/>
+<circle cx="612.5" cy="386.4" r="1.8" fill="#F8FCFF" opacity="0.82"/>
+<circle cx="332.6" cy="336.7" r="2" fill="#F8FCFF" opacity="0.37"/>
+<circle cx="659.9" cy="49.9" r="3.1" fill="#F8FCFF" opacity="0.72"/>
+<circle cx="588.7" cy="83.1" r="2.5" fill="#F8FCFF" opacity="0.65"/>
+<circle cx="386.6" cy="160.4" r="2.5" fill="#F8FCFF" opacity="0.72"/>
+<circle cx="653.2" cy="352.8" r="3.2" fill="#F8FCFF" opacity="0.60"/>
+<circle cx="687.1" cy="139.9" r="2.7" fill="#F8FCFF" opacity="0.69"/>
+<rect x="62" y="417.1" width="4" height="16.4" fill="#183B70"/>
+<path d="M64 361.3 L49.7 394.1 L57.5 394.1 L46.8 418.7 L81.2 418.7 L70.5 394.1 L78.3 394.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="166" y="462.5" width="4" height="17.4" fill="#183B70"/>
+<path d="M168 403.3 L151.6 438.1 L160.6 438.1 L148.3 464.2 L187.7 464.2 L175.4 438.1 L184.4 438.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="694" y="411.9" width="4" height="16.6" fill="#183B70"/>
+<path d="M696 355.3 L679.8 388.6 L688.7 388.6 L676.6 413.6 L715.4 413.6 L703.3 388.6 L712.2 388.6 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="448" cy="436" rx="80.4" ry="14.6" fill="#183B70" opacity="0.12"/>
+<circle cx="391.5" cy="267.2" r="2.7" fill="#E9675F" opacity="0.65"/>
+<circle cx="583" cy="389.9" r="3.6" fill="#DFA93E" opacity="0.65"/>
+<circle cx="361" cy="410.2" r="3.4" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(448 360) scale(1.5)">
+<rect x="-46" y="-10" width="92" height="60" rx="5" fill="#F8FCFF"/>
+<rect x="-46" y="-10" width="92" height="15" rx="4" fill="#E9675F" opacity="0.92"/>
+<rect x="-8" y="4" width="16" height="46" fill="#DFA93E" opacity="0.85"/>
+<path d="M0 -10 C-34 -18 -36 -49 -16 -44 C-6 -42 -2 -26 0 -10 C2 -26 6 -42 16 -44 C36 -49 34 -18 0 -10 Z" fill="#E9675F"/>
+<circle cx="0" cy="-10" r="6" fill="#DFA93E"/>
+</g>
+</svg>

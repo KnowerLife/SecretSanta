@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-labelledby="art-faq-help-winter-title art-faq-help-winter-desc">
+<title id="art-faq-help-winter-title">Помощь и частые вопросы</title>
+<desc id="art-faq-help-winter-desc">Help and FAQ. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-faq-help-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-faq-help-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-faq-help-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="675" fill="url(#art-faq-help-winter-sky)"/>
+<circle cx="860.4" cy="155.5" r="338.1" fill="url(#art-faq-help-winter-glow)"/>
+<circle cx="860.4" cy="155.5" r="58.4" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 388.7 C216 341.5, 408 449.5, 648 395.5 S984 334.7, 1200 415.7 L1200 675 L0 675 Z" fill="#BFD8EA"/>
+<path d="M0 487 C264 446.5, 456 520.7, 696 480.2 S1008 446.5, 1200 500.5 L1200 675 L0 675 Z" fill="url(#art-faq-help-winter-ground)"/>
+<path d="M0 487 C264 446.5, 456 520.7, 696 480.2 S1008 446.5, 1200 500.5" fill="none" stroke="#F8FCFF" stroke-width="8.1" opacity="0.5"/>
+<circle cx="1148.7" cy="310.4" r="3.4" fill="#F8FCFF" opacity="0.58"/>
+<circle cx="998.9" cy="218.2" r="2.1" fill="#F8FCFF" opacity="0.33"/>
+<circle cx="128.3" cy="17.8" r="1.8" fill="#F8FCFF" opacity="0.55"/>
+<circle cx="113.2" cy="153.4" r="3" fill="#F8FCFF" opacity="0.61"/>
+<circle cx="549.1" cy="97.5" r="1.9" fill="#F8FCFF" opacity="0.77"/>
+<circle cx="1106.3" cy="270" r="1.6" fill="#F8FCFF" opacity="0.51"/>
+<circle cx="253.5" cy="419.4" r="2.1" fill="#F8FCFF" opacity="0.52"/>
+<circle cx="80.1" cy="211.8" r="3" fill="#F8FCFF" opacity="0.54"/>
+<circle cx="487.2" cy="205.8" r="3.4" fill="#F8FCFF" opacity="0.36"/>
+<circle cx="103.2" cy="338.6" r="1.2" fill="#F8FCFF" opacity="0.35"/>
+<circle cx="1123.6" cy="394.6" r="2.9" fill="#F8FCFF" opacity="0.56"/>
+<circle cx="865.5" cy="174.2" r="3.1" fill="#F8FCFF" opacity="0.38"/>
+<circle cx="1169.8" cy="231.1" r="1.7" fill="#F8FCFF" opacity="0.48"/>
+<circle cx="571" cy="367.4" r="2" fill="#F8FCFF" opacity="0.48"/>
+<circle cx="171.5" cy="322.9" r="3.3" fill="#F8FCFF" opacity="0.55"/>
+<circle cx="1143" cy="102.7" r="2.5" fill="#F8FCFF" opacity="0.64"/>
+<circle cx="983" cy="326.3" r="1.4" fill="#F8FCFF" opacity="0.35"/>
+<circle cx="837.8" cy="247.9" r="3.2" fill="#F8FCFF" opacity="0.45"/>
+<rect x="94" y="478.8" width="4" height="20.5" fill="#183B70"/>
+<path d="M96 409 L69.7 450.1 L84.1 450.1 L64.4 480.9 L127.6 480.9 L107.9 450.1 L122.3 450.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="517.2" width="4" height="17.9" fill="#183B70"/>
+<path d="M252 456.2 L229.7 492.1 L242 492.1 L225.2 519 L278.8 519 L262 492.1 L274.3 492.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="469.4" width="4" height="19.8" fill="#183B70"/>
+<path d="M1044 402.2 L1021 441.7 L1033.7 441.7 L1016.4 471.4 L1071.6 471.4 L1054.3 441.7 L1067 441.7 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="523.1" width="4" height="19.7" fill="#183B70"/>
+<path d="M1152 456.2 L1129.9 495.6 L1142 495.6 L1125.4 525.1 L1178.6 525.1 L1162 495.6 L1174.1 495.6 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="816" cy="526.7" rx="107.3" ry="19.5" fill="#183B70" opacity="0.12"/>
+<circle cx="930" cy="331.1" r="5.4" fill="#E9675F" opacity="0.65"/>
+<circle cx="987.7" cy="462.9" r="4.2" fill="#DFA93E" opacity="0.65"/>
+<circle cx="701.1" cy="513.3" r="5.1" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(816 425.3) scale(2)">
+<path d="M-24 -22 C-24 -48 16 -52 16 -24 C16 -10 -2 -6 -2 8" fill="none" stroke="#F8FCFF" stroke-width="12" stroke-linecap="round"/>
+<circle cx="-2" cy="28" r="8" fill="#E9675F"/>
+<circle cx="36" cy="-30" r="5" fill="#DFA93E" opacity="0.7"/>
+</g>
+</svg>
