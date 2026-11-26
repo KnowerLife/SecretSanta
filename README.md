@@ -131,18 +131,19 @@ CI запускает типопроверку, тесты, сборку, вал
 
 ## Production и откат
 
-Публикация образов выполняется workflow `.github/workflows/publish-images.yml` по тегу `v*` или вручную. Актуальный образ — `v69.3.0`, предыдущий рабочий — `v69.2.2`; оба доступны в GHCR вместе с `latest`.
+Публикация образов выполняется workflow `.github/workflows/publish-images.yml` по тегу `v*` или вручную. Актуальный образ — `v69.4.0`, предыдущий рабочий — `v69.3.0`; оба доступны в GHCR вместе с `latest`. Git-тег `stable` всегда указывает на последний стабильный релиз.
 
 ```bash
-git tag v69.3.0
-git push origin v69.3.0
-docker manifest inspect ghcr.io/<владелец>/secret-santa-api:v69.3.0
+git tag -a v69.4.0 -m "v69.4.0"
+git tag -a stable -m "Stable: v69.4.0"
+git push origin v69.4.0 stable
+docker manifest inspect ghcr.io/<владелец>/secret-santa-api:v69.4.0
 ```
 
 Для отката задайте предыдущий `V69_IMAGE_TAG`, сохраните том `v69_api_data`, проверьте совместимость миграций и пересоздайте сервисы:
 
 ```bash
-export V69_IMAGE_TAG=v69.2.2
+export V69_IMAGE_TAG=v69.3.0
 docker compose -f docker-compose.v69.yml pull api web
 docker compose -f docker-compose.v69.yml up -d --no-build --force-recreate
 ```
