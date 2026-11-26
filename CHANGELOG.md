@@ -8,6 +8,7 @@
 
 - Легаси-стек v68 удалён из репозитория: `index.html`, `app.js`, `src/*.js`, `styles.css`, `sw.js`, `backend/`, `assets/`, `icons/`, `docker-compose.yml`, `PRODUCTION_PLAN.md`, скриншоты и проверки v68. Для локальных регрессионных тестов сохранена игнорируемая копия `.legacy-v68-local/`.
 - Легаси-workflow `.github/workflows/ci.yml` и связанные npm-команды (`verify:frontend`, `screenshots`) удалены; `Makefile` и `docs/RELEASES.md` теперь описывают только проверки v69.
+- Устаревшие ветки `feature/*`, `hotfix/*` и `release/v69.0.0`–`release/v69.2.0` удалены с remote; остались `main`, `develop`, `release/v69.3.0` и все теги, включая `v69.2.2` для отката.
 
 ## [69.3.0] — 2026-11-26
 
