@@ -2,9 +2,10 @@ name: Deploy Pages showcase
 
 # Статическая витрина v69 на GitHub Pages. Полный SSR/API/SSE остаётся в
 # docker-compose и образах GHCR; здесь публикуются только prerender'енные страницы.
+# develop обновляет демо, main — стабильную витрину релиза.
 on:
   push:
-    branches: [main]
+    branches: [develop, main]
   workflow_dispatch:
 
 permissions:

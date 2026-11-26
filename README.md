@@ -102,7 +102,7 @@ Service worker кэширует оболочку приложения и ста�
 PAGES_BASE=/<имя-репозитория> npm run build:pages   # вывод: apps/web/dist/client
 ```
 
-Workflow `.github/workflows/deploy-pages.yml` публикует витрину при пуше в `main` или вручную. Комнаты `/room/$code` исключены из prerender: для них нужен API и SSE, поэтому по таким ссылкам показывается пояснение. Push, общий чат и серверная жеребьёвка доступны только в полном деплое. Подробности — [`docs/GITHUB_PAGES.md`](docs/GITHUB_PAGES.md).
+Workflow `.github/workflows/deploy-pages.yml` публикует витрину при пуше в `develop` (демо) или `main` (стабильная версия), а также вручную. Комнаты `/room/$code` исключены из prerender: для них нужен API и SSE, поэтому по таким ссылкам показывается пояснение. Push, общий чат и серверная жеребьёвка доступны только в полном деплое. Подробности — [`docs/GITHUB_PAGES.md`](docs/GITHUB_PAGES.md).
 
 ## Локализация, темы и доступность
 

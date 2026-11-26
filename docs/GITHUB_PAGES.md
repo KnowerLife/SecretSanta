@@ -36,9 +36,9 @@ PAGES_BASE=/<имя-репозитория> npm run build:pages
 
 ## Деплой
 
-`.github/workflows/deploy-pages.yml` запускается при пуше в `main` и вручную (`workflow_dispatch`). Шаги: `npm ci`, `npm run build:pages`, `actions/upload-pages-artifact`, `actions/deploy-pages`. Разрешения ограничены `contents: read`, `pages: write`, `id-token: write`.
+`.github/workflows/deploy-pages.yml` запускается при пуше в `develop` (демо-витрина) или `main` (стабильная витрина релиза), а также вручную (`workflow_dispatch`). Шаги: `npm ci`, `npm run build:pages`, `actions/upload-pages-artifact`, `actions/deploy-pages`. Разрешения ограничены `contents: read`, `pages: write`, `id-token: write`.
 
-В репозитории нужно включить **Settings → Pages → Source: GitHub Actions**. Отдельный git-тег или новый GitHub Release для витрины не создаётся: деплой привязан к `main`, а релизные теги по-прежнему управляют публикацией образов в GHCR.
+В репозитории нужно включить **Settings → Pages → Source: GitHub Actions**. Отдельный git-тег или новый GitHub Release для витрины не создаётся: демо обновляется из `develop`, стабильная витрина — из `main`, а релизные теги по-прежнему управляют публикацией образов в GHCR.
 
 ## Локальная проверка
 
