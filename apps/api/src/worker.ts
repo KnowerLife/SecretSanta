@@ -1,4 +1,7 @@
+import { assertProductionSecret } from './config.ts';
 import { all, get, run } from './db.ts';
+import { pruneRoomEvents, setEventBroker } from './events.ts';
+import { createEventBroker } from './redis-events.ts';
 import { pushEnabled, sendRoomPush } from './push.ts';
 
 interface RoomRow {
@@ -97,11 +100,14 @@ export async function processJobs(): Promise<{ processed: number; delivered: num
 
 export async function runWorkerOnce(): Promise<void> {
   scheduleReminders();
+  pruneRoomEvents();
   await processJobs();
 }
 
 const invokedDirectly = process.argv[1]?.endsWith('worker.ts') ?? false;
 if (invokedDirectly) {
+  assertProductionSecret();
+  setEventBroker(await createEventBroker());
   const interval = Number(process.env.SECRET_SANTA_WORKER_INTERVAL_MS ?? 30_000);
   if (!pushEnabled()) {
     console.warn('VAPID не настроен: воркер ждёт ключи, задачи остаются в очереди');

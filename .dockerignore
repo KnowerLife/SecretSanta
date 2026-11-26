@@ -1,0 +1,23 @@
+# Локальные секреты и метаданные репозитория не нужны в контексте сборки.
+.git
+.env
+.env.*
+!.env.example
+
+# Локальные базы и transient-файлы SQLite.
+*.db
+*.db-shm
+*.db-wal
+
+# Установленные зависимости и артефакты сборки создаются внутри образа.
+node_modules
+dist
+coverage
+
+# Логи и отчёты Lighthouse из локальных прогонов.
+*.log
+/tmp
+lh_*.json
+lighthouse-report*.json
+lighthouse-reports/
+lh_final/

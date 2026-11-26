@@ -1,4 +1,5 @@
-import { createPrivateKey, createSign, randomUUID } from 'node:crypto';
+import { createPrivateKey, createPublicKey, createSign, randomUUID, timingSafeEqual } from 'node:crypto';
+import type { KeyObject } from 'node:crypto';
 import { all, run } from './db.ts';
 
 interface PushSubscription {
@@ -34,15 +35,71 @@ function derToRaw(signature: Buffer): Buffer {
   return Buffer.concat([readInt(), readInt()]);
 }
 
-function privateKey() {
+function privateKey(): KeyObject | null {
   const raw = process.env.VAPID_PRIVATE_KEY;
   if (!raw) return null;
   try {
     const normalized = raw.includes('BEGIN') ? raw : Buffer.from(raw, 'base64url').toString('utf8');
-    return createPrivateKey(normalized);
+    const key = createPrivateKey(normalized);
+    return key.asymmetricKeyType === 'ec' ? key : null;
   } catch {
     return null;
   }
+}
+
+/** Публичный ключ Web Push: 0x04 || X || Y в base64url (65 байт). */
+export function vapidPublicKeyFromPrivate(key: KeyObject): string {
+  const jwk = key.export({ format: 'jwk' }) as { x: string; y: string };
+  return Buffer.concat([
+    Buffer.from([4]),
+    Buffer.from(jwk.x, 'base64url'),
+    Buffer.from(jwk.y, 'base64url'),
+  ]).toString('base64url');
+}
+
+function validSubject(value: string | undefined): boolean {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return (url.protocol === 'mailto:' && Boolean(url.pathname)) || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+let statusCache: { signature: string; enabled: boolean; reason?: string } | null = null;
+
+/** Единственный источник истины о готовности push: пара ключей и валидный subject. */
+export function vapidStatus(): { enabled: boolean; reason?: string } {
+  const signature = [
+    process.env.VAPID_PUBLIC_KEY ?? '',
+    process.env.VAPID_PRIVATE_KEY ?? '',
+    process.env.VAPID_SUBJECT ?? '',
+  ].join('\u0000');
+  if (statusCache?.signature === signature) {
+    return { enabled: statusCache.enabled, ...(statusCache.reason ? { reason: statusCache.reason } : {}) };
+  }
+
+  let reason: string | undefined;
+  const key = privateKey();
+  const publicKey = process.env.VAPID_PUBLIC_KEY?.trim();
+  const subject = process.env.VAPID_SUBJECT ?? 'mailto:admin@example.com';
+  if (!publicKey || !process.env.VAPID_PRIVATE_KEY) {
+    reason = 'VAPID-ключи не заданы';
+  } else if (!key || !publicKey.match(/^[A-Za-z0-9_-]+$/)) {
+    reason = 'VAPID-ключи не удалось разобрать';
+  } else if (!validSubject(subject)) {
+    reason = 'VAPID_SUBJECT должен быть mailto: или https://';
+  } else {
+    const expected = Buffer.from(vapidPublicKeyFromPrivate(key), 'base64url');
+    const actual = Buffer.from(publicKey, 'base64url');
+    if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) {
+      reason = 'VAPID_PUBLIC_KEY не соответствует VAPID_PRIVATE_KEY';
+    }
+  }
+  if (reason) console.warn(`VAPID отключён: ${reason}`);
+  statusCache = { signature, enabled: !reason, ...(reason ? { reason } : {}) };
+  return { enabled: !reason, ...(reason ? { reason } : {}) };
 }
 
 function vapidAuthorization(endpoint: string): string | null {
@@ -69,7 +126,7 @@ function vapidAuthorization(endpoint: string): string | null {
 }
 
 export function pushEnabled(): boolean {
-  return Boolean(process.env.VAPID_PUBLIC_KEY && privateKey());
+  return vapidStatus().enabled;
 }
 
 /** Отправляет нейтральное уведомление без персонального payload. */

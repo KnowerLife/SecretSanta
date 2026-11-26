@@ -4,6 +4,29 @@
 
 ## [Unreleased]
 
+## [69.2.0] — 2026-11-26
+
+### Added
+
+- Redis Pub/Sub для SSE между процессами API и воркером; курсор `Last-Event-ID` теперь берётся из `rowid` SQLite и переживает перезапуск.
+- Workflow публикации образов в GHCR по тегу `v*` и вручную, с тегами версии и `latest`, а также документированная процедура отката через `V69_IMAGE_TAG`.
+- Настраиваемая очистка журнала `room_events` и проверка подмены брокера события в unit-тестах.
+
+### Fixed
+
+- Браузерная проверка v69 завершает группу процессов локального API и веб-сервера: CI-задача больше не зависает после вывода `11 FAILED 0`.
+
+### Changed
+
+- SSE подписывается до replay, события дедуплицируются, кадр `connected` остаётся без `id`, а медленный клиент не блокирует остальные кадры.
+- `/api/health`, `/api/push/config` и ответ на подписку используют единое состояние `pushEnabled()`; публичный ключ отдаётся только для корректной пары VAPID и допустимого `VAPID_SUBJECT`.
+- compose поднимает Redis, передаёт `REDIS_URL` API и воркеру, а имена образов поддерживают `V69_IMAGE_REGISTRY` и `V69_IMAGE_NAMESPACE`.
+
+### Security
+
+- Production-старт API, воркера и миграции отклоняет отсутствующий, короткий или заглушечный `SECRET_SANTA_SECRET` до открытия порта.
+- VAPID считается включённым только при совпадении публичного ключа с приватным; приватный ключ не попадает в логи и ответы API.
+
 ## [69.1.1] — 2026-11-26
 
 ### Fixed
@@ -88,7 +111,8 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.1...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.0...HEAD
+[69.2.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.1...v69.2.0
 [69.1.1]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.0...v69.1.1
 [69.1.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.0.0...v69.1.0
 [69.0.0]: https://github.com/KnowerLife/SecretSanta/compare/v68.0.0...v69.0.0

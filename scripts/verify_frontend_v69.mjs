@@ -85,9 +85,16 @@ async function post(pathname, body, token) {
 function cleanup() {
   for (const child of children.splice(0)) {
     try {
-      child.kill('SIGTERM');
+      // Дочерние процессы запущены detached: завершаем всю группу, иначе
+      // npm/vinxi оставляет сервер и удерживает потоки в CI.
+      if (child.pid) process.kill(-child.pid, 'SIGTERM');
+      else child.kill('SIGTERM');
     } catch {
-      // already gone
+      try {
+        child.kill('SIGTERM');
+      } catch {
+        // already gone
+      }
     }
   }
 }
@@ -97,11 +104,13 @@ if (START) {
     cwd: ROOT,
     env: { ...process.env, PORT: '8787' },
     stdio: ['ignore', 'pipe', 'pipe'],
+    detached: true,
   });
   const webProcess = spawn('npm', ['run', 'dev'], {
     cwd: ROOT,
     env: { ...process.env, SECRET_SANTA_API_TARGET: API },
     stdio: ['ignore', 'pipe', 'pipe'],
+    detached: true,
   });
   children.push(apiProcess, webProcess);
   process.on('exit', cleanup);
@@ -187,6 +196,30 @@ await report('api.sse_replay', async () => {
   assert(/"seq":\d+/.test(text), 'SSE replay has no seq');
   assert(/"eventDbId":/.test(text), 'SSE replay has no eventDbId');
   assert(!/id: connected/.test(text), 'connected frame must have no id');
+
+  const ids = [...text.matchAll(/^id: (\d+)$/gm)].map((match) => Number(match[1]));
+  assert(ids.length > 0, 'SSE frames must use numeric rowid cursors');
+  const resumed = await fetch(`${API}/api/rooms/${demo.code}/events`, {
+    headers: {
+      authorization: `Bearer ${demo.token}`,
+      'last-event-id': String(ids.at(-1)),
+    },
+  });
+  assert(resumed.ok, 'SSE resume failed');
+  const resumedReader = resumed.body.getReader();
+  let resumedText = '';
+  for (let i = 0; i < 8 && !resumedText.includes('event: connected'); i += 1) {
+    const chunk = await resumedReader.read();
+    if (chunk.done) break;
+    resumedText += decoder.decode(chunk.value, { stream: true });
+  }
+  await resumedReader.cancel();
+  const resumedIds = [...resumedText.matchAll(/^id: (\d+)$/gm)].map((match) => Number(match[1]));
+  assert(
+    resumedIds.every((id) => id > ids.at(-1)),
+    'SSE resume must not repeat delivered events',
+  );
+  assert(/(^|\n)event: connected\n/.test(resumedText), 'resumed stream must send connected');
 });
 
 let browser;
@@ -303,9 +336,10 @@ if (!QUICK) {
   });
 }
 
-cleanup();
+const exitCode = failures.length ? 1 : 0;
 console.log(`FRONTEND_V69_CHECKS ${passed.length + failures.length} FAILED ${failures.length}`);
 if (failures.length) {
   console.log(`failed: ${failures.join(', ')}`);
-  process.exitCode = 1;
 }
+cleanup();
+process.exit(exitCode);

@@ -1,5 +1,12 @@
 import { serve } from '@hono/node-server';
 import app from './app.ts';
+import { assertProductionSecret } from './config.ts';
+import { setEventBroker } from './events.ts';
+import { createEventBroker } from './redis-events.ts';
+
+assertProductionSecret();
+const broker = await createEventBroker();
+setEventBroker(broker);
 
 const port = Number(process.env.PORT ?? 8787);
 
