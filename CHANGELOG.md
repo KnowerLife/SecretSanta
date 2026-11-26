@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [69.2.1] — 2026-11-26
+
+### Fixed
+
+- Публикация в GHCR использует владельца репозитория в нижнем регистре: docker отклонил тег `ghcr.io/KnowerLife/...` с ошибкой `repository name must be lowercase`.
+- Тег образа по умолчанию обновлён до `v69.2.1`; тег `v69.2.0` остаётся как неудачная попытка публикации и не рекомендуется для деплоя.
+
 ## [69.2.0] — 2026-11-26
 
 ### Added
@@ -111,7 +118,8 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.0...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.1...HEAD
+[69.2.1]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.0...v69.2.1
 [69.2.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.1...v69.2.0
 [69.1.1]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.0...v69.1.1
 [69.1.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.0.0...v69.1.0
