@@ -29,6 +29,6 @@
 ## 4. Проверки и выпуск
 
 - [x] 4.1 Прогнать `npm run typecheck`, `npm test`, `npm run check:i18n-unused`, `npm run build`, `make test`, `npm audit --audit-level=high` и `npx openspec validate --all --strict`.
-- [ ] 4.2 Прогнать `npm run verify:frontend:v69` с Lighthouse для 3 тем × RU/EN и быстрый набор против compose-стека с Redis.
+- [x] 4.2 Прогнать `npm run verify:frontend:v69` с Lighthouse для 3 тем × RU/EN и быстрый набор против compose-стека с Redis.
 - [ ] 4.3 Проверить реальную публикацию образов в тестовом пространстве имён registry по ручному запуску workflow и откат на предыдущий тег.
 - [ ] 4.4 После зелёного CI и явного разрешения владельца синхронизировать спеки, архивировать change и выпустить отдельный релиз по `docs/RELEASES.md`.
