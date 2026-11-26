@@ -4,7 +4,7 @@
 
 services:
   api:
-    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-api:${V69_IMAGE_TAG:-v69.4.0}
+    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-api:${V69_IMAGE_TAG:-95}
     build:
       context: .
       dockerfile: apps/api/Dockerfile
@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-web:${V69_IMAGE_TAG:-v69.4.0}
+    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-web:${V69_IMAGE_TAG:-95}
     build:
       context: .
       dockerfile: apps/web/Dockerfile
@@ -56,7 +56,7 @@ services:
     restart: unless-stopped
 
   worker:
-    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-api:${V69_IMAGE_TAG:-v69.4.0}
+    image: ${V69_IMAGE_REGISTRY:+${V69_IMAGE_REGISTRY:-}/}${V69_IMAGE_NAMESPACE:+${V69_IMAGE_NAMESPACE:-}/}secret-santa-api:${V69_IMAGE_TAG:-95}
     # Команда workspace запускается из корня монорепозитория.
     working_dir: /app
     env_file: .env

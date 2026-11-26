@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Тег образа, например v69.1.2'
+        description: 'Тег образа, например 95 или v9.5.0'
         required: true
         type: string
 

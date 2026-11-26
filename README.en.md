@@ -6,7 +6,7 @@
 
 [![CI v69](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml/badge.svg)](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml)
 [![Pages demo](https://img.shields.io/badge/Pages-live%20demo-2F6FB0?style=flat-square&logo=github)](https://knowerlife.github.io/SecretSanta/)
-[![v69.4.0](https://img.shields.io/badge/version-v69.4.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
+[![v9.5.0](https://img.shields.io/badge/version-v9.5.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-183B70?style=flat-square)](#pwa-and-offline)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6B4EFF?style=flat-square)](#license)
 
@@ -196,13 +196,13 @@ Template: `.env.example`. Key variables:
 ## Releases and rollback
 
 - **Demo:** `.github/workflows/deploy-pages.yml` publishes the showcase from `develop` and `main`, or manually. No separate Pages tag is needed.
-- **Full stack:** `.github/workflows/publish-images.yml` publishes images to GHCR on `v*` tags or manually. Current release: `v69.4.0`; previous known-good: `v69.3.0`; `stable` points to the latest stable release.
+- **Full stack:** `.github/workflows/publish-images.yml` publishes images to GHCR on `v*` tags or manually. Final release: `v9.5.0` (images also tagged `95`); previous known-good: `v69.4.0`; `stable` points to the latest stable release.
 
 ```bash
-git tag -a v69.4.0 -m "v69.4.0"
-git tag -a stable -m "Stable: v69.4.0"
-git push origin v69.4.0 stable
-docker manifest inspect ghcr.io/<owner>/secret-santa-api:v69.4.0
+git tag -a v9.5.0 -m "v9.5.0"
+git tag -a stable -m "Stable: v9.5.0"
+git push origin v9.5.0 stable
+docker manifest inspect ghcr.io/<owner>/secret-santa-api:95
 ```
 
 To roll back, preserve the `v69_api_data` volume, check migration compatibility and recreate the services:

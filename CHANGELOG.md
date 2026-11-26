@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+## [9.5.0] — 2026-11-26
+
+### Added
+
+- Статическая витрина на GitHub Pages: prerender главной и страниц create/join/quick-draw, SPA-fallback для неизвестных путей и понятная заглушка для комнат, которым нужен API.
+- Англоязычный `README.en.md` с переключателем языка на главной странице репозитория; RU/EN-описание приводит демо и полный стек к одним сценариям.
+- Ссылки в футере: copyright ведёт в репозиторий проекта, отдельная ссылка — на профиль https://github.com/KnowerLife.
+
+### Changed
+
+- Final-релиз зафиксирован как `v9.5.0`; образы GHCR публикуются с тегом `95` вместе с `v9.5.0` и `latest`.
+- Compose и `.env.example` по умолчанию используют образы с тегом `95`.
+
 ## [69.4.0] — 2026-11-26
 
 ### Added
@@ -168,7 +181,8 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.4.0...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v9.5.0...HEAD
+[9.5.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.4.0...v9.5.0
 [69.4.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.3.0...v69.4.0
 [69.3.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.2...v69.3.0
 [69.2.2]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.1...v69.2.2
