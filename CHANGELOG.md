@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [69.0.0] — 2026-11-26
+
 ### Added
 
 - OpenSpec-change `migrate-v69-ts-stack` с пятью capability: `room-gameplay`, `server-rendering`, `localized-themes`, `svg-scenes`, `pwa-offline`.
@@ -25,6 +27,8 @@
 - Офлайн-очередь сообщений: параллельные слушатели `online` больше не отправляют одно сообщение дважды.
 - SSR дашборда: токен комнаты хранится в отдельной cookie `ss_token_<CODE>`, поэтому несколько комнат не конфликтуют.
 
+v69.0.0 — рекомендуемая точка входа для разработки. v68 сохранён как legacy-стек и резервный вариант; старые файлы и проверки не удалены. Production-деплой нового стека ещё не настроен.
+
 ## [68.0.0] — 2026-01-15
 
 ### Added
@@ -35,5 +39,6 @@
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v68.0.0...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.0.0...HEAD
+[69.0.0]: https://github.com/KnowerLife/SecretSanta/compare/v68.0.0...v69.0.0
 [68.0.0]: https://github.com/KnowerLife/SecretSanta/releases/tag/v68.0.0
