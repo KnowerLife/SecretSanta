@@ -34,6 +34,8 @@ export function ConfirmDialog({
       opened={opened}
       onClose={cancel}
       title={title}
+      size="480px"
+      closeButtonProps={{ 'aria-label': t('confirm.close') }}
       centered
       trapFocus
       returnFocus

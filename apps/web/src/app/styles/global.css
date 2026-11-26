@@ -16,6 +16,7 @@
   --santa-accent: #c93b35;
   --santa-accent-hover: #b12e29;
   --santa-accent-soft: #fff0ee;
+  --santa-accent-text: #a3302b;
   --santa-primary: #2b5f9e;
   --santa-primary-hover: #1f4d84;
   --santa-primary-soft: #e9f2fd;
@@ -65,6 +66,7 @@
   --santa-accent: #cf443d;
   --santa-accent-hover: #b5312b;
   --santa-accent-soft: #38243b;
+  --santa-accent-text: #ff9e96;
   --santa-primary: #a9cbff;
   --santa-primary-hover: #c9ddff;
   --santa-primary-soft: #203a69;
@@ -111,6 +113,7 @@
   --santa-accent: #a84336;
   --santa-accent-hover: #8f352a;
   --santa-accent-soft: #fbeae5;
+  --santa-accent-text: #8f352a;
   --santa-primary: #82482a;
   --santa-primary-hover: #6b3a22;
   --santa-primary-soft: #f9eee5;
@@ -271,7 +274,7 @@ svg {
 }
 
 .brand__word--accent {
-  color: var(--santa-accent);
+  color: var(--santa-accent-text);
 }
 
 .nav {
@@ -456,12 +459,22 @@ svg {
 }
 
 .trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 8px 12px;
   border-radius: 999px;
   background: var(--santa-surface-2);
   color: var(--santa-muted);
   font-size: 0.82rem;
   font-weight: 600;
+}
+
+.trust-pill__icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  color: var(--santa-accent-text);
 }
 
 .scene {
@@ -495,6 +508,14 @@ svg {
 
 .section--tint {
   background: var(--santa-surface-2);
+}
+
+.section-art {
+  margin-top: 1.5rem;
+}
+
+.section-art .scene svg {
+  max-height: 260px;
 }
 
 .section__head {
@@ -555,6 +576,17 @@ svg {
   margin: 0;
   color: var(--santa-muted);
   line-height: 1.6;
+}
+
+.card__author {
+  margin-top: 1rem;
+  color: var(--santa-ink);
+  font-weight: 800;
+}
+
+.budget-row {
+  display: flex;
+  gap: 10px;
 }
 
 .card__scene {
@@ -681,7 +713,7 @@ svg {
   height: 38px;
   border-radius: var(--santa-radius-control);
   background: var(--santa-accent-soft);
-  color: var(--santa-accent);
+  color: var(--santa-accent-text);
   font-size: 1.1rem;
 }
 
@@ -760,11 +792,35 @@ svg {
 }
 
 .cta-band {
+  position: relative;
+  overflow: hidden;
   padding: 2.25rem;
   border: 1px solid var(--santa-line);
   border-radius: var(--santa-radius);
-  background: var(--santa-surface);
+  background: linear-gradient(
+    135deg,
+    var(--santa-accent-soft) 0%,
+    var(--santa-surface) 55%,
+    var(--santa-primary-soft) 100%
+  );
   box-shadow: var(--santa-shadow-sm);
+}
+
+/* Декоративные снежинки в стиле сайта; цвет наследуется от темы через mask. */
+.cta-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--santa-primary);
+  opacity: 0.18;
+  pointer-events: none;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='420'%20height='260'%20viewBox='0%200%20420%20260'%20fill='none'%20stroke='black'%20stroke-width='4'%20stroke-linecap='round'%3E%3Cpath%20d='M350%2030v60M320%2060h60M329%2039l42%2042M371%2039l-42%2042'/%3E%3Cpath%20d='M280%20166v28M266%20180h28M276%20170l20%2020M296%20170l-20%2020'/%3E%3Cpath%20d='M390%20176v52M364%20202h52M372%20184l36%2036M408%20184l-36%2036'/%3E%3Ccircle%20cx='250'%20cy='64'%20r='5'%20fill='black'%20stroke='none'/%3E%3Ccircle%20cx='306'%20cy='120'%20r='4'%20fill='black'%20stroke='none'/%3E%3Ccircle%20cx='410'%20cy='108'%20r='6'%20fill='black'%20stroke='none'/%3E%3C/svg%3E") no-repeat right center / auto 100%;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='420'%20height='260'%20viewBox='0%200%20420%20260'%20fill='none'%20stroke='black'%20stroke-width='4'%20stroke-linecap='round'%3E%3Cpath%20d='M350%2030v60M320%2060h60M329%2039l42%2042M371%2039l-42%2042'/%3E%3Cpath%20d='M280%20166v28M266%20180h28M276%20170l20%2020M296%20170l-20%2020'/%3E%3Cpath%20d='M390%20176v52M364%20202h52M372%20184l36%2036M408%20184l-36%2036'/%3E%3Ccircle%20cx='250'%20cy='64'%20r='5'%20fill='black'%20stroke='none'/%3E%3Ccircle%20cx='306'%20cy='120'%20r='4'%20fill='black'%20stroke='none'/%3E%3Ccircle%20cx='410'%20cy='108'%20r='6'%20fill='black'%20stroke='none'/%3E%3C/svg%3E") no-repeat right center / auto 100%;
+}
+
+.cta-band > * {
+  position: relative;
+  z-index: 1;
 }
 
 .cta-band .btn-row {
@@ -854,8 +910,8 @@ svg {
 .field label {
   display: block;
   margin-bottom: 8px;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 .field input,
@@ -888,7 +944,7 @@ svg {
   padding: 12px 14px;
   border-radius: 12px;
   background: color-mix(in srgb, var(--santa-accent) 14%, transparent);
-  color: var(--santa-accent);
+  color: var(--santa-accent-text);
   font-size: 0.9rem;
 }
 
@@ -1104,7 +1160,7 @@ svg {
   border: 1px solid var(--santa-accent);
   border-radius: 14px;
   background: color-mix(in srgb, var(--santa-accent) 12%, transparent);
-  color: var(--santa-accent);
+  color: var(--santa-accent-text);
   font-size: 0.9rem;
   text-align: center;
 }
@@ -1506,8 +1562,8 @@ svg {
 }
 
 .progress-panel__countdown {
-  border-color: var(--santa-accent);
-  color: var(--santa-accent);
+  border-color: var(--santa-accent-text);
+  color: var(--santa-accent-text);
 }
 
 .progress-bar {
@@ -1578,8 +1634,8 @@ svg {
 }
 
 .meta-grid .pill[data-online='false'] {
-  border-color: var(--santa-accent);
-  color: var(--santa-accent);
+  border-color: var(--santa-accent-text);
+  color: var(--santa-accent-text);
 }
 
 .reveal-card__hidden {
@@ -1597,13 +1653,20 @@ svg {
 
 .invite-result {
   display: grid;
+  /* Длинная ссылка не должна растягивать сетку за пределы панели. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 8px;
   margin-top: 20px;
 }
 
 .invite-result textarea {
+  min-width: 0;
   min-height: 120px;
   font-size: 0.88rem;
+}
+
+.invite-result .field-hint {
+  overflow-wrap: anywhere;
 }
 
 .activity-list .activity-item {
@@ -1741,6 +1804,9 @@ svg {
 }
 
 .mantine-Modal-content {
+  /* Mantine задаёт ширину через flex-basis, поэтому переопределяем его, а не width. */
+  flex: 0 0 min(480px, calc(100vw - 2rem));
+  max-width: 100%;
   border: 1px solid var(--santa-line);
   border-radius: var(--santa-radius);
   background: var(--santa-surface);
@@ -1751,16 +1817,38 @@ svg {
 .mantine-Modal-header {
   margin-bottom: 0.5rem;
   padding: 1.25rem 1.5rem 0.5rem;
+  border-bottom: 1px solid var(--santa-line);
+  border-radius: 0;
+  background: var(--santa-surface);
   color: var(--santa-ink);
+  font-family: var(--santa-font);
+}
+
+.mantine-Modal-title {
+  color: var(--santa-ink);
+  font-family: var(--santa-font);
+  font-size: 1.25rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .mantine-Modal-body {
   padding: 0 1.5rem 1.5rem;
 }
 
-.mantine-Notifications-notification,
+.mantine-Modal-close {
+  width: 44px;
+  height: 44px;
+  color: var(--santa-muted);
+}
+
+.mantine-Notifications-notification {
+  padding: 0;
+}
+
 .mantine-Notification-root {
+  width: 100%;
+  padding: 0.85rem 1rem;
   border: 0;
   border-radius: var(--santa-radius-sm);
   background: var(--santa-toast-bg) !important;
@@ -1773,8 +1861,13 @@ svg {
 .mantine-Notification-title,
 .mantine-Notification-description {
   color: inherit !important;
+  font-family: var(--santa-font);
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
 .mantine-Notification-closeButton {
+  width: 44px;
+  height: 44px;
   color: var(--santa-toast-ink) !important;
 }

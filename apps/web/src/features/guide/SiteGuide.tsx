@@ -1,12 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { Link } from '@tanstack/react-router';
+import type { SceneId } from '@secret-santa/art';
 import { useI18n } from '../../app/providers/i18n.tsx';
 import { tokenKey } from '../../shared/api/client.ts';
+import { Scene } from '../../shared/ui/Scene.tsx';
 import { DemoRoomButton } from './DemoRoomButton.tsx';
 import './site-guide.css';
 
 const STEPS = [1, 2, 3, 4, 5] as const;
+const STEP_SCENES: Record<(typeof STEPS)[number], SceneId> = {
+  1: 'guide-format',
+  2: 'guide-prep',
+  3: 'guide-room-team',
+  4: 'guide-room-wishes',
+  5: 'guide-room-draw',
+};
 const PANEL_ID = 'site-guide-detail';
 const TOKEN_PREFIX = tokenKey('');
 
@@ -80,52 +89,57 @@ export function SiteGuide() {
         aria-labelledby={`site-guide-tab-${step}`}
         tabIndex={0}
       >
-        <span className="site-guide__progress" aria-live="polite">
-          {active + 1} / {STEPS.length}
-        </span>
-        <h3>{t(`guide.site.${step}.title`)}</h3>
-        <p>{t(`guide.site.${step}.text`)}</p>
-        <p className="site-guide__tip">{t(`guide.site.${step}.tip`)}</p>
-        <div className="btn-row">
-          {step === 1 && (
-            <>
+        <div className="site-guide__copy">
+          <span className="site-guide__progress" aria-live="polite">
+            {active + 1} / {STEPS.length}
+          </span>
+          <h3>{t(`guide.site.${step}.title`)}</h3>
+          <p>{t(`guide.site.${step}.text`)}</p>
+          <p className="site-guide__tip">{t(`guide.site.${step}.tip`)}</p>
+          <div className="btn-row">
+            {step === 1 && (
+              <>
+                <Link className="btn btn--primary" to="/create">
+                  {t('nav.create')}
+                </Link>
+                <Link className="btn btn--secondary" to="/quick-draw">
+                  {t('nav.quick')}
+                </Link>
+                <DemoRoomButton className="btn btn--secondary">{t('hero.ctaDemo')}</DemoRoomButton>
+              </>
+            )}
+            {step === 2 && (
               <Link className="btn btn--primary" to="/create">
                 {t('nav.create')}
               </Link>
-              <Link className="btn btn--secondary" to="/quick-draw">
-                {t('nav.quick')}
+            )}
+            {step === 3 && (
+              <Link className="btn btn--primary" to="/join">
+                {t('nav.join')}
               </Link>
-              <DemoRoomButton className="btn btn--secondary">{t('hero.ctaDemo')}</DemoRoomButton>
-            </>
-          )}
-          {step === 2 && (
-            <Link className="btn btn--primary" to="/create">
-              {t('nav.create')}
-            </Link>
-          )}
-          {step === 3 && (
-            <Link className="btn btn--primary" to="/join">
-              {t('nav.join')}
-            </Link>
-          )}
-          {step === 4 &&
-            (roomCode ? (
-              <Link className="btn btn--primary" to="/room/$code" params={{ code: roomCode }}>
-                {t('nav.dashboard')}
-              </Link>
-            ) : (
-              <Link className="btn btn--primary" to="/create">
-                {t('nav.create')}
-              </Link>
-            ))}
-          {step === 5 && (
-            <>
-              <Link className="btn btn--primary" to="/quick-draw">
-                {t('nav.quick')}
-              </Link>
-              <DemoRoomButton className="btn btn--secondary">{t('hero.ctaDemo')}</DemoRoomButton>
-            </>
-          )}
+            )}
+            {step === 4 &&
+              (roomCode ? (
+                <Link className="btn btn--primary" to="/room/$code" params={{ code: roomCode }}>
+                  {t('nav.dashboard')}
+                </Link>
+              ) : (
+                <Link className="btn btn--primary" to="/create">
+                  {t('nav.create')}
+                </Link>
+              ))}
+            {step === 5 && (
+              <>
+                <Link className="btn btn--primary" to="/quick-draw">
+                  {t('nav.quick')}
+                </Link>
+                <DemoRoomButton className="btn btn--secondary">{t('hero.ctaDemo')}</DemoRoomButton>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="site-guide__art" aria-hidden="true">
+          <Scene id={STEP_SCENES[step]} />
         </div>
       </div>
     </div>

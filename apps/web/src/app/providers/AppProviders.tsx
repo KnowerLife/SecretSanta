@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
-import { MantineProvider, createTheme } from '@mantine/core';
+import { MantineProvider, Notification, createTheme } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { I18nProvider } from './i18n.tsx';
+import { I18nProvider, useI18n } from './i18n.tsx';
 import { SettingsProvider, useSettings } from './settings.tsx';
 
 const palette = {
@@ -29,8 +29,9 @@ const makeTheme = (name: keyof typeof palette) => {
         '#C9584F', '#A84740', '#883A34', '#672D29',
       ] as [string, string, string, string, string, string, string, string, string, string],
     },
+    // Единая типографика с сайтом: диалоги и уведомления Mantine не выбиваются из Manrope.
     fontFamily:
-      'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      'Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     defaultRadius: 'md',
     headings: {
       fontFamily: 'Manrope, Inter, ui-sans-serif, system-ui, -apple-system, sans-serif',
@@ -41,6 +42,7 @@ const makeTheme = (name: keyof typeof palette) => {
 
 function Providers({ children }: { children: ReactNode }) {
   const { theme } = useSettings();
+  const { t } = useI18n();
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -59,10 +61,21 @@ function Providers({ children }: { children: ReactNode }) {
       withCssVariables={false}
       withGlobalClasses={false}
     >
-      <Notifications autoClose={4000} position="top-right" limit={5} />
-      <QueryClientProvider client={queryClient}>
-        <I18nProvider>{children}</I18nProvider>
-      </QueryClientProvider>
+      <Notifications
+        autoClose={4000}
+        position="top-right"
+        limit={5}
+        containerWidth={360}
+        // Стандартная кнопка Mantine не имеет доступного имени — задаём его из словаря.
+        renderNotification={({ id: _wrapperId, onClose, ...data }) => (
+          <Notification
+            {...data}
+            onClose={() => onClose?.(data)}
+            closeButtonProps={{ 'aria-label': t('toast.close') }}
+          />
+        )}
+      />
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </MantineProvider>
   );
 }
@@ -70,7 +83,9 @@ function Providers({ children }: { children: ReactNode }) {
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <SettingsProvider>
-      <Providers>{children}</Providers>
+      <I18nProvider>
+        <Providers>{children}</Providers>
+      </I18nProvider>
     </SettingsProvider>
   );
 }

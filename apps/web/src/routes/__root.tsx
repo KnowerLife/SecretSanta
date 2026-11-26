@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 import mantineCoreStyles from '@mantine/core/styles.css?url';
 import mantineNotificationsStyles from '@mantine/notifications/styles.css?url';
@@ -58,8 +59,17 @@ function RootComponent() {
   );
 }
 
+const THEME_COLORS = { winter: '#f4f9ff', midnight: '#0e1c39', cozy: '#fff8f2' } as const;
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { locale, theme } = useSettings();
+
+  // Цвет панели браузера следует активной теме, а не фиксированному winter.
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
+  }, [theme]);
+
   return (
     <html
       {...mantineHtmlProps}

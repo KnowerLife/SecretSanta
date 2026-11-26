@@ -82,9 +82,8 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
     links: '',
     allergies: '',
   });
-  const [online, setOnline] = useState(
-    () => typeof navigator === 'undefined' || navigator.onLine,
-  );
+  // Старт одинаковый на сервере и клиенте; фактическое состояние сети читаем в эффекте.
+  const [online, setOnline] = useState(true);
   const [demoBusy, setDemoBusy] = useState(false);
   const resetTrigger = useRef<HTMLButtonElement>(null);
   const [resetOpen, setResetOpen] = useState(false);
@@ -204,6 +203,7 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
   }, [code, bootstrap.ok, refresh]);
 
   useEffect(() => {
+    setOnline(typeof navigator === 'undefined' || navigator.onLine);
     const goOnline = () => setOnline(true);
     const goOffline = () => setOnline(false);
     window.addEventListener('online', goOnline);

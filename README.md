@@ -538,16 +538,16 @@ node -e "const fs=require('node:fs'); const {createPublicKey}=require('node:cryp
 Workflow `.github/workflows/publish-images.yml` собирает и публикует образы `secret-santa-api` и `secret-santa-web` в GHCR по git-тегу `v*` или вручную через `workflow_dispatch`. Токен публикации — встроенный `GITHUB_TOKEN` с правом `packages: write`; его не нужно добавлять в `.env` или передавать в сборку.
 
 ```bash
-git tag v69.1.2
-git push origin v69.1.2
+git tag v69.2.2
+git push origin v69.2.2
 ```
 
-После публикации тега `v69.1.2` появятся образы `ghcr.io/<владелец>/secret-santa-api:v69.1.2` и `:latest` (аналогично для web). Для ручного запуска используйте кнопку **Run workflow** и укажите нужный тег в поле `tag`. Потребительские настройки:
+После публикации тега `v69.2.2` появятся образы `ghcr.io/<владелец>/secret-santa-api:v69.2.2` и `:latest` (аналогично для web); наличие обоих можно проверить через `docker manifest inspect`. Теги `v69.2.0` и `v69.2.1` выпущены неудачно и не рекомендуются для деплоя. Для ручного запуска используйте кнопку **Run workflow** и укажите нужный тег в поле `tag`. Потребительские настройки:
 
 ```bash
 export V69_IMAGE_REGISTRY=ghcr.io
 export V69_IMAGE_NAMESPACE=<владелец-репозитория в нижнем регистре>
-export V69_IMAGE_TAG=v69.1.2
+export V69_IMAGE_TAG=v69.2.2
 docker compose -f docker-compose.v69.yml pull api web
 ```
 
@@ -557,9 +557,10 @@ docker compose -f docker-compose.v69.yml pull api web
 
 Откат выполняется на том же хосте и с тем же файлом compose; цель — вернуть предыдущие образы, не теряя данные.
 
-1. Выберите последний известный рабочий тег (например, `v69.1.1`) и задайте его в `.env` или окружении деплоя:
+1. Выберите последний известный рабочий тег и задайте его в `.env` или окружении деплоя. Для образов из GHCR сейчас подтверждён `v69.2.2` (и `latest`); более старые теги могли не опубликоваться — проверьте доступность перед откатом:
    ```bash
-   export V69_IMAGE_TAG=v69.1.1
+   docker manifest inspect ghcr.io/<владелец>/secret-santa-api:<тег>
+   export V69_IMAGE_TAG=v69.2.2
    ```
 2. Если образы берутся из GHCR, задайте те же `V69_IMAGE_REGISTRY` и `V69_IMAGE_NAMESPACE`, что и при публикации. Для локально собранных образов оставьте их пустыми.
 3. Сохраните именованный том `v69_api_data`: не выполняйте `docker compose down -v` и не удаляйте том вручную. API и воркер используют один и тот же путь `/app/apps/api/data` и должны видеть ту же базу.

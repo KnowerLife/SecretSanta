@@ -258,12 +258,17 @@ function renderLandscape(
   return { elements, farY };
 }
 
-export function renderSceneSvg(id: SceneId, theme: ThemeName): string {
+/**
+ * `instance` делает идентификаторы градиентов уникальными, когда на странице
+ * несколько копий одной сцены; без этого aria-labelledby и fill ссылаются
+ * на первый попавшийся `<defs>`.
+ */
+export function renderSceneSvg(id: SceneId, theme: ThemeName, instance = ''): string {
   const scene = getScene(id);
   const p = PALETTES[theme];
   const random = makeRandom(seedFrom(`${id}|${theme}`));
   const { width: w, height: h } = scene;
-  const uid = `art-${id}-${theme}`;
+  const uid = `art-${id}-${theme}${instance ? `-${instance}` : ''}`;
   const titleId = `${uid}-title`;
   const descId = `${uid}-desc`;
 

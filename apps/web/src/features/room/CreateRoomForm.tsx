@@ -110,7 +110,7 @@ export function CreateRoomForm() {
       </div>
       <div className="field">
         <label>{t('create.budget')}</label>
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div className="budget-row">
           <input
             aria-label={t('create.budgetMin')}
             type="number"

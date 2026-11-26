@@ -23,8 +23,9 @@
   min-width: 34px;
   min-height: 34px;
   border-radius: 999px;
-  background: var(--color-surface, #fff);
-  color: var(--color-success, #2e7d32);
+  border: 1px solid var(--santa-line);
+  background: var(--santa-surface);
+  color: var(--santa-success);
   font-weight: 700;
 }
 

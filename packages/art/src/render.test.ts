@@ -15,6 +15,15 @@ test('рендер детерминирован для сцены и темы', 
   }
 });
 
+test('несколько копий сцены не конфликтуют по идентификаторам', () => {
+  const first = renderSceneSvg('guide-format', 'winter', 'a');
+  const second = renderSceneSvg('guide-format', 'winter', 'b');
+  assert.match(first, /id="art-guide-format-winter-a-title"/);
+  assert.match(second, /id="art-guide-format-winter-b-title"/);
+  assert.equal(first.includes('art-guide-format-winter-b-'), false);
+  assert.equal(second.includes('art-guide-format-winter-a-'), false);
+});
+
 test('каждая сцена валидна, доступна и меняет палитру', () => {
   for (const scene of SCENES) {
     for (const theme of ['winter', 'midnight', 'cozy'] as const) {

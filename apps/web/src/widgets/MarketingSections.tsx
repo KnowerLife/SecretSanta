@@ -7,6 +7,30 @@ import { Scene } from '../shared/ui/Scene.tsx';
 import { DemoRoomButton } from '../features/guide/DemoRoomButton.tsx';
 import { SiteGuide } from '../features/guide/SiteGuide.tsx';
 
+const TRUST_ICONS = [
+  <path key="lock" d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v10H5z" />,
+  <path key="chat" d="M20 12a7 7 0 0 1-7 7H8l-4 3 1.2-4.4A7 7 0 1 1 20 12Z" />,
+  <path key="package" d="m12 3 9 5v8l-9 5-9-5V8l9-5ZM3 8l9 5 9-5M12 13v8" />,
+  <path key="bolt" d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />,
+] as const;
+
+function TrustIcon({ index }: { index: number }) {
+  return (
+    <svg
+      className="trust-pill__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.9}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {TRUST_ICONS[index - 1]}
+    </svg>
+  );
+}
+
 function Head({ kicker, title, sub }: { kicker: string; title: string; sub: string }) {
   return (
     <div className="section__head">
@@ -65,7 +89,8 @@ export function HeroSection() {
         <Group className="trust-row" gap={10} wrap="wrap">
           {[1, 2, 3, 4].map((index) => (
             <span className="trust-pill" key={index}>
-              ✓ {t(`hero.trust.${index}`)}
+              <TrustIcon index={index} />
+              {t(`hero.trust.${index}`)}
             </span>
           ))}
         </Group>
@@ -245,7 +270,7 @@ export function IdeasSection() {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 24 }}>
+        <div className="section-art">
           <Scene id="gift-ideas" />
         </div>
       </div>
@@ -275,13 +300,13 @@ export function TestimonialsSection() {
           {[1, 2, 3].map((index) => (
             <div className="card card__body" key={index}>
               <p>“{t(`testimonials.${index}.text`)}”</p>
-              <p style={{ marginTop: 16, fontWeight: 700 }}>
+              <p className="card__author">
                 {t(`testimonials.${index}.name`)} · {t(`testimonials.${index}.role`)}
               </p>
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 24 }}>
+        <div className="section-art">
           <Scene id="testimonials-friends" />
         </div>
       </div>

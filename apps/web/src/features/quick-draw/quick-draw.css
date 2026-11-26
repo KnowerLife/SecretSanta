@@ -1,3 +1,25 @@
+.quick-draw__art {
+  flex: 0 1 180px;
+  min-width: 120px;
+  margin-left: auto;
+}
+
+.quick-draw__art .scene svg {
+  max-height: 110px;
+  border-radius: var(--santa-radius-sm);
+}
+
+@media (max-width: 640px) {
+  .quick-draw__art {
+    flex-basis: 100px;
+    min-width: 100px;
+  }
+
+  .quick-draw__art .scene svg {
+    max-height: 72px;
+  }
+}
+
 .quick-draw__hello {
   margin: 16px 0 10px;
   font-size: 1.2rem;
