@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash, createHmac } from 'node:crypto';
-import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
@@ -12,9 +12,9 @@ process.env.SECRET_SANTA_SECRET = 'migration-test-secret';
 
 const { MigrationError, reconstructV68SessionToken, runMigration } = await import('./migrate-v68.ts');
 const { hashLegacyToken, resolveLegacyToken, verifyV69Token } = await import('./migration-tokens.ts');
+const { V68_SCHEMA_SQL } = await import('./v68-schema-fixture.ts');
 
 const SECRET = 'migration-test-secret';
-const V68_MIGRATIONS = fileURLToPath(new URL('../../../backend/migrations/', import.meta.url));
 const MIGRATION_SCRIPT = fileURLToPath(new URL('./migrate-v68.ts', import.meta.url));
 
 const RAW_INVITE = 'invite_0123456789abcdef';
@@ -89,9 +89,7 @@ function createFixture(duplicateMemberName = false): Fixture {
   const expires = isoAt(7 * 86400);
   const db = new DatabaseSync(source);
 
-  for (const file of readdirSync(V68_MIGRATIONS).filter((name) => name.endsWith('.sql')).sort()) {
-    db.exec(readFileSync(join(V68_MIGRATIONS, file), 'utf8'));
-  }
+  db.exec(V68_SCHEMA_SQL);
 
   insert(db, 'users', { id: 'usr_org', name: 'Org', created_at: created });
   insert(db, 'users', { id: 'usr_bob', name: 'Bob', created_at: created });

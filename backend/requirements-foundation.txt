@@ -1,4 +1,0 @@
-# Foundation server (backend/app/*) runs on Python stdlib only.
-# Optional for real Web Push delivery and production migration:
-pywebpush>=2.0.0
-cryptography>=42.0.0

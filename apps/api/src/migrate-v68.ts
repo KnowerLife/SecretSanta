@@ -17,7 +17,7 @@ import type { LegacyTokenKind } from './migration-tokens.ts';
 type Row = Record<string, unknown> & { _rowid?: number };
 
 const PROJECT_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
-const DEFAULT_SOURCE = join(PROJECT_ROOT, 'backend/data/app.db');
+const DEFAULT_SOURCE = join(PROJECT_ROOT, 'apps/api/data/v68-app.db');
 const DEFAULT_TARGET = join(PROJECT_ROOT, 'apps/api/data/app.db');
 const V69_SCHEMA = fileURLToPath(new URL('../migrations/001_init.sql', import.meta.url));
 const FAR_FUTURE = '2099-12-31T23:59:59.000Z';
@@ -744,7 +744,7 @@ function main(): void {
     if (args.help) {
       console.log(
         'Usage: node apps/api/src/migrate-v68.ts [--source PATH] [--target PATH] [--dry-run]\n' +
-          'Defaults: source = SECRET_SANTA_V68_DB_PATH or backend/data/app.db\n' +
+          'Defaults: source = SECRET_SANTA_V68_DB_PATH or apps/api/data/v68-app.db\n' +
           '          target = SECRET_SANTA_V69_DB_PATH or apps/api/data/app.db',
       );
       return;

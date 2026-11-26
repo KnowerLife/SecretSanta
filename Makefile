@@ -1,36 +1,31 @@
-.PHONY: frontend backend test test-backend deps-frontend verify-frontend verify-frontend-quick smoke screenshots docker-up docker-down
+.PHONY: dev dev-api test verify verify-quick build deps docker-up docker-down
 
-frontend:
-	python3 -m http.server 8766
+dev:
+	npm run dev
 
-backend:
-	python3 -m backend.app.server --host 127.0.0.1 --port 8000
+dev-api:
+	npm run dev:api
 
-test-backend:
-	cd backend && python3 -m unittest discover -s tests -p 'test*.py' -v
+test:
+	npm run typecheck
+	npm test
+	npm run check:i18n-unused
 
-test: test-backend
-	for f in app.js src/*.js; do node --input-type=module --check < "$$f"; done
-	node --check sw.js
+verify:
+	npm run verify:frontend:v69
 
-deps-frontend:
+verify-quick:
+	npm run verify:frontend:v69:quick
+
+build:
+	npm run build
+
+deps:
 	npm ci --ignore-scripts
-	npx playwright install chromium
-
-verify-frontend:
-	node scripts/verify_frontend.mjs
-
-verify-frontend-quick:
-	node scripts/verify_frontend.mjs --quick
-
-smoke:
-	python3 scripts/smoke_e2e.py
-
-screenshots:
-	node scripts/capture_screenshots.mjs
+	npx playwright install --with-deps chromium
 
 docker-up:
-	docker compose up --build
+	docker compose -f docker-compose.v69.yml up --build
 
 docker-down:
-	docker compose down
+	docker compose -f docker-compose.v69.yml down

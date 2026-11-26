@@ -1,6 +1,6 @@
 # Релизы
 
-Версии следуют SemVer: `vMAJOR.MINOR.PATCH`. v68 — последний релиз монолитного ES-модульного интерфейса, v69 — первый релиз TypeScript-стека TanStack Start + Mantine + Hono.
+Версии следуют SemVer: `vMAJOR.MINOR.PATCH`. Актуальный стек — v69: TanStack Start + Mantine + Hono.
 
 ## Чеклист релиза
 
@@ -10,14 +10,16 @@
    ```bash
    npm run typecheck
    npm test
+   npm run check:i18n-unused
    npm run build
    make test
+   npm audit --audit-level=high
    git diff --check
    ```
 
 3. OpenSpec-change для релиза прошёл `openspec validate <name> --strict`.
-4. Создана `release/vX.Y.Z`, обновлены `CHANGELOG.md`, README и `docs/PARITY_v69.md`.
-5. Проверены браузерные сценарии v68 и новый SSR-срез v69.
+4. Создана `release/vX.Y.Z`, обновлены `CHANGELOG.md` и README.
+5. Проверены браузерные сценарии v69 на трёх темах и двух языках (`npm run verify:frontend:v69`).
 6. После одобрения: merge в `main`, тег `vX.Y.Z`, merge обратно в `develop`, архивация change.
 
 ## CHANGELOG
@@ -26,4 +28,4 @@
 
 ## Откат
 
-Откат выполняется через `git revert` релизного коммита в `main` и отдельный hotfix в `develop`. Удаление тегов и переписывание истории запрещены.
+Откат выполняется через `git revert` релизного коммита в `main` и отдельный hotfix в `develop`. Удаление тегов и переписывание истории запрещены без явного решения владельца репозитория.

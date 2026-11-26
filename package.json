@@ -3,7 +3,7 @@
   "version": "69.3.0",
   "private": true,
   "type": "module",
-  "description": "SecretSanta v68 (working) and v69 (TypeScript migration) in one repository",
+  "description": "SecretSanta: PWA for a Secret Santa game on TanStack Start, Mantine and Hono",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -12,12 +12,9 @@
     "node": ">=22.20.0"
   },
   "scripts": {
-    "verify:frontend": "node scripts/verify_frontend.mjs",
-    "verify:frontend:quick": "node scripts/verify_frontend.mjs --quick",
     "verify:frontend:v69": "node scripts/verify_frontend_v69.mjs",
     "verify:frontend:v69:quick": "node scripts/verify_frontend_v69.mjs --quick",
     "check:i18n-unused": "npm run check:unused-keys --workspace @secret-santa/shared",
-    "screenshots": "node scripts/capture_screenshots.mjs",
     "dev": "npm run dev --workspace @secret-santa/web",
     "dev:api": "npm run dev --workspace @secret-santa/api",
     "build": "npm run build --workspace @secret-santa/api && npm run build --workspace @secret-santa/web",
