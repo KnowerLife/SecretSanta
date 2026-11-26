@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-labelledby="art-recipient-waiting-winter-title art-recipient-waiting-winter-desc">
+<title id="art-recipient-waiting-winter-title">Получатель пока не известен</title>
+<desc id="art-recipient-waiting-winter-desc">Recipient not revealed yet. Matte paper cut-out winter illustration.</desc>
+<defs>
+<linearGradient id="art-recipient-waiting-winter-sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#EAF5FF"/>
+<stop offset="1" stop-color="#A3CEFD"/>
+</linearGradient>
+<linearGradient id="art-recipient-waiting-winter-ground" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#F8FCFF"/>
+<stop offset="1" stop-color="#F8FCFF" stop-opacity="0.76"/>
+</linearGradient>
+<radialGradient id="art-recipient-waiting-winter-glow">
+<stop offset="0" stop-color="#FFF2D2" stop-opacity="0.85"/>
+<stop offset="1" stop-color="#FFF2D2" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="900" fill="url(#art-recipient-waiting-winter-sky)"/>
+<circle cx="931.7" cy="224.7" r="417.8" fill="url(#art-recipient-waiting-winter-glow)"/>
+<circle cx="931.7" cy="224.7" r="72.2" fill="#FFF2D2" opacity="0.6"/>
+<path d="M0 505.3 C216 442.3, 408 586.3, 648 514.3 S984 433.3, 1200 541.3 L1200 900 L0 900 Z" fill="#BFD8EA"/>
+<path d="M0 654.5 C264 600.5, 456 699.5, 696 645.5 S1008 600.5, 1200 672.5 L1200 900 L0 900 Z" fill="url(#art-recipient-waiting-winter-ground)"/>
+<path d="M0 654.5 C264 600.5, 456 699.5, 696 645.5 S1008 600.5, 1200 672.5" fill="none" stroke="#F8FCFF" stroke-width="10.8" opacity="0.5"/>
+<circle cx="126.4" cy="182" r="4.5" fill="#F8FCFF" opacity="0.36"/>
+<circle cx="193.1" cy="675.7" r="4" fill="#F8FCFF" opacity="0.55"/>
+<circle cx="259.3" cy="488.2" r="3.4" fill="#F8FCFF" opacity="0.75"/>
+<circle cx="924.6" cy="651.5" r="3.4" fill="#F8FCFF" opacity="0.69"/>
+<circle cx="851.3" cy="344.5" r="1.7" fill="#F8FCFF" opacity="0.66"/>
+<circle cx="434.1" cy="116.6" r="4.1" fill="#F8FCFF" opacity="0.81"/>
+<circle cx="329" cy="280.2" r="4" fill="#F8FCFF" opacity="0.66"/>
+<circle cx="1007.3" cy="530.9" r="3.4" fill="#F8FCFF" opacity="0.79"/>
+<circle cx="539.6" cy="73.6" r="1.6" fill="#F8FCFF" opacity="0.51"/>
+<circle cx="693.7" cy="651.4" r="2.9" fill="#F8FCFF" opacity="0.73"/>
+<circle cx="178.4" cy="507.4" r="3.1" fill="#F8FCFF" opacity="0.80"/>
+<circle cx="844.4" cy="603.6" r="4.5" fill="#F8FCFF" opacity="0.68"/>
+<circle cx="712.6" cy="237" r="3.6" fill="#F8FCFF" opacity="0.34"/>
+<circle cx="827.6" cy="294.7" r="3.7" fill="#F8FCFF" opacity="0.53"/>
+<circle cx="903.3" cy="539" r="2.9" fill="#F8FCFF" opacity="0.48"/>
+<circle cx="1143.7" cy="547.1" r="2" fill="#F8FCFF" opacity="0.46"/>
+<circle cx="1074.8" cy="110.1" r="2.4" fill="#F8FCFF" opacity="0.44"/>
+<circle cx="932.4" cy="253.4" r="3.3" fill="#F8FCFF" opacity="0.60"/>
+<rect x="94" y="610.7" width="4" height="23.1" fill="#183B70"/>
+<path d="M96 532.3 L71.5 578.4 L85 578.4 L66.6 613.1 L125.4 613.1 L107 578.4 L120.5 578.4 Z" fill="#183B70" opacity="0.9"/>
+<rect x="250" y="677.4" width="4" height="24.2" fill="#183B70"/>
+<path d="M252 595.3 L233.1 643.6 L243.5 643.6 L229.4 679.8 L274.6 679.8 L260.5 643.6 L270.9 643.6 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1042" y="618.2" width="4" height="27.9" fill="#183B70"/>
+<path d="M1044 523.3 L1026.5 579.1 L1036.1 579.1 L1023 621 L1065 621 L1051.9 579.1 L1061.5 579.1 Z" fill="#183B70" opacity="0.9"/>
+<rect x="1150" y="690.1" width="4" height="27.9" fill="#183B70"/>
+<path d="M1152 595.3 L1134.4 651 L1144.1 651 L1130.9 692.8 L1173.1 692.8 L1159.9 651 L1169.6 651 Z" fill="#183B70" opacity="0.9"/>
+<ellipse cx="756" cy="646.2" rx="112.3" ry="20.4" fill="#183B70" opacity="0.12"/>
+<circle cx="591.6" cy="585.2" r="4.8" fill="#E9675F" opacity="0.65"/>
+<circle cx="960.8" cy="515" r="6" fill="#DFA93E" opacity="0.65"/>
+<circle cx="928.8" cy="554.4" r="6.6" fill="#E9675F" opacity="0.65"/>
+<g transform="translate(756 540) scale(2)">
+<rect x="-52" y="-32" width="104" height="64" rx="6" fill="#F8FCFF"/>
+<path d="M-52 -32 L0 7 L52 -32 Z" fill="#BFD8EA" opacity="0.42"/>
+<path d="M-52 32 L-14 -2 M52 32 L14 -2" fill="none" stroke="#183B70" stroke-width="2" opacity="0.26"/>
+<circle cx="0" cy="3" r="8" fill="#E9675F"/>
+</g>
+</svg>
