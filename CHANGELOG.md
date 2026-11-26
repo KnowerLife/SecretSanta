@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [69.3.0] — 2026-11-26
+
 ### Added
 
 - SVG-иллюстрации в гайде и быстрой жеребьёвке, декоративные снежинки в CTA и иконки trust-pills; все сцены получили уникальные идентификаторы при повторном использовании на странице.
@@ -138,7 +140,8 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.2...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.3.0...HEAD
+[69.3.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.2...v69.3.0
 [69.2.2]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.1...v69.2.2
 [69.2.1]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.0...v69.2.1
 [69.2.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.1...v69.2.0

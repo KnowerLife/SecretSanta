@@ -1,6 +1,6 @@
 {
   "name": "secret-santa",
-  "version": "69.2.2",
+  "version": "69.3.0",
   "private": true,
   "type": "module",
   "description": "SecretSanta v68 (working) and v69 (TypeScript migration) in one repository",

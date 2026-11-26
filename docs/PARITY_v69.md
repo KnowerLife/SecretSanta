@@ -1,6 +1,6 @@
 # Паритет v68 → v69
 
-Дата проверки: 2026-11-26. Документ фиксирует фактическое состояние полного паритета: v69.2.2 воспроизводит игровые сценарии и UX v68 в архитектуре TanStack Start + Hono + Mantine. v68 остаётся эталоном и рабочим резервом; старые файлы не удалены.
+Дата проверки: 2026-11-26. Документ фиксирует фактическое состояние полного паритета: v69.3.0 воспроизводит игровые сценарии и UX v68 в архитектуре TanStack Start + Hono + Mantine. v68 остаётся эталоном и рабочим резервом; старые файлы не удалены.
 
 ## Итог
 
@@ -60,7 +60,7 @@
 | `npm run verify:frontend:v69:quick` | `FRONTEND_V69_CHECKS 10 FAILED 0`, 0 ошибок консоли |
 | `npm run verify:frontend:v69` | `FRONTEND_V69_CHECKS 11 FAILED 0`, Lighthouse accessibility 1.00 для 3 тем × RU/EN |
 | `npm run check:i18n-unused` | `unused=0` |
-| `npx openspec validate --all --strict` | 6/6 спецификаций valid |
+| `npx openspec validate --all --strict` | 12/12 элементов valid |
 | `git diff --check` | без ошибок |
 
 ## Откат v69
