@@ -31,4 +31,4 @@
 - [x] 4.1 Прогнать `npm run typecheck`, `npm test`, `npm run check:i18n-unused`, `npm run build`, `make test`, `npm audit --audit-level=high` и `npx openspec validate --all --strict`.
 - [x] 4.2 Прогнать `npm run verify:frontend:v69` с Lighthouse для 3 тем × RU/EN и быстрый набор против compose-стека с Redis.
 - [x] 4.3 Проверить реальную публикацию образов: манифесты `v69.2.2` и `latest` для api/web в GHCR, а также конфигурацию отката через `docker compose config` с альтернативным `V69_IMAGE_TAG`. Отсутствие более старых тегов в registry зафиксировано в `docs/PARITY_v69.md`; пользовательский откат требуется выполнять только на доступный предыдущий образ.
-- [ ] 4.4 После зелёного CI и явного разрешения владельца синхронизировать спеки, архивировать change и выпустить отдельный релиз по `docs/RELEASES.md`.
+- [x] 4.4 После зелёного CI и явного разрешения владельца синхронизировать спеки, архивировать change и выпустить отдельный релиз по `docs/RELEASES.md`.
