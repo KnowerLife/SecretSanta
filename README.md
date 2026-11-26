@@ -65,9 +65,9 @@ SecretSanta — самостоятельный frontend на ES-модулях �
 
 ## v69: TypeScript-стек
 
-**Статус:** v68 остаётся рабочей точкой входа; v69 разрабатывается параллельно в `apps/` и `packages/` и ещё не объявлен релизом. Переключение деплоя произойдёт только после паритета и релизной ветки `release/v69.0.0`.
+**Статус:** v69.0.0 выпущен и рекомендуемая точка входа для дальнейшей разработки. v68 сохранён как рабочий legacy-стек и резервный вариант: старые файлы, проверки и API не удалены. Production-деплой v69 ещё не настроен, поэтому до готового прод-стенда следует использовать локальный запуск ниже или v68.
 
-| Слой | v68 (стабильный) | v69 (в разработке) |
+| Слой | v68 (legacy) | v69 (релиз) |
 | :--- | :--- | :--- |
 | Frontend | ES-модули, `index.html`, `styles.css` | React 19 + Vite 8 (Rolldown), TanStack Start/Router/Query, Mantine 9, FSD |
 | Backend | Python stdlib + SQLite | Hono 4 + TypeScript на Node.js 22 + `node:sqlite` |
@@ -82,9 +82,9 @@ npm run dev:api    # Hono API на http://127.0.0.1:8787
 npm run dev        # SSR-приложение на http://localhost:3000
 ```
 
-Проверки v69: `npm run typecheck`, `npm test`, `npm run build`, `npx openspec validate migrate-v69-ts-stack --strict`.
+Проверки v69: `npm run typecheck`, `npm test`, `npm run build`, `npx openspec validate --specs`.
 
-База данных нового API лежит в `apps/api/data/app.db` и **не совпадает** с `backend/data/app.db`: данные v68 не изменяются. План перехода, спецификации и задачи хранятся в [`openspec/changes/migrate-v69-ts-stack/`](openspec/changes/migrate-v69-ts-stack/), процесс — в [`docs/GITFLOW.md`](docs/GITFLOW.md) и [`docs/RELEASES.md`](docs/RELEASES.md).
+База данных нового API лежит в `apps/api/data/app.db` и **не совпадает** с `backend/data/app.db`: данные v68 не изменяются. Архив плана перехода и спецификации хранятся в [`openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/`](openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/) и `openspec/specs/`; результаты сверки — в [`docs/PARITY_v69.md`](docs/PARITY_v69.md), процесс — в [`docs/GITFLOW.md`](docs/GITFLOW.md) и [`docs/RELEASES.md`](docs/RELEASES.md).
 
 ---
 
