@@ -34,6 +34,8 @@
 
 > Docker CLI в среде проверки недоступен: `docker build` и `docker compose up` не запускались. Конфигурация проверена статически и требует повторной проверки в среде с Docker.
 
+v69.1.0 — рекомендуемая точка входа для разработки и деплоя. v68 остаётся эталоном и рабочим резервом; его файлы и проверки сохранены.
+
 ## [69.0.0] — 2026-11-26
 
 ### Added
@@ -69,6 +71,7 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.0.0...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v69.1.0...HEAD
+[69.1.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.0.0...v69.1.0
 [69.0.0]: https://github.com/KnowerLife/SecretSanta/compare/v68.0.0...v69.0.0
 [68.0.0]: https://github.com/KnowerLife/SecretSanta/releases/tag/v68.0.0
