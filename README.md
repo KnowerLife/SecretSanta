@@ -65,7 +65,7 @@ SecretSanta — самостоятельный frontend на ES-модулях �
 
 ## v69: TypeScript-стек
 
-**Статус:** v69.1.0 — полный функциональный и UX-паритет с v68 в новой архитектуре. v68 сохранён как рабочий legacy-стек и эталон: старые файлы, проверки и API не удалены. Новый стек добавляет демо в один клик, локальную игру офлайн, групповые исключения, управление участниками, Web Push с напоминаниями, интерактивные гиды, перенос данных v68 и готовые Docker-артефакты.
+**Статус:** v69.1.1 — полный функциональный и UX-паритет с v68 в новой архитектуре. v68 сохранён как рабочий legacy-стек и эталон: старые файлы, проверки и API не удалены. Новый стек добавляет демо в один клик, локальную игру офлайн, групповые исключения, управление участниками, Web Push с напоминаниями, интерактивные гиды, перенос данных v68 и готовые Docker-артефакты.
 
 | Слой | v68 (legacy) | v69 (релиз) |
 | :--- | :--- | :--- |
@@ -82,7 +82,7 @@ npm run dev:api    # Hono API на http://127.0.0.1:8787
 npm run dev        # SSR-приложение на http://localhost:3000
 ```
 
-Проверки v69: `npm run typecheck`, `npm test`, `npm run check:i18n-unused`, `npm run build`, `npm run verify:frontend:v69:quick`, `npm run verify:frontend:v69` (включая Lighthouse для 3 тем × RU/EN), `npx openspec validate --all --strict`. Для Lighthouse runner использует Chromium Playwright через `CHROME_PATH`; переменную можно переопределить. `npm audit` пока сообщает об одной high-уязвимости в транзитивной зависимости Vite; обновление отложено до совместимого релиза.
+Проверки v69: `npm run typecheck`, `npm test`, `npm run check:i18n-unused`, `npm run build`, `npm run verify:frontend:v69:quick`, `npm run verify:frontend:v69` (включая Lighthouse для 3 тем × RU/EN), `npx openspec validate --all --strict`. Для Lighthouse runner использует Chromium Playwright через `CHROME_PATH`; переменную можно переопределить. `npm audit` сообщает о 0 уязвимостях.
 
 Перенос данных v68 (источник открывается только на чтение, режим `--dry-run` не пишет целевую БД):
 
