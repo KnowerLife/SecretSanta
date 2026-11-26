@@ -1,29 +1,123 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useI18n } from '../app/providers/i18n.tsx';
 import { useSettings } from '../app/providers/settings.tsx';
+import { LocalSyncPrompt } from '../features/local-play/LocalSyncPrompt.tsx';
+import './pwa-install.css';
 
 type InstallEvent = Event & {
   prompt?: () => Promise<void>;
   userChoice?: Promise<{ outcome: string }>;
 };
 
+export type PwaInstallStatus = 'installed' | 'ready' | 'ios' | 'generic';
+
+export interface PwaInstallState {
+  installed: boolean;
+  canInstall: boolean;
+  isIos: boolean;
+  status: PwaInstallStatus;
+  hintKey: string;
+  locale: string;
+  promptInstall: () => Promise<void>;
+}
+
+const PWA_INSTALLED_KEY = 'ss:v69:pwa-installed';
 const THEME_ORDER = ['winter', 'midnight', 'cozy'] as const;
 
-export function SiteHeader() {
-  const { t } = useI18n();
-  const { locale, setLocale, theme, setTheme } = useSettings();
-  const { pathname } = useLocation();
+export function detectIos(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  const platform = navigator.platform ?? '';
+  return /iPad|iPhone|iPod/.test(platform) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+function detectInstalled(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    if (window.localStorage.getItem(PWA_INSTALLED_KEY) === '1') return true;
+  } catch {
+    // Приватный режим может запретить доступ к хранилищу.
+  }
+  const standalone = (navigator as Navigator & { standalone?: boolean }).standalone === true;
+  const query = typeof window.matchMedia === 'function' ? window.matchMedia('(display-mode: standalone)').matches : false;
+  return standalone || query;
+}
+
+function markInstalled(): void {
+  try {
+    window.localStorage.setItem(PWA_INSTALLED_KEY, '1');
+  } catch {
+    // Не критично: состояние уже обновлено в React.
+  }
+}
+
+/** Подсказки установки PWA. Зависит от locale, поэтому обновляется при смене языка. */
+export function usePwaInstall(): PwaInstallState {
+  const { locale } = useI18n();
   const [installEvent, setInstallEvent] = useState<InstallEvent | null>(null);
+  const [installed, setInstalled] = useState(detectInstalled);
+  const isIos = detectIos();
 
   useEffect(() => {
     const onPrompt = (event: Event) => {
       event.preventDefault();
       setInstallEvent(event as InstallEvent);
     };
+    const onInstalled = () => {
+      markInstalled();
+      setInstalled(true);
+      setInstallEvent(null);
+    };
     window.addEventListener('beforeinstallprompt', onPrompt);
-    return () => window.removeEventListener('beforeinstallprompt', onPrompt);
+    window.addEventListener('appinstalled', onInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', onPrompt);
+      window.removeEventListener('appinstalled', onInstalled);
+    };
   }, []);
+
+  const promptInstall = useCallback(async () => {
+    if (!installEvent?.prompt) return;
+    await installEvent.prompt();
+    const choice = await installEvent.userChoice?.catch(() => ({ outcome: 'dismissed' }));
+    setInstallEvent(null);
+    if (choice?.outcome === 'accepted') {
+      markInstalled();
+      setInstalled(true);
+    }
+  }, [installEvent]);
+
+  const status: PwaInstallStatus = installed
+    ? 'installed'
+    : installEvent
+      ? 'ready'
+      : isIos
+        ? 'ios'
+        : 'generic';
+  const hintKey = status === 'installed'
+    ? 'install.done'
+    : status === 'ready'
+      ? 'install.ready'
+      : status === 'ios'
+        ? 'install.ios'
+        : 'install.generic';
+
+  return {
+    installed,
+    canInstall: Boolean(installEvent) && !installed,
+    isIos,
+    status,
+    hintKey,
+    locale,
+    promptInstall,
+  };
+}
+
+export function SiteHeader() {
+  const { t } = useI18n();
+  const { locale, setLocale, theme, setTheme } = useSettings();
+  const { pathname } = useLocation();
+  const install = usePwaInstall();
 
   const links = [
     { to: '/', label: t('nav.home') },
@@ -31,13 +125,6 @@ export function SiteHeader() {
     { to: '/quick-draw', label: t('nav.quick') },
     { to: '/join', label: t('nav.join') },
   ] as const;
-
-  const install = async () => {
-    if (!installEvent?.prompt) return;
-    await installEvent.prompt();
-    await installEvent.userChoice;
-    setInstallEvent(null);
-  };
 
   return (
     <header className="site-header">
@@ -49,10 +136,7 @@ export function SiteHeader() {
           <span className="brand__mark" aria-hidden="true">
             ❄
           </span>
-          <span>
-            <span className="brand__word">Тайный </span>
-            <span className="brand__word brand__word--accent">Санта</span>
-          </span>
+          <span dangerouslySetInnerHTML={{ __html: t('brand.name') }} />
         </Link>
 
         <nav className="nav" aria-label={t('nav.aria')}>
@@ -90,19 +174,27 @@ export function SiteHeader() {
           >
             {theme === 'winter' ? '❄' : theme === 'midnight' ? '☾' : '☕'}
           </button>
-          {installEvent && (
+          {install.installed ? (
+            <span className="install-pill" role="status" aria-label={t('install.done')} title={t('install.done')}>
+              ✓
+            </span>
+          ) : install.canInstall ? (
             <button
               type="button"
               className="icon-button"
-              onClick={install}
+              onClick={() => void install.promptInstall()}
               aria-label={t('nav.installAria')}
               title={t('nav.installAria')}
             >
               ↓
             </button>
-          )}
+          ) : null}
         </div>
       </div>
+      <div className="container">
+        <p className="install-hint install-hint--header">{t(install.hintKey)}</p>
+      </div>
+      <LocalSyncPrompt />
     </header>
   );
 }

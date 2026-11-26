@@ -4,6 +4,8 @@ import { Link } from '@tanstack/react-router';
 import type { SceneId } from '@secret-santa/art';
 import { useI18n } from '../app/providers/i18n.tsx';
 import { Scene } from '../shared/ui/Scene.tsx';
+import { DemoRoomButton } from '../features/guide/DemoRoomButton.tsx';
+import { SiteGuide } from '../features/guide/SiteGuide.tsx';
 
 function Head({ kicker, title, sub }: { kicker: string; title: string; sub: string }) {
   return (
@@ -45,9 +47,7 @@ export function HeroSection() {
           <Link className="btn btn--secondary" to="/join">
             {t('hero.ctaJoin')}
           </Link>
-          <Link className="btn btn--secondary" to="/quick-draw">
-            {t('hero.ctaDemo')}
-          </Link>
+          <DemoRoomButton className="btn btn--secondary">{t('hero.ctaDemo')}</DemoRoomButton>
         </Group>
         <p className="hero__note">{t('hero.note')}</p>
         <Group className="trust-row" gap={10} wrap="wrap">
@@ -68,9 +68,9 @@ export function HeroSection() {
 export function ModesSection() {
   const { t } = useI18n();
   const modes = [
-    { id: 'mode-online', key: 'full', to: '/create' },
-    { id: 'mode-quick', key: 'quick', to: '/quick-draw' },
-    { id: 'mode-demo', key: 'demo', to: '/quick-draw' },
+    { id: 'mode-online', key: 'full', to: '/create', demo: false },
+    { id: 'mode-quick', key: 'quick', to: '/quick-draw', demo: false },
+    { id: 'mode-demo', key: 'demo', to: null, demo: true },
   ] as const;
   return (
     <section className="section section--tint" id="modes">
@@ -84,9 +84,15 @@ export function ModesSection() {
               title={t(`modes.${mode.key}.title`)}
               text={t(`modes.${mode.key}.text`)}
               cta={
-                <Link className="btn btn--secondary" to={mode.to}>
-                  {t(`modes.${mode.key}.cta`)}
-                </Link>
+                mode.demo ? (
+                  <DemoRoomButton className="btn btn--secondary">
+                    {t(`modes.${mode.key}.cta`)}
+                  </DemoRoomButton>
+                ) : (
+                  <Link className="btn btn--secondary" to={mode.to}>
+                    {t(`modes.${mode.key}.cta`)}
+                  </Link>
+                )
               }
             />
           ))}
@@ -236,27 +242,11 @@ export function IdeasSection() {
 
 export function GuideSection() {
   const { t } = useI18n();
-  const guide = [
-    { num: 1, id: 'guide-format' },
-    { num: 2, id: 'guide-prep' },
-    { num: 3, id: 'guide-room-team' },
-    { num: 4, id: 'guide-room-wishes' },
-    { num: 5, id: 'guide-room-profile' },
-  ] as const;
   return (
     <section className="section" id="guide">
       <div className="container">
         <Head kicker={t('guide.site.kicker')} title={t('guide.site.title')} sub={t('guide.site.sub')} />
-        <div className="grid grid--3">
-          {guide.map((item) => (
-            <SceneCard
-              key={item.num}
-              id={item.id}
-              title={t(`guide.site.${item.num}.title`)}
-              text={t(`guide.site.${item.num}.text`)}
-            />
-          ))}
-        </div>
+        <SiteGuide />
       </div>
     </section>
   );
@@ -309,7 +299,10 @@ export function FaqSection() {
 export function CtaSection() {
   const { t } = useI18n();
   return (
-    <section className="section">
+    <section
+      className="section"
+      aria-label={`${t('home.more.title')} — ${t('home.more.sub')}`}
+    >
       <div className="container cta-band">
         <div>
           <span className="kicker">{t('cta.kicker')}</span>

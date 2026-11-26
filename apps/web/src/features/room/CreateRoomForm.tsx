@@ -1,7 +1,12 @@
 import { useState } from 'react';
+import { Group, Radio } from '@mantine/core';
 import { useNavigate } from '@tanstack/react-router';
+import type { RoomTheme } from '@secret-santa/shared/contracts';
+import { notifications } from '@mantine/notifications';
 import { apiFetch, rememberRoom } from '../../shared/api/client.ts';
 import { useI18n } from '../../app/providers/i18n.tsx';
+
+const ROOM_THEMES = ['winter', 'midnight', 'cozy'] as const satisfies readonly RoomTheme[];
 
 interface CreatedRoom {
   code: string;
@@ -18,7 +23,7 @@ export function CreateRoomForm() {
   const [eventDate, setEventDate] = useState('');
   const [budgetMin, setBudgetMin] = useState('0');
   const [budgetMax, setBudgetMax] = useState('0');
-  const [theme, setTheme] = useState('');
+  const [theme, setTheme] = useState<RoomTheme>('winter');
   const [members, setMembers] = useState('');
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
@@ -28,6 +33,10 @@ export function CreateRoomForm() {
     setError('');
     if (!name.trim() || !organizerName.trim()) {
       setError(t('err.createRequired'));
+      return;
+    }
+    if (!eventDate.trim()) {
+      setError(t('err.createDate'));
       return;
     }
     const min = Number(budgetMin);
@@ -43,9 +52,10 @@ export function CreateRoomForm() {
         body: {
           name: name.trim(),
           organizerName: organizerName.trim(),
-          eventDate: eventDate || undefined,
-          budgetMin: min,
-          budgetMax: max,
+          eventDate: eventDate.trim(),
+          budgetMin: Math.round(min),
+          budgetMax: Math.round(max),
+          theme,
           memberNames: members
             .split('\n')
             .map((item) => item.trim())
@@ -53,6 +63,7 @@ export function CreateRoomForm() {
         },
       });
       rememberRoom(result.code, result.token, result.memberToken);
+      notifications.show({ message: t('toast.created'), color: 'green', autoClose: 3500 });
       await navigate({ to: '/room/$code', params: { code: result.code } });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : t('err.network'));
@@ -88,14 +99,13 @@ export function CreateRoomForm() {
         />
       </div>
       <div className="field">
-        <label htmlFor="event-date">
-          {t('create.eventDate')} <span className="form-card__sub">{t('create.optional')}</span>
-        </label>
+        <label htmlFor="event-date">{t('create.eventDate')}</label>
         <input
           id="event-date"
           type="date"
           value={eventDate}
           onChange={(event) => setEventDate(event.target.value)}
+          required
         />
       </div>
       <div className="field">
@@ -120,20 +130,25 @@ export function CreateRoomForm() {
         </div>
       </div>
       <div className="field">
-        <label htmlFor="create-theme">
-          {t('create.theme')} <span className="form-card__sub">{t('create.optional')}</span>
-        </label>
-        <input
-          id="create-theme"
+        <Radio.Group
+          label={t('create.theme')}
           value={theme}
-          onChange={(event) => setTheme(event.target.value)}
-          placeholder={t('create.themePh')}
-        />
+          onChange={(value) => setTheme(value as RoomTheme)}
+        >
+          <Group gap="sm" wrap="wrap">
+            {ROOM_THEMES.map((value) => (
+              <Radio key={value} value={value} label={t(`theme.${value}`)} />
+            ))}
+          </Group>
+        </Radio.Group>
       </div>
       <div className="field">
-        <label htmlFor="member-names">{t('dash.participantsTitle')}</label>
+        <label htmlFor="member-names">
+          {t('dash.participantsTitle')} <span className="field-hint">{t('create.optional')}</span>
+        </label>
         <textarea
           id="member-names"
+          aria-label={t('participant.label')}
           value={members}
           onChange={(event) => setMembers(event.target.value)}
           placeholder={t('quick.namesPh')}
@@ -146,6 +161,7 @@ export function CreateRoomForm() {
         <button className="btn btn--primary" type="submit" disabled={pending}>
           {t('create.submit')}
         </button>
+        <a className="btn btn--secondary" href="/">{t('create.cancel')}</a>
       </div>
     </form>
   );

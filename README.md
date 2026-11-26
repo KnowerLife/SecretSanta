@@ -65,7 +65,7 @@ SecretSanta — самостоятельный frontend на ES-модулях �
 
 ## v69: TypeScript-стек
 
-**Статус:** v69.0.0 выпущен и рекомендуемая точка входа для дальнейшей разработки. v68 сохранён как рабочий legacy-стек и резервный вариант: старые файлы, проверки и API не удалены. Production-деплой v69 ещё не настроен, поэтому до готового прод-стенда следует использовать локальный запуск ниже или v68.
+**Статус:** v69.1.0 — полный функциональный и UX-паритет с v68 в новой архитектуре. v68 сохранён как рабочий legacy-стек и эталон: старые файлы, проверки и API не удалены. Новый стек добавляет демо в один клик, локальную игру офлайн, групповые исключения, управление участниками, Web Push с напоминаниями, интерактивные гиды, перенос данных v68 и готовые Docker-артефакты.
 
 | Слой | v68 (legacy) | v69 (релиз) |
 | :--- | :--- | :--- |
@@ -82,9 +82,24 @@ npm run dev:api    # Hono API на http://127.0.0.1:8787
 npm run dev        # SSR-приложение на http://localhost:3000
 ```
 
-Проверки v69: `npm run typecheck`, `npm test`, `npm run build`, `npx openspec validate --specs`.
+Проверки v69: `npm run typecheck`, `npm test`, `npm run check:i18n-unused`, `npm run build`, `npm run verify:frontend:v69:quick`, `npm run verify:frontend:v69` (включая Lighthouse для 3 тем × RU/EN), `npx openspec validate --all --strict`. Для Lighthouse runner использует Chromium Playwright через `CHROME_PATH`; переменную можно переопределить. `npm audit` пока сообщает об одной high-уязвимости в транзитивной зависимости Vite; обновление отложено до совместимого релиза.
 
-База данных нового API лежит в `apps/api/data/app.db` и **не совпадает** с `backend/data/app.db`: данные v68 не изменяются. Архив плана перехода и спецификации хранятся в [`openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/`](openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/) и `openspec/specs/`; результаты сверки — в [`docs/PARITY_v69.md`](docs/PARITY_v69.md), процесс — в [`docs/GITFLOW.md`](docs/GITFLOW.md) и [`docs/RELEASES.md`](docs/RELEASES.md).
+Перенос данных v68 (источник открывается только на чтение, режим `--dry-run` не пишет целевую БД):
+
+```bash
+npm run migrate:v68 -- --dry-run
+npm run migrate:v68            # копия v68 → apps/api/data/app.db
+```
+
+Запуск воркера напоминаний и production-стенда:
+
+```bash
+npm run worker --workspace @secret-santa/api
+cp .env.example .env
+docker compose -f docker-compose.v69.yml up --build
+```
+
+Подробности — [`apps/api/WORKER.md`](apps/api/WORKER.md). База нового API лежит в `apps/api/data/app.db` и отделена от `backend/data/app.db`: миграция не изменяет источник и сохраняет счётчики. Архив плана перехода и спецификации хранятся в [`openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/`](openspec/changes/archive/2026-11-26-migrate-v69-ts-stack/) и `openspec/specs/`; результаты сверки — в [`docs/PARITY_v69.md`](docs/PARITY_v69.md), процесс — в [`docs/GITFLOW.md`](docs/GITFLOW.md) и [`docs/RELEASES.md`](docs/RELEASES.md).
 
 ---
 

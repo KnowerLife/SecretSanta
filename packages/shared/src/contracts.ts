@@ -2,13 +2,36 @@ import { z } from 'zod';
 
 /** Публичные контракты API v69. Используются и клиентом, и сервером. */
 
+export const roomThemeSchema = z.enum(['winter', 'midnight', 'cozy']);
+
 export const createRoomSchema = z.object({
   name: z.string().min(1).max(120),
   organizerName: z.string().min(1).max(80),
-  eventDate: z.string().max(40).optional(),
+  eventDate: z.string().min(1).max(40),
   budgetMin: z.number().int().min(0).default(0),
   budgetMax: z.number().int().min(0).default(0),
   memberNames: z.array(z.string().min(1).max(80)).max(100).optional(),
+  theme: roomThemeSchema.default('winter'),
+});
+
+export const createDemoSchema = z.object({
+  memberNames: z.array(z.string().min(1).max(80)).min(2).max(12).optional(),
+});
+
+export const memberSchema = z.object({
+  name: z.string().min(1).max(80),
+});
+
+export const groupSchema = z.object({
+  name: z.string().min(1).max(80),
+  memberIds: z.array(z.string().min(1)).min(2).max(100),
+});
+
+export const pushSubscribeSchema = z.object({
+  endpoint: z.string().min(1),
+  keys: z.object({ p256dh: z.string(), auth: z.string() }).optional(),
+  roomCode: z.string().min(4).max(32).optional(),
+  memberId: z.string().optional(),
 });
 
 export const joinRoomSchema = z.object({
@@ -65,8 +88,21 @@ export const notificationSchema = z.object({
 });
 
 export type CreateRoomInput = z.infer<typeof createRoomSchema>;
+export type CreateDemoInput = z.infer<typeof createDemoSchema>;
 export type JoinRoomInput = z.infer<typeof joinRoomSchema>;
+export type MemberInput = z.infer<typeof memberSchema>;
+export type GroupInput = z.infer<typeof groupSchema>;
+export type PushSubscribeInput = z.infer<typeof pushSubscribeSchema>;
 export type MessageInput = z.infer<typeof messageSchema>;
+export type RoomTheme = z.infer<typeof roomThemeSchema>;
+
+/** Идентификатор, полученный из токена v68 через таблицу соответствий. */
+export interface LegacyIdentity {
+  kind: 'session' | 'invite' | 'member';
+  roomId: string;
+  memberId?: string;
+  sessionId?: string;
+}
 
 export interface RoomMemberView {
   id: string;
@@ -81,6 +117,8 @@ export interface RoomView {
   code: string;
   name: string;
   eventDate: string | null;
+  theme: RoomTheme;
+  demo: boolean;
   budgetMin: number;
   budgetMax: number;
   status: string;
@@ -104,8 +142,19 @@ export interface ActivityView {
   id: string;
   type: string;
   actor: string | null;
+  actorName: string | null;
   payload: unknown;
   createdAt: string;
+}
+
+export interface SessionView {
+  id: string;
+  createdAt: string;
+  expiresAt: string;
+  lastSeenAt: string | null;
+  userAgent: string | null;
+  revoked: boolean;
+  current: boolean;
 }
 
 export interface MessageView {
@@ -114,4 +163,25 @@ export interface MessageView {
   text: string;
   fromMe: boolean;
   createdAt: string;
+  pending?: boolean;
+}
+
+export interface LocalMember extends RoomMemberView {
+  token: string;
+}
+
+export interface LocalRoom extends RoomView {
+  members: LocalMember[];
+  meId: string;
+  assignment: Record<string, string>;
+  messages: Array<MessageView & { id: string; authorId: string }>;
+  activity: ActivityView[];
+  dirty: boolean;
+}
+
+/** Версионированное состояние локальной игры в localStorage. */
+export interface LocalGameState {
+  version: 1;
+  rooms: LocalRoom[];
+  updatedAt: string;
 }

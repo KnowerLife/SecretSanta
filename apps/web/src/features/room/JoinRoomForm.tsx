@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { apiFetch, rememberRoom } from '../../shared/api/client.ts';
+import { notifications } from '@mantine/notifications';
+import { apiFetch, rememberRoom, shouldUseLocal } from '../../shared/api/client.ts';
 import { useI18n } from '../../app/providers/i18n.tsx';
 
 interface JoinedRoom {
@@ -44,9 +45,15 @@ export function JoinRoomForm() {
         },
       });
       rememberRoom(result.code, result.token, result.memberToken);
+      notifications.show({ message: t('toast.joined'), color: 'green', autoClose: 3500 });
       await navigate({ to: '/room/$code', params: { code: result.code } });
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : t('err.network'));
+      const failure = cause as { code?: string; status?: number } | null;
+      if (failure?.code === 'room_not_found' || failure?.status === 404) {
+        setError(t(shouldUseLocal() ? 'err.joinNotFound' : 'err.joinNotFoundOnline'));
+      } else {
+        setError(cause instanceof Error ? cause.message : t('err.network'));
+      }
     } finally {
       setPending(false);
     }
@@ -85,6 +92,7 @@ export function JoinRoomForm() {
         <button className="btn btn--primary" type="submit" disabled={pending}>
           {t('join.submit')}
         </button>
+        <a className="btn btn--secondary" href="/">{t('join.cancel')}</a>
       </div>
     </form>
   );

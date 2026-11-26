@@ -12,3 +12,4 @@ apps/api/data/*.db-wal
 node_modules/
 dist/
 .tmp/
+.agents/skills/

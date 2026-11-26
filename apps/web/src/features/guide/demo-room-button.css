@@ -1,0 +1,10 @@
+.site-demo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.site-demo .form-error {
+  margin: 0;
+}

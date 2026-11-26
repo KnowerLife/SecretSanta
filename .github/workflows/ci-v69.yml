@@ -18,6 +18,24 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run typecheck
       - run: npm test
+      - run: npm run check:i18n-unused
       - run: npm run build
       - name: OpenSpec validation
-        run: npx openspec validate migrate-v69-ts-stack --strict
+        run: npx openspec validate --all --strict
+
+  frontend-checks-v69:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Browser checks, readiness gates and Lighthouse (3 themes x RU/EN)
+        env:
+          SECRET_SANTA_V69_START_SERVERS: '1'
+          SECRET_SANTA_SECRET: ci-secret-change-me
+        run: npm run verify:frontend:v69

@@ -1,0 +1,36 @@
+.install-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+.install-hint--header {
+  display: none;
+  padding: 0 0 8px;
+}
+
+@media (min-width: 960px) {
+  .install-hint--header {
+    display: block;
+  }
+}
+
+.install-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 999px;
+  background: var(--color-surface, #fff);
+  color: var(--color-success, #2e7d32);
+  font-weight: 700;
+}
+
+.footer-install {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}

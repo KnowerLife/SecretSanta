@@ -1,0 +1,103 @@
+.site-guide {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.6fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.site-guide__rail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.site-guide__step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--santa-line);
+  border-radius: 12px;
+  background: var(--santa-surface);
+  color: var(--santa-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.site-guide__step:hover {
+  color: var(--santa-ink);
+}
+
+.site-guide__step[aria-selected='true'] {
+  border-color: var(--santa-accent);
+  background: var(--santa-accent);
+  color: var(--santa-on-accent);
+}
+
+.site-guide__step:focus-visible,
+.site-guide__panel:focus-visible {
+  outline: 3px solid var(--santa-accent);
+  outline-offset: 2px;
+}
+
+.site-guide__step-num {
+  display: inline-flex;
+  flex: 0 0 28px;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--santa-primary);
+  color: var(--santa-on-primary);
+  font-weight: 700;
+}
+
+.site-guide__step[aria-selected='true'] .site-guide__step-num {
+  background: var(--santa-surface);
+  color: var(--santa-accent);
+}
+
+.site-guide__panel {
+  position: relative;
+  padding: 28px;
+  border: 1px solid var(--santa-line);
+  border-radius: 18px;
+  background: var(--santa-surface);
+}
+
+.site-guide__panel h3 {
+  margin: 12px 0 10px;
+}
+
+.site-guide__progress {
+  color: var(--santa-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.site-guide__tip {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--santa-accent);
+  border-radius: 8px;
+  background: var(--santa-tint, var(--santa-surface));
+  color: var(--santa-muted);
+}
+
+@media (max-width: 800px) {
+  .site-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .site-guide__rail {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .site-guide__step {
+    min-width: 150px;
+  }
+}

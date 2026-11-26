@@ -1,56 +1,101 @@
-const API_BASE = import.meta.env.VITE_API_BASE ?? '';
+/**
+ * Единая точка входа для всех запросов веб-приложения.
+ *
+ * `apiFetch` и `request` имеют одинаковую сигнатуру: при доступном API запрос
+ * уходит на сервер, при недоступном — выполняется локальным адаптером. Вызывающие
+ * сайты не меняются при переключении режима.
+ */
 
-export type ApiError = Error & { status?: number; code?: string };
+import { isApiAvailable, markApiUnavailable, markApiAvailable, shouldUseLocal } from './availability.ts';
+import { localRequest } from './localAdapter.ts';
+import { findLocalRoom } from './localState.ts';
+import type { ApiError, FetchOptions } from './http.ts';
+import { serverFetch } from './http.ts';
 
-export function tokenKey(code: string): string {
-  return `ss:v69:token:${code.toUpperCase()}`;
+export {
+  API_BASE,
+  apiError,
+  forgetRoom,
+  memberTokenKey,
+  rememberRoom,
+  roomToken,
+  tokenKey,
+} from './http.ts';
+export type { ApiError, FetchOptions } from './http.ts';
+export {
+  isApiAvailable,
+  isBrowserOffline,
+  isLocalMode,
+  LOCAL_MODE_EVENT,
+  markApiAvailable,
+  markApiUnavailable,
+  setLocalMode,
+  shouldUseLocal,
+} from './availability.ts';
+export {
+  clearOutbox,
+  dirtyRoomCodes,
+  flushLocalOutbox,
+  getLocalRoomBootstrap,
+  hasDirtyRooms,
+  keepLocalOnly,
+  localRequest,
+  readOutbox,
+  seedLocalState,
+  writeOutbox,
+} from './localAdapter.ts';
+export {
+  LOCAL_OUTBOX_KEY,
+  LOCAL_STATE_KEY,
+  LOCAL_STATE_VERSION,
+  emptyLocalState,
+  markRoomsClean,
+  readLocalState,
+  resetLocalState,
+  writeLocalState,
+} from './localState.ts';
+export {
+  getPushConfig,
+  getStoredSubscription,
+  isPushEnabled,
+  isPushSupported,
+  sendTestNotification,
+  subscribeToPush,
+  unsubscribeFromPush,
+  urlBase64ToUint8Array,
+} from './push.ts';
+export type { PushConfig, PushFetcher, PushSubscriptionSnapshot } from './push.ts';
+
+function isFallbackError(error: unknown): boolean {
+  if (error instanceof TypeError) return true;
+  const status = (error as ApiError | undefined)?.status;
+  return typeof status === 'number' && (status === 0 || status >= 500);
 }
 
-export function memberTokenKey(code: string): string {
-  return `ss:v69:member:${code.toUpperCase()}`;
+function localRoomCode(path: string): string | null {
+  const match = path.match(/^\/api\/rooms\/([^/?]+)/);
+  return match?.[1] ? decodeURIComponent(match[1]).toUpperCase() : null;
 }
 
-export function rememberRoom(code: string, token: string, memberToken?: string): void {
-  if (typeof window === 'undefined') return;
-  window.localStorage.setItem(tokenKey(code), token);
-  if (memberToken) window.localStorage.setItem(memberTokenKey(code), memberToken);
-  document.cookie = `ss_token=${encodeURIComponent(token)}; path=/; max-age=604800; samesite=lax`;
-  document.cookie = `ss_token_${code.toUpperCase()}=${encodeURIComponent(token)}; path=/; max-age=604800; samesite=lax`;
-}
+/** HTTP-клиент с прозрачным локальным режимом. */
+export async function apiFetch<T>(path: string, options: FetchOptions = {}): Promise<T> {
+  const code = options.code ?? localRoomCode(path) ?? undefined;
+  const hasLocalRoom = Boolean(code && findLocalRoom(code));
+  // Комната, созданная на сервере, не должна ломаться из-за включённого локального режима.
+  if (shouldUseLocal() && hasLocalRoom) return localRequest<T>(path, options);
 
-export function forgetRoom(code: string): void {
-  if (typeof window === 'undefined') return;
-  window.localStorage.removeItem(tokenKey(code));
-  window.localStorage.removeItem(memberTokenKey(code));
-}
-
-export function roomToken(code: string): string | null {
-  if (typeof window === 'undefined') return null;
-  return window.localStorage.getItem(tokenKey(code));
-}
-
-export async function apiFetch<T>(
-  path: string,
-  options: { method?: string; body?: unknown; token?: string | null; code?: string } = {},
-): Promise<T> {
-  const { method = 'GET', body, token, code } = options;
-  const authToken = token === undefined && code ? roomToken(code) : token;
-  const response = await fetch(`${API_BASE}${path}`, {
-    method,
-    headers: {
-      ...(body !== undefined ? { 'content-type': 'application/json' } : {}),
-      ...(authToken ? { authorization: `Bearer ${authToken}` } : {}),
-    },
-    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
-  });
-
-  const text = await response.text();
-  const data = text ? (JSON.parse(text) as T & { error?: string }) : ({} as T & { error?: string });
-  if (!response.ok) {
-    const error = new Error(data.error ?? `HTTP ${response.status}`) as ApiError;
-    error.status = response.status;
-    error.code = data.error;
+  try {
+    const result = await serverFetch<T>(path, options);
+    markApiAvailable();
+    return result;
+  } catch (error) {
+    if (isFallbackError(error)) {
+      markApiUnavailable();
+      return localRequest<T>(path, options);
+    }
     throw error;
   }
-  return data;
 }
+
+/** Стабильный псевдоним для call-site, которые хотят явно переключать режимы. */
+export const request = apiFetch;

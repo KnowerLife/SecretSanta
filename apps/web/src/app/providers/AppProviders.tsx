@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { MantineProvider, createTheme } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { I18nProvider } from './i18n.tsx';
 import { SettingsProvider, useSettings } from './settings.tsx';
@@ -53,7 +54,12 @@ function Providers({ children }: { children: ReactNode }) {
     <MantineProvider
       theme={makeTheme(theme)}
       forceColorScheme={theme === 'midnight' ? 'dark' : 'light'}
+      // React 19 требует precedence/href для динамических <style>; статические
+      // переменные Мантина подключены ссылками в __root.tsx и global.css.
+      withCssVariables={false}
+      withGlobalClasses={false}
     >
+      <Notifications autoClose={4000} position="top-right" limit={5} />
       <QueryClientProvider client={queryClient}>
         <I18nProvider>{children}</I18nProvider>
       </QueryClientProvider>
