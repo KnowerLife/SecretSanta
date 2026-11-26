@@ -20,7 +20,7 @@
 3. OpenSpec-change для релиза прошёл `openspec validate <name> --strict`.
 4. Создана `release/vX.Y.Z`, обновлены `CHANGELOG.md` и README.
 5. Проверены браузерные сценарии v69 на трёх темах и двух языках (`npm run verify:frontend:v69`).
-6. После одобрения: merge в `main`, тег `vX.Y.Z`, merge обратно в `develop`, архивация change.
+6. После одобрения: merge в `main`, теги `vX.Y.Z` и `stable`, merge обратно в `develop`, архивация change.
 
 ## CHANGELOG
 

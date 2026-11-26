@@ -1,6 +1,6 @@
 {
   "name": "secret-santa",
-  "version": "69.3.0",
+  "version": "69.4.0",
   "private": true,
   "type": "module",
   "description": "SecretSanta: PWA for a Secret Santa game on TanStack Start, Mantine and Hono",
