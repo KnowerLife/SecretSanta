@@ -70,6 +70,9 @@ services:
       - v69
     # Отдельный процесс напоминаний; скрипт объявлен в apps/api/package.json.
     command: npm run worker --workspace @secret-santa/api
+    # Образ API наследует HTTP-healthcheck, но воркер не слушает порт.
+    healthcheck:
+      disable: true
     depends_on:
       redis:
         condition: service_healthy

@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Compose больше не применяет HTTP-healthcheck API-образа к воркеру: воркер не слушает порт и теперь показывает корректный статус `Up` без ложного `unhealthy`.
+- Публикация образов собирает `linux/amd64` и `linux/arm64`; образы доступны на хостах с Apple Silicon без принудительной замены платформы.
+
 ### Removed
 
 - Легаси-стек v68 удалён из репозитория: `index.html`, `app.js`, `src/*.js`, `styles.css`, `sw.js`, `backend/`, `assets/`, `icons/`, `docker-compose.yml`, `PRODUCTION_PLAN.md`, скриншоты и проверки v68. Для локальных регрессионных тестов сохранена игнорируемая копия `.legacy-v68-local/`.
