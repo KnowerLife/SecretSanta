@@ -82,7 +82,7 @@ npm run dev:api    # Hono API на http://127.0.0.1:8787
 npm run dev        # SSR-приложение на http://localhost:3000
 ```
 
-Проверки v69: `npm run typecheck`, `npm test`, `npm run check:i18n-unused`, `npm run build`, `npm run verify:frontend:v69:quick`, `npm run verify:frontend:v69` (включая Lighthouse для 3 тем × RU/EN), `npx openspec validate --all --strict`. Для Lighthouse runner использует Chromium Playwright через `CHROME_PATH`; переменную можно переопределить. `npm audit` пока сообщает об одной high-уязвимости в транзитивной зависимости Vite; обновление отложено до совместимого релиза.
+Проверки v69: `npm run typecheck`, `npm test`, `npm run check:i18n-unused`, `npm run build`, `npm run verify:frontend:v69:quick`, `npm run verify:frontend:v69` (включая Lighthouse для 3 тем × RU/EN), `npx openspec validate --all --strict`. Для Lighthouse runner использует Chromium Playwright через `CHROME_PATH`; переменную можно переопределить. `npm audit` сообщает о 0 уязвимостях.
 
 Перенос данных v68 (источник открывается только на чтение, режим `--dry-run` не пишет целевую БД):
 
