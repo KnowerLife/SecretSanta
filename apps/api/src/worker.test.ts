@@ -10,9 +10,11 @@ process.env.SECRET_SANTA_SECRET = 'worker-test-secret';
 
 const { all, get, run } = await import('./db.ts');
 const { processJobs, runWorkerOnce, scheduleReminders } = await import('./worker.ts');
+const { vapidPublicKeyFromPrivate } = await import('./push.ts');
 
 const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
 const PRIVATE_PEM = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
+const PUBLIC_KEY = vapidPublicKeyFromPrivate(privateKey);
 const ENDPOINT = 'https://push.example.test/worker';
 
 function seedRoom(eventDate: string): string {
@@ -75,7 +77,7 @@ test('без VAPID задача остаётся в очереди и не по�
 
 test('воркер отправляет задачу, удаляет мёртвую подписку и не падает на ошибках', async () => {
   process.env.VAPID_PRIVATE_KEY = PRIVATE_PEM;
-  process.env.VAPID_PUBLIC_KEY = 'test-public-key';
+  process.env.VAPID_PUBLIC_KEY = PUBLIC_KEY;
   process.env.VAPID_SUBJECT = 'mailto:test@example.com';
   const roomId = seedRoom(new Date().toISOString().slice(0, 10));
   run(

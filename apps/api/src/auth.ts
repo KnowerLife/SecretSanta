@@ -1,8 +1,9 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 import type { LegacyIdentity } from '@secret-santa/shared/contracts';
+import { signingSecret } from './config.ts';
 import { get } from './db.ts';
 
-const SECRET = process.env.SECRET_SANTA_SECRET ?? 'dev-insecure-change-me';
+const SECRET = signingSecret();
 const DEFAULT_TTL = Number(process.env.SECRET_SANTA_TOKEN_TTL ?? 604800);
 
 export type TokenKind = 'session' | 'invite' | 'member';

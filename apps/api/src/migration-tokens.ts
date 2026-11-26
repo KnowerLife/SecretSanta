@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 import { fileURLToPath } from 'node:url';
 import type { TokenPayload } from './auth.ts';
+import { signingSecret } from './config.ts';
 
 export type LegacyTokenKind = 'session' | 'invite' | 'member';
 
@@ -40,7 +41,7 @@ export function hashLegacyToken(token: string): string {
  * runtime database via db.ts, so the CLI deliberately stays independent.
  */
 export function signV69Token(payload: TokenPayload): string {
-  const secret = process.env.SECRET_SANTA_SECRET ?? 'dev-insecure-change-me';
+  const secret = signingSecret();
   const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
   const signature = createHmac('sha256', secret).update(body).digest('base64url');
   return `${body}.${signature}`;
@@ -49,7 +50,7 @@ export function signV69Token(payload: TokenPayload): string {
 export function verifyV69Token(token: string): TokenPayload | null {
   const [body, signature] = token.split('.');
   if (!body || !signature) return null;
-  const secret = process.env.SECRET_SANTA_SECRET ?? 'dev-insecure-change-me';
+  const secret = signingSecret();
   const expected = createHmac('sha256', secret).update(body).digest('base64url');
   const a = Buffer.from(signature);
   const b = Buffer.from(expected);

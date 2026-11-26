@@ -9,11 +9,12 @@ process.env.SECRET_SANTA_V69_DB_PATH = join(mkdtempSync(join(tmpdir(), 'ss-push-
 process.env.SECRET_SANTA_SECRET = 'push-test-secret';
 
 const { get, run } = await import('./db.ts');
-const { sendRoomPush } = await import('./push.ts');
+const { pushEnabled, sendRoomPush, vapidPublicKeyFromPrivate, vapidStatus } = await import('./push.ts');
 
 const ENDPOINT = 'https://push.example.test/abc';
 const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
 const PRIVATE_PEM = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
+const PUBLIC_KEY = vapidPublicKeyFromPrivate(privateKey);
 
 function seedSubscription(): string {
   const roomId = `room_${Math.random().toString(36).slice(2)}`;
@@ -57,11 +58,31 @@ test('без VAPID отправка отключена и сетевых выз�
     assert.deepEqual(result, { delivered: 0, failures: 0, removed: [], disabled: true });
   });
   assert.equal(calls, 0);
+  assert.equal(pushEnabled(), false);
+  assert.match(vapidStatus().reason ?? '', /не заданы/);
+});
+
+test('несовпадение пары VAPID и неверный subject отключают push', () => {
+  const other = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+  process.env.VAPID_PRIVATE_KEY = PRIVATE_PEM;
+  process.env.VAPID_PUBLIC_KEY = vapidPublicKeyFromPrivate(other.privateKey);
+  process.env.VAPID_SUBJECT = 'mailto:test@example.com';
+  assert.equal(pushEnabled(), false);
+  assert.match(vapidStatus().reason ?? '', /не соответствует/);
+
+  process.env.VAPID_PUBLIC_KEY = PUBLIC_KEY;
+  process.env.VAPID_SUBJECT = 'not-a-url';
+  assert.equal(pushEnabled(), false);
+  assert.match(vapidStatus().reason ?? '', /VAPID_SUBJECT/);
+
+  process.env.VAPID_SUBJECT = 'mailto:test@example.com';
+  assert.equal(pushEnabled(), true);
+  assert.equal(vapidStatus().reason, undefined);
 });
 
 test('Web Push подписан ES256 и не содержит персональных данных', async () => {
   process.env.VAPID_PRIVATE_KEY = PRIVATE_PEM;
-  process.env.VAPID_PUBLIC_KEY = 'test-public-key';
+  process.env.VAPID_PUBLIC_KEY = PUBLIC_KEY;
   process.env.VAPID_SUBJECT = 'mailto:test@example.com';
   const roomId = seedSubscription();
 
@@ -97,7 +118,7 @@ test('Web Push подписан ES256 и не содержит персонал�
 
 test('недействительная подписка удаляется и помечается как удалённая', async () => {
   process.env.VAPID_PRIVATE_KEY = PRIVATE_PEM;
-  process.env.VAPID_PUBLIC_KEY = 'test-public-key';
+  process.env.VAPID_PUBLIC_KEY = PUBLIC_KEY;
   const roomId = seedSubscription();
   await withFetch((() => Promise.resolve(new Response(null, { status: 410 }))) as typeof fetch, async () => {
     const result = await sendRoomPush(roomId);

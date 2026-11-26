@@ -11,6 +11,7 @@ process.env.SECRET_SANTA_SECRET = 'test-secret';
 const { app } = await import('./app.ts');
 const { get, run } = await import('./db.ts');
 const { hashToken } = await import('./auth.ts');
+const { vapidPublicKeyFromPrivate } = await import('./push.ts');
 
 async function call(path: string, init?: RequestInit): Promise<Response> {
   return app.request(`http://localhost${path}`, init);
@@ -245,7 +246,8 @@ test('SSE переподключение использует Last-Event-ID и �
   assert.match(resumed, /(^|\n)event: connected\n/);
 
   const invalid = await readEvents('999999999');
-  assert.equal([...invalid.matchAll(/^id: (\d+)$/gm)].length, 0);
+  const replayedIds = [...invalid.matchAll(/^id: (\d+)$/gm)].map((match) => match[1]!);
+  assert.deepEqual(replayedIds, ids);
   assert.match(invalid, /(^|\n)event: connected\n/);
 });
 
@@ -466,10 +468,30 @@ test('тестовое уведомление без VAPID даёт понятн
   assert.equal(body.error, 'push_not_configured');
 });
 
+test('заглушки VAPID не сообщают о готовности push', async () => {
+  process.env.VAPID_PUBLIC_KEY = 'replace-with-vapid-public-key';
+  process.env.VAPID_PRIVATE_KEY = 'replace-with-vapid-private-key';
+  process.env.VAPID_SUBJECT = 'mailto:admin@example.com';
+  try {
+    const health = (await (await call('/api/health')).json()) as { push: { enabled: boolean } };
+    const config = (await (await call('/api/push/config')).json()) as {
+      enabled: boolean;
+      publicKey: string | null;
+    };
+    assert.equal(health.push.enabled, false);
+    assert.equal(config.enabled, false);
+    assert.equal(config.publicKey, null);
+  } finally {
+    delete process.env.VAPID_PUBLIC_KEY;
+    delete process.env.VAPID_PRIVATE_KEY;
+    delete process.env.VAPID_SUBJECT;
+  }
+});
+
 test('тестовое уведомление с VAPID доставляется и не раскрывает получателя', async () => {
   const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
   process.env.VAPID_PRIVATE_KEY = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
-  process.env.VAPID_PUBLIC_KEY = 'test-public-key';
+  process.env.VAPID_PUBLIC_KEY = vapidPublicKeyFromPrivate(privateKey);
   process.env.VAPID_SUBJECT = 'mailto:test@example.com';
   const originalFetch = globalThis.fetch;
   let bodies = '';

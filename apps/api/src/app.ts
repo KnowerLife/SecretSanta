@@ -35,9 +35,9 @@ import {
   signToken,
   verifyToken,
 } from './auth.ts';
-import { all, get, run } from './db.ts';
+import { all, db, get, run } from './db.ts';
 import { formatSse, roomEvents } from './events.ts';
-import { sendRoomPush } from './push.ts';
+import { pushEnabled, sendRoomPush } from './push.ts';
 import type { RoomEvent } from './events.ts';
 
 type JsonStatus = 200 | 201 | 202 | 204 | 400 | 401 | 403 | 404 | 409 | 429 | 500 | 503;
@@ -85,8 +85,6 @@ interface EventRow {
   payload_json: string;
   created_at: string;
 }
-
-let eventCounter = 0;
 
 type RequestCtx = {
   req: {
@@ -157,30 +155,29 @@ function latestRun(roomId: string): { id: string } | undefined {
 }
 
 function emit(roomId: string, type: string, actor: string | null, payload: unknown): RoomEvent {
-  eventCounter = (eventCounter + 1) % 1000;
+  const createdAt = new Date().toISOString();
+  const eventDbId = `${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  const inserted = db
+    .prepare(
+      'INSERT INTO room_events (id, room_id, type, actor, payload_json, created_at) VALUES (?, ?, ?, ?, ?, ?)',
+    )
+    .run(eventDbId, roomId, type, actor, JSON.stringify(payload), createdAt);
+  const seq = Number(inserted.lastInsertRowid);
+  const row = get<{ code: string }>(
+    'SELECT rooms.code AS code FROM room_events JOIN rooms ON rooms.id = room_events.room_id WHERE room_events.rowid = ?',
+    seq,
+  );
   const event: RoomEvent = {
-    id: String(Date.now() * 1000 + eventCounter),
+    // Курсор SSE — rowid базы: он монотонен и переживает перезапуск процесса.
+    id: String(seq),
     type,
     actor,
     payload,
-    createdAt: new Date().toISOString(),
+    createdAt,
+    roomCode: row?.code,
+    seq,
+    eventDbId,
   };
-  run(
-    'INSERT INTO room_events (id, room_id, type, actor, payload_json, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-    event.id,
-    roomId,
-    type,
-    actor,
-    JSON.stringify(payload),
-    event.createdAt,
-  );
-  const row = get<{ code: string; seq: number }>(
-    'SELECT rooms.code AS code, room_events.rowid AS seq FROM room_events JOIN rooms ON rooms.id = room_events.room_id WHERE room_events.id = ?',
-    event.id,
-  );
-  event.roomCode = row?.code;
-  event.seq = row?.seq;
-  event.eventDbId = event.id;
   roomEvents.publish(roomId, event);
   return event;
 }
@@ -312,15 +309,15 @@ app.get('/api/health', (c) =>
     version: '0.3-v69',
     stack: 'hono-node',
     time: new Date().toISOString(),
-    push: { enabled: Boolean(process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) },
+    push: { enabled: pushEnabled() },
   }),
 );
 
 app.get('/api/push/config', (c) =>
   c.json({
-    enabled: Boolean(process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY),
-    publicKey: process.env.VAPID_PUBLIC_KEY ?? null,
-    subject: process.env.VAPID_SUBJECT ?? 'mailto:admin@example.com',
+    enabled: pushEnabled(),
+    publicKey: pushEnabled() ? (process.env.VAPID_PUBLIC_KEY ?? null) : null,
+    subject: pushEnabled() ? (process.env.VAPID_SUBJECT ?? 'mailto:admin@example.com') : null,
   }),
 );
 
@@ -340,7 +337,7 @@ app.post('/api/push/subscribe', async (c) => {
     JSON.stringify(body),
     new Date().toISOString(),
   );
-  return c.json({ ok: true, stored: true, vapid: { enabled: Boolean(process.env.VAPID_PUBLIC_KEY) } }, 200);
+  return c.json({ ok: true, stored: true, vapid: { enabled: pushEnabled() } }, 200);
 });
 
 app.post('/api/push/unsubscribe', async (c) => {
@@ -911,7 +908,7 @@ app.get('/api/rooms/:code/activity', (c) => {
   const requested = Number(c.req.query('limit') ?? 20);
   const limit = Math.min(50, Math.max(1, Number.isFinite(requested) ? requested : 20));
   const rows = all<EventRow>(
-    'SELECT e.*, m.name AS actor_name FROM room_events e LEFT JOIN members m ON m.id = e.actor WHERE e.room_id = ? ORDER BY CAST(e.id AS INTEGER) DESC LIMIT ?',
+    'SELECT e.*, m.name AS actor_name FROM room_events e LEFT JOIN members m ON m.id = e.actor WHERE e.room_id = ? ORDER BY e.rowid DESC LIMIT ?',
     auth.room.id,
     limit,
   );
@@ -1111,57 +1108,85 @@ app.get('/api/rooms/:code/events', (c) => {
   const parsedCursor = Number(rawCursor) || 0;
   const knownCursor =
     parsedCursor > 0 &&
-    get<{ id: string }>('SELECT id FROM room_events WHERE id = ? AND room_id = ?', String(parsedCursor), auth.room.id);
-  const lastEventId = parsedCursor;
-  const shouldReplay = parsedCursor === 0 || Boolean(knownCursor);
+    get<{ seq: number }>(
+      'SELECT rowid AS seq FROM room_events WHERE rowid = ? AND room_id = ?',
+      parsedCursor,
+      auth.room.id,
+    );
+  const lastEventId = knownCursor ? parsedCursor : 0;
   const encoder = new TextEncoder();
   let cleanup: (() => void) | undefined;
 
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
       let closed = false;
-      const send = (event: RoomEvent) => {
-        if (closed) return;
-        controller.enqueue(encoder.encode(formatSse(event)));
-      };
-      if (shouldReplay) {
-        const history = all<EventRow & { seq: number }>(
-          'SELECT e.*, e.rowid AS seq FROM room_events e WHERE e.room_id = ? AND CAST(e.id AS INTEGER) > ? ORDER BY CAST(e.id AS INTEGER) ASC LIMIT 200',
-          auth.room.id,
-          lastEventId,
-        );
-        for (const row of history) {
-          send({
-            id: row.id,
-            type: row.type,
-            actor: row.actor,
-            payload: JSON.parse(row.payload_json) as unknown,
-            createdAt: row.created_at,
-            roomCode: auth.room.code,
-            seq: row.seq,
-            eventDbId: row.id,
-          });
-        }
-      }
-      send({
-        id: 'connected',
-        type: 'connected',
-        actor: null,
-        payload: { code: auth.room.code },
-        createdAt: new Date().toISOString(),
-        roomCode: auth.room.code,
-        omitId: true,
-      });
-      const unsubscribe = roomEvents.subscribe(auth.room.id, send);
-      const timer = setInterval(() => {
-        if (!closed) controller.enqueue(encoder.encode(': ping\n\n'));
-      }, 15000);
-      cleanup = () => {
+      let replaying = true;
+      let timer: NodeJS.Timeout | undefined;
+      let unsubscribe: (() => void) | undefined;
+      const cleanupInternal = () => {
         if (closed) return;
         closed = true;
-        clearInterval(timer);
-        unsubscribe();
+        if (timer) clearInterval(timer);
+        unsubscribe?.();
       };
+      cleanup = cleanupInternal;
+      const seen = new Set<number>();
+      const pending: RoomEvent[] = [];
+      const enqueue = (text: string) => {
+        if (closed) return;
+        // Отрицательный desiredSize означает, что клиент отстаёт: новые кадры
+        // отбрасываются, но соединение и replay остаются доступными.
+        if (controller.desiredSize !== null && controller.desiredSize < -8) return;
+        try {
+          controller.enqueue(encoder.encode(text));
+        } catch {
+          cleanupInternal();
+        }
+      };
+      const deliver = (event: RoomEvent) => {
+        if (closed || event.seq === undefined || seen.has(event.seq)) return;
+        seen.add(event.seq);
+        enqueue(formatSse(event));
+      };
+      // Подписка до replay: события, пришедшие во время чтения лога, не теряются.
+      unsubscribe = roomEvents.subscribe(auth.room.id, (event) => {
+        if (replaying) pending.push(event);
+        else deliver(event);
+      });
+      const history = all<EventRow & { seq: number }>(
+        'SELECT e.*, e.rowid AS seq FROM room_events e WHERE e.room_id = ? AND e.rowid > ? ORDER BY e.rowid ASC LIMIT 200',
+        auth.room.id,
+        lastEventId,
+      );
+      for (const row of history) {
+        deliver({
+          id: String(row.seq),
+          type: row.type,
+          actor: row.actor,
+          payload: JSON.parse(row.payload_json) as unknown,
+          createdAt: row.created_at,
+          roomCode: auth.room.code,
+          seq: row.seq,
+          eventDbId: row.id,
+        });
+      }
+      for (const event of pending) deliver(event);
+      replaying = false;
+      enqueue(
+        formatSse({
+          id: 'connected',
+          type: 'connected',
+          actor: null,
+          payload: { code: auth.room.code },
+          createdAt: new Date().toISOString(),
+          roomCode: auth.room.code,
+          omitId: true,
+        }),
+      );
+      timer = setInterval(() => {
+        if (!closed) enqueue(': ping\n\n');
+      }, 15000);
+      c.req.raw.signal?.addEventListener('abort', () => cleanupInternal(), { once: true });
     },
     cancel() {
       cleanup?.();
