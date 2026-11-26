@@ -85,7 +85,7 @@ export function ModesSection() {
     { id: 'mode-demo', key: 'demo', to: null, demo: true },
   ] as const;
   return (
-    <section className="section section--tint" id="modes">
+    <section className="section section--compact" id="modes">
       <div className="container">
         <Head kicker={t('modes.kicker')} title={t('modes.title')} sub={t('modes.sub')} />
         <div className="grid grid--3 mode-grid">
@@ -256,7 +256,7 @@ export function IdeasSection() {
 export function GuideSection() {
   const { t } = useI18n();
   return (
-    <section className="section" id="guide">
+    <section className="section section--tight" id="guide">
       <div className="container">
         <Head kicker={t('guide.site.kicker')} title={t('guide.site.title')} sub={t('guide.site.sub')} />
         <SiteGuide />
@@ -292,10 +292,10 @@ export function TestimonialsSection() {
 export function FaqSection() {
   const { t } = useI18n();
   return (
-    <section className="section" id="faq">
-      <div className="container grid grid--2">
-        <div>
-          <Head kicker={t('faq.kicker')} title={t('faq.title')} sub="" />
+    <section className="section section--compact section--narrow" id="faq">
+      <div>
+        <Head kicker={t('faq.kicker')} title={t('faq.title')} sub="" />
+        <div className="faq-list">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
             <details className="faq-item" key={index}>
               <summary>{t(`faq.${index}.q`)}</summary>
@@ -303,7 +303,6 @@ export function FaqSection() {
             </details>
           ))}
         </div>
-        <Scene id="faq-help" />
       </div>
     </section>
   );
@@ -313,21 +312,21 @@ export function CtaSection() {
   const { t } = useI18n();
   return (
     <section
-      className="section"
+      className="section section--compact section--narrow"
       aria-label={`${t('home.more.title')} — ${t('home.more.sub')}`}
     >
-      <div className="container cta-band">
-        <div>
-          <span className="kicker">{t('cta.kicker')}</span>
-          <h2>{t('cta.title')}</h2>
-          <p>{t('cta.sub')}</p>
-          <div className="btn-row">
-            <Link className="btn btn--accent" to="/create">
-              {t('hero.ctaCreate')}
-            </Link>
-          </div>
+      <div className="cta-band">
+        <span className="kicker">{t('cta.kicker')}</span>
+        <h2>{t('cta.title')}</h2>
+        <p>{t('cta.sub')}</p>
+        <div className="btn-row">
+          <Link className="btn btn--accent" to="/create">
+            {t('hero.ctaCreate')}
+          </Link>
+          <Link className="btn btn--secondary" to="/join">
+            {t('hero.ctaJoin')}
+          </Link>
         </div>
-        <Scene id="cta-celebration" />
       </div>
     </section>
   );

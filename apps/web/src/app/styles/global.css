@@ -622,6 +622,99 @@ svg {
   margin-bottom: 12px;
 }
 
+/* Свёрнутый блок «Подробнее об игре» сохраняет легаси-ритм главной. */
+.info-disclosure {
+  padding: 0;
+  overflow: hidden;
+}
+
+.info-disclosure > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--santa-line);
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 160ms ease;
+}
+
+.info-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.info-disclosure > summary:hover {
+  background: var(--santa-accent-soft);
+}
+
+.info-disclosure[open] > summary {
+  background: var(--santa-surface-2);
+}
+
+.info-disclosure > summary:focus-visible {
+  outline: 3px solid var(--santa-primary);
+  outline-offset: -3px;
+}
+
+.info-disclosure > summary::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  margin-left: auto;
+  flex-shrink: 0;
+  border-right: 2px solid var(--santa-accent);
+  border-bottom: 2px solid var(--santa-accent);
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.info-disclosure[open] > summary::after {
+  transform: rotate(225deg);
+}
+
+.info-disclosure__icon {
+  display: inline-flex;
+  flex: 0 0 38px;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--santa-radius-control);
+  background: var(--santa-accent-soft);
+  color: var(--santa-accent);
+  font-size: 1.1rem;
+}
+
+.info-disclosure__copy {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.info-disclosure__copy strong {
+  color: var(--santa-ink);
+  font-size: 1.05rem;
+}
+
+.info-disclosure__copy small {
+  color: var(--santa-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.info-disclosure__body {
+  padding: 0.5rem 1.25rem 1rem;
+}
+
+.info-disclosure__body .section {
+  padding: 2.25rem 0;
+}
+
+.info-disclosure__body .section--tint {
+  margin-inline: -1.25rem;
+  padding-inline: 1.25rem;
+}
+
 .step-num {
   display: grid;
   place-items: center;
@@ -634,13 +727,20 @@ svg {
   font-weight: 800;
 }
 
-.faq-item {
-  padding: 18px 0;
-  border-bottom: 1px solid var(--santa-line);
+.faq-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 12px;
 }
 
-.faq-item:last-child {
-  border-bottom: 0;
+.faq-item {
+  padding: 1rem 1.1rem;
+  overflow: hidden;
+  border: 1px solid var(--santa-line);
+  border-radius: var(--santa-radius-sm);
+  background: var(--santa-surface);
+  box-shadow: var(--santa-shadow-sm);
 }
 
 .faq-item summary {
@@ -660,14 +760,15 @@ svg {
 }
 
 .cta-band {
-  display: grid;
-  grid-template-columns: 1fr 0.8fr;
-  gap: 32px;
-  align-items: center;
-  padding: 44px;
-  border-radius: 30px;
-  background: var(--santa-surface);
+  padding: 2.25rem;
   border: 1px solid var(--santa-line);
+  border-radius: var(--santa-radius);
+  background: var(--santa-surface);
+  box-shadow: var(--santa-shadow-sm);
+}
+
+.cta-band .btn-row {
+  margin-top: 1.25rem;
 }
 
 .site-footer {
@@ -925,13 +1026,14 @@ svg {
 
 .chat {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
 .chat__channel {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 300px;
   padding: 18px;
   border: 1px solid var(--santa-line);
@@ -1090,6 +1192,7 @@ svg {
   .grid--4,
   .grid--2,
   .stat-grid,
+  .faq-list,
   .chat {
     grid-template-columns: 1fr;
   }
@@ -1287,8 +1390,8 @@ svg {
 }
 
 .preset-chip {
-  min-height: 38px;
-  padding: 7px 12px;
+  min-height: 44px;
+  padding: 8px 12px;
   border: 1px solid var(--santa-line);
   border-radius: 999px;
   background: var(--santa-surface);
@@ -1552,9 +1655,9 @@ svg {
 }
 
 .chat__templates .preset-chip {
-  min-height: 32px;
-  padding: 5px 10px;
-  font-size: 0.76rem;
+  min-height: 44px;
+  padding: 8px 10px;
+  font-size: 0.8rem;
 }
 
 .confirm-dialog__body {
@@ -1588,7 +1691,8 @@ svg {
 }
 
 @media (max-width: 980px) {
-  .dash-overview {
+  .dash-overview,
+  .chat {
     grid-template-columns: minmax(0, 1fr);
   }
 
