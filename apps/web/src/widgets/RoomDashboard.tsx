@@ -12,6 +12,7 @@ import { useI18n } from '../app/providers/i18n.tsx';
 import { apiFetch, getLocalRoomBootstrap, rememberRoom, roomToken } from '../shared/api/client.ts';
 import { ChatPanel } from '../features/chat/ChatPanel.tsx';
 import { PushControls } from '../features/local-play/PushControls.tsx';
+import { usePwaInstall } from './SiteHeader.tsx';
 import { Scene } from '../shared/ui/Scene.tsx';
 import type { RoomBootstrap } from '../entities/room/server.ts';
 import { ActivityLog } from '../features/dashboard/ActivityLog.tsx';
@@ -72,7 +73,9 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
   const { t } = useI18n();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const install = usePwaInstall();
   const [tab, setTab] = useState<Tab>('overview');
+  const [overviewSection, setOverviewSection] = useState<'wishes' | 'profile'>('wishes');
   const [wish, setWish] = useState('');
   const [profile, setProfile] = useState<ProfileForm>({
     address: '',
@@ -90,8 +93,10 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
 
   const guideKey = `ss:v69:guide:${code.toUpperCase()}`;
   const revealKey = `ss:v69:revealed:${code.toUpperCase()}`;
-  const [guideStep, setGuideStepState] = useState(() => storedStep(guideKey));
-  const [revealed, setRevealedState] = useState(() => storedFlag(revealKey));
+  // Старт одинаковый на сервере и клиенте: localStorage читается в эффекте,
+  // иначе SSR и гидратация расходятся на rooms с сохранённым прогрессом.
+  const [guideStep, setGuideStepState] = useState(0);
+  const [revealed, setRevealedState] = useState(false);
   const lastRun = useRef<string | null>(null);
 
   // Локальная комната не имеет серверной сессии: её данные доступны только в этом браузере.
@@ -177,7 +182,11 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
 
   const goTab = (next: Tab, focusId?: string) => {
     setTab(next);
-    if (focusId) window.setTimeout(() => document.getElementById(focusId)?.focus(), 0);
+    if (!focusId) return;
+    if (focusId === 'wish-input') setOverviewSection('wishes');
+    if (focusId.startsWith('profile-')) setOverviewSection('profile');
+    // Секция переключается в том же тике — фокусу нужен отрендеренный input.
+    window.setTimeout(() => document.getElementById(focusId)?.focus(), 60);
   };
 
   const setGuideStep = (step: number) => {
@@ -236,6 +245,11 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
       if (typeof window !== 'undefined') window.localStorage.removeItem(revealKey);
     }
   }, [room?.drawRunId, revealKey]);
+
+  useEffect(() => {
+    setGuideStepState(storedStep(guideKey));
+    setRevealedState(storedFlag(revealKey));
+  }, [guideKey, revealKey]);
 
   const addWish = async (text: string) => {
     const trimmed = text.trim();
@@ -355,8 +369,8 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
       </div>
 
       {tab === 'overview' && (
-        <div className="dashboard__stack">
-          <div className="grid dash-overview">
+        <div className="grid dash-overview">
+          <div className="dashboard__stack dashboard__side">
             <RevealCard
               recipient={assignment?.recipient ?? null}
               drawn={drawn}
@@ -364,52 +378,156 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
               onReveal={reveal}
             />
 
-            <div className="dashboard__stack">
-              <section className="panel" aria-labelledby="wishlist-title">
-                <h2 id="wishlist-title">{t('dash.myWishlistTitle')}</h2>
-                <p className="panel__sub">{t('dash.myWishlistSub')}</p>
-                <div className="field">
-                  <label htmlFor="wish-input" className="sr-only">{t('dash.myWishlistPh')}</label>
-                  <input
-                    id="wish-input"
-                    aria-label={t('wish.label')}
-                    value={wish}
-                    onChange={(event) => setWish(event.target.value)}
-                    placeholder={t('dash.myWishlistPh')}
-                  />
-                </div>
+            <section className="panel" aria-labelledby="gift-status-title">
+              <h2 id="gift-status-title">{t('dash.giftStatus')}</h2>
+              <div className="btn-row">
+                {(['none', 'idea', 'bought', 'done'] as const).map((status) => (
+                  <button
+                    key={status}
+                    id={`gift-status-${status}`}
+                    type="button"
+                    className="tab"
+                    data-active={me?.giftStatus === status}
+                    onClick={() =>
+                      void mutate(`/api/rooms/${code}/gift-status`, { status }, 'POST', 'toast.statusSaved')
+                    }
+                  >
+                    {t(`dash.gift.${status}`)}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {organizer && (
+              <section className="panel" aria-labelledby="draw-title">
+                <h2 id="draw-title">{t('dash.checklistTitle')}</h2>
+                <p className="panel__sub">{t('dash.statusSub')}</p>
                 <div className="btn-row">
                   <button
+                    id="draw-btn"
                     type="button"
                     className="btn btn--primary"
-                    onClick={() => void addWish(wish)}
+                    disabled={drawn}
+                    onClick={() => {
+                      if (room.members.length < 3) {
+                        notifications.show({
+                          message: t('toast.drawNeed3'),
+                          color: 'yellow',
+                          autoClose: 4000,
+                        });
+                        return;
+                      }
+                      void mutate(`/api/rooms/${code}/draw`, {}, 'POST', 'toast.drawDone');
+                    }}
                   >
-                    {t('dash.myWishlistAdd')}
+                    {t(drawn ? 'dash.drawDone' : 'dash.draw')}
                   </button>
+                  {drawn && (
+                    <button
+                      ref={resetTrigger}
+                      type="button"
+                      className="btn btn--secondary"
+                      onClick={() => setResetOpen(true)}
+                    >
+                      {t('dash.reset')}
+                    </button>
+                  )}
                 </div>
-                {myMember?.wishlist.length === 0 && <p className="panel__sub">{t('dash.myWishlistEmpty')}</p>}
-                <ul className="list">
-                  {myMember?.wishlist.map((item) => (
-                    <li key={item.id}>
-                      <span>{item.text}</span>
-                      <button
-                        type="button"
-                        className="btn btn--secondary"
-                        onClick={() =>
-                          void mutate(`/api/rooms/${code}/wishlist/${item.id}`, undefined, 'DELETE')
-                        }
-                      >
-                        {t('dash.wishDelete')}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-                <WishPresets wishes={myWishes} onAdd={(text) => void addWish(text)} />
+                <ConfirmDialog
+                  opened={resetOpen}
+                  title={t('confirm.title')}
+                  triggerRef={resetTrigger}
+                  onCancel={() => setResetOpen(false)}
+                  onConfirm={() => {
+                    setResetOpen(false);
+                    setRevealedState(false);
+                    if (typeof window !== 'undefined') window.localStorage.removeItem(revealKey);
+                    void mutate(`/api/rooms/${code}/draw/reset`, {}, 'POST', 'toast.drawReset');
+                  }}
+                >
+                  <p>{t('confirm.reset')}</p>
+                </ConfirmDialog>
               </section>
+            )}
+          </div>
 
-              <section className="panel" aria-labelledby="profile-title">
-                <h2 id="profile-title">{t('dash.myProfileTitle')}</h2>
-                <p className="panel__sub">{t('dash.myProfileSub')}</p>
+          <div className="dashboard__stack dashboard__main">
+            <div className="overview-switch" role="group" aria-label={t('dash.overviewSectionsAria')}>
+              <button
+                type="button"
+                className="tab"
+                data-active={overviewSection === 'wishes'}
+                aria-pressed={overviewSection === 'wishes'}
+                onClick={() => setOverviewSection('wishes')}
+              >
+                {t('dash.sectionWishes')}
+              </button>
+              <button
+                type="button"
+                className="tab"
+                data-active={overviewSection === 'profile'}
+                aria-pressed={overviewSection === 'profile'}
+                onClick={() => setOverviewSection('profile')}
+              >
+                {t('dash.sectionProfile')}
+              </button>
+            </div>
+
+            <section
+              className="panel overview-panel"
+              aria-labelledby="wishlist-title"
+              hidden={overviewSection !== 'wishes'}
+            >
+              <h2 id="wishlist-title">{t('dash.myWishlistTitle')}</h2>
+              <p className="panel__sub">{t('dash.myWishlistSub')}</p>
+              <div className="field wish-field">
+                <label htmlFor="wish-input" className="sr-only">{t('dash.myWishlistPh')}</label>
+                <input
+                  id="wish-input"
+                  aria-label={t('wish.label')}
+                  value={wish}
+                  onChange={(event) => setWish(event.target.value)}
+                  placeholder={t('dash.myWishlistPh')}
+                />
+                <button
+                  type="button"
+                  className="btn btn--primary"
+                  onClick={() => void addWish(wish)}
+                >
+                  {t('dash.myWishlistAdd')}
+                </button>
+              </div>
+              {myMember?.wishlist.length === 0 && <p className="panel__sub">{t('dash.myWishlistEmpty')}</p>}
+              <ul className="list">
+                {myMember?.wishlist.map((item) => (
+                  <li key={item.id}>
+                    <span>{item.text}</span>
+                    <button
+                      type="button"
+                      className="btn btn--secondary"
+                      onClick={() =>
+                        void mutate(`/api/rooms/${code}/wishlist/${item.id}`, undefined, 'DELETE')
+                      }
+                    >
+                      {t('dash.wishDelete')}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <details className="preset-details">
+                <summary>{t('dash.presetWishTitle')}</summary>
+                <WishPresets wishes={myWishes} onAdd={(text) => void addWish(text)} hideTitle />
+              </details>
+            </section>
+
+            <section
+              className="panel overview-panel"
+              aria-labelledby="profile-title"
+              hidden={overviewSection !== 'profile'}
+            >
+              <h2 id="profile-title">{t('dash.myProfileTitle')}</h2>
+              <p className="panel__sub">{t('dash.myProfileSub')}</p>
+              <div className="profile-grid">
                 {PROFILE_FIELDS.map(([field, label, placeholder]) => (
                   <div className="field" key={field}>
                     <label htmlFor={`profile-${field}`}>{t(label)}</label>
@@ -423,99 +541,30 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
                     />
                   </div>
                 ))}
-                <div className="btn-row">
-                  <button
-                    type="button"
-                    className="btn btn--primary"
-                    onClick={() =>
-                      void mutate(`/api/rooms/${code}/profile`, profile, 'POST', 'dash.profileSaved')
-                    }
-                  >
-                    {t('dash.profileSave')}
-                  </button>
-                </div>
-                <p className="field-hint">{t('dash.profilePrivacy')}</p>
-                <AntiPresets value={profile.antiWishlist} onSet={(text) => void setAnti(text)} />
-              </section>
-
-              <section className="panel" aria-labelledby="gift-status-title">
-                <h2 id="gift-status-title">{t('dash.giftStatus')}</h2>
-                <div className="btn-row">
-                  {(['none', 'idea', 'bought', 'done'] as const).map((status) => (
-                    <button
-                      key={status}
-                      id={`gift-status-${status}`}
-                      type="button"
-                      className="tab"
-                      data-active={me?.giftStatus === status}
-                      onClick={() =>
-                        void mutate(`/api/rooms/${code}/gift-status`, { status }, 'POST', 'toast.statusSaved')
-                      }
-                    >
-                      {t(`dash.gift.${status}`)}
-                    </button>
-                  ))}
-                </div>
-              </section>
-            </div>
-          </div>
-
-          {organizer && (
-            <section className="panel panel--wide" aria-labelledby="draw-title">
-              <h2 id="draw-title">{t('dash.checklistTitle')}</h2>
-              <p className="panel__sub">{t('dash.statusSub')}</p>
+              </div>
               <div className="btn-row">
                 <button
-                  id="draw-btn"
                   type="button"
                   className="btn btn--primary"
-                  disabled={drawn}
-                  onClick={() => {
-                    if (room.members.length < 3) {
-                      notifications.show({
-                        message: t('toast.drawNeed3'),
-                        color: 'yellow',
-                        autoClose: 4000,
-                      });
-                      return;
-                    }
-                    void mutate(`/api/rooms/${code}/draw`, {}, 'POST', 'toast.drawDone');
-                  }}
+                  onClick={() =>
+                    void mutate(`/api/rooms/${code}/profile`, profile, 'POST', 'dash.profileSaved')
+                  }
                 >
-                  {t(drawn ? 'dash.drawDone' : 'dash.draw')}
+                  {t('dash.profileSave')}
                 </button>
-                {drawn && (
-                  <button
-                    ref={resetTrigger}
-                    type="button"
-                    className="btn btn--secondary"
-                    onClick={() => setResetOpen(true)}
-                  >
-                    {t('dash.reset')}
-                  </button>
-                )}
               </div>
-              <ConfirmDialog
-                opened={resetOpen}
-                title={t('confirm.title')}
-                triggerRef={resetTrigger}
-                onCancel={() => setResetOpen(false)}
-                onConfirm={() => {
-                  setResetOpen(false);
-                  setRevealedState(false);
-                  if (typeof window !== 'undefined') window.localStorage.removeItem(revealKey);
-                  void mutate(`/api/rooms/${code}/draw/reset`, {}, 'POST', 'toast.drawReset');
-                }}
-              >
-                <p>{t('confirm.reset')}</p>
-              </ConfirmDialog>
+              <p className="field-hint">{t('dash.profilePrivacy')}</p>
+              <details className="preset-details">
+                <summary>{t('dash.presetAntiTitle')}</summary>
+                <AntiPresets value={profile.antiWishlist} onSet={(text) => void setAnti(text)} hideTitle />
+              </details>
             </section>
-          )}
+          </div>
         </div>
       )}
 
       {tab === 'people' && (
-        <div className="dashboard__stack">
+        <div className="dashboard__stack people-grid">
           <MembersManager
             code={code}
             room={room}
@@ -532,6 +581,24 @@ export function RoomDashboard({ code, bootstrap }: { code: string; bootstrap: Ro
               mutate={mutate}
             />
           )}
+          <section className="panel people-install" aria-labelledby="people-install-title">
+            <div>
+              <h2 id="people-install-title">{t('footer.installTitle')}</h2>
+              {!install.installed && <p className="panel__sub">{t('footer.installText')}</p>}
+              <p className="install-hint install-hint--status" role="status">
+                {t(install.hintKey)}
+              </p>
+            </div>
+            {install.canInstall && (
+              <button
+                className="btn btn--primary"
+                type="button"
+                onClick={() => void install.promptInstall()}
+              >
+                {t('footer.install')}
+              </button>
+            )}
+          </section>
         </div>
       )}
 

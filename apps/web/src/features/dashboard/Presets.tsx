@@ -25,14 +25,16 @@ const ANTI_PRESETS = [
 export function WishPresets({
   wishes,
   onAdd,
+  hideTitle = false,
 }: {
   wishes: string[];
   onAdd: (text: string) => void;
+  hideTitle?: boolean;
 }) {
   const { t } = useI18n();
   return (
     <div className="presets">
-      <h3>{t('dash.presetWishTitle')}</h3>
+      {!hideTitle && <h3>{t('dash.presetWishTitle')}</h3>}
       <div className="preset-chips">
         {WISH_PRESETS.map((key) => {
           const text = t(key);
@@ -58,9 +60,11 @@ export function WishPresets({
 export function AntiPresets({
   value,
   onSet,
+  hideTitle = false,
 }: {
   value: string;
   onSet: (text: string) => void;
+  hideTitle?: boolean;
 }) {
   const { t } = useI18n();
   const chips = [
@@ -70,7 +74,7 @@ export function AntiPresets({
 
   return (
     <div className="presets">
-      <h3>{t('dash.presetAntiTitle')}</h3>
+      {!hideTitle && <h3>{t('dash.presetAntiTitle')}</h3>}
       <div className="preset-chips" role="group" aria-label={t('dash.profileAntiLabel')}>
         {chips.map((chip) => {
           const added = value.includes(chip.value);

@@ -1,8 +1,8 @@
 .install-hint {
   margin: 0;
   font-size: 0.85rem;
-  line-height: 1.4;
-  opacity: 0.85;
+  line-height: 1.5;
+  color: inherit;
 }
 
 .install-hint--header {
@@ -27,11 +27,4 @@
   background: var(--santa-surface);
   color: var(--santa-success);
   font-weight: 700;
-}
-
-.footer-install {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
 }

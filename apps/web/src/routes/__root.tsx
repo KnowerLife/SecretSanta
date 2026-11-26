@@ -8,6 +8,7 @@ import { AppProviders } from '../app/providers/AppProviders.tsx';
 import { useSettings } from '../app/providers/settings.tsx';
 import { NotFoundPage } from '../pages/NotFoundPage.tsx';
 import { ServiceWorkerRegistrar } from '../shared/pwa/ServiceWorkerRegistrar.tsx';
+import { FestiveSky } from '../shared/ui/FestiveDecor.tsx';
 import { SiteFooter } from '../widgets/SiteFooter.tsx';
 import { SiteHeader } from '../widgets/SiteHeader.tsx';
 import '../app/styles/global.css';
@@ -82,7 +83,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="site-shell">{children}</div>
+        <div className="site-shell">
+          <FestiveSky />
+          {children}
+        </div>
         <Scripts />
       </body>
     </html>

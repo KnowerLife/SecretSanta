@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Group, Radio } from '@mantine/core';
 import { useNavigate } from '@tanstack/react-router';
 import type { RoomTheme } from '@secret-santa/shared/contracts';
 import { notifications } from '@mantine/notifications';
@@ -130,17 +129,23 @@ export function CreateRoomForm() {
         </div>
       </div>
       <div className="field">
-        <Radio.Group
-          label={t('create.theme')}
-          value={theme}
-          onChange={(value) => setTheme(value as RoomTheme)}
-        >
-          <Group gap="sm" wrap="wrap">
-            {ROOM_THEMES.map((value) => (
-              <Radio key={value} value={value} label={t(`theme.${value}`)} />
-            ))}
-          </Group>
-        </Radio.Group>
+        <span className="field-label" id="room-theme-label">{t('create.theme')}</span>
+        <div className="theme-picker" role="group" aria-labelledby="room-theme-label">
+          {ROOM_THEMES.map((value) => (
+            <button
+              key={value}
+              type="button"
+              className="theme-option"
+              data-theme-option={value}
+              aria-pressed={theme === value}
+              aria-label={t(`theme.${value}`)}
+              onClick={() => setTheme(value)}
+            >
+              <span className="theme-option__swatch" aria-hidden="true" />
+              <span>{t(`theme.short.${value}`)}</span>
+            </button>
+          ))}
+        </div>
       </div>
       <div className="field">
         <label htmlFor="member-names">

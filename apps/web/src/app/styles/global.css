@@ -27,6 +27,12 @@
 
   --santa-glow: rgba(43, 95, 158, 0.12);
   --santa-warm-glow: rgba(201, 59, 53, 0.1);
+  --santa-snow: rgba(255, 255, 255, 0.92);
+  --santa-star: rgba(255, 255, 255, 0.96);
+  --santa-festive-gold: #f1c45a;
+  --santa-festive-pine: #2f8f72;
+  --santa-festive-glow: rgba(120, 180, 255, 0.2);
+  --santa-festive-warm: rgba(255, 185, 140, 0.18);
   --santa-header-bg: rgba(255, 255, 255, 0.74);
   --santa-header-border: rgba(20, 42, 73, 0.06);
   --santa-input-bg: #f6faff;
@@ -42,10 +48,25 @@
   --santa-footer-body: #cbddfe;
   --santa-footer-accent: #ff9e96;
   --santa-footer-line: rgba(203, 221, 254, 0.18);
+  --santa-footer-panel: rgba(255, 255, 255, 0.08);
+  --santa-footer-cta-bg: #e9f2fd;
+  --santa-footer-cta-ink: #1f4d84;
+  --santa-footer-cta-border: rgba(203, 221, 254, 0.5);
 
   --santa-radius: 24px;
   --santa-radius-sm: 16px;
   --santa-radius-control: 14px;
+
+  /* Единая шкала отступов: все зазоры между блоками кратны 4/8 px. */
+  --santa-space-1: 4px;
+  --santa-space-2: 8px;
+  --santa-space-3: 12px;
+  --santa-space-4: 16px;
+  --santa-space-5: 24px;
+  --santa-space-6: 32px;
+  --santa-space-7: 40px;
+  --santa-space-8: 48px;
+
   --santa-shadow-sm: 0 4px 14px rgba(21, 49, 87, 0.05);
   --santa-shadow: 0 14px 40px rgba(21, 49, 87, 0.08);
   --santa-shadow-lg: 0 24px 60px rgba(21, 49, 87, 0.14);
@@ -77,6 +98,12 @@
 
   --santa-glow: rgba(169, 203, 255, 0.1);
   --santa-warm-glow: rgba(207, 68, 61, 0.14);
+  --santa-snow: rgba(214, 232, 255, 0.86);
+  --santa-star: rgba(255, 225, 150, 0.95);
+  --santa-festive-gold: #ffd97a;
+  --santa-festive-pine: #63bfae;
+  --santa-festive-glow: rgba(120, 170, 255, 0.17);
+  --santa-festive-warm: rgba(255, 150, 120, 0.13);
   --santa-header-bg: rgba(9, 21, 46, 0.8);
   --santa-header-border: rgba(169, 203, 255, 0.1);
   --santa-input-bg: #1b3158;
@@ -92,6 +119,10 @@
   --santa-footer-body: #c4d5f0;
   --santa-footer-accent: #ff9e96;
   --santa-footer-line: rgba(169, 203, 255, 0.18);
+  --santa-footer-panel: rgba(169, 203, 255, 0.08);
+  --santa-footer-cta-bg: #a9cbff;
+  --santa-footer-cta-ink: #0e1c39;
+  --santa-footer-cta-border: rgba(169, 203, 255, 0.5);
 
   --santa-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.18);
   --santa-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
@@ -124,6 +155,12 @@
 
   --santa-glow: rgba(130, 72, 42, 0.1);
   --santa-warm-glow: rgba(168, 67, 54, 0.12);
+  --santa-snow: rgba(255, 250, 240, 0.95);
+  --santa-star: rgba(255, 220, 160, 0.95);
+  --santa-festive-gold: #e0a13f;
+  --santa-festive-pine: #4f7a52;
+  --santa-festive-glow: rgba(255, 196, 140, 0.18);
+  --santa-festive-warm: rgba(200, 110, 80, 0.14);
   --santa-header-bg: rgba(255, 253, 251, 0.78);
   --santa-header-border: rgba(90, 56, 38, 0.07);
   --santa-input-bg: #fdf5ef;
@@ -139,6 +176,10 @@
   --santa-footer-body: #f0ded1;
   --santa-footer-accent: #ffb3a8;
   --santa-footer-line: rgba(240, 222, 209, 0.18);
+  --santa-footer-panel: rgba(240, 222, 209, 0.09);
+  --santa-footer-cta-bg: #f7e9dd;
+  --santa-footer-cta-ink: #4d3224;
+  --santa-footer-cta-border: rgba(240, 222, 209, 0.5);
 
   --santa-shadow-sm: 0 4px 14px rgba(90, 56, 38, 0.05);
   --santa-shadow: 0 14px 40px rgba(90, 56, 38, 0.09);
@@ -229,6 +270,117 @@ svg {
   background-attachment: fixed;
 }
 
+/* Праздничный слой: детерминированный SVG + transform-only анимации. */
+main#main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.festive-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.festive-sky__glow {
+  position: absolute;
+  width: min(46vw, 640px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--santa-festive-glow), transparent 70%);
+  animation: festive-drift 22s ease-in-out infinite alternate;
+}
+
+.festive-sky__glow--cool {
+  top: -14vw;
+  left: -12vw;
+}
+
+.festive-sky__glow--warm {
+  top: 8vh;
+  right: -14vw;
+  background: radial-gradient(circle, var(--santa-festive-warm), transparent 70%);
+  animation-direction: alternate-reverse;
+}
+
+.festive-sky__stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.75;
+}
+
+:root[data-theme='midnight'] .festive-sky__stars {
+  opacity: 1;
+}
+
+.festive-sky__star {
+  animation: festive-twinkle 3.8s ease-in-out infinite alternate;
+}
+
+.festive-sky__star circle {
+  fill: var(--santa-star);
+}
+
+.festive-sky__star path {
+  fill: none;
+  stroke: var(--santa-star);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.festive-sky__snow {
+  position: absolute;
+  top: -320px;
+  left: -10%;
+  width: 120%;
+  height: calc(100% + 640px);
+  background-repeat: repeat;
+  will-change: transform;
+}
+
+.festive-sky__snow--far {
+  background-image:
+    radial-gradient(circle at 18% 28%, var(--santa-snow) 1.2px, transparent 1.9px),
+    radial-gradient(circle at 72% 64%, var(--santa-snow) 1.4px, transparent 2px),
+    radial-gradient(circle at 44% 88%, var(--santa-snow) 1px, transparent 1.7px);
+  background-size: 260px 260px;
+  opacity: 0.4;
+  animation: festive-snow-far 38s linear infinite;
+}
+
+.festive-sky__snow--near {
+  background-image:
+    radial-gradient(circle at 26% 20%, var(--santa-snow) 1.9px, transparent 2.7px),
+    radial-gradient(circle at 78% 52%, var(--santa-snow) 1.6px, transparent 2.4px),
+    radial-gradient(circle at 48% 84%, var(--santa-snow) 2.1px, transparent 3px);
+  background-size: 180px 180px;
+  opacity: 0.56;
+  animation: festive-snow-near 22s linear infinite;
+}
+
+@keyframes festive-snow-near {
+  to { transform: translate3d(-24px, 180px, 0); }
+}
+
+@keyframes festive-snow-far {
+  to { transform: translate3d(-18px, 260px, 0); }
+}
+
+@keyframes festive-twinkle {
+  from { opacity: 0.25; }
+  to { opacity: 1; }
+}
+
+@keyframes festive-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(6vw, 4vh, 0); }
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -271,6 +423,7 @@ svg {
   background: var(--santa-accent);
   color: var(--santa-on-accent);
   font-size: 1.2rem;
+  animation: festive-pulse 4.6s ease-in-out infinite;
 }
 
 .brand__word--accent {
@@ -320,7 +473,7 @@ svg {
 .nav__controls {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .icon-button {
@@ -361,7 +514,7 @@ svg {
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
-  padding: 3.75rem 0 1.25rem;
+  padding: 3.75rem 0 2.5rem;
 }
 
 .hero__eyebrow,
@@ -379,34 +532,37 @@ svg {
 }
 
 .hero h1 {
-  margin: 20px 0 18px;
+  margin: var(--santa-space-5) 0 var(--santa-space-4);
   font-size: clamp(3rem, 6vw, 5.4rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
+  animation: festive-rise 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .hero__lead {
   max-width: 620px;
-  margin: 0 0 28px;
+  margin: 0 0 var(--santa-space-5);
   color: var(--santa-muted);
   font-size: 1.1rem;
   line-height: 1.65;
+  animation: festive-rise 720ms cubic-bezier(0.2, 0.8, 0.2, 1) 120ms both;
 }
 
 .btn-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 26px;
+  gap: var(--santa-space-3);
+  margin-top: var(--santa-space-5);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 0.8rem 1.4rem;
+  gap: var(--santa-space-2);
+  height: var(--santa-space-8);
+  min-height: var(--santa-space-8);
+  padding: 0 1.4rem;
   border: 1px solid transparent;
   border-radius: var(--santa-radius-control);
   font-family: inherit;
@@ -446,16 +602,89 @@ svg {
 }
 
 .hero__note {
-  margin-top: 22px;
+  margin-top: var(--santa-space-5);
   color: var(--santa-muted);
   font-size: 0.86rem;
+}
+
+/* Главная иллюстрация «дышит», а гирлянда мерцает поверх неё. */
+.hero__art {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero__art .scene {
+  animation: festive-float 8s ease-in-out infinite;
+}
+
+.festive-garland {
+  position: absolute;
+  z-index: 2;
+  top: -26px;
+  left: 2%;
+  width: 96%;
+  height: auto;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.festive-garland__cord {
+  fill: none;
+  stroke: var(--santa-festive-pine);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.festive-garland__shine {
+  fill: none;
+  stroke: var(--santa-festive-gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+
+.festive-garland__bulb {
+  animation: festive-bulb 2.8s ease-in-out infinite alternate;
+}
+
+.festive-garland__halo {
+  fill: currentColor;
+  opacity: 0.16;
+}
+
+.festive-garland__lamp {
+  fill: currentColor;
+}
+
+.festive-garland__bulb--gold { color: var(--santa-festive-gold); }
+.festive-garland__bulb--red { color: var(--santa-accent); }
+.festive-garland__bulb--pine { color: var(--santa-festive-pine); }
+
+@keyframes festive-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
+@keyframes festive-bulb {
+  from { opacity: 0.52; }
+  to { opacity: 1; }
+}
+
+@keyframes festive-pulse {
+  0%, 100% { transform: rotate(-4deg) scale(1); }
+  50% { transform: rotate(4deg) scale(1.07); }
+}
+
+@keyframes festive-rise {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 .trust-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 26px;
+  gap: var(--santa-space-2);
+  margin-top: var(--santa-space-5);
 }
 
 .trust-pill {
@@ -494,7 +723,7 @@ svg {
 }
 
 .section--tight {
-  padding: 2rem 0 1rem;
+  padding: 2rem 0 2.25rem;
 }
 
 .section--compact {
@@ -520,7 +749,7 @@ svg {
 
 .section__head {
   max-width: 720px;
-  margin-bottom: 34px;
+  margin-bottom: var(--santa-space-6);
 }
 
 .section__head h2 {
@@ -537,9 +766,14 @@ svg {
   line-height: 1.6;
 }
 
+/* Три роли приватности не должны прилипать к иллюстрации над ними. */
+.privacy-roles {
+  margin-top: var(--santa-space-6);
+}
+
 .grid {
   display: grid;
-  gap: 18px;
+  gap: var(--santa-space-4);
 }
 
 .grid--3 {
@@ -824,62 +1058,192 @@ svg {
 }
 
 .cta-band .btn-row {
-  margin-top: 1.25rem;
+  margin-top: var(--santa-space-5);
 }
 
 .site-footer {
-  margin-top: 2rem;
-  padding: 3.5rem 0 2rem;
+  /* 36px снизу у последней секции + 36px здесь = тот же ритм 72px. */
+  position: relative;
+  isolation: isolate;
+  margin-top: 2.25rem;
+  padding: clamp(2.5rem, 5vw, 4rem) 0 var(--santa-space-5);
   background: var(--santa-footer-bg);
   color: var(--santa-footer-ink);
   font-size: 0.95rem;
 }
 
-.site-footer strong {
-  display: block;
-  margin-bottom: 0.75rem;
-  font-size: 1.15rem;
+/* Тонкая праздничная линия с мягким пробегающим бликом. */
+.site-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--santa-festive-gold) 18%,
+    var(--santa-footer-accent) 50%,
+    var(--santa-festive-gold) 82%,
+    transparent
+  );
+  background-size: 220% 100%;
+  opacity: 0.8;
+  animation: festive-shimmer 9s linear infinite;
 }
 
-.site-footer p,
-.site-footer a {
-  color: var(--santa-footer-body);
-}
-
-.site-footer a {
-  text-decoration: none;
-}
-
-.site-footer a:hover {
-  color: var(--santa-footer-accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+@keyframes festive-shimmer {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
 }
 
 .footer-inner {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1.2fr;
-  gap: 2.5rem;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(260px, 1.2fr);
+  gap: var(--santa-space-6) var(--santa-space-7);
+  align-items: start;
 }
 
-.footer-inner > div:last-child {
-  grid-column: 1 / -1;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--santa-footer-line);
+.footer-title {
+  display: block;
+  margin: 0 0 var(--santa-space-3);
+  color: var(--santa-footer-ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footer-brand__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--santa-space-2);
+  min-height: 44px;
+  color: var(--santa-footer-ink);
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.footer-brand__mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--santa-footer-line);
+  border-radius: 12px;
+  background: var(--santa-footer-panel);
+  color: var(--santa-footer-accent);
+  font-size: 1.1rem;
+}
+
+/* Акцент заголовка рассчитан на светлые поверхности — здесь нужен тёмный фон. */
+.footer-brand__link .brand__word--accent {
+  color: var(--santa-footer-accent);
+}
+
+.footer-brand__tagline {
+  max-width: 34ch;
+  margin-top: var(--santa-space-2);
   color: var(--santa-footer-body);
+  line-height: 1.6;
+}
+
+.footer-nav ul {
+  display: grid;
+  gap: var(--santa-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin-inline: calc(-1 * var(--santa-space-2));
+  padding: var(--santa-space-1) var(--santa-space-2);
+  border-radius: var(--santa-radius-control);
+  color: var(--santa-footer-body);
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.footer-nav a::after {
+  content: '→';
+  margin-left: auto;
+  padding-left: var(--santa-space-2);
+  color: var(--santa-footer-accent);
+  opacity: 0;
+}
+
+.footer-nav a:hover,
+.footer-nav a:focus-visible {
+  background: var(--santa-footer-panel);
+  color: var(--santa-footer-ink);
+}
+
+.footer-nav a:hover::after,
+.footer-nav a:focus-visible::after {
+  opacity: 1;
 }
 
 .footer-install {
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--santa-space-2);
+  padding: var(--santa-space-4);
   border: 1px solid var(--santa-footer-line);
   border-radius: var(--santa-radius-sm);
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--santa-footer-panel);
+}
+
+.footer-install .install-hint {
+  color: var(--santa-footer-body);
+}
+
+.footer-install .install-hint--status {
+  color: var(--santa-footer-ink);
+  font-weight: 700;
+}
+
+.footer-install .btn {
+  width: 100%;
+  border-color: var(--santa-footer-cta-border);
+  background: var(--santa-footer-cta-bg);
+  color: var(--santa-footer-cta-ink);
+  box-shadow: none;
+}
+
+.footer-install .btn:hover {
+  background: var(--santa-footer-cta-bg);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.site-footer :focus-visible {
+  outline: 3px solid var(--santa-footer-accent);
+  outline-offset: 3px;
+}
+
+.footer-bottom {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--santa-space-1) var(--santa-space-4);
+  padding-top: var(--santa-space-4);
+  border-top: 1px solid var(--santa-footer-line);
+  color: var(--santa-footer-body);
+  font-size: 0.85rem;
 }
 
 .form-layout {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
-  gap: 44px;
+  gap: var(--santa-space-7);
   align-items: start;
   padding: 60px 0 80px;
 }
@@ -904,12 +1268,13 @@ svg {
 }
 
 .field {
-  margin-bottom: 18px;
+  margin-bottom: var(--santa-space-4);
 }
 
-.field label {
+.field label,
+.field-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: var(--santa-space-2);
   font-size: 1rem;
   font-weight: 800;
 }
@@ -918,8 +1283,9 @@ svg {
 .field textarea,
 .field select {
   width: 100%;
-  min-height: 48px;
-  padding: 12px 14px;
+  height: var(--santa-space-8);
+  min-height: var(--santa-space-8);
+  padding: 10px 14px;
   border: 1px solid var(--santa-line-strong);
   border-radius: var(--santa-radius-control);
   background: var(--santa-input-bg);
@@ -929,14 +1295,103 @@ svg {
 }
 
 .field textarea {
+  height: auto;
   min-height: 150px;
   resize: vertical;
 }
 
 .field-hint {
-  margin-top: 6px;
+  margin-top: var(--santa-space-1);
   color: var(--santa-muted);
   font-size: 0.82rem;
+}
+
+/* Выбор темы игры: понятные карточки вместо «чужих» радиокнопок Mantine. */
+.theme-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--santa-space-2);
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 1px solid var(--santa-line);
+  border-radius: var(--santa-radius-sm);
+  background: var(--santa-surface-2);
+  color: var(--santa-muted);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.theme-option:hover {
+  border-color: var(--santa-primary);
+  transform: translateY(-1px);
+}
+
+.theme-option[aria-pressed='true'] {
+  border-color: var(--santa-primary);
+  background: var(--santa-primary-soft);
+  color: var(--santa-primary-text);
+  box-shadow: inset 0 0 0 1px var(--santa-primary);
+}
+
+.theme-option__swatch {
+  position: relative;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  border: 1px solid var(--santa-line);
+  border-radius: 12px;
+  background: var(--swatch-bg);
+}
+
+.theme-option__swatch::before,
+.theme-option__swatch::after {
+  content: '';
+  position: absolute;
+}
+
+.theme-option__swatch::before {
+  right: -7px;
+  bottom: -7px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--swatch-accent);
+}
+
+.theme-option__swatch::after {
+  left: 5px;
+  bottom: 5px;
+  width: 18px;
+  height: 10px;
+  border-radius: 8px 8px 0 0;
+  background: var(--swatch-snow);
+}
+
+.theme-option[data-theme-option='winter'] {
+  --swatch-bg: #d4e9fb;
+  --swatch-accent: #2b5f9e;
+  --swatch-snow: #ffffff;
+}
+
+.theme-option[data-theme-option='midnight'] {
+  --swatch-bg: #09152e;
+  --swatch-accent: #e7c37b;
+  --swatch-snow: #63bfae;
+}
+
+.theme-option[data-theme-option='cozy'] {
+  --swatch-bg: #f7e3d2;
+  --swatch-accent: #a95035;
+  --swatch-snow: #d6a03f;
 }
 
 .form-error {
@@ -956,8 +1411,8 @@ svg {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 26px;
+  gap: var(--santa-space-4);
+  margin-bottom: var(--santa-space-5);
 }
 
 .dashboard__head h1 {
@@ -994,8 +1449,8 @@ svg {
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: var(--santa-space-4);
+  margin-bottom: var(--santa-space-5);
 }
 
 .stat {
@@ -1019,14 +1474,16 @@ svg {
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 22px;
+  gap: var(--santa-space-2);
+  margin-top: var(--santa-space-5);
+  margin-bottom: var(--santa-space-5);
 }
 
 .tab {
   flex: 0 0 auto;
-  min-height: 44px;
-  padding: 10px 18px;
+  height: var(--santa-space-8);
+  min-height: var(--santa-space-8);
+  padding: 0 18px;
   border: 1px solid var(--santa-line);
   border-radius: var(--santa-radius-control);
   background: var(--santa-surface-2);
@@ -1058,7 +1515,7 @@ svg {
 }
 
 .panel__sub {
-  margin: 0 0 20px;
+  margin: 0 0 var(--santa-space-4);
   color: var(--santa-muted);
 }
 
@@ -1122,8 +1579,8 @@ svg {
 
 .chat__composer {
   display: flex;
-  gap: 8px;
-  margin-top: 14px;
+  gap: var(--santa-space-2);
+  margin-top: var(--santa-space-4);
 }
 
 .chat__composer input {
@@ -1207,6 +1664,11 @@ svg {
   .stat-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .footer-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--santa-space-5);
+  }
 }
 
 @media (max-width: 760px) {
@@ -1224,10 +1686,6 @@ svg {
   .nav__controls {
     margin-left: auto;
   }
-
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media (max-width: 640px) {
@@ -1236,8 +1694,22 @@ svg {
   }
 
   .hero {
-    gap: 24px;
-    padding: 2.5rem 0 2rem;
+    gap: var(--santa-space-5);
+    padding: 2.75rem 0;
+  }
+
+  .festive-garland {
+    top: -14px;
+    left: 0;
+    width: 100%;
+  }
+
+  .site-footer {
+    margin-top: 2.75rem;
+  }
+
+  .info-disclosure__body .section {
+    padding: 2.75rem 0;
   }
 
   .section {
@@ -1256,7 +1728,7 @@ svg {
   .grid--3,
   .grid--4,
   .grid--2 {
-    gap: 14px;
+    gap: var(--santa-space-4);
   }
 
   .cta-band {
@@ -1268,13 +1740,21 @@ svg {
     padding: 1.25rem;
   }
 
-  .footer-inner {
+  .theme-picker {
     grid-template-columns: 1fr;
-    gap: 2rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--santa-space-5);
+  }
+
+  .footer-install {
+    padding: var(--santa-space-3);
   }
 
   .btn-row {
-    gap: 8px;
+    gap: var(--santa-space-2);
   }
 }
 
@@ -1307,17 +1787,123 @@ svg {
 /* v69: направляющий UX дашборда */
 .dashboard__stack {
   display: grid;
-  gap: 18px;
+  gap: var(--santa-space-4);
 }
 
-/* Легаси-пропорция обзора: 7/5 вместо двух равных колонок. */
+/* Компактный обзор: получатель и быстрые действия слева, ввод справа. */
 .dash-overview {
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   align-items: start;
 }
 
 .dash-overview > .dashboard__stack {
-  gap: 14px;
+  min-width: 0;
+  gap: var(--santa-space-4);
+}
+
+.dashboard__side,
+.dashboard__main {
+  min-width: 0;
+}
+
+.overview-switch {
+  display: flex;
+  gap: var(--santa-space-2);
+}
+
+.overview-switch .tab {
+  flex: 1 1 0;
+}
+
+.overview-panel[hidden] {
+  display: none;
+}
+
+.wish-field {
+  display: flex;
+  align-items: center;
+  gap: var(--santa-space-2);
+}
+
+.wish-field input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wish-field .btn {
+  flex: 0 0 auto;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--santa-space-4);
+}
+
+.profile-grid .field {
+  margin-bottom: var(--santa-space-3);
+}
+
+.preset-details {
+  margin-top: var(--santa-space-3);
+  border-top: 1px solid var(--santa-line);
+  padding-top: var(--santa-space-3);
+}
+
+.preset-details summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--santa-space-8);
+  color: var(--santa-primary-text);
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+.preset-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.preset-details summary::after {
+  content: '＋';
+  margin-left: auto;
+  color: var(--santa-muted);
+  font-size: 1.1rem;
+}
+
+.preset-details[open] summary::after {
+  content: '−';
+}
+
+.preset-details .presets {
+  margin-top: var(--santa-space-2);
+}
+
+/* Участники и исключения — два равнозначных блока рядом на широком экране. */
+.people-grid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: start;
+}
+
+.people-install {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--santa-space-4);
+}
+
+.people-install h2 {
+  font-size: 1.05rem;
+}
+
+.people-install .panel__sub {
+  margin-bottom: var(--santa-space-2);
+}
+
+.people-install .btn {
+  flex: 0 0 auto;
 }
 
 .dashboard__stack > .grid,
@@ -1344,7 +1930,7 @@ svg {
 .guide__layout {
   display: grid;
   grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr);
-  gap: 20px;
+  gap: var(--santa-space-5);
 }
 
 .guide__rail {
@@ -1356,9 +1942,9 @@ svg {
 .guide__step {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--santa-space-2);
   width: 100%;
-  min-height: 46px;
+  min-height: var(--santa-space-8);
   padding: 9px 12px;
   border: 1px solid var(--santa-line);
   border-radius: 13px;
@@ -1427,11 +2013,11 @@ svg {
 }
 
 .guide__actions {
-  margin-top: 18px;
+  margin-top: var(--santa-space-5);
 }
 
 .presets {
-  margin-top: 22px;
+  margin-top: var(--santa-space-5);
 }
 
 .presets h3 {
@@ -1447,7 +2033,7 @@ svg {
 
 .preset-chip {
   min-height: 44px;
-  padding: 8px 12px;
+  padding: 0 12px;
   border: 1px solid var(--santa-line);
   border-radius: 999px;
   background: var(--santa-surface);
@@ -1481,15 +2067,17 @@ svg {
 .form-inline {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: var(--santa-space-2);
+  margin-bottom: var(--santa-space-4);
 }
 
 .form-inline input,
 .form-inline select {
   flex: 1 1 180px;
+  height: var(--santa-space-8);
   min-width: 0;
-  padding: 11px 13px;
+  min-height: var(--santa-space-8);
+  padding: 10px 13px;
   border: 1px solid var(--santa-line);
   border-radius: 12px;
   background: var(--santa-bg);
@@ -1713,13 +2301,13 @@ svg {
 .chat__templates {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: var(--santa-space-2);
+  margin-bottom: var(--santa-space-3);
 }
 
 .chat__templates .preset-chip {
   min-height: 44px;
-  padding: 8px 10px;
+  padding: 0 10px;
   font-size: 0.8rem;
 }
 
@@ -1731,7 +2319,7 @@ svg {
 
 .confirm-dialog__actions {
   justify-content: flex-end;
-  margin-top: 22px;
+  margin-top: var(--santa-space-5);
 }
 
 @media (max-width: 980px) {
@@ -1755,6 +2343,7 @@ svg {
 
 @media (max-width: 980px) {
   .dash-overview,
+  .people-grid,
   .chat {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1780,6 +2369,19 @@ svg {
 @media (max-width: 640px) {
   .dashboard__head .room-code {
     order: 2;
+  }
+
+  .profile-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wish-field {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .wish-field .btn {
+    width: 100%;
   }
 
   .guide__rail {

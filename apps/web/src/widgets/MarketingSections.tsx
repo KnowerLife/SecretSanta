@@ -3,6 +3,7 @@ import { Box, Group } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import type { SceneId } from '@secret-santa/art';
 import { useI18n } from '../app/providers/i18n.tsx';
+import { FestiveGarland } from '../shared/ui/FestiveDecor.tsx';
 import { Scene } from '../shared/ui/Scene.tsx';
 import { DemoRoomButton } from '../features/guide/DemoRoomButton.tsx';
 import { SiteGuide } from '../features/guide/SiteGuide.tsx';
@@ -95,7 +96,8 @@ export function HeroSection() {
           ))}
         </Group>
       </Box>
-      <Box>
+      <Box className="hero__art">
+        <FestiveGarland />
         <Scene id="hero-winter-scene" />
       </Box>
     </section>
@@ -204,7 +206,7 @@ export function PrivacySection() {
         <Head kicker={t('privacy.kicker')} title={t('privacy.title')} sub={t('privacy.sub')} />
         <Scene id="privacy-who-sees" />
       </div>
-      <div className="container grid grid--3">
+      <div className="container grid grid--3 privacy-roles">
         {['organizer', 'santa', 'member'].map((role) => (
           <div className="card card__body" key={role}>
             <h3>{t(`privacy.${role}.title`)}</h3>

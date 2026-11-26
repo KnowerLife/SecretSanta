@@ -7,6 +7,21 @@ test('каталог содержит ровно 36 уникальных сце�
   assert.equal(new Set(SCENES.map((scene) => scene.id)).size, 36);
 });
 
+test('у каждой сцены своя композиция, а не одна иконка на общем фоне', () => {
+  const signatures = new Map<string, string>();
+  for (const scene of SCENES) {
+    const signature = renderSceneSvg(scene.id, 'winter')
+      .replace(/art-[^" ]+/g, 'uid')
+      .replace(/#[0-9A-Fa-f]{6}/g, 'color')
+      .replace(/-?\d+(?:\.\d+)?/g, '#')
+      .replace(/\s+/g, ' ')
+      .trim();
+    assert.equal(signatures.has(signature), false, `одинаковая композиция: ${scene.id}`);
+    signatures.set(signature, scene.id);
+  }
+  assert.equal(signatures.size, SCENES.length);
+});
+
 test('рендер детерминирован для сцены и темы', () => {
   for (const scene of SCENES) {
     const first = renderSceneSvg(scene.id, 'winter');

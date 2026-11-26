@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { MantineProvider, Notification, createTheme } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
+import { notifications as notificationStore, Notifications } from '@mantine/notifications';
+import type { NotificationData } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { I18nProvider, useI18n } from './i18n.tsx';
 import { SettingsProvider, useSettings } from './settings.tsx';
@@ -67,13 +68,38 @@ function Providers({ children }: { children: ReactNode }) {
         limit={5}
         containerWidth={360}
         // Стандартная кнопка Mantine не имеет доступного имени — задаём его из словаря.
-        renderNotification={({ id: _wrapperId, onClose, ...data }) => (
-          <Notification
-            {...data}
-            onClose={() => onClose?.(data)}
-            closeButtonProps={{ 'aria-label': t('toast.close') }}
-          />
-        )}
+        // Важно: message — это дочерний контент Notification, а не DOM-атрибут.
+        renderNotification={(notification: NotificationData) => {
+          const {
+            id,
+            onClose: _onClose,
+            message,
+            autoClose: _autoClose,
+            allowClose: _allowClose,
+            position: _position,
+            withAutoCloseProgress: _withAutoCloseProgress,
+            autoCloseProgressPosition: _autoCloseProgressPosition,
+            onOpen: _onOpen,
+            renderNotification: _renderNotification,
+            priority: _priority,
+            __sequence: _sequence,
+            ...data
+          } = notification as NotificationData & { __sequence?: number };
+          return (
+            <Notification
+              {...data}
+              onClose={() => {
+                // Контейнер Mantine сам вызывает onClose из данных после hide(),
+                // поэтому достаточно удалить уведомление из стора — кнопка
+                // «Закрыть» сработает сразу, не дожидаясь авто-закрытия.
+                if (id) notificationStore.hide(id);
+              }}
+              closeButtonProps={{ 'aria-label': t('toast.close') }}
+            >
+              {message}
+            </Notification>
+          );
+        }}
       />
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </MantineProvider>
