@@ -170,7 +170,7 @@ RU и EN синхронизированы — `npm run check:i18n-unused` соо
 
 ```bash
 npm run typecheck              # все пакеты
-npm test                       # 83 unit-теста shared/art/api/web, observability, motion и design-floor
+npm test                       # 87 unit-тестов shared/art/api/web, observability, motion, design-floor и footer
 npm run check:i18n-unused      # словарь RU/EN
 npm run build                  # API и SSR
 npm run build:pages            # статическая витрина GitHub Pages
