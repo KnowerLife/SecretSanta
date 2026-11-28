@@ -8,7 +8,8 @@
     "./i18n": "./src/i18n.ts",
     "./i18n-data": "./src/i18n-data.ts",
     "./draw": "./src/draw.ts",
-    "./contracts": "./src/contracts.ts"
+    "./contracts": "./src/contracts.ts",
+    "./observability": "./src/observability.ts"
   },
   "scripts": {
     "check:unused-keys": "node scripts/check-unused-keys.mjs"

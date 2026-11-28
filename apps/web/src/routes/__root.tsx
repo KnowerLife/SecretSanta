@@ -3,10 +3,13 @@ import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 import mantineCoreStyles from '@mantine/core/styles.css?url';
 import mantineNotificationsStyles from '@mantine/notifications/styles.css?url';
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router';
+import type { ErrorComponentProps } from '@tanstack/react-router';
 import { I18N } from '@secret-santa/shared/i18n-data';
 import { AppProviders } from '../app/providers/AppProviders.tsx';
 import { useSettings } from '../app/providers/settings.tsx';
 import { NotFoundPage } from '../pages/NotFoundPage.tsx';
+import { PrivacyAnalytics } from '../shared/Analytics.tsx';
+import { webReporter } from '../shared/observability.ts';
 import { ServiceWorkerRegistrar } from '../shared/pwa/ServiceWorkerRegistrar.tsx';
 import { assetPath } from '../shared/base.ts';
 import { FestiveSky } from '../shared/ui/FestiveDecor.tsx';
@@ -43,12 +46,15 @@ export const Route = createRootRoute({
     ],
   }),
   notFoundComponent: NotFoundPage,
+  errorComponent: RouteErrorPage,
+  onError: (error) => webReporter.captureException(error, { source: 'tanstack-router' }),
   component: RootComponent,
 });
 
 function RootComponent() {
   return (
     <AppProviders>
+      <PrivacyAnalytics />
       <RootDocument>
         <SiteHeader />
         <main id="main">
@@ -58,6 +64,21 @@ function RootComponent() {
         <ServiceWorkerRegistrar />
       </RootDocument>
     </AppProviders>
+  );
+}
+
+function RouteErrorPage({ error, reset }: ErrorComponentProps) {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    <div className="container dashboard">
+      <div className="empty-state">
+        <h1>Что-то пошло не так / Something went wrong</h1>
+        <p>{message}</p>
+        <button className="btn btn--primary" type="button" onClick={reset}>
+          Повторить / Retry
+        </button>
+      </div>
+    </div>
   );
 }
 

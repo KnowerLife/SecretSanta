@@ -168,7 +168,7 @@ RU и EN синхронизированы — `npm run check:i18n-unused` соо
 
 ```bash
 npm run typecheck              # все пакеты
-npm test                       # 62 unit-теста shared/art/api/web
+npm test                       # 76 unit-тестов shared/art/api/web и CLI-скриптов
 npm run check:i18n-unused      # словарь RU/EN
 npm run build                  # API и SSR
 npm run build:pages            # статическая витрина GitHub Pages
@@ -178,6 +178,10 @@ npx openspec validate --all --strict
 ```
 
 CI на `ubuntu-24.04` прогоняет типопроверку, тесты, сборку и валидацию OpenSpec; `verify:frontend:v69` поднимает Compose-стек и проверяет готовность, демо, приватность назначения, SSE replay и доступность Lighthouse. Pages-сборка проверяется браузером на подпути `/SecretSanta/`.
+
+## Наблюдаемость и приватная аналитика
+
+Все интеграции необязательны и выключены без переменных окружения. `synthetic-checks.yml` раз в 15 минут проверяет витрину, `/api/health` и базовые a11y-признаки; при наличии секретов синхронизируются мониторы UptimeRobot. GoatCounter считает только публичные страницы Pages (без `/room/*`, без кук и с уважением `Do Not Track`). Sentry-совместимый репортер ловит ошибки Hono API, SSR и браузера и не отправляет токены, коды комнат и query-строки. Настройка — в [`docs/OBSERVABILITY.md`](docs/OBSERVABILITY.md).
 
 ## Конфигурация
 
@@ -192,6 +196,9 @@ CI на `ubuntu-24.04` прогоняет типопроверку, тесты, 
 | `PORT` | Порт API (по умолчанию `8787`) |
 | `PAGES_BASE` | Подпуть витрины, например `/SecretSanta`; workflow задаёт автоматически |
 | `VITE_API_BASE` | Необязательный внешний API для витрины; без него демо остаётся статическим |
+| `VITE_GOATCOUNTER_CODE` | Код сайта для cookieless-аналитики витрины (только публичные страницы) |
+| `SENTRY_DSN`, `VITE_SENTRY_DSN` | Sentry-совместимый репортер ошибок для API и web соответственно |
+| `MONITOR_API_URL`, `UPTIMEROBOT_API_KEY` | Публичный API и ключ для синхронизации внешних мониторов |
 
 ## Релизы и откат
 

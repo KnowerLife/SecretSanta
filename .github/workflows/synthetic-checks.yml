@@ -1,0 +1,59 @@
+name: Synthetic checks
+
+# Cheap, provider-agnostic smoke checks for the public showcase and the
+# optionally configured Hono API. UptimeRobot/Checkly/Accesserty Pulse are
+# documented in docs/OBSERVABILITY.md; this workflow works with no account.
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  endpoints:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Showcase routes, API health and a11y landmarks
+        env:
+          PAGES_URL: https://knowerlife.github.io/SecretSanta/
+          API_URL: ${{ secrets.MONITOR_API_URL }}
+        run: node scripts/check_endpoints.mjs
+      - name: Sync UptimeRobot monitors (optional)
+        env:
+          UPTIMEROBOT_API_KEY: ${{ secrets.UPTIMEROBOT_API_KEY }}
+          MONITOR_API_URL: ${{ secrets.MONITOR_API_URL }}
+        run: node scripts/uptimerobot-sync.mjs
+
+  pages-a11y:
+    # Manual only: Lighthouse is fetched ad hoc and is slower than the smoke run.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Lighthouse accessibility for the Pages showcase
+        env:
+          PAGES_URL: https://knowerlife.github.io/SecretSanta/
+        run: |
+          CHROME_PATH="$(node -e "console.log(require('playwright').chromium.executablePath())")"
+          npx --yes lighthouse@12 "$PAGES_URL" \
+            --only-categories=accessibility \
+            --output=json --output-path=./lighthouse-pages.json \
+            --chrome-flags="--headless --no-sandbox --disable-gpu" \
+            --quiet
+          node -e "const s=require('./lighthouse-pages.json').categories.accessibility.score; console.log('accessibility score:', s); if (s < 0.9) process.exit(1)"

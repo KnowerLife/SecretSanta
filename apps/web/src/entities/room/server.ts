@@ -5,6 +5,7 @@ import type {
   MessageView,
   RoomView,
 } from '@secret-santa/shared/contracts';
+import { webReporter } from '../../shared/observability.ts';
 
 const API_BASE = process.env.SECRET_SANTA_API_TARGET ?? 'http://127.0.0.1:8787';
 
@@ -59,6 +60,8 @@ export const loadRoomBootstrap = createServerFn({ method: 'GET' })
         messages: messages.messages,
       };
     } catch (error) {
+      // Without a room code: errors may contain upstream URLs with private data.
+      webReporter.captureException(error, { source: 'room-bootstrap' });
       return { ok: false, error: error instanceof Error ? error.message : 'network' };
     }
   });
