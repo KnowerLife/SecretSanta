@@ -106,7 +106,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="site-shell">
+        <div className="site-shell" id="top">
           <FestiveSky />
           {children}
         </div>

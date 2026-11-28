@@ -45,27 +45,34 @@ export function SiteFooter() {
         </section>
 
         <div className="footer-bottom">
-          <a
-            className="footer-bottom__link"
-            href="https://github.com/KnowerLife/SecretSanta"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={t('footer.copyLink')}
-          >
-            {t('footer.copy')}
-          </a>
-          <span aria-hidden="true">·</span>
-          <span>{t('footer.made')}</span>
-          <span aria-hidden="true">·</span>
-          <a
-            className="footer-bottom__link"
-            href="https://github.com/KnowerLife"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={t('footer.github')}
-          >
-            GitHub
-          </a>
+          <ul className="footer-bottom__list">
+            <li>
+              <a
+                className="footer-bottom__link"
+                href="https://github.com/KnowerLife/SecretSanta"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t('footer.copy')}
+                <span className="sr-only">{t('footer.copyContext')}</span>
+              </a>
+            </li>
+            <li>{t('footer.made')}</li>
+            <li>
+              <a
+                className="footer-bottom__link"
+                href="https://github.com/KnowerLife"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+                <span className="sr-only">{t('footer.githubContext')}</span>
+              </a>
+            </li>
+            <li>
+              <a className="footer-bottom__link" href="#top">{t('footer.toTop')}</a>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>
