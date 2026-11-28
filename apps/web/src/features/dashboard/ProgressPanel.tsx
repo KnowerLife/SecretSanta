@@ -70,7 +70,7 @@ export function ProgressPanel({
           </li>
         ))}
         {checks.every((check) => check.done) && (
-          <li className="checklist__done">{t('dash.checkAllDone')}</li>
+          <li className="checklist__done animated pulse motion-cheer">{t('dash.checkAllDone')}</li>
         )}
       </ul>
 

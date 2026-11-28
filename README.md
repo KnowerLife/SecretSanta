@@ -160,6 +160,8 @@ Service worker кэширует оболочку и статические SVG-�
 
 RU и EN синхронизированы — `npm run check:i18n-unused` сообщает о неиспользуемых ключах. Три темы (`winter`, `midnight`, `cozy`) задаются CSS-токенами и общими SVG-палитрами. Выбор языка и темы сохраняется в localStorage. Интерфейс поддерживает клавиатурную навигацию, видимый фокус и `prefers-reduced-motion`.
 
+Из animate.css взято пять точечных эффектов: `zoomIn` при раскрытии получателя, `fadeInUp` для строк жеребьёвки, `headShake` для ошибок форм, `fadeInDown` для подтверждений и `pulse` для завершённого чек-листа. Подключены только используемые исходники, а не весь бандл; подробности — [`docs/MOTION.md`](docs/MOTION.md).
+
 ## Графика
 
 Иллюстрации генерируются из `packages/art` и лежат в `apps/web/public/art`. Одна сцена рендерится в трёх палитрах; при повторном использовании идентификаторы SVG делаются уникальными, чтобы не конфликтовать с `aria-labelledby` и градиентами. Детерминированный рендер позволяет получить одинаковую картинку в SSR и статической витрине.
@@ -168,7 +170,7 @@ RU и EN синхронизированы — `npm run check:i18n-unused` соо
 
 ```bash
 npm run typecheck              # все пакеты
-npm test                       # 62 unit-теста shared/art/api/web
+npm test                       # 65 unit-тестов shared/art/api/web и motion-проверок
 npm run check:i18n-unused      # словарь RU/EN
 npm run build                  # API и SSR
 npm run build:pages            # статическая витрина GitHub Pages

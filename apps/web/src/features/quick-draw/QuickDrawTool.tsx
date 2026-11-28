@@ -23,6 +23,7 @@ export function QuickDrawTool() {
   const { searchStr } = useLocation();
   const [namesText, setNamesText] = useState('Анна\nБорис\nВика\nГлеб');
   const [pairs, setPairs] = useState<DrawPair[]>([]);
+  const [drawVersion, setDrawVersion] = useState(0);
   const [error, setError] = useState('');
   const [personal, setPersonal] = useState<PersonalPair | null>(null);
   const [notice, setNotice] = useState('');
@@ -62,6 +63,9 @@ export function QuickDrawTool() {
       return;
     }
     setPairs(result);
+    // Новый ключ строк заставляет браузер проиграть каскад и при повторной
+    // жеребьёвке с тем же набором имён.
+    setDrawVersion((version) => version + 1);
   };
 
   const reset = () => {
@@ -108,7 +112,12 @@ export function QuickDrawTool() {
           </p>
           <p className="field-hint">{t('quick.personalWarning')}</p>
           {notice && (
-            <p className="notice" data-kind="success" role="status">
+            <p
+              key={notice}
+              className="notice animated fadeInDown motion-notice"
+              data-kind="success"
+              role="status"
+            >
               {notice}
             </p>
           )}
@@ -147,12 +156,17 @@ export function QuickDrawTool() {
           <p className="field-hint">{t('quick.namesHint')}</p>
         </div>
         {error && (
-          <p className="form-error" role="alert">
+          <p key={error} className="form-error animated headShake motion-error" role="alert">
             {error}
           </p>
         )}
         {notice && (
-          <p className="notice" data-kind="success" role="status">
+          <p
+            key={notice}
+            className="notice animated fadeInDown motion-notice"
+            data-kind="success"
+            role="status"
+          >
             {notice}
           </p>
         )}
@@ -189,7 +203,9 @@ export function QuickDrawTool() {
               <tbody>
                 {pairs.map((pair, index) => (
                   <tr
-                    key={`${pair.santa}-${pair.recipient}`}
+                    key={`${drawVersion}-${pair.santa}-${pair.recipient}`}
+                    className="animated fadeInUp motion-row"
+                    style={{ animationDelay: `${Math.min(index, 8) * 70}ms` }}
                     aria-label={t('quick.pair', { santa: pair.santa, recipient: pair.recipient })}
                   >
                     <td>{pair.santa}</td>

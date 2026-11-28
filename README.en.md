@@ -160,6 +160,8 @@ The service worker caches the app shell and static SVG scenes, so the app is ins
 
 RU and EN stay in sync — `npm run check:i18n-unused` reports unused keys. Three themes (`winter`, `midnight`, `cozy`) are defined by CSS tokens and shared SVG palettes. Language and theme choices persist in localStorage. The UI supports keyboard navigation, a visible focus state and `prefers-reduced-motion`.
 
+Five focused effects are taken from animate.css: `zoomIn` for the recipient reveal, `fadeInUp` for draw result rows, `headShake` for form errors, `fadeInDown` for confirmations and `pulse` for a completed checklist. Only the used source files are imported, not the whole bundle; see [`docs/MOTION.md`](docs/MOTION.md).
+
 ## Artwork
 
 Illustrations are generated in `packages/art` and stored in `apps/web/public/art`. One scene is rendered in three palettes; SVG IDs are made unique on reuse so they do not collide with `aria-labelledby` or gradients. Deterministic rendering produces the same picture in SSR and in the static showcase.
@@ -168,7 +170,7 @@ Illustrations are generated in `packages/art` and stored in `apps/web/public/art
 
 ```bash
 npm run typecheck              # all packages
-npm test                       # 62 unit tests across shared/art/api/web
+npm test                       # 65 unit tests across shared/art/api/web and motion checks
 npm run check:i18n-unused      # RU/EN dictionary
 npm run build                  # API and SSR
 npm run build:pages            # static GitHub Pages showcase
