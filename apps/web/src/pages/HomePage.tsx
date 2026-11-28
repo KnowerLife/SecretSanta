@@ -10,7 +10,7 @@ import {
   ModesSection,
   PrivacySection,
   RulesSection,
-  TestimonialsSection,
+  ScenariosSection,
 } from '../widgets/MarketingSections.tsx';
 
 export function HomePage() {
@@ -36,7 +36,7 @@ export function HomePage() {
             <RulesSection />
             <AudienceSection />
             <IdeasSection />
-            <TestimonialsSection />
+            <ScenariosSection />
           </div>
         </details>
       </section>

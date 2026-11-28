@@ -170,7 +170,7 @@ Illustrations are generated in `packages/art` and stored in `apps/web/public/art
 
 ```bash
 npm run typecheck              # all packages
-npm test                       # 66 unit tests across shared/art/api/web and motion checks
+npm test                       # 69 unit tests across shared/art/api/web, motion and design-floor checks
 npm run check:i18n-unused      # RU/EN dictionary
 npm run build                  # API and SSR
 npm run build:pages            # static GitHub Pages showcase

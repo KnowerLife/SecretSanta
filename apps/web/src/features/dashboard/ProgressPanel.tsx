@@ -58,7 +58,10 @@ export function ProgressPanel({
         aria-valuemax={100}
         aria-valuenow={progress}
       >
-        <span className="progress-bar__fill" style={{ width: `${progress}%` }} />
+        <span
+          className="progress-bar__fill"
+          style={{ transform: `scaleX(${progress / 100})` }}
+        />
       </div>
       <p className="field-hint">{t('dash.progressLabel')}: {progress}%</p>
 
