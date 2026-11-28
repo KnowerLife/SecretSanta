@@ -2,13 +2,23 @@
 
 Все значимые изменения фиксируются здесь. Формат: [Keep a Changelog](https://keepachangelog.com/ru/1.1.0/), версии — [Semantic Versioning](https://semver.org/lang/ru/).
 
-## [Unreleased]
+## [10.0.0] — 2026-11-28
 
 ### Added
 
 - Необязательная наблюдаемость: smoke-проверки Pages/API каждые 15 минут (`synthetic-checks.yml`), идемпотентная синхронизация мониторов UptimeRobot, cookieless-аналитика GoatCounter только на публичных страницах витрины и Sentry-совместимый репортер ошибок Hono API, SSR и браузера.
 - Документация по настройке и privacy-гарантиям — `docs/OBSERVABILITY.md`; переменные окружения добавлены в `.env.example`, `deploy-pages.yml` и оба README.
-- Регрессионные тесты для path-фильтра аналитики, envelope-репортера и CLI-скриптов (76 тестов в `npm test`).
+- Регрессионные тесты для path-фильтра аналитики, envelope-репортера и CLI-скриптов (83 теста в `npm test`).
+- Единые токены движения `--santa-ease-*`, `--santa-dur-*` и `--santa-delay-*` для интерфейсных переходов и смысловых анимаций; каскад строк жеребьёвки тоже управляется токеном.
+- Пять точечных анимаций из animate.css 4.1.1: `zoomIn` при раскрытии получателя, каскад `fadeInUp` в результатах жеребьёвки, `headShake` для ошибок форм, `fadeInDown` для подтверждений и `pulse` для завершённого чек-листа. Импортируются только используемые исходники, а не весь бандл.
+- Документация по выбору эффектов и доступности — `docs/MOTION.md`; лицензия animate.css вынесена в `LICENSES/animate.css.txt`.
+- Проверки `scripts/design-floor.test.mjs`: горизонтальный скролл ограничен через `clip`, полоса прогресса не анимирует `width`, в копиях нет вымышленных отзывов.
+- Final-релиз зафиксирован как `v10.0.0`; образы GHCR публикуются с тегом `100` вместе с `v10.0.0` и `latest`.
+
+### Changed
+
+- Вместо вымышленных отзывов с именами на главной — три иллюстративных сценария использования без цитат и фамилий.
+- Полоса прогресса анимируется `transform: scaleX()` вместо `width`; подпись SVG-сцены «Отзывы участников» заменена на «Друзья с подарками».
 
 ## [9.5.0] — 2026-11-26
 
@@ -187,7 +197,8 @@ v69.0.0 — рекомендуемая точка входа для разраб
 
 - Контраст темы `cozy` и версии ассетов/service worker обновлены до v68.
 
-[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v9.5.0...HEAD
+[Unreleased]: https://github.com/KnowerLife/SecretSanta/compare/v10.0.0...HEAD
+[10.0.0]: https://github.com/KnowerLife/SecretSanta/compare/v9.5.0...v10.0.0
 [9.5.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.4.0...v9.5.0
 [69.4.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.3.0...v69.4.0
 [69.3.0]: https://github.com/KnowerLife/SecretSanta/compare/v69.2.2...v69.3.0

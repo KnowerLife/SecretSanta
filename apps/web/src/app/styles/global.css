@@ -67,6 +67,24 @@
   --santa-space-7: 40px;
   --santa-space-8: 48px;
 
+  /* Единая шкала движения: кривые и длительности задаются здесь, а правила
+   * ниже содержат только ссылки на токены. Идея — из Hyprland-конфигов,
+   * код не заимствуется. */
+  --santa-ease-ui: ease;
+  --santa-ease-enter: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --santa-dur-control: 160ms;
+  --santa-dur-nav: 220ms;
+  --santa-dur-progress: 240ms;
+  --santa-dur-notice: 320ms;
+  --santa-dur-result: 420ms;
+  --santa-dur-motion: 480ms;
+  --santa-dur-reveal: 620ms;
+  --santa-dur-hero: 720ms;
+  --santa-dur-cheer: 800ms;
+  --santa-delay-hero: 120ms;
+  --santa-delay-stagger: 70ms;
+
   --santa-shadow-sm: 0 4px 14px rgba(21, 49, 87, 0.05);
   --santa-shadow: 0 14px 40px rgba(21, 49, 87, 0.08);
   --santa-shadow-lg: 0 24px 60px rgba(21, 49, 87, 0.14);
@@ -196,6 +214,7 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -204,10 +223,9 @@ body {
   font-family: var(--santa-font);
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: background-color 220ms ease, color 220ms ease;
+  transition: background-color var(--santa-dur-nav) var(--santa-ease-ui), color var(--santa-dur-nav) var(--santa-ease-ui);
 }
 
 h1,
@@ -450,7 +468,7 @@ main#main,
   font-weight: 700;
   color: var(--santa-muted);
   text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease;
+  transition: background-color var(--santa-dur-control) var(--santa-ease-ui), color var(--santa-dur-control) var(--santa-ease-ui);
 }
 
 .nav__link:hover {
@@ -536,7 +554,7 @@ main#main,
   font-size: clamp(3rem, 6vw, 5.4rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
-  animation: festive-rise 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: festive-rise var(--santa-dur-hero) var(--santa-ease-enter) both;
 }
 
 .hero__lead {
@@ -545,7 +563,7 @@ main#main,
   color: var(--santa-muted);
   font-size: 1.1rem;
   line-height: 1.65;
-  animation: festive-rise 720ms cubic-bezier(0.2, 0.8, 0.2, 1) 120ms both;
+  animation: festive-rise var(--santa-dur-hero) var(--santa-ease-enter) var(--santa-delay-hero) both;
 }
 
 .btn-row {
@@ -572,7 +590,7 @@ main#main,
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, color 160ms ease;
+  transition: transform var(--santa-dur-control) var(--santa-ease-ui), box-shadow var(--santa-dur-control) var(--santa-ease-ui), background-color var(--santa-dur-control) var(--santa-ease-ui), color var(--santa-dur-control) var(--santa-ease-ui);
 }
 
 .btn:hover {
@@ -812,10 +830,8 @@ main#main,
   line-height: 1.6;
 }
 
-.card__author {
-  margin-top: 1rem;
-  color: var(--santa-ink);
-  font-weight: 800;
+.card__body h3 + p {
+  margin-top: var(--santa-space-2);
 }
 
 .budget-row {
@@ -902,7 +918,7 @@ main#main,
   border-bottom: 1px solid var(--santa-line);
   cursor: pointer;
   list-style: none;
-  transition: background-color 160ms ease;
+  transition: background-color var(--santa-dur-control) var(--santa-ease-ui);
 }
 
 .info-disclosure > summary::-webkit-details-marker {
@@ -931,7 +947,7 @@ main#main,
   border-right: 2px solid var(--santa-accent);
   border-bottom: 2px solid var(--santa-accent);
   transform: rotate(45deg);
-  transition: transform 160ms ease;
+  transition: transform var(--santa-dur-control) var(--santa-ease-ui);
 }
 
 .info-disclosure[open] > summary::after {
@@ -1168,7 +1184,7 @@ main#main,
   border-radius: var(--santa-radius-control);
   color: var(--santa-footer-body);
   text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease;
+  transition: background-color var(--santa-dur-control) var(--santa-ease-ui), color var(--santa-dur-control) var(--santa-ease-ui);
 }
 
 .footer-nav a::after {
@@ -1338,7 +1354,7 @@ main#main,
   cursor: pointer;
   font: inherit;
   font-weight: 800;
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition: transform var(--santa-dur-control) var(--santa-ease-ui), border-color var(--santa-dur-control) var(--santa-ease-ui), box-shadow var(--santa-dur-control) var(--santa-ease-ui);
 }
 
 .theme-option:hover {
@@ -2176,10 +2192,12 @@ main#main,
 
 .progress-bar__fill {
   display: block;
+  width: 100%;
   height: 100%;
   border-radius: inherit;
   background: var(--santa-primary);
-  transition: width 240ms ease;
+  transform-origin: left center;
+  transition: transform var(--santa-dur-progress) var(--santa-ease-ui);
 }
 
 .checklist {

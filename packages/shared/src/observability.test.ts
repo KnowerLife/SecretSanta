@@ -28,7 +28,7 @@ test('reporter sends a Sentry envelope to the DSN project endpoint', async () =>
   const reporter = createErrorReporter({
     dsn: DSN,
     environment: 'test',
-    release: 'v9.5.0',
+    release: 'v10.0.0',
     fetch: fetchFn,
   });
 

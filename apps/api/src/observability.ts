@@ -4,5 +4,5 @@ import { createErrorReporter } from '@secret-santa/shared/observability';
 export const apiReporter = createErrorReporter({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.SENTRY_ENVIRONMENT ?? (process.env.NODE_ENV === 'production' ? 'production' : 'development'),
-  release: process.env.APP_VERSION ?? 'v9.5.0',
+  release: process.env.APP_VERSION ?? 'v10.0.0',
 });

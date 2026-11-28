@@ -43,7 +43,7 @@ jobs:
           VITE_GOATCOUNTER_CODE: ${{ vars.VITE_GOATCOUNTER_CODE }}
           VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
           VITE_SENTRY_ENVIRONMENT: ${{ vars.VITE_SENTRY_ENVIRONMENT }}
-          VITE_APP_VERSION: v9.5.0
+          VITE_APP_VERSION: v10.0.0
         run: npm run build:pages
 
       - name: Upload Pages artifact

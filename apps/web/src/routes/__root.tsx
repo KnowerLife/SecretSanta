@@ -16,6 +16,7 @@ import { FestiveSky } from '../shared/ui/FestiveDecor.tsx';
 import { SiteFooter } from '../widgets/SiteFooter.tsx';
 import { SiteHeader } from '../widgets/SiteHeader.tsx';
 import '../app/styles/global.css';
+import '../app/styles/motion.css';
 
 export const Route = createRootRoute({
   head: () => ({
