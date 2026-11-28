@@ -3,8 +3,10 @@ import app from './app.ts';
 import { assertProductionSecret } from './config.ts';
 import { setEventBroker } from './events.ts';
 import { createEventBroker } from './redis-events.ts';
+import { apiReporter } from './observability.ts';
 
 assertProductionSecret();
+if (apiReporter.enabled) console.log('ERROR_REPORTING enabled');
 const broker = await createEventBroker();
 setEventBroker(broker);
 

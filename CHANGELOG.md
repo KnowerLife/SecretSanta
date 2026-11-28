@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Added
+
+- Необязательная наблюдаемость: smoke-проверки Pages/API каждые 15 минут (`synthetic-checks.yml`), идемпотентная синхронизация мониторов UptimeRobot, cookieless-аналитика GoatCounter только на публичных страницах витрины и Sentry-совместимый репортер ошибок Hono API, SSR и браузера.
+- Документация по настройке и privacy-гарантиям — `docs/OBSERVABILITY.md`; переменные окружения добавлены в `.env.example`, `deploy-pages.yml` и оба README.
+- Регрессионные тесты для path-фильтра аналитики, envelope-репортера и CLI-скриптов (76 тестов в `npm test`).
+
 ## [9.5.0] — 2026-11-26
 
 ### Added

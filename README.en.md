@@ -168,7 +168,7 @@ Illustrations are generated in `packages/art` and stored in `apps/web/public/art
 
 ```bash
 npm run typecheck              # all packages
-npm test                       # 62 unit tests across shared/art/api/web
+npm test                       # 76 unit tests across shared/art/api/web and CLI scripts
 npm run check:i18n-unused      # RU/EN dictionary
 npm run build                  # API and SSR
 npm run build:pages            # static GitHub Pages showcase
@@ -178,6 +178,10 @@ npx openspec validate --all --strict
 ```
 
 CI on `ubuntu-24.04` runs typechecking, tests, build and OpenSpec validation. `verify:frontend:v69` brings up the Compose stack and checks readiness, the demo, assignment privacy, SSE replay and Lighthouse accessibility. The Pages build is checked in a browser under the `/SecretSanta/` subpath.
+
+## Observability and privacy-friendly analytics
+
+All integrations are optional and off until configured. `synthetic-checks.yml` checks the showcase, `/api/health` and basic accessibility landmarks every 15 minutes; UptimeRobot monitors are synced when secrets are present. GoatCounter counts only public Pages routes (never `/room/*`, no cookies, `Do Not Track` respected). A Sentry-compatible reporter captures Hono API, SSR and browser errors without sending tokens, room codes or query strings. Setup: [`docs/OBSERVABILITY.md`](docs/OBSERVABILITY.md).
 
 ## Configuration
 
@@ -192,6 +196,9 @@ Template: `.env.example`. Key variables:
 | `PORT` | API port (default `8787`) |
 | `PAGES_BASE` | Showcase subpath, e.g. `/SecretSanta`; set automatically by the workflow |
 | `VITE_API_BASE` | Optional external API for the showcase; without it the demo stays static |
+| `VITE_GOATCOUNTER_CODE` | Site code for cookieless showcase analytics (public routes only) |
+| `SENTRY_DSN`, `VITE_SENTRY_DSN` | Sentry-compatible error reporting for the API and web respectively |
+| `MONITOR_API_URL`, `UPTIMEROBOT_API_KEY` | Public API URL and key for external monitor sync |
 
 ## Releases and rollback
 

@@ -25,6 +25,10 @@ PAGES_BASE=/<имя-репозитория> npm run build:pages
 | :--- | :--- |
 | `PAGES_BASE` | Подпуть репозитория, например `/SecretSanta`. Workflow берёт `$GITHUB_REPOSITORY`. |
 | `VITE_API_BASE` | Необязательный внешний API. Без него витрина остаётся статической и формы используют локальный режим. |
+| `VITE_GOATCOUNTER_CODE` | Необязательный код сайта GoatCounter: cookieless-аналитика только публичных страниц, без `/room/*`. |
+| `VITE_SENTRY_DSN` / `VITE_SENTRY_ENVIRONMENT` / `VITE_APP_VERSION` | Необязательный Sentry-совместимый репортер ошибок браузера и SSR. |
+
+Подробнее о мониторинге, аналитике и проверках — [`OBSERVABILITY.md`](OBSERVABILITY.md).
 
 `apps/web/vite.pages.config.ts` включает SPA-режим и prerender, задаёт `router.basepath` (иначе TanStack Start сбрасывает его при гидратации) и сохраняет относительные URL ассетов. `scripts/prepare_pages.mjs` после сборки:
 
