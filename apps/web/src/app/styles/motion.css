@@ -14,30 +14,30 @@
 @import 'animate.css/source/attention_seekers/pulse.css';
 
 :root {
-  --animate-duration: 480ms;
-  --animate-delay: 70ms;
+  --animate-duration: var(--santa-dur-motion);
+  --animate-delay: var(--santa-delay-stagger);
 }
 
 /* Семантические обёртки держат длительность в одном месте и не спорят
  * с degrade-правилом prefers-reduced-motion из global.css. */
 .motion-reveal {
-  animation-duration: 620ms;
+  animation-duration: var(--santa-dur-reveal);
 }
 
 .motion-row {
-  animation-duration: 420ms;
+  animation-duration: var(--santa-dur-result);
 }
 
 .motion-error {
-  animation-duration: 420ms;
+  animation-duration: var(--santa-dur-result);
 }
 
 .motion-notice {
-  animation-duration: 320ms;
+  animation-duration: var(--santa-dur-notice);
 }
 
 .motion-cheer {
-  animation-duration: 800ms;
+  animation-duration: var(--santa-dur-cheer);
   animation-iteration-count: 1;
 }
 

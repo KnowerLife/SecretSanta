@@ -205,7 +205,9 @@ export function QuickDrawTool() {
                   <tr
                     key={`${drawVersion}-${pair.santa}-${pair.recipient}`}
                     className="animated fadeInUp motion-row"
-                    style={{ animationDelay: `${Math.min(index, 8) * 70}ms` }}
+                    style={{
+                      animationDelay: `calc(var(--santa-delay-stagger) * ${Math.min(index, 8)})`,
+                    }}
                     aria-label={t('quick.pair', { santa: pair.santa, recipient: pair.recipient })}
                   >
                     <td>{pair.santa}</td>
