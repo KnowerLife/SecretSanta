@@ -86,8 +86,16 @@ export function JoinRoomForm() {
           required
         />
       </div>
-      {inviteToken && <p className="notice" data-kind="success">{t('dash.inviteBtn')}</p>}
-      {error && <p className="form-error" role="alert">{error}</p>}
+      {inviteToken && (
+        <p className="notice animated fadeInDown motion-notice" data-kind="success">
+          {t('dash.inviteBtn')}
+        </p>
+      )}
+      {error && (
+        <p key={error} className="form-error animated headShake motion-error" role="alert">
+          {error}
+        </p>
+      )}
       <div className="btn-row">
         <button className="btn btn--primary" type="submit" disabled={pending}>
           {t('join.submit')}

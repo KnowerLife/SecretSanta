@@ -1,0 +1,50 @@
+/*
+ * Небольшая подборка анимаций из animate.css 4.1.1 (https://animate.style).
+ * Импортируем только исходники используемых эффектов, а не весь бандл:
+ * zoomIn, fadeInUp, headShake, fadeInDown, pulse.
+ * Смысл каждой анимации и причины отказа от остальных — docs/MOTION.md.
+ * Лицензия: MIT, текст в LICENSES/animate.css.txt.
+ */
+@import 'animate.css/source/_vars.css';
+@import 'animate.css/source/_base.css';
+@import 'animate.css/source/zooming_entrances/zoomIn.css';
+@import 'animate.css/source/fading_entrances/fadeInUp.css';
+@import 'animate.css/source/attention_seekers/headShake.css';
+@import 'animate.css/source/fading_entrances/fadeInDown.css';
+@import 'animate.css/source/attention_seekers/pulse.css';
+
+:root {
+  --animate-duration: var(--santa-dur-motion);
+  --animate-delay: var(--santa-delay-stagger);
+}
+
+/* Семантические обёртки держат длительность в одном месте и не спорят
+ * с degrade-правилом prefers-reduced-motion из global.css. */
+.motion-reveal {
+  animation-duration: var(--santa-dur-reveal);
+}
+
+.motion-row {
+  animation-duration: var(--santa-dur-result);
+}
+
+.motion-error {
+  animation-duration: var(--santa-dur-result);
+}
+
+.motion-notice {
+  animation-duration: var(--santa-dur-notice);
+}
+
+.motion-cheer {
+  animation-duration: var(--santa-dur-cheer);
+  animation-iteration-count: 1;
+}
+
+/* animate.css обнуляет длительность, но не задержку: без этого правила
+ * строки результата оставались бы скрытыми до 560 мс при reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  .animated {
+    animation-delay: 0ms !important;
+  }
+}

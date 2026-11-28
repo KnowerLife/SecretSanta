@@ -6,7 +6,7 @@
 
 [![CI v69](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml/badge.svg)](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml)
 [![Pages demo](https://img.shields.io/badge/Pages-live%20demo-2F6FB0?style=flat-square&logo=github)](https://knowerlife.github.io/SecretSanta/)
-[![v9.5.0](https://img.shields.io/badge/version-v9.5.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
+[![v10.0.0](https://img.shields.io/badge/version-v10.0.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-183B70?style=flat-square)](#pwa-and-offline)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6B4EFF?style=flat-square)](#license)
 
@@ -160,6 +160,8 @@ The service worker caches the app shell and static SVG scenes, so the app is ins
 
 RU and EN stay in sync — `npm run check:i18n-unused` reports unused keys. Three themes (`winter`, `midnight`, `cozy`) are defined by CSS tokens and shared SVG palettes. Language and theme choices persist in localStorage. The UI supports keyboard navigation, a visible focus state and `prefers-reduced-motion`.
 
+Five focused effects are taken from animate.css: `zoomIn` for the recipient reveal, `fadeInUp` for draw result rows, `headShake` for form errors, `fadeInDown` for confirmations and `pulse` for a completed checklist. Only the used source files are imported, not the whole bundle; see [`docs/MOTION.md`](docs/MOTION.md).
+
 ## Artwork
 
 Illustrations are generated in `packages/art` and stored in `apps/web/public/art`. One scene is rendered in three palettes; SVG IDs are made unique on reuse so they do not collide with `aria-labelledby` or gradients. Deterministic rendering produces the same picture in SSR and in the static showcase.
@@ -168,7 +170,7 @@ Illustrations are generated in `packages/art` and stored in `apps/web/public/art
 
 ```bash
 npm run typecheck              # all packages
-npm test                       # 62 unit tests across shared/art/api/web
+npm test                       # 83 unit tests across shared/art/api/web, observability, motion and design-floor
 npm run check:i18n-unused      # RU/EN dictionary
 npm run build                  # API and SSR
 npm run build:pages            # static GitHub Pages showcase
@@ -178,6 +180,10 @@ npx openspec validate --all --strict
 ```
 
 CI on `ubuntu-24.04` runs typechecking, tests, build and OpenSpec validation. `verify:frontend:v69` brings up the Compose stack and checks readiness, the demo, assignment privacy, SSE replay and Lighthouse accessibility. The Pages build is checked in a browser under the `/SecretSanta/` subpath.
+
+## Observability and privacy-friendly analytics
+
+All integrations are optional and off until configured. `synthetic-checks.yml` checks the showcase, `/api/health` and basic accessibility landmarks every 15 minutes; UptimeRobot monitors are synced when secrets are present. GoatCounter counts only public Pages routes (never `/room/*`, no cookies, `Do Not Track` respected). A Sentry-compatible reporter captures Hono API, SSR and browser errors without sending tokens, room codes or query strings. Setup: [`docs/OBSERVABILITY.md`](docs/OBSERVABILITY.md).
 
 ## Configuration
 
@@ -192,17 +198,20 @@ Template: `.env.example`. Key variables:
 | `PORT` | API port (default `8787`) |
 | `PAGES_BASE` | Showcase subpath, e.g. `/SecretSanta`; set automatically by the workflow |
 | `VITE_API_BASE` | Optional external API for the showcase; without it the demo stays static |
+| `VITE_GOATCOUNTER_CODE` | Site code for cookieless showcase analytics (public routes only) |
+| `SENTRY_DSN`, `VITE_SENTRY_DSN` | Sentry-compatible error reporting for the API and web respectively |
+| `MONITOR_API_URL`, `UPTIMEROBOT_API_KEY` | Public API URL and key for external monitor sync |
 
 ## Releases and rollback
 
 - **Demo:** `.github/workflows/deploy-pages.yml` publishes the showcase from `develop` and `main`, or manually. No separate Pages tag is needed.
-- **Full stack:** `.github/workflows/publish-images.yml` publishes images to GHCR on `v*` tags or manually. Final release: `v9.5.0` (images also tagged `95`); previous known-good: `v69.4.0`; `stable` points to the latest stable release.
+- **Full stack:** `.github/workflows/publish-images.yml` publishes images to GHCR on `v*` tags or manually. Final release: `v10.0.0` (images also tagged `100`); previous known-good: `v9.5.0`; `stable` points to the latest stable release.
 
 ```bash
-git tag -a v9.5.0 -m "v9.5.0"
-git tag -a stable -m "Stable: v9.5.0"
-git push origin v9.5.0 stable
-docker manifest inspect ghcr.io/<owner>/secret-santa-api:95
+git tag -a v10.0.0 -m "v10.0.0"
+git tag -a stable -m "Stable: v10.0.0"
+git push origin v10.0.0 stable
+docker manifest inspect ghcr.io/<owner>/secret-santa-api:100
 ```
 
 To roll back, preserve the `v69_api_data` volume, check migration compatibility and recreate the services:

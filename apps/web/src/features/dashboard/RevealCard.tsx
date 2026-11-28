@@ -63,7 +63,7 @@ export function RevealCard({
   const profile = Object.entries(recipient.profile).filter(([key, value]) => PROFILE_LABELS[key] && value);
 
   return (
-    <section className="panel reveal-card" aria-labelledby="recipient-title">
+    <section className="panel reveal-card animated zoomIn motion-reveal" aria-labelledby="recipient-title">
       <h2 id="recipient-title">{t('dash.recipientTitle')}</h2>
       <h3
         className="reveal-card__name"

@@ -15,7 +15,7 @@ export const SCENES = [
 
   { id: 'hero-winter-scene', titleRu: 'Зимняя сцена на первом экране', titleEn: 'Winter hero scene', category: 'hero', width: 1200, height: 675 },
   { id: 'rules-fair-draw', titleRu: 'Правила честной жеребьёвки', titleEn: 'Fair draw rules', category: 'hero', width: 1200, height: 675 },
-  { id: 'testimonials-friends', titleRu: 'Отзывы участников', titleEn: "Friends' testimonials", category: 'hero', width: 1200, height: 675 },
+  { id: 'testimonials-friends', titleRu: 'Друзья с подарками', titleEn: 'Friends with gifts', category: 'hero', width: 1200, height: 675 },
   { id: 'faq-help', titleRu: 'Помощь и частые вопросы', titleEn: 'Help and FAQ', category: 'hero', width: 1200, height: 675 },
   { id: 'create-game-head', titleRu: 'Создание игры', titleEn: 'Create a game', category: 'hero', width: 1200, height: 675 },
   { id: 'join-game-head', titleRu: 'Вход в игру', titleEn: 'Join a game', category: 'hero', width: 1200, height: 675 },

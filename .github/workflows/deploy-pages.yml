@@ -40,6 +40,10 @@ jobs:
         env:
           PAGES_BASE: /${{ github.event.repository.name }}
           VITE_API_BASE: ${{ vars.VITE_API_BASE }}
+          VITE_GOATCOUNTER_CODE: ${{ vars.VITE_GOATCOUNTER_CODE }}
+          VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
+          VITE_SENTRY_ENVIRONMENT: ${{ vars.VITE_SENTRY_ENVIRONMENT }}
+          VITE_APP_VERSION: v10.0.0
         run: npm run build:pages
 
       - name: Upload Pages artifact

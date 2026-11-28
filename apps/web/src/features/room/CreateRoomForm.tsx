@@ -161,7 +161,11 @@ export function CreateRoomForm() {
         <p className="field-hint">{t('quick.namesHint')}</p>
       </div>
 
-      {error && <p className="form-error" role="alert">{error}</p>}
+      {error && (
+        <p key={error} className="form-error animated headShake motion-error" role="alert">
+          {error}
+        </p>
+      )}
       <div className="btn-row">
         <button className="btn btn--primary" type="submit" disabled={pending}>
           {t('create.submit')}

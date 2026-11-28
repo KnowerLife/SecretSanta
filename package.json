@@ -1,6 +1,6 @@
 {
   "name": "secret-santa",
-  "version": "9.5.0",
+  "version": "10.0.0",
   "private": true,
   "type": "module",
   "description": "SecretSanta: PWA for a Secret Santa game on TanStack Start, Mantine and Hono",
@@ -20,7 +20,7 @@
     "build": "npm run build --workspace @secret-santa/api && npm run build --workspace @secret-santa/web",
     "build:pages": "npm run build:pages --workspace @secret-santa/web",
     "typecheck": "tsc --noEmit -p packages/shared/tsconfig.json && tsc --noEmit -p packages/art/tsconfig.json && tsc --noEmit -p apps/api/tsconfig.json && tsc --noEmit -p apps/web/tsconfig.json",
-    "test": "node --test packages/shared/src/*.test.ts packages/art/src/*.test.ts apps/api/src/*.test.ts apps/web/src/shared/api/localState.test.ts apps/web/src/features/quick-draw/pairs.test.ts",
+    "test": "node --test packages/shared/src/*.test.ts packages/art/src/*.test.ts apps/api/src/*.test.ts apps/web/src/shared/api/localState.test.ts apps/web/src/shared/analytics.test.ts apps/web/src/features/quick-draw/pairs.test.ts scripts/*.test.mjs",
     "art": "node packages/art/scripts/generate.ts",
     "migrate:v68": "node apps/api/src/migrate-v68.ts",
     "openspec:validate": "openspec validate --all --strict"
@@ -35,6 +35,7 @@
     "@tanstack/react-query": "5.108.4",
     "@tanstack/react-router": "1.170.46",
     "@tanstack/react-start": "1.169.7",
+    "animate.css": "4.1.1",
     "hono": "4.13.22",
     "ioredis": "6.1.0",
     "react": "19.3.1",

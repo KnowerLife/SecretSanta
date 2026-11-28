@@ -292,19 +292,17 @@ export function GuideSection() {
   );
 }
 
-export function TestimonialsSection() {
+export function ScenariosSection() {
   const { t } = useI18n();
   return (
     <section className="section section--tint">
       <div className="container">
-        <Head kicker={t('testimonials.kicker')} title={t('testimonials.title')} sub="" />
+        <Head kicker={t('scenarios.kicker')} title={t('scenarios.title')} sub="" />
         <div className="grid grid--3">
           {[1, 2, 3].map((index) => (
             <div className="card card__body" key={index}>
-              <p>“{t(`testimonials.${index}.text`)}”</p>
-              <p className="card__author">
-                {t(`testimonials.${index}.name`)} · {t(`testimonials.${index}.role`)}
-              </p>
+              <h3>{t(`scenarios.${index}.title`)}</h3>
+              <p>{t(`scenarios.${index}.text`)}</p>
             </div>
           ))}
         </div>

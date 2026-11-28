@@ -6,7 +6,7 @@
 
 [![CI v69](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml/badge.svg)](https://github.com/KnowerLife/SecretSanta/actions/workflows/ci-v69.yml)
 [![Pages demo](https://img.shields.io/badge/Pages-live%20demo-2F6FB0?style=flat-square&logo=github)](https://knowerlife.github.io/SecretSanta/)
-[![v9.5.0](https://img.shields.io/badge/version-v9.5.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
+[![v10.0.0](https://img.shields.io/badge/version-v10.0.0-6B4EFF?style=flat-square)](https://github.com/KnowerLife/SecretSanta/releases)
 [![PWA](https://img.shields.io/badge/PWA-offline%20ready-183B70?style=flat-square)](#pwa-и-офлайн)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6B4EFF?style=flat-square)](#лицензия)
 
@@ -160,6 +160,8 @@ Service worker кэширует оболочку и статические SVG-�
 
 RU и EN синхронизированы — `npm run check:i18n-unused` сообщает о неиспользуемых ключах. Три темы (`winter`, `midnight`, `cozy`) задаются CSS-токенами и общими SVG-палитрами. Выбор языка и темы сохраняется в localStorage. Интерфейс поддерживает клавиатурную навигацию, видимый фокус и `prefers-reduced-motion`.
 
+Из animate.css взято пять точечных эффектов: `zoomIn` при раскрытии получателя, `fadeInUp` для строк жеребьёвки, `headShake` для ошибок форм, `fadeInDown` для подтверждений и `pulse` для завершённого чек-листа. Подключены только используемые исходники, а не весь бандл; подробности — [`docs/MOTION.md`](docs/MOTION.md).
+
 ## Графика
 
 Иллюстрации генерируются из `packages/art` и лежат в `apps/web/public/art`. Одна сцена рендерится в трёх палитрах; при повторном использовании идентификаторы SVG делаются уникальными, чтобы не конфликтовать с `aria-labelledby` и градиентами. Детерминированный рендер позволяет получить одинаковую картинку в SSR и статической витрине.
@@ -168,7 +170,7 @@ RU и EN синхронизированы — `npm run check:i18n-unused` соо
 
 ```bash
 npm run typecheck              # все пакеты
-npm test                       # 62 unit-теста shared/art/api/web
+npm test                       # 83 unit-теста shared/art/api/web, observability, motion и design-floor
 npm run check:i18n-unused      # словарь RU/EN
 npm run build                  # API и SSR
 npm run build:pages            # статическая витрина GitHub Pages
@@ -178,6 +180,10 @@ npx openspec validate --all --strict
 ```
 
 CI на `ubuntu-24.04` прогоняет типопроверку, тесты, сборку и валидацию OpenSpec; `verify:frontend:v69` поднимает Compose-стек и проверяет готовность, демо, приватность назначения, SSE replay и доступность Lighthouse. Pages-сборка проверяется браузером на подпути `/SecretSanta/`.
+
+## Наблюдаемость и приватная аналитика
+
+Все интеграции необязательны и выключены без переменных окружения. `synthetic-checks.yml` раз в 15 минут проверяет витрину, `/api/health` и базовые a11y-признаки; при наличии секретов синхронизируются мониторы UptimeRobot. GoatCounter считает только публичные страницы Pages (без `/room/*`, без кук и с уважением `Do Not Track`). Sentry-совместимый репортер ловит ошибки Hono API, SSR и браузера и не отправляет токены, коды комнат и query-строки. Настройка — в [`docs/OBSERVABILITY.md`](docs/OBSERVABILITY.md).
 
 ## Конфигурация
 
@@ -192,17 +198,20 @@ CI на `ubuntu-24.04` прогоняет типопроверку, тесты, 
 | `PORT` | Порт API (по умолчанию `8787`) |
 | `PAGES_BASE` | Подпуть витрины, например `/SecretSanta`; workflow задаёт автоматически |
 | `VITE_API_BASE` | Необязательный внешний API для витрины; без него демо остаётся статическим |
+| `VITE_GOATCOUNTER_CODE` | Код сайта для cookieless-аналитики витрины (только публичные страницы) |
+| `SENTRY_DSN`, `VITE_SENTRY_DSN` | Sentry-совместимый репортер ошибок для API и web соответственно |
+| `MONITOR_API_URL`, `UPTIMEROBOT_API_KEY` | Публичный API и ключ для синхронизации внешних мониторов |
 
 ## Релизы и откат
 
 - **Демо:** workflow `.github/workflows/deploy-pages.yml` публикует витрину из `develop` и `main` или вручную. Отдельный тег для Pages не нужен.
-- **Полный стек:** `.github/workflows/publish-images.yml` публикует образы в GHCR по тегу `v*` или вручную. Final-релиз — `v9.5.0` (образы также с тегом `95`), предыдущий рабочий — `v69.4.0`; тег `stable` указывает на последний стабильный релиз.
+- **Полный стек:** `.github/workflows/publish-images.yml` публикует образы в GHCR по тегу `v*` или вручную. Final-релиз — `v10.0.0` (образы также с тегом `100`), предыдущий рабочий — `v9.5.0`; тег `stable` указывает на последний стабильный релиз.
 
 ```bash
-git tag -a v9.5.0 -m "v9.5.0"
-git tag -a stable -m "Stable: v9.5.0"
-git push origin v9.5.0 stable
-docker manifest inspect ghcr.io/<владелец>/secret-santa-api:95
+git tag -a v10.0.0 -m "v10.0.0"
+git tag -a stable -m "Stable: v10.0.0"
+git push origin v10.0.0 stable
+docker manifest inspect ghcr.io/<владелец>/secret-santa-api:100
 ```
 
 Для отката сохраните том `v69_api_data`, проверьте совместимость миграций и пересоздайте сервисы:

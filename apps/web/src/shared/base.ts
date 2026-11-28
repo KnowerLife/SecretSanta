@@ -1,6 +1,8 @@
 /** Базовый путь приложения: '/' локально и '/<repo>' на GitHub Pages. */
 
-const SEGMENT = (import.meta.env.VITE_PAGES_BASE ?? '').replace(/^\/+|\/+$/g, '');
+const ENV = (import.meta as ImportMeta & { env?: Record<string, string> }).env ?? {};
+
+const SEGMENT = (ENV.VITE_PAGES_BASE ?? '').replace(/^\/+|\/+$/g, '');
 
 /** TanStack Router ожидает базу без завершающего слеша. */
 export const BASE_PATH = SEGMENT ? `/${SEGMENT}` : '/';
@@ -13,4 +15,4 @@ export function assetPath(path: string): string {
 }
 
 /** Статическая витрина на GitHub Pages: серверных комнат здесь нет. */
-export const PAGES_MODE = import.meta.env.VITE_PAGES_MODE === '1';
+export const PAGES_MODE = ENV.VITE_PAGES_MODE === '1';

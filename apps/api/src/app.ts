@@ -25,6 +25,7 @@ import type {
   SessionView,
 } from '@secret-santa/shared/contracts';
 import { drawAssignments } from '@secret-santa/shared/draw';
+import { apiReporter } from './observability.ts';
 import {
   expiresAt,
   hashToken,
@@ -290,6 +291,18 @@ app.use('*', async (c, next) => {
   c.header('X-Content-Type-Options', 'nosniff');
   c.header('X-Frame-Options', 'DENY');
   c.header('Referrer-Policy', 'no-referrer');
+});
+
+app.onError((error, c) => {
+  if (c.req.path !== '/api/health') {
+    apiReporter.captureException(error, {
+      source: 'hono',
+      method: c.req.method,
+      // Path only: no query string, body, cookies or auth tokens.
+      path: c.req.path,
+    });
+  }
+  return fail(500, 'internal_error');
 });
 
 const RESERVED_ROOM_PATHS = new Set(['join', 'demo']);
